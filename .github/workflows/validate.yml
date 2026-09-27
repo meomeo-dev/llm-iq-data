@@ -1,0 +1,32 @@
+name: Validate Data Repository
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Test & Validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Validate data repository structure & security
+        run: npm run validate
+
+      - name: Verify indexes are up-to-date
+        run: npm run build-index -- --check

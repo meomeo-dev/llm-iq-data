@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://llm-iq.dev/schemas/public-run.schema.json",
+  "title": "PublicRunRecord",
+  "description": "公开数据仓单次运行记录结构规范",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "publicSchemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "runId": {
+      "type": "string",
+      "pattern": "^\\d{8}T\\d{6}Z$"
+    },
+    "prompts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "promptId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "text": {
+            "type": "string"
+          },
+          "bindings": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "promptId",
+          "text",
+          "bindings"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finishedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "durationMs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "trigger": {
+      "type": "string",
+      "enum": [
+        "schedule",
+        "manual"
+      ]
+    },
+    "inProgress": {
+      "type": "boolean",
+      "const": false
+    },
+    "cancelledAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "budgetStop": {
+      "type": [
+        "boolean",
+        "object",
+        "string",
+        "null"
+      ]
+    },
+    "attempts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PublicAttempt"
+      }
+    },
+    "redactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "file",
+          "reason"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "publicSchemaVersion",
+    "runId",
+    "prompts",
+    "startedAt",
+    "finishedAt",
+    "durationMs",
+    "trigger",
+    "inProgress",
+    "attempts",
+    "redactions"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "PublicAttempt": {
+      "type": "object",
+      "properties": {
+        "targetId": {
+          "type": "string"
+        },
+        "promptId": {
+          "type": "string"
+        },
+        "cli": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string"
+        },
+        "effort": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "appliedEffort": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "effortHonored": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "ok",
+            "no-svg",
+            "error",
+            "timeout"
+          ]
+        },
+        "svgFile": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rawFile": {
+          "type": "null"
+        },
+        "startedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "finishedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "durationMs": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "svgBytes": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "error": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "usage": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "tokens": {
+              "type": "object",
+              "properties": {
+                "input": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "cache_read": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "cache_write": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "cache_write_5m": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "cache_write_1h": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "output": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": false
+            },
+            "reasoningTokens": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "serviceTier": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "enum": [
+                "standard",
+                "fast",
+                null
+              ]
+            },
+            "reportedCostUsd": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            }
+          },
+          "required": [
+            "tokens"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "targetId",
+        "promptId",
+        "cli",
+        "model",
+        "effort",
+        "appliedEffort",
+        "effortHonored",
+        "label",
+        "status",
+        "svgFile",
+        "rawFile",
+        "startedAt",
+        "finishedAt",
+        "durationMs",
+        "svgBytes",
+        "error",
+        "usage"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
