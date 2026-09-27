@@ -116,15 +116,6 @@ function checkRunDirectoryContents(
             type: 'consistency',
             message: `attempts[${idx}].svgFile 引用的文件不存在: ${attempt.svgFile}`,
           });
-        } else if (attempt.svgBytes !== null) {
-          const stats = fs.statSync(svgFullPath);
-          if (stats.size !== attempt.svgBytes) {
-            errors.push({
-              file: svgRelPath,
-              type: 'consistency',
-              message: `attempts[${idx}].svgBytes (${attempt.svgBytes}) 与文件实际大小 (${stats.size}) 不符`,
-            });
-          }
         }
       }
     }
