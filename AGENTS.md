@@ -5,7 +5,7 @@
 ## 数据来源与写入
 
 - 本仓库只存脱敏后的评测结果（`run.json`、`*.svg`）与索引，由
-  [`xumetide-dev/llm-iq-dashboard`](https://github.com/xumetide-dev/llm-iq-dashboard)
+  [`meomeo-dev/llm-iq-dashboard`](https://github.com/meomeo-dev/llm-iq-dashboard)
   的 `pnpm sync:data` 写入；不要手工复制运行目录。
 - 只追加：已发布的轮次目录不改写、不删除。
 - `runs/` 下只允许各级 `index.json`、`run.json` 与 `*.svg`；原始转录 `*.txt` 永不入库。

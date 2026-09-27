@@ -2,9 +2,9 @@
 
 [![License: MIT](https://img.shields.io/badge/Code%20License-MIT-blue.svg)](LICENSE-CODE)
 [![License: CC BY 4.0](https://img.shields.io/badge/Data%20License-CC%20BY%204.0-lightgrey.svg)](LICENSE-DATA)
-[![CI Validation](https://github.com/xumetide-dev/llm-iq-data/actions/workflows/validate.yml/badge.svg)](https://github.com/xumetide-dev/llm-iq-data/actions/workflows/validate.yml)
+[![CI Validation](https://github.com/meomeo-dev/llm-iq-data/actions/workflows/validate.yml/badge.svg)](https://github.com/meomeo-dev/llm-iq-data/actions/workflows/validate.yml)
 
-本项目是 [llm-iq-dashboard](https://github.com/xumetide-dev/llm-iq-dashboard) 的独立公开数据仓库（Open Data Lake Repository），用于持久化沉淀由自动化流水线生成的评测数据。评测任务覆盖**经典鹈鹕自行车基准（Pelican on a Bicycle Benchmark）**与 **2026 年 14 大前沿工程/视觉特效评测**（共 140 道题目）的全量脱敏运行记录与矢量艺术成果（SVG Artworks）。
+本项目是 [llm-iq-dashboard](https://github.com/meomeo-dev/llm-iq-dashboard) 的独立公开数据仓库（Open Data Lake Repository），用于持久化沉淀由自动化流水线生成的评测数据。评测任务覆盖**经典鹈鹕自行车基准（Pelican on a Bicycle Benchmark）**与 **2026 年 14 大前沿工程/视觉特效评测**（共 140 道题目）的全量脱敏运行记录与矢量艺术成果（SVG Artworks）。
 
 ---
 
@@ -148,19 +148,19 @@ llm-iq-data/
 
 ### 5.1 GitHub 原生 Raw 访问
 ```text
-https://raw.githubusercontent.com/xumetide-dev/llm-iq-data/main/runs/<YYYY>/<MM>/<DD>/<runId>/<svgFile>
+https://raw.githubusercontent.com/meomeo-dev/llm-iq-data/main/runs/<YYYY>/<MM>/<DD>/<runId>/<svgFile>
 ```
 *示例：*
-* 轮次元数据：`https://raw.githubusercontent.com/xumetide-dev/llm-iq-data/main/runs/2026/09/27/20260927T021708Z/run.json`
-* 矢量作品：`https://raw.githubusercontent.com/xumetide-dev/llm-iq-data/main/runs/2026/09/27/20260927T021708Z/gpt-5-pro.svg`
-* 全局索引：`https://raw.githubusercontent.com/xumetide-dev/llm-iq-data/main/index.json`
+* 轮次元数据：`https://raw.githubusercontent.com/meomeo-dev/llm-iq-data/main/runs/2026/09/27/20260927T021708Z/run.json`
+* 矢量作品：`https://raw.githubusercontent.com/meomeo-dev/llm-iq-data/main/runs/2026/09/27/20260927T021708Z/gpt-5-pro.svg`
+* 全局索引：`https://raw.githubusercontent.com/meomeo-dev/llm-iq-data/main/index.json`
 
 ### 5.2 全球 jsDelivr CDN 加速
 ```text
-https://cdn.jsdelivr.net/gh/xumetide-dev/llm-iq-data@main/runs/<YYYY>/<MM>/<DD>/<runId>/<svgFile>
+https://cdn.jsdelivr.net/gh/meomeo-dev/llm-iq-data@main/runs/<YYYY>/<MM>/<DD>/<runId>/<svgFile>
 ```
 *示例：*
-* 矢量作品：`https://cdn.jsdelivr.net/gh/xumetide-dev/llm-iq-data@main/runs/2026/09/27/20260927T021708Z/gpt-5-pro.svg`
+* 矢量作品：`https://cdn.jsdelivr.net/gh/meomeo-dev/llm-iq-data@main/runs/2026/09/27/20260927T021708Z/gpt-5-pro.svg`
 
 ---
 
@@ -206,9 +206,9 @@ npm run build-index -- --check
   title = {LLM-IQ Benchmark: Dynamic & Frontier Visual Evaluation Open Data Lake},
   year = {2026},
   publisher = {GitHub},
-  howpublished = {\url{https://github.com/xumetide-dev/llm-iq-data}}
+  howpublished = {\url{https://github.com/meomeo-dev/llm-iq-data}}
 }
 ```
 
 文末或图注致谢标注：
-> 评测数据与矢量作品来源于 LLM-IQ Benchmark Open Data Lake (https://github.com/xumetide-dev/llm-iq-data)，基于 CC BY 4.0 许可协议发布。
+> 评测数据与矢量作品来源于 LLM-IQ Benchmark Open Data Lake (https://github.com/meomeo-dev/llm-iq-data)，基于 CC BY 4.0 许可协议发布。

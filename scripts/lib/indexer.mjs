@@ -112,7 +112,7 @@ export function buildDayIndex(dateStr, runs) {
 export function buildManifest(rootDir, dateMap) {
   let name = 'llm-iq-data-index';
   let description = '鹈鹕基准与前沿大模型可视化评测全量运行索引';
-  let repository = 'https://github.com/xumetide-dev/llm-iq-data';
+  let repository = 'https://github.com/meomeo-dev/llm-iq-data';
   let fallbackUpdatedAt = '2026-09-27T07:12:00.000Z';
 
   const manifestPath = path.join(rootDir, 'index.json');
