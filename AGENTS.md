@@ -13,7 +13,7 @@
 
 ## 永不发布的题目
 
-- `leijun-v1`（雷军骑自行车）只是本地测试题，其题面与结果永远不进入本仓库。
+- 以真实人物为主体或仅供本地测试的题目，其题面与结果永远不进入本仓库。
 - `scripts/lib/validator.mjs` 的 `UNPUBLISHABLE_PROMPT_IDS` 在 CI 中拒收这些题目，
   与主仓 `src/core/data-repo/contract.ts` 的同名清单保持一致。
 
