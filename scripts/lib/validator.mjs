@@ -13,6 +13,22 @@ import {
 } from './schema-validators.mjs';
 
 /**
+ * 永不发布的题目（仅供本地测试，如以真人为主体的题目）。与主仓
+ * src/core/data-repo/contract.ts 的 UNPUBLISHABLE_PROMPT_IDS 保持一致。
+ */
+export const UNPUBLISHABLE_PROMPT_IDS = ['leijun-v1'];
+
+/** 轮次记录的题面与调用中出现的永不发布题目，去重后返回 */
+function unpublishablePromptIds(runData) {
+  const blocked = new Set(UNPUBLISHABLE_PROMPT_IDS);
+  const seen = new Set();
+  for (const item of [...(runData.prompts ?? []), ...(runData.attempts ?? [])]) {
+    if (item && blocked.has(item.promptId)) seen.add(item.promptId);
+  }
+  return [...seen];
+}
+
+/**
  * 递归收集目录下的文件与目录信息
  * @param {string} rootDir 仓库根目录
  * @returns {object}
@@ -339,6 +355,13 @@ export function validateRepository(rootDir) {
             file: path.join(runRelDir, 'run.json'),
             type: 'schema',
             message: err,
+          });
+        }
+        for (const promptId of unpublishablePromptIds(runData)) {
+          errors.push({
+            file: path.join(runRelDir, 'run.json'),
+            type: 'unpublishable-prompt',
+            message: `含永不发布的题目 ${promptId}`,
           });
         }
         if (runData.runId !== runId) {

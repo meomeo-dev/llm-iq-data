@@ -138,6 +138,7 @@ llm-iq-data/
    * **白名单与反例保护**：针对常规矢量图形 ID（如 `desk-lamp-base-gradient-highlight-01`）具备防误报过滤机制；
 4. **被拦截作品记入 Redactions**：若某模型生成的矢量作品命中泄漏规则，同步流水线将该 attempt 的 `svgFile` 置为 `null`，作品文件不予入库，并在 `redactions` 数组中记录原文件名与拦截原因（如 `{ file: "claude-3-7-sonnet.svg", reason: "secret-pattern" }`）；
 5. **日志安全脱敏**：CI 校验报告仅显示规则名与文件路径，严格禁止在控制台日志中回显敏感内容。
+6. **本地测试题不发布**：仅供本地测试的题目（当前为 `leijun-v1`）的题面与结果不进入本仓库；同步时剔除，CI 校验遇到即判失败（`unpublishable-prompt`）。
 
 ---
 

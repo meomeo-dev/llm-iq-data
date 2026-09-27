@@ -151,3 +151,18 @@ test('validateRepository: 泄漏扫描反例 - SVG 中含有私钥或本地路�
     repo.cleanup();
   }
 });
+
+test('validateRepository: 反例 - 含永不发布的题目', () => {
+  const repo = createTempRepo();
+  try {
+    const runPath = path.join(repo.runsDir, 'run.json');
+    const run = JSON.parse(fs.readFileSync(runPath, 'utf8'));
+    run.prompts.push({ promptId: 'leijun-v1', text: '测试题', bindings: {} });
+    fs.writeFileSync(runPath, JSON.stringify(run, null, 2) + '\n', 'utf8');
+    const result = validateRepository(repo.tmpDir);
+    assert.equal(result.valid, false);
+    assert.ok(result.errors.some((e) => e.type === 'unpublishable-prompt'));
+  } finally {
+    repo.cleanup();
+  }
+});
