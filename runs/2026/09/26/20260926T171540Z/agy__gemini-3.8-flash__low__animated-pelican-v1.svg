@@ -1,0 +1,400 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 650" width="100%" height="100%">
+  <defs>
+    <!-- Background Sky & Scenery Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7ec8e3"/>
+      <stop offset="65%" stop-color="#cdebf7"/>
+      <stop offset="85%" stop-color="#fdf4dc"/>
+      <stop offset="100%" stop-color="#fed6a3"/>
+    </linearGradient>
+
+    <linearGradient id="oceanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3b82a6"/>
+      <stop offset="100%" stop-color="#205374"/>
+    </linearGradient>
+
+    <!-- Metallic & Bicycle Gradients -->
+    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c53030"/>
+      <stop offset="50%" stop-color="#e53e3e"/>
+      <stop offset="100%" stop-color="#9b2c2c"/>
+    </linearGradient>
+
+    <linearGradient id="chromeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="40%" stop-color="#ffffff"/>
+      <stop offset="70%" stop-color="#cbd5e1"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
+    </linearGradient>
+
+    <linearGradient id="pouchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dd6b20"/>
+      <stop offset="70%" stop-color="#c05621"/>
+      <stop offset="100%" stop-color="#9c4221"/>
+    </linearGradient>
+
+    <!-- Reusable Wheel Definition (Center at 0,0) -->
+    <g id="bicycleWheel">
+      <!-- Outer Tire -->
+      <circle cx="0" cy="0" r="100" fill="none" stroke="#222222" stroke-width="15"/>
+      <circle cx="0" cy="0" r="102" fill="none" stroke="#111111" stroke-dasharray="4,6" stroke-width="2"/>
+      <!-- Rim -->
+      <circle cx="0" cy="0" r="92" fill="none" stroke="url(#chromeGrad)" stroke-width="6"/>
+      <!-- Spokes (16 spokes: 8 crossing lines) -->
+      <g stroke="#e2e8f0" stroke-width="1.8" opacity="0.85">
+        <line x1="0" y1="-91" x2="0" y2="91"/>
+        <line x1="-91" y1="0" x2="91" y2="0"/>
+        <line x1="-64.3" y1="-64.3" x2="64.3" y2="64.3"/>
+        <line x1="-64.3" y1="64.3" x2="64.3" y2="-64.3"/>
+        <line x1="-84" y1="-34.8" x2="84" y2="34.8"/>
+        <line x1="-34.8" y1="-84" x2="34.8" y2="84"/>
+        <line x1="-84" y1="34.8" x2="84" y2="-34.8"/>
+        <line x1="-34.8" y1="84" x2="34.8" y2="-84"/>
+      </g>
+      <!-- Hub & Cap -->
+      <circle cx="0" cy="0" r="14" fill="#64748b"/>
+      <circle cx="0" cy="0" r="8" fill="url(#chromeGrad)"/>
+      <circle cx="0" cy="0" r="3" fill="#334155"/>
+    </g>
+
+    <!-- Filter for subtle drop shadows -->
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="3" dy="6" stdDeviation="4" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <style><![CDATA[
+    /* Continuous animations */
+    .wheel-rotate-rear {
+      animation: spin 1.2s linear infinite;
+      transform-origin: 220px 450px;
+    }
+    .wheel-rotate-front {
+      animation: spin 1.2s linear infinite;
+      transform-origin: 660px 450px;
+    }
+    .crank-spin {
+      animation: spin 1.2s linear infinite;
+      transform-origin: 430px 450px;
+    }
+    .counter-rotate {
+      animation: spin-reverse 1.2s linear infinite;
+    }
+    .pedal-near-counter {
+      transform-origin: 430px 505px;
+    }
+    .pedal-far-counter {
+      transform-origin: 430px 395px;
+    }
+
+    /* Leg kinetic kinematics */
+    .leg-near-cycle {
+      animation: pedalNear 1.2s ease-in-out infinite;
+      transform-origin: 382px 305px;
+    }
+    .foot-near-cycle {
+      animation: footNear 1.2s ease-in-out infinite;
+      transform-origin: 418px 435px;
+    }
+    .leg-far-cycle {
+      animation: pedalFar 1.2s ease-in-out infinite;
+      transform-origin: 382px 305px;
+    }
+    .foot-far-cycle {
+      animation: footFar 1.2s ease-in-out infinite;
+      transform-origin: 418px 365px;
+    }
+
+    /* Pelican natural body vibration & head bob */
+    .pelican-bob {
+      animation: birdBob 0.6s ease-in-out infinite alternate;
+    }
+    .pouch-jiggle {
+      animation: jiggle 0.6s ease-in-out infinite alternate;
+      transform-origin: 520px 145px;
+    }
+    .wing-shift {
+      animation: wingBreathe 1.2s ease-in-out infinite;
+      transform-origin: 375px 230px;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes spin-reverse {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    /* Leg motion synchronized with 1.2s crank revolution */
+    @keyframes pedalNear {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(-14deg) scaleY(1.04); }
+      50%  { transform: rotate(-26deg) scaleY(1.08); }
+      75%  { transform: rotate(-10deg) scaleY(0.96); }
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes footNear {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(-10deg); }
+      50%  { transform: rotate(18deg); }
+      75%  { transform: rotate(26deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    @keyframes pedalFar {
+      0%   { transform: rotate(-26deg) scaleY(1.08); }
+      25%  { transform: rotate(-10deg) scaleY(0.96); }
+      50%  { transform: rotate(0deg); }
+      75%  { transform: rotate(-14deg) scaleY(1.04); }
+      100% { transform: rotate(-26deg) scaleY(1.08); }
+    }
+    @keyframes footFar {
+      0%   { transform: rotate(18deg); }
+      25%  { transform: rotate(26deg); }
+      50%  { transform: rotate(0deg); }
+      75%  { transform: rotate(-10deg); }
+      100% { transform: rotate(18deg); }
+    }
+
+    @keyframes birdBob {
+      0%   { transform: translateY(0px); }
+      100% { transform: translateY(-3.5px); }
+    }
+    @keyframes jiggle {
+      0%   { transform: scale(1) rotate(0deg); }
+      100% { transform: scale(1.02, 0.98) rotate(1.5deg); }
+    }
+    @keyframes wingBreathe {
+      0%, 100% { transform: rotate(0deg); }
+      50%      { transform: rotate(-2.5deg); }
+    }
+  ]]></style>
+
+  <!-- Environment Backdrop -->
+  <rect x="0" y="0" width="900" height="650" fill="url(#bgGrad)"/>
+
+  <!-- Distant Coastline & Ocean -->
+  <path d="M0,450 C240,430 460,455 900,435 L900,500 L0,500 Z" fill="url(#oceanGrad)" opacity="0.65"/>
+  <ellipse cx="780" cy="180" rx="45" ry="45" fill="#fff5d0" opacity="0.85"/>
+
+  <!-- Coastal Ground/Promenade -->
+  <rect x="0" y="525" width="900" height="125" fill="#d1b18a"/>
+  <rect x="0" y="525" width="900" height="14" fill="#a07d56"/>
+  <!-- Decorative road dashes -->
+  <path d="M 0,590 L 900,590" stroke="#f4ede2" stroke-width="4" stroke-dasharray="40,30" opacity="0.8"/>
+
+  <!-- Bicycle Shadow -->
+  <ellipse cx="440" cy="550" rx="280" ry="18" fill="#443224" opacity="0.25"/>
+
+  <!-- ============================================================== -->
+  <!-- 1. FAR SIDE CYCLE: Back Leg, Far Crank & Pedal                 -->
+  <!-- ============================================================== -->
+  <g class="crank-spin" id="farCrankSystem">
+    <!-- Far crank arm pointing 180 deg opposite from front (towards top) -->
+    <line x1="430" y1="450" x2="430" y2="395" stroke="#718096" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="430" cy="395" r="5" fill="#4a5568"/>
+    <!-- Far pedal (remains horizontal via counter rotation) -->
+    <g class="counter-rotate pedal-far-counter">
+      <rect x="415" y="391" width="30" height="8" rx="3" fill="#2d3748"/>
+    </g>
+  </g>
+
+  <!-- Far Leg (Thigh, Shin, Webbed Foot resting on Far Pedal) -->
+  <g opacity="0.75">
+    <g class="leg-far-cycle">
+      <!-- Thigh -->
+      <path d="M 380,305 C 375,340 405,370 418,375" fill="none" stroke="#684a32" stroke-width="18" stroke-linecap="round"/>
+      <!-- Lower leg -->
+      <path d="M 418,375 L 430,395" fill="none" stroke="#333333" stroke-width="6" stroke-linecap="round"/>
+      <!-- Webbed foot -->
+      <g class="foot-far-cycle">
+        <polygon points="415,395 446,393 440,402 420,402" fill="#2d3748"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- 2. REAR & FRONT BICYCLE WHEELS                                  -->
+  <!-- ============================================================== -->
+  <!-- Rear Wheel (Axle at 220, 450) -->
+  <g class="wheel-rotate-rear">
+    <use href="#bicycleWheel" x="220" y="450"/>
+  </g>
+
+  <!-- Front Wheel (Axle at 660, 450) -->
+  <g class="wheel-rotate-front">
+    <use href="#bicycleWheel" x="660" y="450"/>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- 3. BICYCLE FRAMEWORK (Correct Diamond/Touring Geometry)        -->
+  <!-- Rear Axle: (220,450), Bottom Bracket: (430,450),                -->
+  <!-- Seat Junction: (360,285), Headtube: (610,230)-(625,275),        -->
+  <!-- Front Dropouts: (660,450)                                       -->
+  <!-- ============================================================== -->
+  <g id="bicycleFrame" filter="url(#softShadow)">
+    <!-- Chainstays: Rear Axle -> Bottom Bracket -->
+    <line x1="220" y1="450" x2="430" y2="450" stroke="#718096" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- Bike Chain & Sprockets -->
+    <path d="M 220,442 L 430,432 A 24,24 0 0,1 430,468 L 220,458 A 12,12 0 0,1 220,442 Z" 
+          fill="none" stroke="#2d3748" stroke-width="3.5" stroke-dasharray="4,2"/>
+    <circle cx="220" cy="450" r="15" fill="#4a5568"/>
+
+    <!-- Seatstays: Rear Axle -> Seat Lug (360, 285) -->
+    <line x1="220" y1="450" x2="360" y2="285" stroke="url(#frameGrad)" stroke-width="8" stroke-linecap="round"/>
+
+    <!-- Seat Tube: Bottom Bracket (430,450) -> Seat Lug (360,285) -->
+    <line x1="430" y1="450" x2="360" y2="285" stroke="url(#frameGrad)" stroke-width="11" stroke-linecap="round"/>
+
+    <!-- Down Tube: Bottom Bracket (430,450) -> Lower Headtube (625,275) -->
+    <line x1="430" y1="450" x2="625" y2="275" stroke="url(#frameGrad)" stroke-width="12" stroke-linecap="round"/>
+
+    <!-- Top Tube: Seat Lug (360,285) -> Upper Headtube (610,230) -->
+    <line x1="360" y1="285" x2="610" y2="230" stroke="url(#frameGrad)" stroke-width="10" stroke-linecap="round"/>
+
+    <!-- Head Tube: (610,230) -> (625,275) -->
+    <line x1="610" y1="230" x2="625" y2="275" stroke="url(#frameGrad)" stroke-width="14" stroke-linecap="round"/>
+
+    <!-- Front Fork: Lower Headtube (625,275) -> Front Axle (660,450) -->
+    <line x1="625" y1="275" x2="660" y2="450" stroke="url(#chromeGrad)" stroke-width="9" stroke-linecap="round"/>
+
+    <!-- Seat Post & Saddle -->
+    <line x1="360" y1="285" x2="352" y2="265" stroke="url(#chromeGrad)" stroke-width="8" stroke-linecap="round"/>
+    <!-- Saddle/Seat -->
+    <path d="M 315,268 C 330,265 375,265 390,272 C 375,278 355,278 340,276 C 325,276 315,274 315,268 Z" 
+          fill="#1a202c" stroke="#2d3748" stroke-width="2"/>
+    <ellipse cx="360" cy="273" rx="10" ry="4" fill="#0f172a"/>
+
+    <!-- Stem & Handlebars -->
+    <!-- Quill Stem: rises from headtube, projects forward -->
+    <path d="M 610,230 L 602,198 L 626,195" fill="none" stroke="url(#chromeGrad)" stroke-width="8" stroke-linecap="round"/>
+    <!-- Swept-back Cruiser Handlebars -->
+    <path d="M 626,195 C 640,195 648,205 635,225" fill="none" stroke="url(#chromeGrad)" stroke-width="6" stroke-linecap="round"/>
+    <!-- Rubber Handgrip -->
+    <line x1="638" y1="220" x2="632" y2="230" stroke="#1a202c" stroke-width="9" stroke-linecap="round"/>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- 4. THE PELICAN (Seated, Holding Handlebars, Animated Body)       -->
+  <!-- ============================================================== -->
+  <g id="californiaBrownPelican" class="pelican-bob">
+    
+    <!-- Tail Feathers -->
+    <path d="M 285,265 C 260,275 255,295 280,290 C 295,287 310,275 320,270 Z" 
+          fill="#4a3728" stroke="#2e1f13" stroke-width="2"/>
+
+    <!-- Main Torso / Body -->
+    <!-- California brown pelicans have warm dark-brown & grey patterned plumage -->
+    <path d="M 320,268 C 310,230 335,185 390,185 C 445,185 455,245 425,305 C 400,340 345,335 325,295 Z" 
+          fill="#5a4635" stroke="#3b2b1d" stroke-width="2"/>
+    <!-- Chest / Breast Highlight (Golden brown / chestnut wash) -->
+    <path d="M 380,188 C 420,188 442,230 425,280 C 400,240 375,205 380,188 Z" 
+          fill="#8c6849" opacity="0.8"/>
+
+    <!-- Wing (Folded at side, subtle natural breathing movement) -->
+    <g class="wing-shift">
+      <path d="M 335,220 C 370,210 435,230 425,275 C 420,300 370,320 330,300 C 320,285 325,235 335,220 Z" 
+            fill="#403227" stroke="#291e17" stroke-width="2"/>
+      <!-- Primary Wing Feathers Layering -->
+      <path d="M 345,245 C 380,245 415,265 410,290" fill="none" stroke="#2a1d15" stroke-width="2"/>
+      <path d="M 335,265 C 365,265 395,280 395,305" fill="none" stroke="#2a1d15" stroke-width="2"/>
+    </g>
+
+    <!-- Graceful S-Curved Neck -->
+    <!-- Behind part of neck has dark chocolate brown/black plumage during breeding -->
+    <path d="M 405,190 C 415,140 450,115 480,95 C 470,120 460,155 435,195 Z" 
+          fill="#33241b"/>
+    <!-- White-to-pale-straw neck stripe typical of Brown Pelican -->
+    <path d="M 425,190 C 440,150 472,125 490,95 C 480,110 465,150 445,195 Z" 
+          fill="#fbf5dc" stroke="#e0d6be" stroke-width="1.5"/>
+
+    <!-- Pelican Head -->
+    <g id="pelicanHead">
+      <!-- Crown (Crisp pale yellow/straw crown of adult California Brown Pelican) -->
+      <ellipse cx="498" cy="85" rx="22" ry="14" fill="#fae896"/>
+      <path d="M 480,92 C 485,72 520,72 525,92 Z" fill="#fae896"/>
+
+      <!-- Eye (Dark patch with bright, intelligent eye) -->
+      <circle cx="510" cy="85" r="7.5" fill="#f0e6d2"/>
+      <circle cx="510" cy="85" r="4" fill="#0f172a"/>
+      <circle cx="512" cy="83" r="1.5" fill="#ffffff"/>
+
+      <!-- Immense Bill / Upper Mandible (Long, robust, hook at tip) -->
+      <path d="M 515,85 L 675,120 C 685,123 685,128 676,131 L 525,108 Z" 
+            fill="#d97706" stroke="#b45309" stroke-width="2"/>
+      <!-- Hook tip detail on bill -->
+      <path d="M 675,120 Q 688,126 678,133" fill="none" stroke="#92400e" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- Large Gular Pouch (Distensible, characteristic pelican feature) -->
+      <g class="pouch-jiggle">
+        <path d="M 525,108 L 665,130 C 625,185 530,205 485,135 C 498,130 515,120 525,108 Z" 
+              fill="url(#pouchGrad)" stroke="#b45309" stroke-width="2" opacity="0.95"/>
+        <!-- Fine vascular veins/stretch marks on pouch -->
+        <path d="M 535,125 Q 585,165 640,135" fill="none" stroke="#b91c1c" stroke-width="1" opacity="0.35"/>
+        <path d="M 520,135 Q 560,175 615,145" fill="none" stroke="#b91c1c" stroke-width="1" opacity="0.35"/>
+      </g>
+    </g>
+
+    <!-- Pelican Arm/Wing Extension holding the handlebars -->
+    <g id="pelicanArms">
+      <!-- Strong wing joint reaching forward to handlebars at (635, 225) -->
+      <path d="M 410,225 C 475,215 565,210 635,225" 
+            fill="none" stroke="#5a4635" stroke-width="15" stroke-linecap="round"/>
+      <path d="M 430,225 C 485,218 565,215 632,226" 
+            fill="none" stroke="#3b2b1d" stroke-width="10" stroke-linecap="round"/>
+      <!-- Wingtip feathers wrapping securely around the bike handlebar grip -->
+      <path d="M 626,220 C 640,215 648,225 642,236 C 636,242 626,238 625,228 Z" 
+            fill="#291e17"/>
+    </g>
+  </g>
+
+  <!-- ============================================================== -->
+  <!-- 5. NEAR SIDE CYCLE: Crank, Rotating Pedal, & Animated Leg      -->
+  <!-- ============================================================== -->
+
+  <!-- Bottom Bracket Housing & Chainring Disc -->
+  <circle cx="430" cy="450" r="26" fill="url(#chromeGrad)" stroke="#475569" stroke-width="2"/>
+  <circle cx="430" cy="450" r="22" fill="#cbd5e1" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- Near Crank & Pedal Assembly (Rotates around BB at 430, 450) -->
+  <g class="crank-spin" id="nearCrankSystem">
+    <!-- Front crank arm points down (offset 180 deg from far side) -->
+    <line x1="430" y1="450" x2="430" y2="505" stroke="url(#chromeGrad)" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="430" cy="505" r="5" fill="#64748b"/>
+    <!-- Near Pedal (Always kept flat relative to earth using reverse rotation) -->
+    <g class="counter-rotate pedal-near-counter">
+      <rect x="412" y="501" width="36" height="9" rx="3.5" fill="#1e293b" stroke="#0f172a" stroke-width="1.5"/>
+      <line x1="416" y1="505" x2="444" y2="505" stroke="#f59e0b" stroke-width="2.5"/> <!-- Pedal Reflector -->
+    </g>
+  </g>
+
+  <!-- Near Side Leg (Hip at ~382,305; synchronizes with Near Pedal at 430, 505) -->
+  <g id="pelicanNearLeg" filter="url(#softShadow)">
+    <g class="leg-near-cycle">
+      <!-- Upper Leg / Thigh (Heavy feathered plumage) -->
+      <path d="M 382,305 C 375,348 408,398 420,435" 
+            fill="none" stroke="#5a4635" stroke-width="22" stroke-linecap="round"/>
+      <path d="M 382,305 C 377,344 405,390 416,425" 
+            fill="none" stroke="#71543d" stroke-width="14" stroke-linecap="round"/>
+      
+      <!-- Knee & Lower Tarsus (Sturdy, scaled bird leg) -->
+      <line x1="420" y1="435" x2="430" y2="505" stroke="#1e293b" stroke-width="7.5" stroke-linecap="round"/>
+
+      <!-- Large Palmate Webbed Foot on the Near Pedal -->
+      <g class="foot-near-cycle">
+        <!-- Webbing -->
+        <polygon points="412,504 452,501 445,513 416,513" fill="#0f172a"/>
+        <!-- Digits / Toes -->
+        <line x1="420" y1="504" x2="453" y2="501" stroke="#334155" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="420" y1="506" x2="447" y2="512" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+        <line x1="420" y1="504" x2="441" y2="506" stroke="#334155" stroke-width="2" stroke-linecap="round"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Bracket Center Cap -->
+  <circle cx="430" cy="450" r="8" fill="#1e293b" stroke="url(#chromeGrad)" stroke-width="2"/>
+</svg>

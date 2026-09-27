@@ -1,0 +1,318 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1000" height="600" viewBox="0 0 1000 600">
+  <style><![CDATA[
+    .emitter-core { animation: emit 0.6s ease-in-out infinite; }
+    @keyframes emit { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+    .label { font: 600 13px system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #9fb6d8; }
+    .sub { font: 400 11px system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #6f84a6; }
+    .title { font: 700 14px system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; fill: #d8e6ff; }
+  ]]></style>
+
+  <defs>
+    <!-- 滤镜：用户坐标区域，避免水平线零高度包围盒导致不可见 -->
+    <filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="1000" height="600">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlur" filterUnits="userSpaceOnUse" x="0" y="0" width="1000" height="600">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+
+    <radialGradient id="bg" cx="50%" cy="47%" r="70%">
+      <stop offset="0" stop-color="#0a1226"/>
+      <stop offset="1" stop-color="#03050b"/>
+    </radialGradient>
+    <linearGradient id="emitterBody" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0d1a2e"/>
+      <stop offset="1" stop-color="#1b3556"/>
+    </linearGradient>
+    <linearGradient id="planeGrad" gradientUnits="userSpaceOnUse" x1="0" y1="120" x2="0" y2="440">
+      <stop offset="0" stop-color="#8fe9ff" stop-opacity="0"/>
+      <stop offset="0.12" stop-color="#8fe9ff" stop-opacity="0.9"/>
+      <stop offset="0.88" stop-color="#8fe9ff" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#8fe9ff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="peakGrad" gradientUnits="userSpaceOnUse" x1="366" y1="0" x2="900" y2="0">
+      <stop offset="0" stop-color="#fff3b0" stop-opacity="0.15"/>
+      <stop offset="0.5" stop-color="#ffe98a" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#fff6c8" stop-opacity="0.95"/>
+    </linearGradient>
+    <radialGradient id="slitGlow">
+      <stop offset="0" stop-color="#e8fbff" stop-opacity="1"/>
+      <stop offset="0.4" stop-color="#8fe9ff" stop-opacity="0.6"/>
+      <stop offset="1" stop-color="#8fe9ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="curveFill" gradientUnits="userSpaceOnUse" x1="915" y1="0" x2="985" y2="0">
+      <stop offset="0" stop-color="#ffcf5a" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffcf5a" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <!-- 屏上条纹亮度：I(y) = cos²(πΔ/λ)·sinc²(β) -->
+    <linearGradient id="fringeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffeab0" stop-opacity="0.025"/>
+      <stop offset="0.01" stop-color="#ffeab0" stop-opacity="0.042"/>
+      <stop offset="0.03" stop-color="#ffeab0" stop-opacity="0.089"/>
+      <stop offset="0.05" stop-color="#ffeab0" stop-opacity="0.15"/>
+      <stop offset="0.07" stop-color="#ffeab0" stop-opacity="0.213"/>
+      <stop offset="0.086" stop-color="#ffeab0" stop-opacity="0.251"/>
+      <stop offset="0.1" stop-color="#ffeab0" stop-opacity="0.269"/>
+      <stop offset="0.12" stop-color="#ffeab0" stop-opacity="0.259"/>
+      <stop offset="0.14" stop-color="#ffeab0" stop-opacity="0.204"/>
+      <stop offset="0.16" stop-color="#ffeab0" stop-opacity="0.12"/>
+      <stop offset="0.18" stop-color="#ffeab0" stop-opacity="0.038"/>
+      <stop offset="0.2" stop-color="#ffeab0" stop-opacity="0"/>
+      <stop offset="0.22" stop-color="#ffeab0" stop-opacity="0.043"/>
+      <stop offset="0.24" stop-color="#ffeab0" stop-opacity="0.177"/>
+      <stop offset="0.26" stop-color="#ffeab0" stop-opacity="0.379"/>
+      <stop offset="0.28" stop-color="#ffeab0" stop-opacity="0.589"/>
+      <stop offset="0.304" stop-color="#ffeab0" stop-opacity="0.735"/>
+      <stop offset="0.328" stop-color="#ffeab0" stop-opacity="0.688"/>
+      <stop offset="0.348" stop-color="#ffeab0" stop-opacity="0.5"/>
+      <stop offset="0.368" stop-color="#ffeab0" stop-opacity="0.254"/>
+      <stop offset="0.388" stop-color="#ffeab0" stop-opacity="0.055"/>
+      <stop offset="0.404" stop-color="#ffeab0" stop-opacity="0"/>
+      <stop offset="0.42" stop-color="#ffeab0" stop-opacity="0.066"/>
+      <stop offset="0.44" stop-color="#ffeab0" stop-opacity="0.302"/>
+      <stop offset="0.46" stop-color="#ffeab0" stop-opacity="0.623"/>
+      <stop offset="0.48" stop-color="#ffeab0" stop-opacity="0.894"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="0.52" stop-color="#ffeab0" stop-opacity="0.894"/>
+      <stop offset="0.54" stop-color="#ffeab0" stop-opacity="0.623"/>
+      <stop offset="0.56" stop-color="#ffeab0" stop-opacity="0.302"/>
+      <stop offset="0.58" stop-color="#ffeab0" stop-opacity="0.066"/>
+      <stop offset="0.596" stop-color="#ffeab0" stop-opacity="0"/>
+      <stop offset="0.612" stop-color="#ffeab0" stop-opacity="0.055"/>
+      <stop offset="0.632" stop-color="#ffeab0" stop-opacity="0.254"/>
+      <stop offset="0.652" stop-color="#ffeab0" stop-opacity="0.5"/>
+      <stop offset="0.672" stop-color="#ffeab0" stop-opacity="0.688"/>
+      <stop offset="0.696" stop-color="#ffeab0" stop-opacity="0.735"/>
+      <stop offset="0.72" stop-color="#ffeab0" stop-opacity="0.589"/>
+      <stop offset="0.74" stop-color="#ffeab0" stop-opacity="0.379"/>
+      <stop offset="0.76" stop-color="#ffeab0" stop-opacity="0.177"/>
+      <stop offset="0.78" stop-color="#ffeab0" stop-opacity="0.043"/>
+      <stop offset="0.8" stop-color="#ffeab0" stop-opacity="0"/>
+      <stop offset="0.82" stop-color="#ffeab0" stop-opacity="0.038"/>
+      <stop offset="0.84" stop-color="#ffeab0" stop-opacity="0.12"/>
+      <stop offset="0.86" stop-color="#ffeab0" stop-opacity="0.204"/>
+      <stop offset="0.88" stop-color="#ffeab0" stop-opacity="0.259"/>
+      <stop offset="0.9" stop-color="#ffeab0" stop-opacity="0.269"/>
+      <stop offset="0.914" stop-color="#ffeab0" stop-opacity="0.251"/>
+      <stop offset="0.93" stop-color="#ffeab0" stop-opacity="0.213"/>
+      <stop offset="0.95" stop-color="#ffeab0" stop-opacity="0.15"/>
+      <stop offset="0.97" stop-color="#ffeab0" stop-opacity="0.089"/>
+      <stop offset="0.99" stop-color="#ffeab0" stop-opacity="0.042"/>
+      <stop offset="1" stop-color="#ffeab0" stop-opacity="0.025"/>
+    </linearGradient>
+
+    <clipPath id="planeClip"><rect x="72" y="120" width="290" height="320"/></clipPath>
+    <clipPath id="fieldClip"><rect x="370" y="20" width="530" height="520"/></clipPath>
+
+    <!-- 惠更斯子波：波峰实线、波谷虚线，半径以波速 18px/0.6s 向外扩张 -->
+    <g id="ripple" fill="none">
+      <g stroke="#7fe0ff" stroke-width="1.5">
+        <circle r="0" stroke-opacity="0.85"><animate attributeName="r" values="0;18" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="18" stroke-opacity="0.76"><animate attributeName="r" values="18;36" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="36" stroke-opacity="0.69"><animate attributeName="r" values="36;54" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="54" stroke-opacity="0.64"><animate attributeName="r" values="54;72" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="72" stroke-opacity="0.60"><animate attributeName="r" values="72;90" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="90" stroke-opacity="0.57"><animate attributeName="r" values="90;108" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="108" stroke-opacity="0.54"><animate attributeName="r" values="108;126" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="126" stroke-opacity="0.51"><animate attributeName="r" values="126;144" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="144" stroke-opacity="0.49"><animate attributeName="r" values="144;162" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="162" stroke-opacity="0.47"><animate attributeName="r" values="162;180" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="180" stroke-opacity="0.45"><animate attributeName="r" values="180;198" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="198" stroke-opacity="0.44"><animate attributeName="r" values="198;216" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="216" stroke-opacity="0.43"><animate attributeName="r" values="216;234" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="234" stroke-opacity="0.41"><animate attributeName="r" values="234;252" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="252" stroke-opacity="0.40"><animate attributeName="r" values="252;270" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="270" stroke-opacity="0.39"><animate attributeName="r" values="270;288" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="288" stroke-opacity="0.38"><animate attributeName="r" values="288;306" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="306" stroke-opacity="0.37"><animate attributeName="r" values="306;324" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="324" stroke-opacity="0.36"><animate attributeName="r" values="324;342" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="342" stroke-opacity="0.35"><animate attributeName="r" values="342;360" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="360" stroke-opacity="0.35"><animate attributeName="r" values="360;378" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="378" stroke-opacity="0.34"><animate attributeName="r" values="378;396" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="396" stroke-opacity="0.33"><animate attributeName="r" values="396;414" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="414" stroke-opacity="0.33"><animate attributeName="r" values="414;432" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="432" stroke-opacity="0.32"><animate attributeName="r" values="432;450" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="450" stroke-opacity="0.31"><animate attributeName="r" values="450;468" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="468" stroke-opacity="0.31"><animate attributeName="r" values="468;486" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="486" stroke-opacity="0.30"><animate attributeName="r" values="486;504" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="504" stroke-opacity="0.30"><animate attributeName="r" values="504;522" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="522" stroke-opacity="0.29"><animate attributeName="r" values="522;540" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="540" stroke-opacity="0.29"><animate attributeName="r" values="540;558" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="558" stroke-opacity="0.28"><animate attributeName="r" values="558;576" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="576" stroke-opacity="0.28"><animate attributeName="r" values="576;594" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="594" stroke-opacity="0.28"><animate attributeName="r" values="594;612" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="612" stroke-opacity="0.27"><animate attributeName="r" values="612;630" dur="0.6s" repeatCount="indefinite"/></circle>
+      </g>
+      <g stroke="#3a78c0" stroke-width="1" stroke-opacity="0.35" stroke-dasharray="2 4">
+        <circle r="9"><animate attributeName="r" values="9;27" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="27"><animate attributeName="r" values="27;45" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="45"><animate attributeName="r" values="45;63" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="63"><animate attributeName="r" values="63;81" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="81"><animate attributeName="r" values="81;99" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="99"><animate attributeName="r" values="99;117" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="117"><animate attributeName="r" values="117;135" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="135"><animate attributeName="r" values="135;153" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="153"><animate attributeName="r" values="153;171" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="171"><animate attributeName="r" values="171;189" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="189"><animate attributeName="r" values="189;207" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="207"><animate attributeName="r" values="207;225" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="225"><animate attributeName="r" values="225;243" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="243"><animate attributeName="r" values="243;261" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="261"><animate attributeName="r" values="261;279" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="279"><animate attributeName="r" values="279;297" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="297"><animate attributeName="r" values="297;315" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="315"><animate attributeName="r" values="315;333" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="333"><animate attributeName="r" values="333;351" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="351"><animate attributeName="r" values="351;369" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="369"><animate attributeName="r" values="369;387" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="387"><animate attributeName="r" values="387;405" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="405"><animate attributeName="r" values="405;423" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="423"><animate attributeName="r" values="423;441" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="441"><animate attributeName="r" values="441;459" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="459"><animate attributeName="r" values="459;477" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="477"><animate attributeName="r" values="477;495" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="495"><animate attributeName="r" values="495;513" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="513"><animate attributeName="r" values="513;531" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="531"><animate attributeName="r" values="531;549" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="549"><animate attributeName="r" values="549;567" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="567"><animate attributeName="r" values="567;585" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="585"><animate attributeName="r" values="585;603" dur="0.6s" repeatCount="indefinite"/></circle>
+        <circle r="603"><animate attributeName="r" values="603;621" dur="0.6s" repeatCount="indefinite"/></circle>
+      </g>
+    </g>
+
+    <!-- 相长干涉双曲线 r2 − r1 = mλ（m = 0, ±1, ±2） -->
+    <path id="pk0" d="M366,280 L900,280"/>
+    <path id="pk1a" d="M366,289 L416,292.8 L466,300.4 L566,317.7 L666,335.6 L766,353.7 L900,378.1"/>
+    <path id="pk1b" d="M366,271 L416,267.2 L466,259.6 L566,242.3 L666,224.4 L766,206.3 L900,181.9"/>
+    <path id="pk2a" d="M366,298 L416,306.4 L466,322.6 L566,359.2 L666,397.2 L766,435.4 L900,486.9"/>
+    <path id="pk2b" d="M366,262 L416,253.6 L466,237.4 L566,200.8 L666,162.8 L766,124.6 L900,73.1"/>
+    <!-- 相消干涉节线 r2 − r1 = (m + 1/2)λ -->
+    <path id="nd1a" d="M366,284.5 L416,286.4 L466,290.1 L566,298.6 L666,307.5 L766,316.4 L900,328.5"/>
+    <path id="nd1b" d="M366,275.5 L416,273.6 L466,269.9 L566,261.4 L666,252.5 L766,243.6 L900,231.5"/>
+    <path id="nd2a" d="M366,293.5 L416,299.5 L466,311.1 L566,337.7 L666,365.2 L766,393 L900,430.3"/>
+    <path id="nd2b" d="M366,266.5 L416,260.5 L466,248.9 L566,222.3 L666,194.8 L766,167 L900,129.7"/>
+    <path id="nd3a" d="M366,302.5 L416,313.8 L466,335.2 L566,383.3 L666,432.8 L766,482.8 L900,550"/>
+    <path id="nd3b" d="M366,257.5 L416,246.2 L466,224.8 L566,176.7 L666,127.2 L766,77.2 L900,10"/>
+  </defs>
+
+  <rect width="1000" height="600" fill="url(#bg)"/>
+
+  <!-- 相干光源 -->
+  <rect x="20" y="110" width="46" height="340" rx="8" fill="url(#emitterBody)" stroke="#2c4a70" stroke-width="1.5"/>
+  <rect class="emitter-core" x="62" y="120" width="8" height="320" rx="3" fill="#9ff0ff" filter="url(#glow)"/>
+
+  <!-- 平面波前：与子波同周期、同相位 -->
+  <g clip-path="url(#planeClip)">
+    <g filter="url(#glow)">
+      <g fill="none">
+        <animateTransform attributeName="transform" type="translate" from="0 0" to="18 0" dur="0.6s" repeatCount="indefinite"/>
+        <path stroke="url(#planeGrad)" stroke-width="2.4" d="M60,120V440M78,120V440M96,120V440M114,120V440M132,120V440M150,120V440M168,120V440M186,120V440M204,120V440M222,120V440M240,120V440M258,120V440M276,120V440M294,120V440M312,120V440M330,120V440M348,120V440M366,120V440"/>
+        <path stroke="#3a78c0" stroke-width="1" stroke-opacity="0.45" stroke-dasharray="3 5" d="M51,120V440M69,120V440M87,120V440M105,120V440M123,120V440M141,120V440M159,120V440M177,120V440M195,120V440M213,120V440M231,120V440M249,120V440M267,120V440M285,120V440M303,120V440M321,120V440M339,120V440M357,120V440"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- 干涉场：两组圆形子波叠加 -->
+  <g clip-path="url(#fieldClip)">
+    <use xlink:href="#ripple" x="366" y="230"/>
+    <use xlink:href="#ripple" x="366" y="330" style="mix-blend-mode:screen"/>
+
+    <g fill="none" stroke-linejoin="round" stroke-linecap="round">
+      <g stroke="#02040a" stroke-width="7" stroke-opacity="0.85" filter="url(#softBlur)">
+        <use xlink:href="#nd1a"/><use xlink:href="#nd1b"/>
+        <use xlink:href="#nd2a"/><use xlink:href="#nd2b"/>
+        <use xlink:href="#nd3a"/><use xlink:href="#nd3b"/>
+      </g>
+      <g stroke="url(#peakGrad)" stroke-width="3" filter="url(#glow)">
+        <animate attributeName="opacity" values="0.7;1;0.7" dur="0.6s" repeatCount="indefinite"/>
+        <use xlink:href="#pk0"/>
+        <use xlink:href="#pk1a"/><use xlink:href="#pk1b"/>
+        <use xlink:href="#pk2a"/><use xlink:href="#pk2b"/>
+      </g>
+      <g stroke="#fffbe6" stroke-width="2.2" stroke-dasharray="3 15">
+        <animate attributeName="stroke-dashoffset" values="18;0" dur="0.6s" repeatCount="indefinite"/>
+        <use xlink:href="#pk0"/>
+        <use xlink:href="#pk1a"/><use xlink:href="#pk1b"/>
+        <use xlink:href="#pk2a"/><use xlink:href="#pk2b"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- 双缝挡板：缝中心 y = 230 与 y = 330，缝宽 8 -->
+  <g fill="#262d3d" stroke="#56607a" stroke-width="1">
+    <rect x="362" y="20" width="8" height="206"/>
+    <rect x="362" y="234" width="8" height="92"/>
+    <rect x="362" y="334" width="8" height="206"/>
+  </g>
+  <g>
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="0.6s" repeatCount="indefinite"/>
+    <circle cx="366" cy="230" r="11" fill="url(#slitGlow)"/>
+    <circle cx="366" cy="330" r="11" fill="url(#slitGlow)"/>
+  </g>
+
+  <!-- 探测屏与条纹累积 -->
+  <rect x="900" y="30" width="12" height="500" fill="#0a0f1c" stroke="#3b4a68" stroke-width="1"/>
+  <g opacity="0">
+    <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.8;0.95;1" dur="12s" repeatCount="indefinite"/>
+    <rect x="878" y="30" width="22" height="500" fill="url(#fringeGrad)" opacity="0.35" filter="url(#softBlur)"/>
+    <rect x="900" y="30" width="12" height="500" fill="url(#fringeGrad)"/>
+  </g>
+
+  <!-- 单粒子命中：按 |ψ|² 分布逐个出现 -->
+  <g fill="#ffffff">
+    <circle cx="905" cy="284" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.04;0.05;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="908" cy="184" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.07;0.08;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="903" cy="381" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.10;0.11;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="909" cy="272" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.13;0.14;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="906" cy="485" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.16;0.17;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="902" cy="294" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.19;0.20;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="904" cy="178" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.22;0.23;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="907" cy="278" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.25;0.26;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="910" cy="373" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.28;0.29;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="903" cy="70" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.31;0.32;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="905" cy="262" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.34;0.35;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="907" cy="388" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.37;0.38;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="909" cy="289" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.40;0.41;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="902" cy="190" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.43;0.44;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="908" cy="476" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.46;0.47;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="904" cy="268" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.49;0.50;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="906" cy="366" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.52;0.53;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="909" cy="174" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.55;0.56;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="903" cy="300" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.58;0.59;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="907" cy="81" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.61;0.62;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="910" cy="275" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.64;0.65;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="904" cy="379" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.67;0.68;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="906" cy="196" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.70;0.71;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="902" cy="296" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.73;0.74;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="905" cy="494" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.76;0.77;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="908" cy="258" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.79;0.80;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="910" cy="392" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.82;0.83;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="903" cy="183" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.85;0.86;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="906" cy="280" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.88;0.89;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+    <circle cx="909" cy="65" r="1.8" opacity="0"><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.91;0.92;0.96;1" dur="12s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- 概率密度曲线 P(y)：以 x = 915 为基线横向增长 -->
+  <g transform="translate(915 0)">
+    <g>
+      <animateTransform attributeName="transform" type="scale" values="0.001 1;1 1;1 1;0.001 1" keyTimes="0;0.8;0.95;1" dur="12s" repeatCount="indefinite"/>
+      <g transform="translate(-915 0)">
+        <path fill="url(#curveFill)" stroke="#ffd36b" stroke-width="1.8" stroke-linejoin="round" filter="url(#glow)"
+          d="M915,30 L916.7,30 L917.9,35 L921.2,45 L925.5,55 L929.9,65 L932.6,73 L933.8,80 L933.1,90 L929.3,100 L923.4,110 L917.6,120 L915,130 L918,140 L927.4,150 L941.5,160 L956.2,170 L966.5,182 L963.2,194 L950,204 L932.7,214 L918.9,224 L915,232 L919.6,240 L936.2,250 L958.6,260 L977.6,270 L985,280 L977.6,290 L958.6,300 L936.2,310 L919.6,320 L915,328 L918.9,336 L932.7,346 L950,356 L963.2,366 L966.5,378 L956.2,390 L941.5,400 L927.4,410 L918,420 L915,430 L917.6,440 L923.4,450 L929.3,460 L933.1,470 L933.8,480 L932.6,487 L929.9,495 L925.5,505 L921.2,515 L917.9,525 L916.7,530 L915,530 Z"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- 标注 -->
+  <text class="label" x="45" y="562" text-anchor="middle">Coherent source</text>
+  <text class="label" x="366" y="562" text-anchor="middle">Double slit</text>
+  <text class="sub" x="366" y="578" text-anchor="middle">d = 100, λ = 18</text>
+  <text class="label" x="635" y="562" text-anchor="middle">Interference field</text>
+  <text class="sub" x="635" y="578" text-anchor="middle">bright: Δr = mλ · dark: Δr = (m + ½)λ</text>
+  <text class="label" x="906" y="562" text-anchor="middle">Detector</text>
+  <text class="sub" x="950" y="578" text-anchor="middle">P(y) ∝ |ψ₁ + ψ₂|²</text>
+  <text class="title" x="20" y="594">Quantum double-slit: wave–particle duality</text>
+</svg>

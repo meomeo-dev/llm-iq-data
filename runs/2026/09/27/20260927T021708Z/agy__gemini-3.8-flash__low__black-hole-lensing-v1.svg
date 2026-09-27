@@ -1,0 +1,311 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%">
+  <defs>
+    <!-- Background space glows & color definitions -->
+    <radialGradient id="spaceBg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0a0718"/>
+      <stop offset="45%" stop-color="#04020a"/>
+      <stop offset="100%" stop-color="#000002"/>
+    </radialGradient>
+
+    <!-- Relativistic Doppler Beaming Color Ramp:
+         Approaching side (left): intense blue-cyan-white, highly energetic & beamed
+         Receding side (right): redshifted deep orange, dim russet-red -->
+    <linearGradient id="dopplerGradient" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#5599ff" stop-opacity="0.3"/>
+      <stop offset="15%" stop-color="#aae5ff" stop-opacity="0.95"/>
+      <stop offset="35%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="48%" stop-color="#ffdd77" stop-opacity="0.9"/>
+      <stop offset="65%" stop-color="#ff7711" stop-opacity="0.6"/>
+      <stop offset="85%" stop-color="#bb2200" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#550500" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- Vertical Doppler gradient for the gravitationally lensed top & bottom crowns -->
+    <radialGradient id="lensingCrownTop" cx="45%" cy="65%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="20%" stop-color="#d4f0ff" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#ffb84d" stop-opacity="0.8"/>
+      <stop offset="70%" stop-color="#ee3300" stop-opacity="0.4"/>
+      <stop offset="95%" stop-color="#660000" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="lensingCrownBottom" cx="45%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="25%" stop-color="#ffd580" stop-opacity="0.8"/>
+      <stop offset="55%" stop-color="#cc2c00" stop-opacity="0.4"/>
+      <stop offset="90%" stop-color="#440000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Photon Sphere Ring Glow -->
+    <radialGradient id="photonSphereGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="82%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="90%" stop-color="#ffeebb" stop-opacity="0.9"/>
+      <stop offset="94%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="98%" stop-color="#77c8ff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Black Hole Event Horizon Shadow -->
+    <radialGradient id="shadowGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#000000"/>
+      <stop offset="92%" stop-color="#000000"/>
+      <stop offset="97%" stop-color="#010206"/>
+      <stop offset="100%" stop-color="#050a15" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Volumetric Bloom / Glow Filters -->
+    <filter id="bloomGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="blur1"/>
+      <feGaussianBlur stdDeviation="25" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="intenseBloom" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="sharp"/>
+      <feGaussianBlur stdDeviation="18" result="mid"/>
+      <feGaussianBlur stdDeviation="40" result="wide"/>
+      <feMerge>
+        <feMergeNode in="wide"/>
+        <feMergeNode in="mid"/>
+        <feMergeNode in="sharp"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="lensingDistort" x="-20%" y="-20%" width="140%" height="140%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.015 0.03" numOctaves="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- Accretion disk matter texture pattern (differential Keplerian swirl) -->
+    <pattern id="diskFilaments" width="200" height="200" patternUnits="userSpaceOnUse">
+      <circle cx="100" cy="100" r="85" fill="none" stroke="#ffffff" stroke-width="0.8" stroke-dasharray="15 35 40 20" opacity="0.4"/>
+      <circle cx="100" cy="100" r="65" fill="none" stroke="#ffeaa7" stroke-width="1.2" stroke-dasharray="25 20 60 30" opacity="0.6"/>
+      <circle cx="100" cy="100" r="45" fill="none" stroke="#74b9ff" stroke-width="1.8" stroke-dasharray="10 15 30 10" opacity="0.8"/>
+    </pattern>
+
+    <style type="text/css"><![CDATA[
+      /* Keplerian Differential Rotation Rates: Faster at inner radii */
+      .spin-innermost {
+        transform-origin: 600px 450px;
+        animation: spinClockwise 2.8s linear infinite;
+      }
+      .spin-inner {
+        transform-origin: 600px 450px;
+        animation: spinClockwise 4.8s linear infinite;
+      }
+      .spin-mid {
+        transform-origin: 600px 450px;
+        animation: spinClockwise 9.2s linear infinite;
+      }
+      .spin-outer {
+        transform-origin: 600px 450px;
+        animation: spinClockwise 17.5s linear infinite;
+      }
+      .spin-counter {
+        transform-origin: 600px 450px;
+        animation: spinCounter 12s linear infinite;
+      }
+
+      /* Relativistic Infall Stream pulse */
+      .infall-pulse {
+        animation: streamPulse 3.5s ease-in-out infinite alternate;
+      }
+
+      /* Doppler beaming brightness shimmer */
+      .doppler-shimmer {
+        animation: beamingFlicker 4s ease-in-out infinite alternate;
+      }
+
+      /* Spacetime Distortion Wobble */
+      .lensing-shimmer {
+        animation: crownWobble 6s ease-in-out infinite alternate;
+      }
+
+      @keyframes spinClockwise {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes spinCounter {
+        from { transform: rotate(360deg); }
+        to { transform: rotate(0deg); }
+      }
+      @keyframes streamPulse {
+        0% { opacity: 0.65; stroke-dashoffset: 0; }
+        50% { opacity: 0.95; }
+        100% { opacity: 0.65; stroke-dashoffset: 120; }
+      }
+      @keyframes beamingFlicker {
+        0% { filter: drop-shadow(-8px 0 25px rgba(120, 200, 255, 0.85)); }
+        100% { filter: drop-shadow(-16px 0 45px rgba(180, 230, 255, 1)); }
+      }
+      @keyframes crownWobble {
+        0% { transform: scale(1) skewX(0deg); }
+        100% { transform: scale(1.018, 0.985) skewX(0.8deg); }
+      }
+    ]]></style>
+  </defs>
+
+  <!-- Deep Cosmos Background -->
+  <rect width="100%" height="100%" fill="url(#spaceBg)"/>
+
+  <!-- Distant Background Field Stars with Gravitational Lensing Deflection -->
+  <g id="starField" opacity="0.65">
+    <circle cx="120" cy="180" r="1.2" fill="#d0e5ff"/>
+    <circle cx="280" cy="90" r="1.6" fill="#ffffff"/>
+    <circle cx="1020" cy="150" r="1.4" fill="#ffd5bb"/>
+    <circle cx="940" cy="300" r="1.1" fill="#ffffff"/>
+    <circle cx="180" cy="720" r="1.5" fill="#ffffff"/>
+    <circle cx="1060" cy="760" r="1.8" fill="#d9edff"/>
+    <circle cx="850" cy="810" r="1.0" fill="#ffffff"/>
+    <circle cx="340" cy="800" r="1.3" fill="#ffe2c4"/>
+    <circle cx="150" cy="400" r="1.7" fill="#ffffff"/>
+    <circle cx="1110" cy="480" r="1.2" fill="#ffffff"/>
+    <!-- Lensed background arclets (Einstein micro-rings/arcs) -->
+    <path d="M 380,310 A 260 260 0 0 1 450,250" fill="none" stroke="#a2c8ff" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+    <path d="M 760,260 A 260 260 0 0 1 820,320" fill="none" stroke="#ffd0a8" stroke-width="1.4" stroke-linecap="round" opacity="0.4"/>
+    <path d="M 400,600 A 250 250 0 0 0 480,660" fill="none" stroke="#8ac2ff" stroke-width="1.2" stroke-linecap="round" opacity="0.4"/>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 1. GRAVITATIONAL LENSING: UPPER CROWN (LIGHT BENT OVER)  -->
+  <!-- ======================================================== -->
+  <g id="gravitationalLensingUpper" class="lensing-shimmer" transform-origin="600px 450px" filter="url(#bloomGlow)">
+    <!-- Primary Upper Lensing Arch of Back Disk -->
+    <path d="M 230,450 C 230,220 400,160 600,160 C 800,160 970,220 970,450 C 930,280 780,225 600,225 C 420,225 270,280 230,450 Z" 
+          fill="url(#lensingCrownTop)"/>
+    <!-- High-energy relativistic flow lines across top lensed image -->
+    <g class="spin-outer">
+      <ellipse cx="600" cy="450" rx="360" ry="240" fill="none" stroke="url(#dopplerGradient)" stroke-width="8" stroke-dasharray="80 140 220 90" opacity="0.65"/>
+    </g>
+    <g class="spin-mid">
+      <ellipse cx="600" cy="450" rx="300" ry="205" fill="none" stroke="#ffffff" stroke-width="5" stroke-dasharray="40 90 120 70" opacity="0.85"/>
+      <ellipse cx="600" cy="450" rx="270" ry="180" fill="none" stroke="url(#dopplerGradient)" stroke-width="12" stroke-dasharray="150 70 90 110" opacity="0.7"/>
+    </g>
+    <g class="spin-inner">
+      <ellipse cx="600" cy="450" rx="230" ry="155" fill="none" stroke="#d5eeff" stroke-width="7" stroke-dasharray="60 40 180 50" opacity="0.9"/>
+    </g>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 2. GRAVITATIONAL LENSING: LOWER CROWN (LIGHT BENT UNDER) -->
+  <!-- ======================================================== -->
+  <g id="gravitationalLensingLower" class="lensing-shimmer" transform-origin="600px 450px" filter="url(#bloomGlow)">
+    <path d="M 270,450 C 270,620 420,685 600,685 C 780,685 930,620 930,450 C 890,570 760,630 600,630 C 440,630 310,570 270,450 Z" 
+          fill="url(#lensingCrownBottom)"/>
+    <g class="spin-mid">
+      <ellipse cx="600" cy="450" rx="280" ry="195" fill="none" stroke="url(#dopplerGradient)" stroke-width="8" stroke-dasharray="100 80 150 120" opacity="0.5"/>
+    </g>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 3. MAIN ACCRETION DISK: EQUATORIAL PLANE (BACK HALF)     -->
+  <!-- ======================================================== -->
+  <g id="equatorialDiskBack" filter="url(#bloomGlow)">
+    <!-- Broad diffuse glow of back ring -->
+    <ellipse cx="600" cy="450" rx="520" ry="110" fill="none" stroke="url(#dopplerGradient)" stroke-width="38" opacity="0.45"/>
+    <ellipse cx="600" cy="450" rx="430" ry="85" fill="none" stroke="url(#dopplerGradient)" stroke-width="26" opacity="0.75"/>
+    <ellipse cx="600" cy="450" rx="320" ry="60" fill="none" stroke="#ffffff" stroke-width="8" opacity="0.6"/>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 4. PHOTON SPHERE & INNER SHADOW BOUNDARY                -->
+  <!-- ======================================================== -->
+  <!-- Innermost Stable Circular Orbit (ISCO) & Relativistic Infall Ring -->
+  <g id="iscoRadiationRing" filter="url(#intenseBloom)">
+    <!-- Blazing thin ring just outside event horizon shadow (1.5 - 2.6 Rs) -->
+    <circle cx="600" cy="450" r="148" fill="url(#photonSphereGlow)" class="doppler-shimmer"/>
+    <!-- Relativistic beaming hot spot at left photon sphere edge -->
+    <ellipse cx="460" cy="445" rx="28" ry="75" fill="#cbe8ff" opacity="0.7" filter="url(#bloomGlow)"/>
+    <circle cx="456" cy="448" r="14" fill="#ffffff" opacity="0.95"/>
+  </g>
+
+  <!-- Relativistic Spiral Vortices Flowing Inward (Keplerian Infall Streams) -->
+  <g id="infallingPlasmaSpirals" class="infall-pulse" filter="url(#intenseBloom)">
+    <!-- Swirling stream vortex 1 (Left / Approaching) -->
+    <path d="M 390,440 Q 420,360 520,340 T 600,325 T 670,360 T 690,450 T 640,535 T 530,535 T 485,465"
+          fill="none" stroke="#b2e2ff" stroke-width="4.5" stroke-linecap="round" stroke-dasharray="18 12 30 8"/>
+    <!-- Swirling stream vortex 2 (Inner High-velocity Core) -->
+    <path d="M 600,315 C 500,315 445,385 450,455 C 455,525 530,575 600,575 C 675,575 745,515 740,445 C 735,380 670,335 605,335"
+          fill="none" stroke="url(#dopplerGradient)" stroke-width="6" stroke-linecap="round" stroke-dasharray="35 20 60 15"/>
+    <!-- Redshifted Infall Stream (Receding side) -->
+    <path d="M 600,575 Q 730,560 760,470 T 700,360 T 575,340"
+          fill="none" stroke="#ff4d1a" stroke-width="3" stroke-linecap="round" stroke-dasharray="15 25 35 15" opacity="0.8"/>
+  </g>
+
+  <!-- Differential Rotating Inner Filaments -->
+  <g class="spin-innermost">
+    <ellipse cx="600" cy="450" rx="170" ry="120" fill="none" stroke="#e0f4ff" stroke-width="3" stroke-dasharray="30 70 110 50" opacity="0.85"/>
+    <ellipse cx="600" cy="450" rx="155" ry="142" fill="none" stroke="#ffffff" stroke-width="2" stroke-dasharray="15 40 60 40" opacity="0.95"/>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 5. CENTRAL BLACK HOLE SHADOW (EVENT HORIZON)             -->
+  <!-- ======================================================== -->
+  <!-- Pitch black shadow cast by the horizon, swallowing all light inside r < 2.6 GM/c^2 -->
+  <g id="blackHoleShadow">
+    <circle cx="600" cy="450" r="140" fill="url(#shadowGradient)"/>
+    <circle cx="600" cy="450" r="136" fill="#000000"/>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 6. MAIN ACCRETION DISK: EQUATORIAL PLANE (FRONT HALF)    -->
+  <!-- ======================================================== -->
+  <!-- The front portion passes directly in front of the shadow,
+       demonstrating extreme Doppler asymmetry (beaming on left vs dim red on right) -->
+  <g id="equatorialDiskFront" filter="url(#intenseBloom)" class="doppler-shimmer">
+    <!-- Masking/clipping lower half not strictly needed; we draw the sweeping front arc -->
+    <!-- Primary high-heat plasma core path of front disk -->
+    <path d="M 70,450 C 70,580 300,615 600,615 C 900,615 1130,580 1130,450 C 1130,510 900,545 600,545 C 300,545 70,510 70,450 Z"
+          fill="url(#dopplerGradient)" opacity="0.95"/>
+
+    <!-- Front Mid-Layer Swirling Structure -->
+    <path d="M 120,450 C 120,560 320,590 600,590 C 880,590 1080,560 1080,450 C 1080,490 880,520 600,520 C 320,520 120,490 120,450 Z"
+          fill="#ffdf99" opacity="0.5" mix-blend-mode="screen"/>
+
+    <!-- Dynamic Stream Filaments (Differential Keplerian Motion) -->
+    <g class="spin-mid">
+      <ellipse cx="600" cy="450" rx="490" ry="98" fill="none" stroke="url(#dopplerGradient)" stroke-width="7" stroke-dasharray="140 90 200 120" opacity="0.9"/>
+      <ellipse cx="600" cy="450" rx="440" ry="85" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-dasharray="60 110 90 70" opacity="0.85"/>
+    </g>
+
+    <g class="spin-inner">
+      <ellipse cx="600" cy="450" rx="360" ry="70" fill="none" stroke="#cceeff" stroke-width="6" stroke-dasharray="80 50 140 90" opacity="0.9"/>
+      <ellipse cx="600" cy="450" rx="310" ry="58" fill="none" stroke="url(#dopplerGradient)" stroke-width="9" stroke-dasharray="40 70 120 40" opacity="0.85"/>
+      <ellipse cx="600" cy="450" rx="260" ry="46" fill="none" stroke="#ffffff" stroke-width="5" stroke-dasharray="50 30 80 40" opacity="0.95"/>
+    </g>
+
+    <g class="spin-outer">
+      <ellipse cx="600" cy="450" rx="545" ry="112" fill="none" stroke="url(#dopplerGradient)" stroke-width="5" stroke-dasharray="210 160 320 140" opacity="0.6"/>
+    </g>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 7. RELATIVISTIC BEAMING: INTENSE APPROACHING FLUX (LEFT)  -->
+  <!-- ======================================================== -->
+  <!-- Brilliant Doppler focal zone where plasma rushes toward observer at ~0.6c -->
+  <g id="relativisticDopplerSpot" filter="url(#intenseBloom)">
+    <!-- Outward beaming diamond/lens flare on approaching flank -->
+    <ellipse cx="320" cy="460" rx="140" ry="45" fill="#a8dbff" opacity="0.5" transform="rotate(-6 320 460)"/>
+    <ellipse cx="300" cy="460" rx="80" ry="22" fill="#ffffff" opacity="0.85" transform="rotate(-6 300 460)"/>
+    <!-- High-energy blue flare rays -->
+    <path d="M 120,460 L 480,460" stroke="#ffffff" stroke-width="4" stroke-linecap="round" opacity="0.95"/>
+    <path d="M 210,430 L 390,490" stroke="#8fd2ff" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+    <circle cx="290" cy="460" r="18" fill="#ffffff" filter="url(#bloomGlow)"/>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- 8. FOREGROUND GAS TURBULENCE & DUST VEIL                 -->
+  <!-- ======================================================== -->
+  <g id="diskTurbulenceVeil" opacity="0.4" mix-blend-mode="overlay">
+    <ellipse cx="600" cy="450" rx="480" ry="95" fill="none" stroke="url(#dopplerGradient)" stroke-width="22" stroke-dasharray="30 15 5 18 45 30"/>
+    <ellipse cx="600" cy="450" rx="380" ry="72" fill="none" stroke="#ffffff" stroke-width="12" stroke-dasharray="12 28 40 16"/>
+  </g>
+
+  <!-- Vignette overlay for cinematic depth -->
+  <rect width="100%" height="100%" fill="none" stroke="#000000" stroke-width="40" opacity="0.45"/>
+</svg>

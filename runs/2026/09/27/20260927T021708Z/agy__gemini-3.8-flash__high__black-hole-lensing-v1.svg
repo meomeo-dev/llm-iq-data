@@ -1,0 +1,505 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <style type="text/css">
+      <![CDATA[
+        .star-t1 { animation: starBlink 2.2s ease-in-out infinite alternate; }
+        .star-t2 { animation: starBlink 3.6s ease-in-out infinite alternate; }
+        .star-t3 { animation: starBlink 1.7s ease-in-out infinite alternate; }
+        .star-t4 { animation: starBlink 4.4s ease-in-out infinite alternate; }
+        .beaming-shimmer { animation: beamPulse 3.2s ease-in-out infinite alternate; }
+        .flare-flicker { animation: flareGlow 2.1s ease-in-out infinite alternate; }
+        .horizon-pulse { animation: photonJitter 4.8s ease-in-out infinite alternate; }
+
+        @keyframes starBlink {
+          0% { opacity: 0.2; transform: scale(0.85); }
+          100% { opacity: 1.0; transform: scale(1.2); }
+        }
+        @keyframes beamPulse {
+          0% { opacity: 0.82; transform: scale(0.98); }
+          100% { opacity: 1.0; transform: scale(1.02); }
+        }
+        @keyframes flareGlow {
+          0% { opacity: 0.75; }
+          100% { opacity: 1.0; }
+        }
+        @keyframes photonJitter {
+          0% { opacity: 0.88; }
+          100% { opacity: 1.0; }
+        }
+      ]]>
+    </style>
+
+    <!-- Visual Glow and Bloom Filters -->
+    <filter id="glow-sharp" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-mid" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur1" />
+      <feGaussianBlur stdDeviation="3.5" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-heavy" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="26" result="blur1" />
+      <feGaussianBlur stdDeviation="11" result="blur2" />
+      <feGaussianBlur stdDeviation="3" result="blur3" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur3" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="super-bloom" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="45" result="blur1" />
+      <feGaussianBlur stdDeviation="18" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Deep Space and Cosmic Background Gradients -->
+    <radialGradient id="space-grad" cx="50%" cy="52%" r="65%">
+      <stop offset="0%" stop-color="#070414" />
+      <stop offset="45%" stop-color="#030209" />
+      <stop offset="100%" stop-color="#000003" />
+    </radialGradient>
+
+    <radialGradient id="nebula-dust" cx="42%" cy="48%" r="55%">
+      <stop offset="0%" stop-color="#180b38" stop-opacity="0.45" />
+      <stop offset="35%" stop-color="#120524" stop-opacity="0.25" />
+      <stop offset="70%" stop-color="#080214" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="jet-glow-north" x1="50%" y1="100%" x2="50%" y2="0%">
+      <stop offset="0%" stop-color="#60c0ff" stop-opacity="0.3" />
+      <stop offset="30%" stop-color="#2a50a0" stop-opacity="0.15" />
+      <stop offset="70%" stop-color="#151a50" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="jet-glow-south" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#60c0ff" stop-opacity="0.3" />
+      <stop offset="30%" stop-color="#2a50a0" stop-opacity="0.15" />
+      <stop offset="70%" stop-color="#151a50" stop-opacity="0.05" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Relativistic Doppler Beaming Gradients (Blue-White on Left, Deep Red on Right) -->
+    <linearGradient id="doppler-disk-body" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#bfe8ff" stop-opacity="0.95" />
+      <stop offset="16%" stop-color="#6ad2ff" stop-opacity="0.9" />
+      <stop offset="32%" stop-color="#ffe990" stop-opacity="0.85" />
+      <stop offset="48%" stop-color="#ff8f1c" stop-opacity="0.75" />
+      <stop offset="68%" stop-color="#bf2804" stop-opacity="0.55" />
+      <stop offset="85%" stop-color="#5a0e02" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#240501" stop-opacity="0.1" />
+    </linearGradient>
+
+    <linearGradient id="doppler-stream-intense" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+      <stop offset="15%" stop-color="#7fe5ff" stop-opacity="0.95" />
+      <stop offset="32%" stop-color="#fff1aa" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#ff7b12" stop-opacity="0.8" />
+      <stop offset="70%" stop-color="#b51e00" stop-opacity="0.5" />
+      <stop offset="88%" stop-color="#550900" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#200300" stop-opacity="0.08" />
+    </linearGradient>
+
+    <linearGradient id="doppler-stream-mid" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d6f4ff" stop-opacity="0.9" />
+      <stop offset="20%" stop-color="#5cc8ff" stop-opacity="0.85" />
+      <stop offset="38%" stop-color="#ffd566" stop-opacity="0.8" />
+      <stop offset="54%" stop-color="#f5620a" stop-opacity="0.65" />
+      <stop offset="75%" stop-color="#991500" stop-opacity="0.4" />
+      <stop offset="92%" stop-color="#480700" stop-opacity="0.18" />
+      <stop offset="100%" stop-color="#1a0200" stop-opacity="0.05" />
+    </linearGradient>
+
+    <linearGradient id="doppler-crown-top" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d0f2ff" stop-opacity="0.95" />
+      <stop offset="20%" stop-color="#60d2ff" stop-opacity="0.9" />
+      <stop offset="38%" stop-color="#ffe885" stop-opacity="0.85" />
+      <stop offset="52%" stop-color="#ff7e16" stop-opacity="0.75" />
+      <stop offset="72%" stop-color="#b82200" stop-opacity="0.5" />
+      <stop offset="90%" stop-color="#540800" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#1f0200" stop-opacity="0.06" />
+    </linearGradient>
+
+    <linearGradient id="doppler-crown-bottom" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c2eeff" stop-opacity="0.9" />
+      <stop offset="22%" stop-color="#58cbff" stop-opacity="0.8" />
+      <stop offset="42%" stop-color="#ffdc75" stop-opacity="0.75" />
+      <stop offset="58%" stop-color="#ff6b0a" stop-opacity="0.6" />
+      <stop offset="78%" stop-color="#9a1800" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#280300" stop-opacity="0.08" />
+    </linearGradient>
+
+    <linearGradient id="photon-ring-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+      <stop offset="24%" stop-color="#92ebff" stop-opacity="0.95" />
+      <stop offset="44%" stop-color="#ffeb99" stop-opacity="0.9" />
+      <stop offset="60%" stop-color="#ff730a" stop-opacity="0.75" />
+      <stop offset="80%" stop-color="#a81a00" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#400600" stop-opacity="0.15" />
+    </linearGradient>
+
+    <!-- Inward Plunging Spiral Gradient (Accelerating into Horizon) -->
+    <radialGradient id="plunge-spiral-grad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0.9" />
+      <stop offset="35%" stop-color="#ff4500" stop-opacity="0.85" />
+      <stop offset="70%" stop-color="#ffd045" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#70e0ff" stop-opacity="0.95" />
+    </radialGradient>
+
+    <!-- Relativistic Spotlight Glare on Approaching Side -->
+    <radialGradient id="doppler-spotlight" cx="37%" cy="52%" r="42%">
+      <stop offset="0%" stop-color="#eaf8ff" stop-opacity="0.75" />
+      <stop offset="28%" stop-color="#70d6ff" stop-opacity="0.5" />
+      <stop offset="55%" stop-color="#0077ff" stop-opacity="0.2" />
+      <stop offset="80%" stop-color="#480088" stop-opacity="0.06" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="flare-streak-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#75e2ff" stop-opacity="0" />
+      <stop offset="35%" stop-color="#d8f6ff" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="1" />
+      <stop offset="65%" stop-color="#d8f6ff" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#75e2ff" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Geometric Clip Paths -->
+    <clipPath id="foreground-sweep-clip">
+      <rect x="0" y="415" width="1200" height="385" />
+    </clipPath>
+
+    <clipPath id="upper-crown-clip">
+      <rect x="0" y="0" width="1200" height="425" />
+    </clipPath>
+
+    <clipPath id="lower-crown-clip">
+      <rect x="0" y="418" width="1200" height="382" />
+    </clipPath>
+  </defs>
+
+  <!-- Deep Cosmos Background -->
+  <rect x="0" y="0" width="1200" height="800" fill="url(#space-grad)" />
+  <rect x="0" y="0" width="1200" height="800" fill="url(#nebula-dust)" />
+
+  <!-- Relativistic Polar Magnetic Cones -->
+  <polygon points="600,360 480,0 720,0" fill="url(#jet-glow-north)" />
+  <polygon points="600,480 490,800 710,800" fill="url(#jet-glow-south)" />
+
+  <!-- Distant Background Starfield -->
+  <g>
+    <circle cx="120" cy="90" r="1.4" fill="#ffffff" class="star-t1" />
+    <circle cx="180" cy="220" r="0.9" fill="#cbe8ff" class="star-t2" />
+    <circle cx="90" cy="380" r="1.2" fill="#ffdcb0" class="star-t3" />
+    <circle cx="210" cy="620" r="1.5" fill="#ffffff" class="star-t4" />
+    <circle cx="110" cy="710" r="0.8" fill="#d2eeff" class="star-t1" />
+    <circle cx="280" cy="110" r="1.6" fill="#ffffff" class="star-t2" />
+    <circle cx="340" cy="40" r="1.1" fill="#ffe2c4" class="star-t3" />
+    <circle cx="430" cy="130" r="0.8" fill="#cce8ff" class="star-t4" />
+    <circle cx="780" cy="95" r="1.2" fill="#ffffff" class="star-t1" />
+    <circle cx="890" cy="60" r="1.5" fill="#d8f0ff" class="star-t2" />
+    <circle cx="990" cy="140" r="1.0" fill="#ffdcb0" class="star-t3" />
+    <circle cx="1080" cy="80" r="1.7" fill="#ffffff" class="star-t4" />
+    <circle cx="1140" cy="230" r="0.9" fill="#cce8ff" class="star-t1" />
+    <circle cx="1040" cy="310" r="1.4" fill="#ffffff" class="star-t2" />
+    <circle cx="1110" cy="510" r="1.2" fill="#ffe0c0" class="star-t3" />
+    <circle cx="1020" cy="670" r="1.6" fill="#ffffff" class="star-t4" />
+    <circle cx="1130" cy="740" r="1.0" fill="#cce8ff" class="star-t1" />
+    <circle cx="880" cy="730" r="1.3" fill="#ffffff" class="star-t2" />
+    <circle cx="790" cy="760" r="0.8" fill="#ffd8b8" class="star-t3" />
+    <circle cx="410" cy="730" r="1.4" fill="#ffffff" class="star-t4" />
+    <circle cx="310" cy="750" r="1.0" fill="#c8e4ff" class="star-t1" />
+    <circle cx="50" cy="510" r="1.1" fill="#ffffff" class="star-t2" />
+    <circle cx="700" cy="50" r="1.3" fill="#ffffff" class="star-t3" />
+    <circle cx="520" cy="40" r="1.2" fill="#dcedff" class="star-t4" />
+  </g>
+
+  <!-- Gravitationally Lensed Background Stars (Einstein Arcs) -->
+  <g filter="url(#glow-sharp)">
+    <path d="M 410,290 A 230 230 0 0 1 475,230" fill="none" stroke="#d5f0ff" stroke-width="2.2" stroke-linecap="round" opacity="0.85" />
+    <path d="M 735,235 A 225 225 0 0 1 790,290" fill="none" stroke="#ffcda8" stroke-width="1.6" stroke-linecap="round" opacity="0.65" />
+    <path d="M 390,490 A 240 240 0 0 0 455,570" fill="none" stroke="#bfe8ff" stroke-width="2.0" stroke-linecap="round" opacity="0.8" />
+    <path d="M 745,565 A 235 235 0 0 0 810,495" fill="none" stroke="#ffb890" stroke-width="1.5" stroke-linecap="round" opacity="0.55" />
+    <path d="M 525,190 A 245 245 0 0 1 675,190" fill="none" stroke="#e8f8ff" stroke-width="1.4" stroke-linecap="round" opacity="0.75" />
+  </g>
+
+  <!-- GRAVITATIONAL LENSING CROWN - UPPER ARCH (Back of disk bent upwards over shadow) -->
+  <g clip-path="url(#upper-crown-clip)">
+    <!-- Broad Relativistic Crown Diffuse Bloom -->
+    <path d="M 180,420 C 180,210 380,140 600,140 C 820,140 1020,210 1020,420 C 940,420 800,240 600,240 C 400,240 260,420 180,420 Z"
+          fill="url(#doppler-crown-top)" filter="url(#glow-heavy)" opacity="0.7" />
+
+    <!-- Main Lensed Upper Ribbon -->
+    <path d="M 230,420 C 230,240 390,175 600,175 C 810,175 970,240 970,420 C 915,420 780,230 600,230 C 420,230 285,420 230,420 Z"
+          fill="url(#doppler-crown-top)" filter="url(#glow-mid)" opacity="0.9" />
+
+    <!-- Inner Caustic Arc of Upper Crown (grazing photon sphere) -->
+    <path d="M 340,420 C 340,320 450,295 600,295 C 750,295 860,320 860,420 C 820,420 730,314 600,314 C 470,314 380,420 340,420 Z"
+          fill="url(#doppler-stream-intense)" filter="url(#glow-sharp)" opacity="0.95" />
+
+    <!-- Keplerian Differential Plasma Streamlines across Upper Crown -->
+    <!-- Outer Streamline (Slowest drift: dur=17s) -->
+    <path d="M 220,420 C 220,230 380,165 600,165 C 820,165 980,230 980,420"
+          fill="none" stroke="url(#doppler-stream-mid)" stroke-width="4.5" stroke-linecap="round"
+          stroke-dasharray="110 50 160 70 80 60 220 90">
+      <animate attributeName="stroke-dashoffset" values="0; 890" dur="17s" repeatCount="indefinite" />
+    </path>
+
+    <!-- Mid-Outer Streamline (dur=12.5s) -->
+    <path d="M 255,420 C 255,248 400,190 600,190 C 800,190 945,248 945,420"
+          fill="none" stroke="url(#doppler-stream-intense)" stroke-width="5.5" stroke-linecap="round"
+          stroke-dasharray="140 60 90 45 180 75 60 40">
+      <animate attributeName="stroke-dashoffset" values="0; 845" dur="12.5s" repeatCount="indefinite" />
+    </path>
+
+    <!-- Mid Streamline (dur=9s) -->
+    <path d="M 295,420 C 295,268 420,218 600,218 C 780,218 905,268 905,420"
+          fill="none" stroke="url(#doppler-stream-intense)" stroke-width="6" stroke-linecap="round"
+          stroke-dasharray="120 50 200 65 70 35 150 55">
+      <animate attributeName="stroke-dashoffset" values="0; 855" dur="9s" repeatCount="indefinite" />
+    </path>
+
+    <!-- Mid-Inner High Energy Streamline (dur=6.5s) -->
+    <path d="M 335,420 C 335,288 440,245 600,245 C 760,245 865,288 865,420"
+          fill="none" stroke="url(#doppler-stream-intense)" stroke-width="6.5" stroke-linecap="round"
+          stroke-dasharray="90 40 140 45 60 30 180 50">
+      <animate attributeName="stroke-dashoffset" values="0; 780" dur="6.5s" repeatCount="indefinite" />
+    </path>
+
+    <!-- Inner Lensed Streamline (dur=4.6s) -->
+    <path d="M 380,420 C 380,312 465,275 600,275 C 735,275 820,312 820,420"
+          fill="none" stroke="url(#doppler-stream-intense)" stroke-width="5" stroke-linecap="round"
+          stroke-dasharray="75 35 110 40 50 25 130 45">
+      <animate attributeName="stroke-dashoffset" values="0; 695" dur="4.6s" repeatCount="indefinite" />
+    </path>
+
+    <!-- Sub-Photon High Shear Streamline (Fastest: dur=3.2s) -->
+    <path d="M 430,420 C 430,340 495,302 600,302 C 705,302 770,340 770,420"
+          fill="none" stroke="url(#doppler-stream-intense)" stroke-width="3.5" stroke-linecap="round"
+          stroke-dasharray="60 25 90 30 40 20 120 35">
+      <animate attributeName="stroke-dashoffset" values="0; 580" dur="3.2s" repeatCount="indefinite" />
+    </path>
+  </g>
+
+  <!-- GRAVITATIONAL LENSING CROWN - LOWER ARCH (Underside of rear disk bent under shadow) -->
+  <g clip-path="url(#lower-crown-clip)">
+    <!-- Diffuse Lower Arc Glow -->
+    <path d="M 300,420 C 320,545 440,585 600,585 C 760,585 880,545 900,420 C 850,420 740,540 600,540 C 460,540 350,420 300,420 Z"
+          fill="url(#doppler-crown-bottom)" filter="url(#glow-mid)" opacity="0.75" />
+
+    <!-- Main Lower Lensed Ribbon -->
+    <path d="M 330,420 C 345,535 450,572 600,572 C 750,572 855,535 870,420 C 835,420 735,534 600,534 C 465,534 365,420 330,420 Z"
+          fill="url(#doppler-crown-bottom)" filter="url(#glow-sharp)" opacity="0.85" />
+
+    <!-- Lower Crown Plasma Filaments (Differential Motion) -->
+    <path d="M 325,420 C 345,540 445,578 600,578 C 755,578 855,540 875,420"
+          fill="none" stroke="url(#doppler-stream-mid)" stroke-width="4.2" stroke-linecap="round"
+          stroke-dasharray="100 50 160 65 70 40">
+      <animate attributeName="stroke-dashoffset" values="0; 785" dur="12s" repeatCount="indefinite" />
+    </path>
+
+    <path d="M 365,420 C 380,518 465,552 600,552 C 735,552 820,518 835,420"
+          fill="none" stroke="url(#doppler-stream-intense)" stroke-width="5" stroke-linecap="round"
+          stroke-dasharray="80 40 130 50 50 25">
+      <animate attributeName="stroke-dashoffset" values="0; 675" dur="7.5s" repeatCount="indefinite" />
+    </path>
+
+    <path d="M 415,420 C 430,488 495,520 600,520 C 705,520 770,488 785,420"
+          fill="none" stroke="url(#doppler-stream-intense)" stroke-width="3.5" stroke-linecap="round"
+          stroke-dasharray="60 30 90 35 40 20">
+      <animate attributeName="stroke-dashoffset" values="0; 555" dur="4.5s" repeatCount="indefinite" />
+    </path>
+  </g>
+
+  <!-- ACCRETION INFLOW: INWARD PLUNGING SPIRAL VORTICES INTO HORIZON -->
+  <!-- Plasma streams peel off ISCO and plunge supersonically into the event horizon -->
+  <g transform="translate(600, 420)">
+    <g>
+      <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="2.4s" repeatCount="indefinite" />
+
+      <!-- Spiral Stream Arm 1 -->
+      <path d="M 155,0 C 145,55 95,105 -25,102" fill="none" stroke="url(#plunge-spiral-grad)" stroke-width="3.8" stroke-linecap="round" stroke-dasharray="14 18">
+        <animate attributeName="stroke-dashoffset" values="0; -32" dur="0.8s" repeatCount="indefinite" />
+      </path>
+
+      <!-- Spiral Stream Arm 2 -->
+      <path d="M 110,110 C 65,135 -10,135 -72,72" fill="none" stroke="url(#plunge-spiral-grad)" stroke-width="3.6" stroke-linecap="round" stroke-dasharray="12 16">
+        <animate attributeName="stroke-dashoffset" values="0; -28" dur="0.8s" repeatCount="indefinite" />
+      </path>
+
+      <!-- Spiral Stream Arm 3 -->
+      <path d="M 0,155 C -55,145 -105,95 -102,-25" fill="none" stroke="url(#plunge-spiral-grad)" stroke-width="4.2" stroke-linecap="round" stroke-dasharray="16 20">
+        <animate attributeName="stroke-dashoffset" values="0; -36" dur="0.8s" repeatCount="indefinite" />
+      </path>
+
+      <!-- Spiral Stream Arm 4 -->
+      <path d="M -110,110 C -135,65 -135,-10 -72,-72" fill="none" stroke="url(#plunge-spiral-grad)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="13 17">
+        <animate attributeName="stroke-dashoffset" values="0; -30" dur="0.8s" repeatCount="indefinite" />
+      </path>
+
+      <!-- Spiral Stream Arm 5 -->
+      <path d="M -155,0 C -145,-55 -95,-105 25,-102" fill="none" stroke="url(#plunge-spiral-grad)" stroke-width="3.8" stroke-linecap="round" stroke-dasharray="14 18">
+        <animate attributeName="stroke-dashoffset" values="0; -32" dur="0.8s" repeatCount="indefinite" />
+      </path>
+
+      <!-- Spiral Stream Arm 6 -->
+      <path d="M -110,-110 C -65,-135 10,-135 72,-72" fill="none" stroke="url(#plunge-spiral-grad)" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="12 16">
+        <animate attributeName="stroke-dashoffset" values="0; -28" dur="0.8s" repeatCount="indefinite" />
+      </path>
+
+      <!-- Spiral Stream Arm 7 -->
+      <path d="M 0,-155 C 55,-145 105,-95 102,25" fill="none" stroke="url(#plunge-spiral-grad)" stroke-width="4.0" stroke-linecap="round" stroke-dasharray="15 19">
+        <animate attributeName="stroke-dashoffset" values="0; -34" dur="0.8s" repeatCount="indefinite" />
+      </path>
+
+      <!-- Spiral Stream Arm 8 -->
+      <path d="M 110,-110 C 135,-65 135,10 72,72" fill="none" stroke="url(#plunge-spiral-grad)" stroke-width="3.6" stroke-linecap="round" stroke-dasharray="13 17">
+        <animate attributeName="stroke-dashoffset" values="0; -30" dur="0.8s" repeatCount="indefinite" />
+      </path>
+    </g>
+  </g>
+
+  <!-- THE CENTRAL BLACK HOLE SHADOW & PHOTON SPHERE -->
+  <!-- Outer Photon Sphere Glare and Halo Rings -->
+  <g class="horizon-pulse">
+    <!-- Sub-Photon Ring 3 -->
+    <circle cx="600" cy="420" r="113" fill="none" stroke="url(#photon-ring-gradient)" stroke-width="1.4" opacity="0.6" filter="url(#glow-sharp)" />
+
+    <!-- Primary Intense Photon Sphere Ring 2 -->
+    <circle cx="600" cy="420" r="107" fill="none" stroke="url(#photon-ring-gradient)" stroke-width="3.2" opacity="0.95" filter="url(#glow-mid)" />
+
+    <!-- Innermost Razor-Sharp Photon Ring 1 -->
+    <circle cx="598" cy="420" r="103.5" fill="none" stroke="url(#photon-ring-gradient)" stroke-width="1.8" filter="url(#glow-sharp)" />
+  </g>
+
+  <!-- PITCH-BLACK EVENT HORIZON SHADOW -->
+  <!-- Pure black circular void swallowing all light behind it -->
+  <circle cx="600" cy="420" r="101" fill="#000000" />
+
+  <!-- Ergosphere Shear Line (Prograde Frame Dragging Boundary) -->
+  <ellipse cx="596" cy="420" rx="103" ry="100.5" fill="none" stroke="#60d0ff" stroke-width="0.8" opacity="0.4" />
+
+  <!-- FOREGROUND ACCRETION DISK (Sweeps across the front of the shadow) -->
+  <g clip-path="url(#foreground-sweep-clip)">
+    <!-- Base Radiant Plasma Body -->
+    <path d="M 80,420 C 80,590 320,595 600,595 C 880,595 1120,590 1120,420 C 1040,420 860,545 600,545 C 340,545 160,420 80,420 Z"
+          fill="url(#doppler-disk-body)" filter="url(#glow-heavy)" opacity="0.65" />
+
+    <path d="M 110,420 C 110,572 330,578 600,578 C 870,578 1090,572 1090,420 C 980,420 820,518 600,518 C 380,518 220,420 110,420 Z"
+          fill="url(#doppler-disk-body)" filter="url(#glow-mid)" opacity="0.85" />
+
+    <path d="M 210,420 C 210,526 370,532 600,532 C 830,532 990,526 990,420 C 875,420 760,478 600,478 C 440,478 325,420 210,420 Z"
+          fill="url(#doppler-disk-body)" filter="url(#glow-sharp)" opacity="0.95" />
+
+    <!-- Keplerian Differential Rotation Streamlines in Foreground Disk -->
+    <!-- Orbital speed is faster near the inner edge (Kepler's Law: omega proportional to r^-1.5) -->
+
+    <!-- Orbit 1: Innermost ISCO Streamline (Fastest: T=2.6s, rx=160, ry=51) -->
+    <ellipse cx="600" cy="420" rx="160" ry="51" fill="none" stroke="url(#doppler-stream-intense)" stroke-width="4.5"
+             stroke-linecap="round" stroke-dasharray="35 18 70 24 45 18 90 28">
+      <animate attributeName="stroke-dashoffset" values="0; 698" dur="2.6s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Orbit 2: Inner High-Shear Streamline (T=3.4s, rx=185, ry=59) -->
+    <ellipse cx="600" cy="420" rx="185" ry="59" fill="none" stroke="url(#doppler-stream-intense)" stroke-width="5"
+             stroke-linecap="round" stroke-dasharray="45 22 95 28 55 22 120 32">
+      <animate attributeName="stroke-dashoffset" values="0; 807" dur="3.4s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Orbit 3: Inner Hot Filament Streamline (T=4.4s, rx=215, ry=68) -->
+    <ellipse cx="600" cy="420" rx="215" ry="68" fill="none" stroke="url(#doppler-stream-intense)" stroke-width="6"
+             stroke-linecap="round" stroke-dasharray="60 26 125 32 75 26 150 38">
+      <animate attributeName="stroke-dashoffset" values="0; 938" dur="4.4s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Orbit 4: Mid-Inner Plasma Knots (T=5.8s, rx=250, ry=80) -->
+    <ellipse cx="600" cy="420" rx="250" ry="80" fill="none" stroke="url(#doppler-stream-intense)" stroke-width="6.5"
+             stroke-linecap="round" stroke-dasharray="80 32 160 42 95 32 180 48">
+      <animate attributeName="stroke-dashoffset" values="0; 1091" dur="5.8s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Orbit 5: Mid-Disk Density Wave (T=7.6s, rx=295, ry=94) -->
+    <ellipse cx="600" cy="420" rx="295" ry="94" fill="none" stroke="url(#doppler-stream-mid)" stroke-width="6.5"
+             stroke-linecap="round" stroke-dasharray="100 40 190 52 120 40 220 58">
+      <animate attributeName="stroke-dashoffset" values="0; 1287" dur="7.6s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Orbit 6: Mid-Outer Turbulent Stream (T=9.8s, rx=345, ry=110) -->
+    <ellipse cx="600" cy="420" rx="345" ry="110" fill="none" stroke="url(#doppler-stream-mid)" stroke-width="6"
+             stroke-linecap="round" stroke-dasharray="120 48 230 62 140 48 260 68">
+      <animate attributeName="stroke-dashoffset" values="0; 1505" dur="9.8s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Orbit 7: Outer Accretion Arm (T=13.2s, rx=405, ry=129) -->
+    <ellipse cx="600" cy="420" rx="405" ry="129" fill="none" stroke="url(#doppler-stream-mid)" stroke-width="5.5"
+             stroke-linecap="round" stroke-dasharray="150 58 270 72 170 58 310 80">
+      <animate attributeName="stroke-dashoffset" values="0; 1767" dur="13.2s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Orbit 8: Outer Tenuous Gas Rim (T=17.8s, rx=470, ry=150) -->
+    <ellipse cx="600" cy="420" rx="470" ry="150" fill="none" stroke="url(#doppler-stream-mid)" stroke-width="4.5"
+             stroke-linecap="round" stroke-dasharray="180 70 320 85 200 70 360 95">
+      <animate attributeName="stroke-dashoffset" values="0; 2051" dur="17.8s" repeatCount="indefinite" />
+    </ellipse>
+
+    <!-- Orbit 9: Outermost Cooler Dust Lane (Slowest: T=24.0s, rx=540, ry=172) -->
+    <ellipse cx="600" cy="420" rx="540" ry="172" fill="none" stroke="url(#doppler-stream-mid)" stroke-width="3.5"
+             stroke-linecap="round" stroke-dasharray="220 85 380 100 240 85 420 110">
+      <animate attributeName="stroke-dashoffset" values="0; 2356" dur="24s" repeatCount="indefinite" />
+    </ellipse>
+  </g>
+
+  <!-- RELATIVISTIC DOPPLER BEAMING SPOTLIGHT & FLARE SYSTEM -->
+  <!-- Blinding energetic bloom centered exclusively on the approaching (left) limb -->
+  <g class="beaming-shimmer" pointer-events="none">
+    <!-- Huge Approaching Limb Spotlight Glow -->
+    <circle cx="410" cy="425" r="280" fill="url(#doppler-spotlight)" filter="url(#super-bloom)" />
+
+    <!-- High-Temperature Core Bloom -->
+    <ellipse cx="400" cy="420" rx="140" ry="45" fill="url(#doppler-spotlight)" filter="url(#glow-heavy)" />
+
+    <!-- Relativistic Anamorphic Glare Streak on Approaching Plasma -->
+    <g class="flare-flicker">
+      <ellipse cx="410" cy="420" rx="260" ry="6" fill="url(#flare-streak-grad)" filter="url(#glow-mid)" opacity="0.85" />
+      <ellipse cx="395" cy="420" rx="120" ry="2.8" fill="#ffffff" filter="url(#glow-sharp)" opacity="0.95" />
+      <ellipse cx="375" cy="420" rx="40" ry="1.4" fill="#ffffff" />
+    </g>
+
+    <!-- Turbulent High-Energy Knots on Approaching Inner Rim -->
+    <circle cx="445" cy="422" r="5" fill="#ffffff" filter="url(#glow-sharp)">
+      <animate attributeName="r" values="4; 6.5; 4" dur="1.3s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.8; 1; 0.8" dur="1.3s" repeatCount="indefinite" />
+    </circle>
+
+    <circle cx="420" cy="438" r="4.2" fill="#d2f2ff" filter="url(#glow-sharp)">
+      <animate attributeName="r" values="3.5; 5.5; 3.5" dur="1.8s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.7; 1; 0.7" dur="1.8s" repeatCount="indefinite" />
+    </circle>
+  </g>
+
+  <!-- RECEDING LIMB EXTINCTION VEIL (Right side is dimmed & reddened) -->
+  <g pointer-events="none">
+    <ellipse cx="820" cy="420" rx="260" ry="75" fill="#150200" opacity="0.25" filter="url(#glow-heavy)" />
+    <!-- Cold Obscuring Dust Bands on Receding Edge -->
+    <path d="M 720,445 C 800,455 900,450 1020,425" fill="none" stroke="#250401" stroke-width="4" opacity="0.4" />
+    <path d="M 760,470 C 840,480 940,472 1050,432" fill="none" stroke="#1c0301" stroke-width="3" opacity="0.35" />
+  </g>
+</svg>

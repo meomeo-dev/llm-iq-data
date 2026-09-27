@@ -1,0 +1,648 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="100%" height="100%">
+  <defs>
+    <style><![CDATA[
+      .hud-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 700; fill: #ffffff; letter-spacing: 1.5px; font-size: 15px; }
+      .hud-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-weight: 400; fill: #94a3b8; font-size: 11px; letter-spacing: 0.4px; }
+      .hud-math { font-family: "Courier New", Courier, monospace; font-weight: 600; fill: #38bdf8; font-size: 11px; }
+      .hud-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 10px; font-weight: 600; fill: #cbd5e1; letter-spacing: 0.5px; }
+      .hud-tag { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: #0284c7; letter-spacing: 1px; }
+      .hud-dim { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 9px; fill: #64748b; }
+      .hud-val { font-family: "Courier New", Courier, monospace; font-size: 10px; fill: #a5f3fc; }
+    ]]></style>
+
+    <!-- Visual Filters -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="intenseGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur1" />
+      <feGaussianBlur stdDeviation="2" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="subtleGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Background Grid Pattern -->
+    <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.7" stroke-opacity="0.4" />
+      <circle cx="0" cy="0" r="1" fill="#334155" opacity="0.6" />
+    </pattern>
+
+    <!-- Color Gradients -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#050811" />
+      <stop offset="50%" stop-color="#070c18" />
+      <stop offset="100%" stop-color="#03060c" />
+    </linearGradient>
+
+    <linearGradient id="emitterBodyGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="70%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#475569" />
+    </linearGradient>
+
+    <radialGradient id="emitterCoreGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="35%" stop-color="#38bdf8" />
+      <stop offset="75%" stop-color="#0284c7" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#0284c7" stop-opacity="0" />
+    </radialGradient>
+
+    <linearGradient id="planeWaveGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0" />
+      <stop offset="15%" stop-color="#00f0ff" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#e0f2fe" stop-opacity="1" />
+      <stop offset="85%" stop-color="#00f0ff" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#00f0ff" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="barrierGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="40%" stop-color="#334155" />
+      <stop offset="70%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+
+    <linearGradient id="screenPlateGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#111827" />
+      <stop offset="50%" stop-color="#1f2937" />
+      <stop offset="100%" stop-color="#0b0f17" />
+    </linearGradient>
+
+    <!-- Interference Fringes on Screen Gradient -->
+    <linearGradient id="fringeGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0.0%" stop-color="#030712" />
+      <stop offset="2.8%" stop-color="#0284c7" stop-opacity="0.4" />
+      <stop offset="7.0%" stop-color="#030712" />
+      <stop offset="13.7%" stop-color="#030712" />
+      <stop offset="19.0%" stop-color="#0284c7" stop-opacity="0.5" />
+      <stop offset="25.7%" stop-color="#38bdf8" stop-opacity="0.85" />
+      <stop offset="32.0%" stop-color="#0284c7" stop-opacity="0.5" />
+      <stop offset="38.0%" stop-color="#030712" />
+      <stop offset="43.0%" stop-color="#00f0ff" stop-opacity="0.7" />
+      <stop offset="50.0%" stop-color="#ffffff" stop-opacity="1" />
+      <stop offset="57.0%" stop-color="#00f0ff" stop-opacity="0.7" />
+      <stop offset="62.0%" stop-color="#030712" />
+      <stop offset="68.0%" stop-color="#0284c7" stop-opacity="0.5" />
+      <stop offset="74.3%" stop-color="#38bdf8" stop-opacity="0.85" />
+      <stop offset="81.0%" stop-color="#0284c7" stop-opacity="0.5" />
+      <stop offset="86.3%" stop-color="#030712" />
+      <stop offset="93.0%" stop-color="#030712" />
+      <stop offset="97.2%" stop-color="#0284c7" stop-opacity="0.4" />
+      <stop offset="100.0%" stop-color="#030712" />
+    </linearGradient>
+
+    <linearGradient id="curveFillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.05" />
+      <stop offset="60%" stop-color="#00f0ff" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.75" />
+    </linearGradient>
+
+    <!-- Clip Paths -->
+    <clipPath id="planeWaveClip">
+      <rect x="114" y="150" width="261" height="400" />
+    </clipPath>
+
+    <clipPath id="diffractionClip">
+      <rect x="390" y="70" width="490" height="560" />
+    </clipPath>
+
+    <!-- Dimension Arrowheads -->
+    <marker id="arrowHeadEnd" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+      <path d="M 0 0 L 6 3 L 0 6 z" fill="#64748b" />
+    </marker>
+    <marker id="arrowHeadStart" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto">
+      <path d="M 6 0 L 0 3 L 6 6 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect x="0" y="0" width="1200" height="700" fill="url(#bgGrad)" />
+  <rect x="0" y="0" width="1200" height="700" fill="url(#gridPattern)" />
+
+  <!-- HEADER BAR -->
+  <g id="headerBar">
+    <rect x="20" y="15" width="1160" height="62" rx="8" fill="#090f1d" stroke="#1e293b" stroke-width="1.2" />
+    <rect x="35" y="27" width="126" height="18" rx="4" fill="#0284c7" fill-opacity="0.2" stroke="#0284c7" stroke-width="1" />
+    <text x="44" y="40" class="hud-tag">QUANTUM OPTICS</text>
+    <text x="175" y="38" class="hud-title">DOUBLE-SLIT INTERFERENCE &amp; WAVE-PARTICLE DUALITY</text>
+    <text x="175" y="56" class="hud-sub">Continuous Huygens-Fresnel secondary wavelet superposition, phase cancellation nodes, and fringe accumulation</text>
+
+    <!-- Mathematical Formula Chips -->
+    <rect x="800" y="25" width="180" height="42" rx="6" fill="#0c1527" stroke="#334155" stroke-width="1" />
+    <text x="810" y="41" class="hud-math">Superposition: Ψ = ψ₁ + ψ₂</text>
+    <text x="810" y="57" class="hud-math">Phase: Δφ = (2π/λ)·d·sin θ</text>
+
+    <rect x="990" y="25" width="175" height="42" rx="6" fill="#0c1527" stroke="#334155" stroke-width="1" />
+    <text x="1000" y="41" class="hud-math">Max: d·sin θ = mλ</text>
+    <text x="1000" y="57" class="hud-math">Born Rule: P(y) ∝ |Ψ(y)|²</text>
+  </g>
+
+  <!-- 1. CONTINUOUS COHERENT EMITTER (FAR LEFT) -->
+  <g id="coherentEmitter">
+    <!-- Mounting Rails -->
+    <rect x="42" y="170" width="12" height="360" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    
+    <!-- Emitter Housing -->
+    <rect x="48" y="295" width="56" height="110" rx="8" fill="url(#emitterBodyGrad)" stroke="#64748b" stroke-width="1.5" />
+    <rect x="54" y="305" width="44" height="90" rx="5" fill="#090d16" stroke="#1e293b" stroke-width="1" />
+    
+    <!-- High-Voltage Laser/Electron Diode Core -->
+    <circle cx="76" cy="350" r="18" fill="url(#emitterCoreGrad)" filter="url(#intenseGlow)">
+      <animate attributeName="r" values="16;20;16" dur="1.6s" repeatCount="indefinite" />
+      <animate attributeName="opacity" values="0.85;1;0.85" dur="1.6s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="76" cy="350" r="6" fill="#ffffff" />
+
+    <!-- Collimator Nozzle -->
+    <polygon points="104,332 116,341 116,359 104,368" fill="#334155" stroke="#64748b" stroke-width="1.2" />
+    <circle cx="116" cy="350" r="6" fill="#00f0ff" filter="url(#glow)" />
+
+    <!-- Labels -->
+    <text x="76" y="278" text-anchor="middle" class="hud-label">COHERENT SOURCE</text>
+    <text x="76" y="426" text-anchor="middle" class="hud-dim">Monochromatic Beam</text>
+    <text x="76" y="439" text-anchor="middle" class="hud-val">λ = 32 nm</text>
+  </g>
+
+  <!-- 2. COHERENT PARALLEL PLANE WAVEFRONTS -->
+  <g id="planeWaves" clip-path="url(#planeWaveClip)">
+    <g>
+      <animateTransform attributeName="transform" type="translate" from="0 0" to="32 0" dur="0.8s" repeatCount="indefinite" />
+      <!-- Seamless propagating vertical wavefronts (wavelength λ = 32px) -->
+      <line x1="58" y1="160" x2="58" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3" filter="url(#glow)" />
+      <line x1="90" y1="160" x2="90" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3" filter="url(#glow)" />
+      <line x1="122" y1="160" x2="122" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3.5" filter="url(#glow)" />
+      <line x1="122" y1="160" x2="122" y2="540" stroke="#ffffff" stroke-width="1" opacity="0.8" />
+      <line x1="154" y1="160" x2="154" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3.5" filter="url(#glow)" />
+      <line x1="154" y1="160" x2="154" y2="540" stroke="#ffffff" stroke-width="1" opacity="0.8" />
+      <line x1="186" y1="160" x2="186" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3.5" filter="url(#glow)" />
+      <line x1="186" y1="160" x2="186" y2="540" stroke="#ffffff" stroke-width="1" opacity="0.8" />
+      <line x1="218" y1="160" x2="218" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3.5" filter="url(#glow)" />
+      <line x1="218" y1="160" x2="218" y2="540" stroke="#ffffff" stroke-width="1" opacity="0.8" />
+      <line x1="250" y1="160" x2="250" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3.5" filter="url(#glow)" />
+      <line x1="250" y1="160" x2="250" y2="540" stroke="#ffffff" stroke-width="1" opacity="0.8" />
+      <line x1="282" y1="160" x2="282" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3.5" filter="url(#glow)" />
+      <line x1="282" y1="160" x2="282" y2="540" stroke="#ffffff" stroke-width="1" opacity="0.8" />
+      <line x1="314" y1="160" x2="314" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3.5" filter="url(#glow)" />
+      <line x1="314" y1="160" x2="314" y2="540" stroke="#ffffff" stroke-width="1" opacity="0.8" />
+      <line x1="346" y1="160" x2="346" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3.5" filter="url(#glow)" />
+      <line x1="346" y1="160" x2="346" y2="540" stroke="#ffffff" stroke-width="1" opacity="0.8" />
+      <line x1="378" y1="160" x2="378" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3.5" filter="url(#glow)" />
+      <line x1="410" y1="160" x2="410" y2="540" stroke="url(#planeWaveGrad)" stroke-width="3.5" filter="url(#glow)" />
+    </g>
+  </g>
+
+  <!-- Incident Wave Annotations -->
+  <g id="incidentLabels">
+    <text x="240" y="172" text-anchor="middle" class="hud-label">INCIDENT PLANE WAVEFRONTS</text>
+    <text x="240" y="186" text-anchor="middle" class="hud-dim">Coherent Wavevector k ➔</text>
+    <!-- Wavelength Indicator -->
+    <line x1="186" y1="520" x2="218" y2="520" stroke="#64748b" stroke-width="1.2" marker-start="url(#arrowHeadStart)" marker-end="url(#arrowHeadEnd)" />
+    <text x="202" y="535" text-anchor="middle" class="hud-val">λ = 32nm</text>
+  </g>
+
+  <!-- 3. CENTRAL BARRIER WITH DUAL MICRO-SLITS (S1, S2) -->
+  <g id="centralBarrier">
+    <!-- Top Absorber Section -->
+    <rect x="375" y="140" width="15" height="142" rx="2" fill="url(#barrierGrad)" stroke="#475569" stroke-width="1.2" />
+    <!-- Center Absorber Section (Between Slits) -->
+    <rect x="375" y="298" width="15" height="104" rx="2" fill="url(#barrierGrad)" stroke="#475569" stroke-width="1.2" />
+    <!-- Bottom Absorber Section -->
+    <rect x="375" y="418" width="15" height="142" rx="2" fill="url(#barrierGrad)" stroke="#475569" stroke-width="1.2" />
+
+    <!-- Slit Openings (S1: y=282..298 center 290, S2: y=402..418 center 410) -->
+    <!-- Slit S1 Glow Source -->
+    <line x1="382" y1="282" x2="382" y2="298" stroke="#00f0ff" stroke-width="4" filter="url(#intenseGlow)" />
+    <line x1="382" y1="282" x2="382" y2="298" stroke="#ffffff" stroke-width="1.5" />
+    <circle cx="390" cy="290" r="5" fill="#ffffff" filter="url(#glow)">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="0.8s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Slit S2 Glow Source -->
+    <line x1="382" y1="402" x2="382" y2="418" stroke="#00f0ff" stroke-width="4" filter="url(#intenseGlow)" />
+    <line x1="382" y1="402" x2="382" y2="418" stroke="#ffffff" stroke-width="1.5" />
+    <circle cx="390" cy="410" r="5" fill="#ffffff" filter="url(#glow)">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="0.8s" repeatCount="indefinite" />
+    </circle>
+
+    <!-- Barrier Labels & Slit Dimension Callout -->
+    <text x="382" y="126" text-anchor="middle" class="hud-label">DUAL-SLIT BARRIER</text>
+    <text x="366" y="294" text-anchor="end" class="hud-val">S₁</text>
+    <text x="366" y="414" text-anchor="end" class="hud-val">S₂</text>
+
+    <!-- Slit Separation d Dimension Line -->
+    <line x1="360" y1="290" x2="360" y2="410" stroke="#64748b" stroke-width="1.2" marker-start="url(#arrowHeadStart)" marker-end="url(#arrowHeadEnd)" />
+    <text x="352" y="354" text-anchor="end" class="hud-val">d = 120nm</text>
+  </g>
+
+  <!-- 4. HUYGENS-FRESNEL DIFFRACTION & INTERFERENCE ZONE -->
+  <g id="interferenceField" clip-path="url(#diffractionClip)">
+    <!-- Expanding Concentric Circular Wavefronts from Slit 1 (S1: 390, 290) -->
+    <g id="wavesSlit1">
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="0s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-0.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-0.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-1.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-1.6s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-2.4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-2.4s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-3.2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-3.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-4.0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-4.0s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-4.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-4.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-5.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-5.6s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-6.4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-6.4s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-7.2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-7.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-8.0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-8.0s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-8.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-8.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-9.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-9.6s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-10.4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-10.4s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-11.2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-11.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="290" r="0" fill="none" stroke="#00f0ff" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-12.0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-12.0s" repeatCount="indefinite" />
+      </circle>
+    </g>
+
+    <!-- Expanding Concentric Circular Wavefronts from Slit 2 (S2: 390, 410) -->
+    <g id="wavesSlit2">
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="0s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-0.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-0.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-1.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-1.6s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-2.4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-2.4s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-3.2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-3.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-4.0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-4.0s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-4.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-4.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-5.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-5.6s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-6.4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-6.4s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-7.2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-7.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-8.0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-8.0s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-8.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-8.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-9.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-9.6s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-10.4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-10.4s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-11.2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-11.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="410" r="0" fill="none" stroke="#38bdf8" stroke-width="2" filter="url(#subtleGlow)">
+        <animate attributeName="r" from="0" to="512" dur="12.8s" begin="-12.0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;0.85;0.7;0.35;0" keyTimes="0;0.05;0.4;0.8;1" dur="12.8s" begin="-12.0s" repeatCount="indefinite" />
+      </circle>
+    </g>
+
+    <!-- DESTRUCTIVE NODAL LINES (Phase Cancellation: Δφ = π, 3π) -->
+    <g id="destructiveNodes">
+      <!-- Node m = +0.5 (y = 285 on screen) -->
+      <line x1="390" y1="350" x2="888" y2="285" stroke="#f43f5e" stroke-width="1.6" stroke-dasharray="6 4" opacity="0.65" />
+      <!-- Node m = -0.5 (y = 415 on screen) -->
+      <line x1="390" y1="350" x2="888" y2="415" stroke="#f43f5e" stroke-width="1.6" stroke-dasharray="6 4" opacity="0.65" />
+      <!-- Node m = +1.5 (y = 154 on screen) -->
+      <line x1="390" y1="350" x2="888" y2="154" stroke="#f43f5e" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.5" />
+      <!-- Node m = -1.5 (y = 546 on screen) -->
+      <line x1="390" y1="350" x2="888" y2="546" stroke="#f43f5e" stroke-width="1.2" stroke-dasharray="5 4" opacity="0.5" />
+
+      <!-- Text annotations on nodal lines -->
+      <text x="635" y="304" fill="#fb7185" font-size="9" font-family="-apple-system, sans-serif" font-weight="600" transform="rotate(-7.4 635 304)">Destructive Node (Δφ = π)</text>
+      <text x="635" y="398" fill="#fb7185" font-size="9" font-family="-apple-system, sans-serif" font-weight="600" transform="rotate(7.4 635 398)">Destructive Node (Δφ = -π)</text>
+    </g>
+
+    <!-- CONSTRUCTIVE INTERFERENCE PATHWAYS (Antinodal Axes: Crest meets Crest) -->
+    <g id="constructivePaths">
+      <!-- Central Maximum (m = 0, y = 350) -->
+      <line x1="390" y1="350" x2="888" y2="350" stroke="#00f0ff" stroke-width="2.2" stroke-dasharray="4 3" opacity="0.85" filter="url(#glow)" />
+      <!-- Photons/Wave-packets traveling along m=0 -->
+      <circle cx="390" cy="350" r="3.5" fill="#ffffff" filter="url(#glow)">
+        <animate attributeName="cx" from="390" to="888" dur="2.4s" begin="0s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2.4s" begin="0s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="350" r="3.5" fill="#ffffff" filter="url(#glow)">
+        <animate attributeName="cx" from="390" to="888" dur="2.4s" begin="0.8s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2.4s" begin="0.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="350" r="3.5" fill="#ffffff" filter="url(#glow)">
+        <animate attributeName="cx" from="390" to="888" dur="2.4s" begin="1.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2.4s" begin="1.6s" repeatCount="indefinite" />
+      </circle>
+
+      <!-- 1st Order Upper Maximum (m = +1, y = 219) -->
+      <line x1="390" y1="350" x2="888" y2="219" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="4 3" opacity="0.75" />
+      <circle cx="390" cy="350" r="3" fill="#38bdf8" filter="url(#glow)">
+        <animate attributeName="cx" from="390" to="888" dur="2.4s" begin="0.4s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="350" to="219" dur="2.4s" begin="0.4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2.4s" begin="0.4s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="350" r="3" fill="#38bdf8" filter="url(#glow)">
+        <animate attributeName="cx" from="390" to="888" dur="2.4s" begin="1.6s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="350" to="219" dur="2.4s" begin="1.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2.4s" begin="1.6s" repeatCount="indefinite" />
+      </circle>
+
+      <!-- 1st Order Lower Maximum (m = -1, y = 481) -->
+      <line x1="390" y1="350" x2="888" y2="481" stroke="#38bdf8" stroke-width="1.8" stroke-dasharray="4 3" opacity="0.75" />
+      <circle cx="390" cy="350" r="3" fill="#38bdf8" filter="url(#glow)">
+        <animate attributeName="cx" from="390" to="888" dur="2.4s" begin="0.4s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="350" to="481" dur="2.4s" begin="0.4s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2.4s" begin="0.4s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="390" cy="350" r="3" fill="#38bdf8" filter="url(#glow)">
+        <animate attributeName="cx" from="390" to="888" dur="2.4s" begin="1.6s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="350" to="481" dur="2.4s" begin="1.6s" repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.1;0.9;1" dur="2.4s" begin="1.6s" repeatCount="indefinite" />
+      </circle>
+
+      <!-- 2nd Order Maxima (m = +2, y = 95; m = -2, y = 605) -->
+      <line x1="390" y1="350" x2="888" y2="95" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.5" />
+      <line x1="390" y1="350" x2="888" y2="605" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.5" />
+
+      <!-- Constructive Labels along lines -->
+      <text x="680" y="342" class="hud-val" fill="#a5f3fc">Constructive (m=0, ΔL=0)</text>
+      <text x="680" y="240" class="hud-val" fill="#38bdf8" transform="rotate(-14.7 680 240)">Constructive (m=+1, ΔL=+λ)</text>
+      <text x="680" y="460" class="hud-val" fill="#38bdf8" transform="rotate(14.7 680 460)">Constructive (m=-1, ΔL=-λ)</text>
+    </g>
+  </g>
+
+  <!-- Distance Dimension L (Barrier to Screen) -->
+  <g id="dimensionL">
+    <line x1="390" y1="595" x2="888" y2="595" stroke="#64748b" stroke-width="1.2" marker-start="url(#arrowHeadStart)" marker-end="url(#arrowHeadEnd)" />
+    <text x="639" y="612" text-anchor="middle" class="hud-val">L = 1.20 m (Apparatus Drift Length)</text>
+  </g>
+
+  <!-- 5. DETECTOR SCREEN & DYNAMIC FRINGE INTENSITY (RIGHT) -->
+  <g id="detectorScreen">
+    <!-- Screen Chassis -->
+    <rect x="880" y="80" width="30" height="540" rx="4" fill="url(#screenPlateGrad)" stroke="#334155" stroke-width="1.5" />
+    <text x="895" y="72" text-anchor="middle" class="hud-label">DETECTOR SCREEN</text>
+
+    <!-- Continuous Interference Fringe Strip -->
+    <rect x="888" y="85" width="14" height="530" rx="2" fill="url(#fringeGradient)" />
+    <!-- Dynamic Breathing Intensity Glow Layer -->
+    <rect x="888" y="85" width="14" height="530" rx="2" fill="url(#fringeGradient)" opacity="0.8" filter="url(#glow)">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="2.4s" repeatCount="indefinite" />
+    </rect>
+
+    <!-- Discrete Quantum Particle Hits (Wave-Particle Duality Demonstration) -->
+    <!-- Photons accumulating in constructive zones, strictly zero in nodal dark gaps -->
+    <g id="quantumHits">
+      <!-- Central Maximum (m = 0, y ~ 335..365) -->
+      <circle cx="894" cy="350" r="1.5" fill="#ffffff" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.9;0" keyTimes="0;0.1;0.3;0.8;1" dur="4.2s" begin="0.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="896" cy="344" r="1.5" fill="#e0f2fe" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.9;0" keyTimes="0;0.1;0.3;0.8;1" dur="4.6s" begin="1.1s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="893" cy="356" r="1.5" fill="#ffffff" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.9;0" keyTimes="0;0.1;0.3;0.8;1" dur="3.8s" begin="0.7s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="897" cy="348" r="1.6" fill="#ffffff" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.9;0" keyTimes="0;0.1;0.3;0.8;1" dur="5.0s" begin="2.1s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="895" cy="353" r="1.5" fill="#ffffff" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.9;0" keyTimes="0;0.1;0.3;0.8;1" dur="4.0s" begin="1.8s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="892" cy="341" r="1.4" fill="#a5f3fc" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.9;0" keyTimes="0;0.1;0.3;0.8;1" dur="4.4s" begin="2.7s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="898" cy="359" r="1.4" fill="#a5f3fc" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.9;0" keyTimes="0;0.1;0.3;0.8;1" dur="3.6s" begin="0.4s" repeatCount="indefinite" />
+      </circle>
+
+      <!-- 1st Order Peak Upper (m = +1, y ~ 210..228) -->
+      <circle cx="895" cy="219" r="1.5" fill="#38bdf8" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.85;0" keyTimes="0;0.1;0.3;0.8;1" dur="4.5s" begin="0.9s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="893" cy="214" r="1.4" fill="#38bdf8" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.85;0" keyTimes="0;0.1;0.3;0.8;1" dur="4.1s" begin="1.5s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="896" cy="224" r="1.4" fill="#a5f3fc" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.85;0" keyTimes="0;0.1;0.3;0.8;1" dur="5.2s" begin="2.3s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="894" cy="221" r="1.5" fill="#ffffff" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.85;0" keyTimes="0;0.1;0.3;0.8;1" dur="3.9s" begin="3.1s" repeatCount="indefinite" />
+      </circle>
+
+      <!-- 1st Order Peak Lower (m = -1, y ~ 472..490) -->
+      <circle cx="895" cy="481" r="1.5" fill="#38bdf8" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.85;0" keyTimes="0;0.1;0.3;0.8;1" dur="4.3s" begin="0.5s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="893" cy="476" r="1.4" fill="#38bdf8" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.85;0" keyTimes="0;0.1;0.3;0.8;1" dur="4.7s" begin="1.7s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="897" cy="485" r="1.4" fill="#a5f3fc" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.85;0" keyTimes="0;0.1;0.3;0.8;1" dur="3.7s" begin="2.9s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="894" cy="480" r="1.5" fill="#ffffff" filter="url(#glow)">
+        <animate attributeName="opacity" values="0;0.2;1;0.85;0" keyTimes="0;0.1;0.3;0.8;1" dur="5.1s" begin="0.3s" repeatCount="indefinite" />
+      </circle>
+
+      <!-- 2nd Order Peaks (m = ±2, y ~ 95, 605) -->
+      <circle cx="895" cy="95" r="1.3" fill="#0284c7">
+        <animate attributeName="opacity" values="0;0.2;1;0.7;0" keyTimes="0;0.1;0.3;0.8;1" dur="5.5s" begin="1.2s" repeatCount="indefinite" />
+      </circle>
+      <circle cx="894" cy="605" r="1.3" fill="#0284c7">
+        <animate attributeName="opacity" values="0;0.2;1;0.7;0" keyTimes="0;0.1;0.3;0.8;1" dur="5.5s" begin="2.5s" repeatCount="indefinite" />
+      </circle>
+    </g>
+  </g>
+
+  <!-- 6. PROBABILITY DENSITY CURVE P(y) = |Ψ(y)|² -->
+  <g id="probabilityDistribution">
+    <text x="1040" y="72" text-anchor="middle" class="hud-label">PROBABILITY DENSITY P(y) = |Ψ|²</text>
+
+    <!-- Intensity Baseline Axis (Zero Probability) -->
+    <line x1="935" y1="80" x2="935" y2="620" stroke="#475569" stroke-width="1.5" />
+    <text x="930" y="635" text-anchor="end" class="hud-dim">I = 0</text>
+
+    <!-- Peak Intensity Guideline -->
+    <line x1="1120" y1="80" x2="1120" y2="620" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 3" />
+    <text x="1120" y="635" text-anchor="middle" class="hud-dim">I_max = 4·I₀</text>
+
+    <!-- Direct Angle Alignment Lines (Connecting Screen Fringes to Probability Curve) -->
+    <g id="alignmentProjections">
+      <!-- Central Max (y = 350) -->
+      <line x1="902" y1="350" x2="1120" y2="350" stroke="#00f0ff" stroke-width="1" stroke-dasharray="3 3" opacity="0.6" />
+      <!-- Node (y = 285) -->
+      <line x1="902" y1="285" x2="935" y2="285" stroke="#f43f5e" stroke-width="1" stroke-dasharray="2 2" opacity="0.5" />
+      <!-- 1st Max (y = 219) -->
+      <line x1="902" y1="219" x2="1075" y2="219" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3" opacity="0.6" />
+      <!-- Node (y = 415) -->
+      <line x1="902" y1="415" x2="935" y2="415" stroke="#f43f5e" stroke-width="1" stroke-dasharray="2 2" opacity="0.5" />
+      <!-- 1st Max (y = 481) -->
+      <line x1="902" y1="481" x2="1075" y2="481" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3" opacity="0.6" />
+    </g>
+
+    <!-- Mathematical Sinc² Diffraction Envelope (Single Slit Factor) -->
+    <path d="M 935 75 
+             C 960 130, 1085 240, 1122 350 
+             C 1085 460, 960 570, 935 625"
+          fill="none" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="4 3" opacity="0.65" />
+    <text x="1132" y="270" class="hud-dim" fill="#f59e0b">Diffraction Envelope sinc²(α)</text>
+
+    <!-- Filled Area under Probability Density Curve -->
+    <path d="M 935 75
+             C 940 85, 1010 88, 1010 95
+             C 1010 102, 940 140, 935 154
+             C 940 170, 1075 200, 1075 219
+             C 1075 238, 940 270, 935 285
+             C 945 305, 1120 325, 1120 350
+             C 1120 375, 945 395, 935 415
+             C 940 430, 1075 462, 1075 481
+             C 1075 500, 940 530, 935 546
+             C 940 560, 1010 595, 1010 605
+             C 1010 615, 940 620, 935 625
+             L 935 625 Z"
+          fill="url(#curveFillGrad)">
+      <!-- Dynamic intensity build-up pulse -->
+      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3.2s" repeatCount="indefinite" />
+    </path>
+
+    <!-- Probability Density Outer Contour Curve -->
+    <path d="M 935 75
+             C 940 85, 1010 88, 1010 95
+             C 1010 102, 940 140, 935 154
+             C 940 170, 1075 200, 1075 219
+             C 1075 238, 940 270, 935 285
+             C 945 305, 1120 325, 1120 350
+             C 1120 375, 945 395, 935 415
+             C 940 430, 1075 462, 1075 481
+             C 1075 500, 940 530, 935 546
+             C 940 560, 1010 595, 1010 605
+             C 1010 615, 940 620, 935 625"
+          fill="none" stroke="#00f0ff" stroke-width="2.5" filter="url(#glow)">
+      <animate attributeName="stroke-width" values="2;3.2;2" dur="3.2s" repeatCount="indefinite" />
+    </path>
+
+    <!-- Fringe Value Readout Annotations -->
+    <text x="1128" y="354" class="hud-math" fill="#ffffff">m = 0 (Peak)</text>
+    <text x="1083" y="223" class="hud-math" fill="#38bdf8">m = +1</text>
+    <text x="1083" y="485" class="hud-math" fill="#38bdf8">m = -1</text>
+    <text x="942" y="289" class="hud-dim" fill="#fb7185">Node (0)</text>
+    <text x="942" y="419" class="hud-dim" fill="#fb7185">Node (0)</text>
+    <text x="1018" y="99" class="hud-math" fill="#0284c7">m = +2</text>
+    <text x="1018" y="609" class="hud-math" fill="#0284c7">m = -2</text>
+  </g>
+
+  <!-- 7. SCIENTIFIC LEGEND & STATUS FOOTER BAR -->
+  <g id="footerBar">
+    <rect x="20" y="642" width="1160" height="48" rx="8" fill="#090f1d" stroke="#1e293b" stroke-width="1.2" />
+
+    <!-- Item 1: Plane Waves -->
+    <line x1="38" y1="666" x2="58" y2="666" stroke="#00f0ff" stroke-width="3" filter="url(#subtleGlow)" />
+    <text x="68" y="670" class="hud-dim">Coherent Plane Waves</text>
+
+    <!-- Item 2: Wavelets -->
+    <path d="M 215 672 A 8 8 0 0 1 215 658" fill="none" stroke="#38bdf8" stroke-width="2" />
+    <text x="228" y="670" class="hud-dim">Huygens Wavelets</text>
+
+    <!-- Item 3: Constructive -->
+    <line x1="355" y1="666" x2="380" y2="666" stroke="#00f0ff" stroke-width="2" stroke-dasharray="4 2" />
+    <circle cx="367" cy="666" r="3" fill="#ffffff" />
+    <text x="390" y="670" class="hud-dim">Constructive (Δφ = 2πm, Bright Fringe)</text>
+
+    <!-- Item 4: Destructive -->
+    <line x1="630" y1="666" x2="655" y2="666" stroke="#f43f5e" stroke-width="2" stroke-dasharray="4 2" />
+    <text x="665" y="670" class="hud-dim">Destructive Node (Δφ = (2m+1)π, Zero Intensity)</text>
+
+    <!-- Item 5: Quantum Detection Hits -->
+    <circle cx="945" cy="666" r="2.5" fill="#ffffff" filter="url(#glow)" />
+    <circle cx="952" cy="666" r="2" fill="#38bdf8" />
+    <text x="965" y="670" class="hud-dim">Individual Quantum Hits Accumulating Pattern</text>
+  </g>
+</svg>

@@ -1,0 +1,672 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <style type="text/css">
+      <![CDATA[
+        .hud-text { font-family: 'SF Pro Display', -apple-system, 'Segoe UI', Roboto, monospace; font-size: 11px; fill: #6b8afd; letter-spacing: 1.5px; }
+        .hud-title { font-family: 'SF Pro Display', -apple-system, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 700; fill: #00f0ff; letter-spacing: 2px; }
+        .hud-val { font-family: monospace; font-size: 11px; fill: #00f0ff; font-weight: bold; }
+        .hud-dim { fill: #3d4f7c; }
+      ]]>
+    </style>
+
+    <!-- Glowing Filters -->
+    <filter id="neon-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="headlight-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0.9  0 0 1 0 1  0 0 0 2 0"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="overpass-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
+      <feOffset dx="0" dy="22"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.75"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="ambient-drop" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14"/>
+      <feOffset dx="0" dy="18"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.6"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Gradients -->
+    <radialGradient id="space-bg" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#0e1329"/>
+      <stop offset="50%" stop-color="#070a17"/>
+      <stop offset="100%" stop-color="#020308"/>
+    </radialGradient>
+
+    <radialGradient id="nebula-cyan" cx="25%" cy="45%" r="40%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="nebula-magenta" cx="75%" cy="55%" r="45%">
+      <stop offset="0%" stop-color="#ff0077" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Track Gradients -->
+    <linearGradient id="underpass-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141c38"/>
+      <stop offset="50%" stop-color="#0b0f20"/>
+      <stop offset="100%" stop-color="#141a33"/>
+    </linearGradient>
+
+    <linearGradient id="overpass-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1a254d"/>
+      <stop offset="30%" stop-color="#2a3c7a"/>
+      <stop offset="50%" stop-color="#344d9e"/>
+      <stop offset="70%" stop-color="#2a3c7a"/>
+      <stop offset="100%" stop-color="#1a254d"/>
+    </linearGradient>
+
+    <linearGradient id="right-lobe-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1c2752"/>
+      <stop offset="40%" stop-color="#2a3b78"/>
+      <stop offset="70%" stop-color="#192348"/>
+      <stop offset="100%" stop-color="#0f1429"/>
+    </linearGradient>
+
+    <!-- Möbius Half-Twist Gradients: demonstrating single-sided transition -->
+    <linearGradient id="twist-enter-grad" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1c2752"/>
+      <stop offset="50%" stop-color="#151d3d"/>
+      <stop offset="100%" stop-color="#080c1a"/>
+    </linearGradient>
+
+    <linearGradient id="twist-exit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070a14"/>
+      <stop offset="40%" stop-color="#101730"/>
+      <stop offset="80%" stop-color="#1a254d"/>
+      <stop offset="100%" stop-color="#223269"/>
+    </linearGradient>
+
+    <!-- Rail Energy Gradients -->
+    <linearGradient id="rail-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="50%" stop-color="#7000ff"/>
+      <stop offset="100%" stop-color="#ff0077"/>
+    </linearGradient>
+
+    <linearGradient id="rail-magenta" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff0077"/>
+      <stop offset="50%" stop-color="#7000ff"/>
+      <stop offset="100%" stop-color="#00f0ff"/>
+    </linearGradient>
+
+    <linearGradient id="headlight-beam" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.85"/>
+      <stop offset="30%" stop-color="#00f0ff" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#00f0ff" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="plasma-thrust" x1="100%" y1="50%" x2="0%" y2="50%">
+      <stop offset="0%" stop-color="#ff0055"/>
+      <stop offset="40%" stop-color="#ff7700"/>
+      <stop offset="80%" stop-color="#00f0ff"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Rover Body Details -->
+    <linearGradient id="rover-hull" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#eaf3ff"/>
+      <stop offset="45%" stop-color="#9eb6db"/>
+      <stop offset="70%" stop-color="#4a5f8a"/>
+      <stop offset="100%" stop-color="#1d273d"/>
+    </linearGradient>
+
+    <linearGradient id="rover-cockpit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="60%" stop-color="#0055aa"/>
+      <stop offset="100%" stop-color="#001833"/>
+    </linearGradient>
+
+    <!-- Master 720 Degree Topological Centerline Motion Path -->
+    <!-- Two full loops around the non-orientable track = 720 degrees total traversal -->
+    <path id="centerline-720" d="
+      M 600,385
+      C 710,315 840,270 930,270
+      C 1010,270 1070,360 1070,430
+      C 1070,500 980,590 900,590
+      C 820,590 710,505 600,435
+      C 490,365 360,270 270,270
+      C 190,270 130,350 130,430
+      C 130,510 220,590 300,590
+      C 390,590 490,455 600,385
+      C 710,315 840,270 930,270
+      C 1010,270 1070,360 1070,430
+      C 1070,500 980,590 900,590
+      C 820,590 710,505 600,435
+      C 490,365 360,270 270,270
+      C 190,270 130,350 130,430
+      C 130,510 220,590 300,590
+      C 390,590 490,455 600,385 Z"/>
+
+    <!-- Reusable Vehicle (Rover) Symbol -->
+    <g id="rover-graphic">
+      <!-- Shadow Under Rover -->
+      <ellipse cx="0" cy="11" rx="20" ry="3.5" fill="#000000" opacity="0.6" filter="url(#ambient-drop)"/>
+
+      <!-- Headlight Light Cones Shining Onto Track Surface -->
+      <polygon points="14,1 95,-16 110,6 20,8" fill="url(#headlight-beam)" opacity="0.8" style="mix-blend-mode: screen;"/>
+      <polygon points="14,6 95,-2 110,18 20,12" fill="url(#headlight-beam)" opacity="0.8" style="mix-blend-mode: screen;"/>
+
+      <!-- Rear Ion Thruster Plasma Plume -->
+      <polygon points="-16,4 -36,0 -46,5 -36,10 -16,6" fill="url(#plasma-thrust)" opacity="0.95"/>
+      <ellipse cx="-16" cy="5" rx="2.5" ry="3.5" fill="#ffffff" filter="url(#neon-glow)"/>
+
+      <!-- Wheels / Maglev Skids (Contact Points With Track) -->
+      <!-- Rear Pod -->
+      <g transform="translate(-11, 7)">
+        <rect x="-4" y="-2" width="9" height="7" rx="2" fill="#0d131f" stroke="#00f0ff" stroke-width="1"/>
+        <line x1="-4" y1="1.5" x2="5" y2="1.5" stroke="#ff0077" stroke-width="1.2"/>
+        <circle cx="0.5" cy="1.5" r="1.5" fill="#00f0ff"/>
+      </g>
+      <!-- Front Pod -->
+      <g transform="translate(11, 7)">
+        <rect x="-4" y="-2" width="9" height="7" rx="2" fill="#0d131f" stroke="#00f0ff" stroke-width="1"/>
+        <line x1="-4" y1="1.5" x2="5" y2="1.5" stroke="#ff0077" stroke-width="1.2"/>
+        <circle cx="0.5" cy="1.5" r="1.5" fill="#00f0ff"/>
+      </g>
+
+      <!-- Chassis Base -->
+      <path d="M -16,6 L -13,-1 L 13,-1 L 18,6 L 14,9 L -13,9 Z" fill="#0f172a" stroke="#253554" stroke-width="1"/>
+
+      <!-- Main Hull Armor -->
+      <path d="M -15,2 L -10,-5 L 8,-5 L 16,1 L 14,6 L -13,6 Z" fill="url(#rover-hull)" stroke="#94a3b8" stroke-width="0.8"/>
+
+      <!-- Cyber Panel Accents -->
+      <path d="M -6,-5 L -4,3 L 6,3 L 8,-5 Z" fill="#1e293b" opacity="0.7"/>
+      <line x1="-10" y1="1" x2="12" y2="1" stroke="#00f0ff" stroke-width="0.8" opacity="0.9"/>
+      <circle cx="-1" cy="1" r="1.2" fill="#ff0077"/>
+
+      <!-- Aerodynamic Cockpit Canopy Visor -->
+      <path d="M -5,-5 Q 3,-13 10,-4 Q 4,-2 -5,-5 Z" fill="url(#rover-cockpit)" stroke="#00f0ff" stroke-width="1.2" filter="url(#headlight-glow)"/>
+
+      <!-- Twin High-Intensity LED Headlights -->
+      <circle cx="16" cy="1.5" r="2.2" fill="#ffffff" filter="url(#headlight-glow)"/>
+      <circle cx="15.5" cy="6.5" r="2.2" fill="#ffffff" filter="url(#headlight-glow)"/>
+
+      <!-- Communication Antenna Mast -->
+      <line x1="-9" y1="-5" x2="-14" y2="-12" stroke="#64748b" stroke-width="1"/>
+      <circle cx="-14.5" cy="-12.5" r="1" fill="#00f0ff" filter="url(#neon-glow)"/>
+    </g>
+  </defs>
+
+  <!-- Deep Cosmic Environment -->
+  <rect x="0" y="0" width="1200" height="800" fill="url(#space-bg)"/>
+  <rect x="0" y="0" width="1200" height="800" fill="url(#nebula-cyan)"/>
+  <rect x="0" y="0" width="1200" height="800" fill="url(#nebula-magenta)"/>
+
+  <!-- Perspective Space Grid (Floor Reference) -->
+  <g opacity="0.18">
+    <line x1="0" y1="680" x2="1200" y2="680" stroke="#2a3f78" stroke-width="1"/>
+    <line x1="0" y1="720" x2="1200" y2="720" stroke="#2a3f78" stroke-width="1"/>
+    <line x1="0" y1="760" x2="1200" y2="760" stroke="#2a3f78" stroke-width="1"/>
+    <line x1="100" y1="800" x2="450" y2="650" stroke="#2a3f78" stroke-width="1"/>
+    <line x1="300" y1="800" x2="520" y2="650" stroke="#2a3f78" stroke-width="1"/>
+    <line x1="500" y1="800" x2="590" y2="650" stroke="#2a3f78" stroke-width="1"/>
+    <line x1="700" y1="800" x2="660" y2="650" stroke="#2a3f78" stroke-width="1"/>
+    <line x1="900" y1="800" x2="730" y2="650" stroke="#2a3f78" stroke-width="1"/>
+    <line x1="1100" y1="800" x2="800" y2="650" stroke="#2a3f78" stroke-width="1"/>
+  </g>
+
+  <!-- Distant Celestial Stars / Coordinate Anchors -->
+  <g opacity="0.6">
+    <circle cx="180" cy="140" r="1.5" fill="#ffffff" opacity="0.8"/>
+    <circle cx="340" cy="90" r="1" fill="#00f0ff" opacity="0.5"/>
+    <circle cx="520" cy="160" r="1.5" fill="#ffffff" opacity="0.7"/>
+    <circle cx="780" cy="110" r="2" fill="#ff0077" opacity="0.6"/>
+    <circle cx="950" cy="170" r="1" fill="#ffffff" opacity="0.9"/>
+    <circle cx="1080" cy="90" r="1.5" fill="#00f0ff" opacity="0.4"/>
+    <circle cx="120" cy="650" r="1.5" fill="#ffffff" opacity="0.6"/>
+    <circle cx="1050" cy="670" r="1.5" fill="#ffffff" opacity="0.7"/>
+  </g>
+
+  <!-- Quantum Levitation Support Pylons -->
+  <g opacity="0.65">
+    <!-- Left Pylon -->
+    <path d="M 270,680 L 270,590 M 260,680 L 280,680" stroke="#1e2c52" stroke-width="3"/>
+    <ellipse cx="270" cy="590" rx="30" ry="8" fill="none" stroke="#00f0ff" stroke-width="1.5" opacity="0.7" filter="url(#neon-glow)"/>
+
+    <!-- Right Pylon -->
+    <path d="M 930,680 L 930,590 M 920,680 L 940,680" stroke="#1e2c52" stroke-width="3"/>
+    <ellipse cx="930" cy="590" rx="30" ry="8" fill="none" stroke="#ff0077" stroke-width="1.5" opacity="0.7" filter="url(#neon-glow)"/>
+
+    <!-- Center Underpass Foundation -->
+    <path d="M 600,680 L 600,455 M 585,680 L 615,680" stroke="#192342" stroke-width="4"/>
+    <ellipse cx="600" cy="455" rx="42" ry="10" fill="none" stroke="#4965ad" stroke-width="1.5" opacity="0.5"/>
+  </g>
+
+
+  <!-- LAYER 1: BACKGROUND MÖBIUS TRACK SEGMENTS -->
+  <!-- 1A: Center Underpass Ribbon Bed -->
+  <g id="track-underpass-group">
+    <!-- Underpass Ribbon Surface -->
+    <path d="
+      M 750,542
+      C 690,490 650,452 600,416
+      C 545,376 490,336 430,296
+      L 452,264
+      C 512,305 570,348 624,388
+      C 672,424 720,466 776,514 Z"
+      fill="url(#underpass-grad)"/>
+
+    <!-- Underpass Transverse Grid Ties / Magneto-Struts -->
+    <g stroke="#1a274f" stroke-width="1.5" opacity="0.6">
+      <line x1="730" y1="520" x2="752" y2="494"/>
+      <line x1="680" y1="478" x2="702" y2="452"/>
+      <line x1="630" y1="436" x2="652" y2="410"/>
+      <line x1="580" y1="394" x2="602" y2="368"/>
+      <line x1="530" y1="354" x2="552" y2="328"/>
+      <line x1="480" y1="312" x2="502" y2="286"/>
+    </g>
+
+    <!-- Underpass Rails -->
+    <!-- Inner Rail (Cyan to Purple) -->
+    <path d="
+      M 750,542
+      C 690,490 650,452 600,416
+      C 545,376 490,336 430,296"
+      fill="none" stroke="url(#rail-cyan)" stroke-width="2.5" opacity="0.65"/>
+    <!-- Outer Rail (Magenta to Purple) -->
+    <path d="
+      M 776,514
+      C 720,466 672,424 624,388
+      C 570,348 512,305 452,264"
+      fill="none" stroke="url(#rail-magenta)" stroke-width="2.5" opacity="0.55"/>
+
+    <!-- Underpass Centerline Light Ribbon -->
+    <path d="
+      M 763,528
+      C 705,478 661,438 612,402
+      C 557,362 501,320 441,280"
+      fill="none" stroke="#00f0ff" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.35"/>
+  </g>
+
+
+  <!-- LAYER 2: VEHICLE BACKGROUND PASS OCCLUSION LAYER -->
+  <!-- This rover instance is rendered BEHIND the Overpass.
+       It is active ONLY during the underpass transit (approx t = 2.8s to 5.2s and 10.8s to 13.2s).
+       At all other times its opacity is 0. -->
+  <g id="rover-background-layer">
+    <g id="rover-bg-motion">
+      <animateMotion dur="16s" repeatCount="indefinite" rotate="auto">
+        <mpath href="#centerline-720"/>
+      </animateMotion>
+
+      <!-- Exact discrete layer switching: active only when traversing behind overpass -->
+      <animate attributeName="opacity" dur="16s" repeatCount="indefinite"
+               calcMode="discrete"
+               keyTimes="0; 0.175; 0.325; 0.675; 0.825; 1"
+               values="0; 1;     0;     1;     0;     0" />
+
+      <!-- Inversion Transform matching the track's single-sided half-twist roll -->
+      <g id="rover-bg-flipper">
+        <animateTransform attributeName="transform" type="scale"
+          dur="16s" repeatCount="indefinite"
+          keyTimes="0; 0.3125; 0.34375; 0.375; 0.40625; 0.4375; 0.5; 0.8125; 0.84375; 0.875; 0.90625; 0.9375; 1"
+          values="1 1; 1 1;    1 0.5;   1 0.05; 1 -0.5;  1 -1;   1 -1; 1 -1;   1 -0.5;  1 -0.05; 1 0.5;   1 1;    1 1"/>
+        <use href="#rover-graphic" xlink:href="#rover-graphic"/>
+      </g>
+    </g>
+  </g>
+
+
+  <!-- LAYER 3: FOREGROUND OVERPASS DROP SHADOW -->
+  <!-- Visually projects the Overpass altitude onto the Underpass beneath it -->
+  <path d="
+    M 440,510
+    C 500,455 550,420 600,390
+    C 650,360 705,335 770,305
+    L 765,342
+    C 705,372 655,398 605,428
+    C 555,458 505,492 445,548 Z"
+    fill="#020307" opacity="0.82" filter="url(#overpass-shadow)"/>
+
+
+  <!-- LAYER 4: THE CONTINUOUS MÖBIUS HALF-TWIST (LEFT LOBE) -->
+  <!-- Demonstrates the authentic non-orientable topology:
+       The outer edge twists smoothly into the inner edge over 180 degrees. -->
+  <g id="track-twist-group">
+    <!-- Twist Approach (Upper Left Arc) -->
+    <path d="
+      M 430,296
+      C 370,256 310,246 250,252
+      C 195,257 155,285 130,335
+      C 114,367 116,400 126,424
+      L 134,424
+      C 126,400 126,372 140,344
+      C 162,298 200,274 252,270
+      C 308,266 366,274 452,264 Z"
+      fill="url(#twist-enter-grad)"/>
+
+    <!-- Twist Cusp & Surface Inversion (Edge-On Horizon: 180° Flip Zone) -->
+    <!-- As the ribbon passes through (128, 424), its apparent 2D width thins to its structural edge -->
+    <path d="
+      M 126,424
+      C 136,448 158,495 204,542
+      C 250,588 300,612 360,610
+      C 410,608 450,582 490,542
+      L 470,512
+      C 434,550 398,574 356,576
+      C 306,578 262,558 222,518
+      C 182,478 158,442 134,424 Z"
+      fill="url(#twist-exit-grad)"/>
+
+    <!-- Twist Region Magnetic Struts -->
+    <g stroke="#263866" stroke-width="1.2" opacity="0.5">
+      <line x1="330" y1="258" x2="336" y2="280"/>
+      <line x1="240" y1="262" x2="248" y2="282"/>
+      <line x1="170" y1="298" x2="182" y2="314"/>
+      <!-- Near the 90° vertical twist, ties align along the twist angle -->
+      <line x1="130" y1="365" x2="138" y2="375"/>
+      <line x1="130" y1="440" x2="140" y2="446"/>
+      <line x1="170" y1="500" x2="188" y2="488"/>
+      <line x1="240" y1="560" x2="256" y2="540"/>
+      <line x1="330" y1="595" x2="340" y2="572"/>
+      <line x1="420" y1="565" x2="436" y2="538"/>
+    </g>
+
+    <!-- Continuous Edge Rails Over the Twist:
+         Watch the Cyan Rail pass from the inner boundary, sweep through the edge-on cusp,
+         and emerge as the outer boundary on the lower bend! -->
+    <path d="
+      M 430,296
+      C 370,256 310,246 250,252
+      C 195,257 155,285 130,335
+      C 114,367 116,400 126,424
+      C 136,448 158,495 204,542
+      C 250,588 300,612 360,610
+      C 410,608 450,582 490,542"
+      fill="none" stroke="url(#rail-cyan)" stroke-width="2.6" filter="url(#neon-glow)"/>
+
+    <!-- Complementary Continuous Rail (Magenta):
+         Transitions inversely across the twist zone -->
+    <path d="
+      M 452,264
+      C 366,274 308,266 252,270
+      C 200,274 162,298 140,344
+      C 126,372 126,400 134,424
+      C 158,442 182,478 222,518
+      C 262,558 306,578 356,576
+      C 398,574 434,550 470,512"
+      fill="none" stroke="url(#rail-magenta)" stroke-width="2.6" filter="url(#neon-glow)"/>
+
+    <!-- Twist Centerline Marker -->
+    <path d="
+      M 441,280
+      C 360,270 270,270 200,305
+      C 145,340 120,385 130,424
+      C 140,465 185,525 245,565
+      C 305,600 400,585 480,527"
+      fill="none" stroke="#00f0ff" stroke-width="1.4" stroke-dasharray="7 6" opacity="0.6"/>
+  </g>
+
+
+  <!-- LAYER 5: FOREGROUND OVERPASS TRACK ARCH -->
+  <!-- Crosses directly in front of the Underpass, establishing unmistakable 3D perspective occlusion -->
+  <g id="track-overpass-group">
+    <!-- Overpass Ribbon Deck -->
+    <path d="
+      M 470,512
+      C 515,462 560,424 610,392
+      C 660,360 710,332 770,305
+      L 790,338
+      C 730,366 678,395 628,428
+      C 576,462 530,502 490,542 Z"
+      fill="url(#overpass-grad)" filter="url(#overpass-shadow)"/>
+
+    <!-- Beveled Side Wall of Overpass (Giving Physical Slab Thickness) -->
+    <path d="
+      M 490,542
+      C 530,502 576,462 628,428
+      C 678,395 730,366 790,338
+      L 792,347
+      C 732,375 679,405 629,438
+      C 577,472 531,512 491,552 Z"
+      fill="#0d1429" stroke="#1f2c52" stroke-width="0.8"/>
+
+    <!-- Overpass High-Tech Deck Transverse Struts -->
+    <g stroke="#3d5899" stroke-width="1.6" opacity="0.75">
+      <line x1="495" y1="524" x2="515" y2="496"/>
+      <line x1="540" y1="486" x2="560" y2="458"/>
+      <line x1="585" y1="450" x2="605" y2="422"/>
+      <line x1="630" y1="416" x2="650" y2="388"/>
+      <line x1="678" y1="382" x2="698" y2="354"/>
+      <line x1="728" y1="348" x2="748" y2="320"/>
+    </g>
+
+    <!-- Overpass Boundary Rails (Vibrant Foreground Glow) -->
+    <path d="
+      M 470,512
+      C 515,462 560,424 610,392
+      C 660,360 710,332 770,305"
+      fill="none" stroke="url(#rail-magenta)" stroke-width="3.2" filter="url(#neon-glow)"/>
+
+    <path d="
+      M 490,542
+      C 530,502 576,462 628,428
+      C 678,395 730,366 790,338"
+      fill="none" stroke="url(#rail-cyan)" stroke-width="3.2" filter="url(#neon-glow)"/>
+
+    <!-- Overpass Centerline Guide Strip -->
+    <path d="
+      M 480,527
+      C 522,482 568,443 619,410
+      C 669,377 720,349 780,321"
+      fill="none" stroke="#ffffff" stroke-width="1.8" stroke-dasharray="9 6" filter="url(#neon-glow)"/>
+  </g>
+
+
+  <!-- LAYER 6: FOREGROUND RIGHT LOBE (BANKED HIGH-SPEED CURVE) -->
+  <g id="track-right-lobe-group">
+    <!-- Right Lobe Ribbon Bed -->
+    <path d="
+      M 770,305
+      C 825,280 885,268 945,274
+      C 1005,280 1055,308 1082,358
+      C 1105,400 1102,448 1075,492
+      C 1042,544 988,582 925,594
+      C 870,604 812,580 750,542
+      L 776,514
+      C 828,546 876,564 920,556
+      C 968,546 1010,516 1038,474
+      C 1060,438 1062,402 1045,372
+      C 1022,332 984,312 935,308
+      C 885,304 835,316 790,338 Z"
+      fill="url(#right-lobe-grad)" filter="url(#ambient-drop)"/>
+
+    <!-- Right Lobe Transverse Support Struts -->
+    <g stroke="#2c3e73" stroke-width="1.5" opacity="0.6">
+      <line x1="825" y1="298" x2="838" y2="324"/>
+      <line x1="895" y1="286" x2="904" y2="312"/>
+      <line x1="965" y1="290" x2="968" y2="316"/>
+      <line x1="1032" y1="318" x2="1024" y2="344"/>
+      <line x1="1080" y1="375" x2="1056" y2="390"/>
+      <line x1="1085" y1="440" x2="1058" y2="444"/>
+      <line x1="1055" y1="505" x2="1032" y2="495"/>
+      <line x1="998" y1="562" x2="982" y2="540"/>
+      <line x1="925" y1="590" x2="920" y2="562"/>
+      <line x1="845" y1="578" x2="850" y2="550"/>
+    </g>
+
+    <!-- Seamless Edge Rails (Connecting Back to Complete Single Boundary Circuit) -->
+    <!-- Outer Rim Rail -->
+    <path d="
+      M 770,305
+      C 825,280 885,268 945,274
+      C 1005,280 1055,308 1082,358
+      C 1105,400 1102,448 1075,492
+      C 1042,544 988,582 925,594
+      C 870,604 812,580 750,542"
+      fill="none" stroke="url(#rail-magenta)" stroke-width="2.8" filter="url(#neon-glow)"/>
+
+    <!-- Inner Rim Rail -->
+    <path d="
+      M 790,338
+      C 835,316 885,304 935,308
+      C 984,312 1022,332 1045,372
+      C 1062,402 1060,438 1038,474
+      C 1010,516 968,546 920,556
+      C 876,564 828,546 776,514"
+      fill="none" stroke="url(#rail-cyan)" stroke-width="2.8" filter="url(#neon-glow)"/>
+
+    <!-- Right Lobe Centerline Track -->
+    <path d="
+      M 780,321
+      C 830,298 885,286 940,291
+      C 994,296 1038,320 1063,365
+      C 1082,400 1081,443 1056,483
+      C 1026,530 978,564 922,575
+      C 873,584 820,563 763,528"
+      fill="none" stroke="#ff0077" stroke-width="1.6" stroke-dasharray="8 6" opacity="0.7"/>
+  </g>
+
+
+  <!-- LAYER 7: FOREGROUND VEHICLE (ROVER) -->
+  <!-- Renders IN FRONT OF the Overpass and all foreground track segments.
+       Visible during the entire 720° traversal EXCEPT when diving under the Overpass arch.
+       Seamlessly handoffs with Layer 2 on the outer lobes where no occlusion conflicts exist. -->
+  <g id="rover-foreground-layer">
+    <g id="rover-fg-motion">
+      <animateMotion dur="16s" repeatCount="indefinite" rotate="auto">
+        <mpath href="#centerline-720"/>
+      </animateMotion>
+
+      <!-- Exact discrete layer switching: active during all foreground portions -->
+      <animate attributeName="opacity" dur="16s" repeatCount="indefinite"
+               calcMode="discrete"
+               keyTimes="0; 0.175; 0.325; 0.675; 0.825; 1"
+               values="1; 0;     1;     0;     1;     1" />
+
+      <!-- The Möbius Topological Inversion Engine:
+           - Circuit 1 (0° to 360°, t=0s to 8s):
+             Starts upright (scaleY = 1). As it enters the half-twist region (t=5s to 7s),
+             scaleY smoothly transitions from 1 -> 0 (edge-on) -> -1 (inverted).
+             At t=8s (360° point), the vehicle arrives at the overpass completely UPSIDE DOWN,
+             riding the inverted/inner surface of the Möbius strip!
+           - Circuit 2 (360° to 720°, t=8s to 16s):
+             Traverses the loop while inverted (scaleY = -1). Enters the twist once more (t=13s to 15s),
+             smoothly rolling from -1 -> 0 -> 1.
+             At t=16s (720° full traversal), it emerges back UPRIGHT in its initial orientation! -->
+      <g id="rover-fg-flipper">
+        <animateTransform attributeName="transform" type="scale"
+          dur="16s" repeatCount="indefinite"
+          keyTimes="0; 0.3125; 0.34375; 0.375; 0.40625; 0.4375; 0.5; 0.8125; 0.84375; 0.875; 0.90625; 0.9375; 1"
+          values="1 1; 1 1;    1 0.5;   1 0.05; 1 -0.5;  1 -1;   1 -1; 1 -1;   1 -0.5;  1 -0.05; 1 0.5;   1 1;    1 1"/>
+        <use href="#rover-graphic" xlink:href="#rover-graphic"/>
+      </g>
+    </g>
+  </g>
+
+
+  <!-- LAYER 8: SCI-FI TELEMETRY HUD OVERLAY -->
+  <!-- Provides topological telemetry and verifies continuous 720° single-sided navigation -->
+  <g id="telemetry-hud" opacity="0.92">
+    <!-- Top-Left System Header -->
+    <g transform="translate(45, 45)">
+      <rect x="0" y="0" width="280" height="70" rx="6" fill="#080d1c" fill-opacity="0.7" stroke="#1e2c52" stroke-width="1"/>
+      <path d="M 0,15 L 0,0 L 15,0 M 265,0 L 280,0 L 280,15 M 280,55 L 280,70 L 265,70 M 15,70 L 0,70 L 0,55" stroke="#00f0ff" stroke-width="2" fill="none"/>
+      <text x="18" y="24" class="hud-title">TOPOLOGY: MÖBIUS STRIP</text>
+      <text x="18" y="44" class="hud-text">MANIFOLD: <tspan class="hud-val">NON-ORIENTABLE (1-SIDED)</tspan></text>
+      <text x="18" y="59" class="hud-text">TRAVERSAL: <tspan class="hud-val">720° FULL CYCLE CONTINUOUS</tspan></text>
+    </g>
+
+    <!-- Top-Right Dynamic Circuit Telemetry Gauge -->
+    <g transform="translate(875, 45)">
+      <rect x="0" y="0" width="280" height="90" rx="6" fill="#080d1c" fill-opacity="0.7" stroke="#1e2c52" stroke-width="1"/>
+      <path d="M 0,15 L 0,0 L 15,0 M 265,0 L 280,0 L 280,15 M 280,75 L 280,90 L 265,90 M 15,90 L 0,90 L 0,75" stroke="#ff0077" stroke-width="2" fill="none"/>
+
+      <text x="18" y="24" class="hud-title" style="fill: #ff0077;">CRUISE TELEMETRY</text>
+
+      <!-- Active Surface Status Indication (Switches between Alpha and Beta surfaces at 360°) -->
+      <g transform="translate(18, 38)">
+        <text class="hud-text">SURFACE ORIENTATION:</text>
+
+        <!-- Circuit 1 Indicator -->
+        <g>
+          <animate attributeName="opacity" dur="16s" repeatCount="indefinite"
+                   calcMode="discrete" keyTimes="0; 0.5; 1" values="1; 0; 1"/>
+          <text x="140" y="0" class="hud-val" fill="#00f0ff">CIRCUIT 1: [OUTER / UPRIGHT]</text>
+          <rect x="0" y="10" width="118" height="4" rx="2" fill="#00f0ff"/>
+        </g>
+
+        <!-- Circuit 2 Indicator -->
+        <g>
+          <animate attributeName="opacity" dur="16s" repeatCount="indefinite"
+                   calcMode="discrete" keyTimes="0; 0.5; 1" values="0; 1; 0"/>
+          <text x="140" y="0" class="hud-val" fill="#ff0077">CIRCUIT 2: [INNER / INVERTED]</text>
+          <rect x="126" y="10" width="118" height="4" rx="2" fill="#ff0077"/>
+        </g>
+      </g>
+
+      <!-- 720 Degree Dual-Dial Animated Progress Meter -->
+      <g transform="translate(18, 68)">
+        <text class="hud-text">CYCLE PROGRESS:</text>
+        <rect x="110" y="-8" width="134" height="8" rx="4" fill="#131b33" stroke="#25355c" stroke-width="1"/>
+        <rect x="111" y="-7" width="132" height="6" rx="3" fill="url(#rail-cyan)">
+          <animate attributeName="width" dur="16s" repeatCount="indefinite"
+                   values="0; 132" keyTimes="0; 1"/>
+        </rect>
+      </g>
+    </g>
+
+    <!-- Bottom-Left Topological Twist Compass -->
+    <g transform="translate(45, 715)">
+      <circle cx="20" cy="20" r="18" fill="#080d1c" stroke="#00f0ff" stroke-width="1.5" opacity="0.8"/>
+      <!-- Compass Rotating Needle tracking vehicle orientation -->
+      <line x1="20" y1="20" x2="20" y2="5" stroke="#ff0077" stroke-width="2.5" stroke-linecap="round">
+        <animateTransform attributeName="transform" type="rotate"
+          dur="16s" repeatCount="indefinite"
+          from="0 20 20" to="720 20 20"/>
+      </line>
+      <circle cx="20" cy="20" r="3" fill="#00f0ff"/>
+      <text x="50" y="16" class="hud-val">720° ROTATION RESOLVER</text>
+      <text x="50" y="30" class="hud-text">NORMAL VECTOR: <tspan fill="#00f0ff">Continuous dN/dt Half-Twist Lock</tspan></text>
+    </g>
+
+    <!-- Bottom-Right Occlusion Layer Gate Status -->
+    <g transform="translate(930, 725)">
+      <text x="0" y="10" class="hud-text">OCCLUSION GATE:</text>
+      <!-- Real-time Occlusion Indicator -->
+      <g>
+        <animate attributeName="opacity" dur="16s" repeatCount="indefinite"
+                 calcMode="discrete"
+                 keyTimes="0; 0.175; 0.325; 0.675; 0.825; 1"
+                 values="0; 1;     0;     1;     0;     0" />
+        <rect x="115" y="-2" width="105" height="16" rx="3" fill="#ff0077" fill-opacity="0.25" stroke="#ff0077" stroke-width="1"/>
+        <text x="122" y="10" class="hud-val" fill="#ff0077">BACKGROUND</text>
+      </g>
+      <g>
+        <animate attributeName="opacity" dur="16s" repeatCount="indefinite"
+                 calcMode="discrete"
+                 keyTimes="0; 0.175; 0.325; 0.675; 0.825; 1"
+                 values="1; 0;     1;     0;     1;     1" />
+        <rect x="115" y="-2" width="105" height="16" rx="3" fill="#00f0ff" fill-opacity="0.25" stroke="#00f0ff" stroke-width="1"/>
+        <text x="122" y="10" class="hud-val" fill="#00f0ff">FOREGROUND</text>
+      </g>
+    </g>
+  </g>
+</svg>

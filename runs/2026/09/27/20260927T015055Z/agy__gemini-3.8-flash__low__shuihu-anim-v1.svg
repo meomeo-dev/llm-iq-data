@@ -1,0 +1,545 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" width="100%" height="100%">
+  <defs>
+    <!-- 渐变定义 -->
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#cfdfe8" />
+      <stop offset="60%" stop-color="#e9edf0" />
+      <stop offset="100%" stop-color="#eedfc6" />
+    </linearGradient>
+
+    <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#bba689" />
+      <stop offset="100%" stop-color="#937b60" />
+    </linearGradient>
+
+    <linearGradient id="wallGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c9beaf" />
+      <stop offset="100%" stop-color="#ded7cb" />
+    </linearGradient>
+
+    <linearGradient id="greenRobe" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2d6a4f" />
+      <stop offset="60%" stop-color="#1b4332" />
+      <stop offset="100%" stop-color="#081c15" />
+    </linearGradient>
+
+    <linearGradient id="butcherRobe" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#dfdcd3" />
+      <stop offset="100%" stop-color="#b0aba1" />
+    </linearGradient>
+
+    <linearGradient id="woodGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6a442a" />
+      <stop offset="100%" stop-color="#432818" />
+    </linearGradient>
+
+    <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fdfdfd" />
+      <stop offset="50%" stop-color="#cfd2d6" />
+      <stop offset="100%" stop-color="#7e858d" />
+    </linearGradient>
+
+    <!-- 阴影滤镜 -->
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" />
+      <feOffset dx="0" dy="5" />
+      <feComponentTransfer><feFuncA type="linear" slope="0.3" /></feComponentTransfer>
+      <feMerge>
+        <feMergeNode />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <style type="text/css">
+      <![CDATA[
+      /* 鲁提辖重拳砸下动效：蓄力高举 - 迅猛重击 - 稍作震颤回弹 */
+      @keyframes fistStrike {
+        0%, 100% {
+          transform: rotate(-15deg);
+        }
+        25% {
+          transform: rotate(-30deg); /* 向上高蓄力 */
+        }
+        40% {
+          transform: rotate(50deg); /* 迅猛重重砸下 */
+        }
+        48% {
+          transform: rotate(44deg); /* 命中震颤回弹 */
+        }
+        56% {
+          transform: rotate(48deg);
+        }
+        70% {
+          transform: rotate(10deg); /* 提拳上拉 */
+        }
+      }
+
+      /* 鲁提辖上身蓄力带动微动 */
+      @keyframes ludaTorso {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(-4deg); }
+        40% { transform: rotate(5deg); }
+        48% { transform: rotate(4deg); }
+        70% { transform: rotate(-1deg); }
+      }
+
+      /* 镇关西（郑屠）惊恐挣扎与受击抽搐动效 */
+      @keyframes zhengTuBody {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        39% { transform: translate(0, 0) rotate(0deg); }
+        41% { transform: translate(4px, 6px) rotate(2deg); } /* 拳风击地一瞬震动 */
+        47% { transform: translate(-2px, -3px) rotate(-1deg); }
+        55% { transform: translate(2px, 1px) rotate(1deg); }
+        65% { transform: translate(0, 0) rotate(0deg); }
+      }
+
+      /* 屠户蹬腿挣扎动效 */
+      @keyframes zhengTuLeg {
+        0%, 100% { transform: rotate(0deg); }
+        30% { transform: rotate(-12deg); }
+        50% { transform: rotate(6deg); }
+        75% { transform: rotate(-8deg); }
+      }
+
+      /* 屠户阻挡求饶手臂晃动 */
+      @keyframes zhengTuArm {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(15deg); }
+        40% { transform: rotate(-10deg) scale(0.95); }
+        60% { transform: rotate(12deg); }
+      }
+
+      /* 街坊畏惧怯步、后退缩脖动效 */
+      @keyframes crowdRecoil {
+        0%, 100% { transform: translate(0, 0); }
+        20% { transform: translate(2px, 0); }
+        40% { transform: translate(-8px, -2px); } /* 见重拳砸下惊退一步 */
+        55% { transform: translate(-6px, 0); }
+        80% { transform: translate(-3px, 0); }
+      }
+
+      /* 挂肉与幌子随风与气流轻晃 */
+      @keyframes meatSway {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(3deg); }
+      }
+
+      .fist-anim {
+        transform-origin: 475px 230px;
+        animation: fistStrike 1.4s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+      }
+
+      .torso-anim {
+        transform-origin: 430px 420px;
+        animation: ludaTorso 1.4s ease-in-out infinite;
+      }
+
+      .zhengtu-anim {
+        transform-origin: 520px 480px;
+        animation: zhengTuBody 1.4s ease infinite;
+      }
+
+      .zhengtu-leg-anim {
+        transform-origin: 590px 490px;
+        animation: zhengTuLeg 1.4s ease-in-out infinite;
+      }
+
+      .zhengtu-arm-anim {
+        transform-origin: 480px 440px;
+        animation: zhengTuArm 1.4s ease-in-out infinite;
+      }
+
+      .crowd-anim {
+        animation: crowdRecoil 2.8s ease-in-out infinite;
+      }
+
+      .sway-slow {
+        transform-origin: top center;
+        animation: meatSway 3.2s ease-in-out infinite;
+      }
+      ]]>
+    </style>
+  </defs>
+
+  <!-- 1. 背景：渭州天空与远景街景建筑 -->
+  <rect x="0" y="0" width="1000" height="420" fill="url(#skyGrad)" />
+  <rect x="0" y="420" width="1000" height="230" fill="url(#groundGrad)" />
+
+  <!-- 街道地面纹理与石缝 -->
+  <path d="M 0,440 L 1000,440 M 0,490 L 1000,490 M 0,550 L 1000,550 M 0,610 L 1000,610" stroke="#877054" stroke-width="1.5" stroke-dasharray="25,35,15,40" />
+  <path d="M 120,440 L 100,490 M 340,440 L 320,490 M 700,440 L 680,490 M 890,440 L 860,490" stroke="#877054" stroke-width="1.2" opacity="0.6" />
+  <path d="M 220,490 L 200,550 M 520,490 L 490,550 M 800,490 L 760,550" stroke="#877054" stroke-width="1.2" opacity="0.6" />
+
+  <!-- 远景宋代青砖瓦檐房屋 -->
+  <g id="townArchitecture">
+    <!-- 远景左侧民居 -->
+    <polygon points="0,210 130,170 260,210 260,420 0,420" fill="url(#wallGrad)" />
+    <!-- 飞檐屋顶 -->
+    <path d="M -10,215 Q 130,150 270,215 L 260,200 Q 130,140 0,200 Z" fill="#3a4046" />
+    <line x1="40" y1="260" x2="90" y2="260" stroke="#5d4037" stroke-width="4" />
+    <rect x="45" y="265" width="40" height="60" fill="#503525" opacity="0.8" />
+
+    <!-- 远景中偏右屋檐背景 -->
+    <polygon points="680,240 850,190 1010,240 1010,420 680,420" fill="#cfc5b5" />
+    <path d="M 660,245 Q 850,175 1020,245 L 1010,230 Q 850,165 670,230 Z" fill="#3a4046" />
+
+    <!-- 状元桥畔郑家肉铺门面门檐 -->
+    <!-- 粗木柱子支撑 -->
+    <rect x="230" y="110" width="490" height="310" fill="#d9cfbe" />
+    <!-- 铺头青瓦大挑檐 -->
+    <path d="M 190,140 Q 480,75 750,140 L 740,115 Q 480,60 200,115 Z" fill="#2d3339" />
+    <!-- 斗栱与挑梁 -->
+    <rect x="235" y="135" width="20" height="285" fill="#532d18" />
+    <rect x="695" y="135" width="20" height="285" fill="#532d18" />
+    <line x1="220" y1="145" x2="720" y2="145" stroke="#3b1d0c" stroke-width="12" />
+
+    <!-- 肉铺门匾与酒/肉幌子 -->
+    <rect x="360" y="150" width="200" height="50" rx="4" fill="#432818" stroke="#cca45d" stroke-width="2" />
+    <text x="460" y="184" font-family="'Songti SC', 'SimSun', serif" font-size="24" fill="#eed9b3" font-weight="bold" text-anchor="middle" letter-spacing="6">郑家肉铺</text>
+
+    <!-- 肉幌子布幔（随风微动） -->
+    <g class="sway-slow" style="transform-origin: 275px 150px;">
+      <line x1="250" y1="150" x2="275" y2="185" stroke="#777" stroke-width="2" />
+      <polygon points="265,185 295,185 290,270 260,270" fill="#8f1d1d" />
+      <rect x="268" y="195" width="19" height="55" fill="#f8f4ea" />
+      <text x="278" y="235" font-family="'Kaiti SC', 'STKaiti', serif" font-size="16" fill="#8f1d1d" font-weight="bold" text-anchor="middle">肉</text>
+    </g>
+  </g>
+
+  <!-- 2. 肉案、悬挂猪肉及散落器具（案板与案上肉） -->
+  <g id="meatStalls">
+    <!-- 肉案一：左侧大肉案 -->
+    <g id="benchLeft" filter="url(#dropShadow)">
+      <!-- 案底横木与腿 -->
+      <polygon points="200,340 370,340 380,450 190,450" fill="none" />
+      <rect x="205" y="380" width="16" height="85" fill="#391e10" />
+      <rect x="350" y="380" width="16" height="85" fill="#391e10" />
+      <line x1="210" y1="435" x2="360" y2="435" stroke="#2a1409" stroke-width="8" />
+      <!-- 厚实木质大案板桌面 -->
+      <polygon points="190,380 375,380 365,365 185,365" fill="#72472b" />
+      <rect x="185" y="380" width="190" height="15" fill="#4d2c16" rx="2" />
+      <!-- 肉案上大砧板 -->
+      <ellipse cx="250" cy="372" rx="42" ry="7" fill="#8c5835" stroke="#3b1d0c" stroke-width="2" />
+      <!-- 砧板上未切完的大肉块 -->
+      <path d="M 230,370 Q 255,348 275,368 Q 285,373 250,375 Z" fill="#b83838" stroke="#681a1a" stroke-width="1.5" />
+      <path d="M 238,366 Q 255,354 268,367" stroke="#fae1dd" stroke-width="3" fill="none" />
+    </g>
+
+    <!-- 肉案二：右侧连架肉案 -->
+    <g id="benchRight" filter="url(#dropShadow)">
+      <rect x="620" y="390" width="15" height="75" fill="#391e10" />
+      <rect x="740" y="390" width="15" height="75" fill="#391e10" />
+      <!-- 桌面 -->
+      <polygon points="605,390 760,390 750,375 600,375" fill="#72472b" />
+      <rect x="600" y="390" width="160" height="14" fill="#4d2c16" rx="2" />
+      <!-- 案上搁置铁秤盘与砝码 -->
+      <ellipse cx="640" cy="382" rx="20" ry="4" fill="#9fa5aa" />
+      <polygon points="638,382 642,374 644,382" fill="#4a4d50" />
+    </g>
+
+    <!-- 横木铁钩上倒挂的两扇半片生猪肉 -->
+    <g id="hangingPork">
+      <!-- 悬挂横杆 -->
+      <rect x="220" y="215" width="220" height="7" fill="#2d1508" />
+      <!-- 吊钩一及挂肉（轻晃） -->
+      <g class="sway-slow" style="transform-origin: 270px 220px;">
+        <path d="M 270,222 L 270,238 Q 270,245 264,242" fill="none" stroke="#222" stroke-width="2.5" />
+        <!-- 半扇条肉 -->
+        <path d="M 264,242 C 250,255 242,280 248,310 C 252,328 266,340 272,325 C 278,310 286,290 280,265 C 276,248 268,242 264,242 Z" fill="#b93b3b" stroke="#781b1b" stroke-width="2" />
+        <!-- 肥膘白肉条纹 -->
+        <path d="M 258,255 C 250,275 250,305 258,322" stroke="#fff0ee" stroke-width="4.5" fill="none" stroke-linecap="round" />
+        <path d="M 266,260 C 263,280 263,300 268,312" stroke="#fff0ee" stroke-width="3" fill="none" stroke-linecap="round" />
+      </g>
+      <!-- 吊钩二及挂肉排 -->
+      <g class="sway-slow" style="transform-origin: 345px 220px; animation-delay: -1.2s;">
+        <path d="M 345,222 L 345,240 Q 345,247 350,244" fill="none" stroke="#222" stroke-width="2.5" />
+        <path d="M 350,244 C 362,255 372,285 365,315 C 358,340 340,335 336,315 C 330,285 335,260 346,244 Z" fill="#9d2828" stroke="#681515" stroke-width="2" />
+        <path d="M 343,252 C 340,275 342,305 348,322" stroke="#fff0ee" stroke-width="4" fill="none" stroke-linecap="round" />
+      </g>
+    </g>
+
+    <!-- 地上散落物：荷叶包与剔骨尖刀 -->
+    <g id="groundClutter" filter="url(#dropShadow)">
+      <!-- 撕开/包肉的散落枯绿荷叶包一 -->
+      <path d="M 330,500 C 315,485 285,490 280,510 C 275,528 305,542 328,536 C 348,530 355,510 330,500 Z" fill="#587b4c" stroke="#334d2a" stroke-width="1.5" />
+      <path d="M 305,512 L 290,498 M 305,512 L 335,502 M 305,512 L 315,532 M 305,512 L 285,524" stroke="#2d4424" stroke-width="1" />
+      <!-- 荷叶中漏出的碎白肥肉丁与红瘦肉 -->
+      <ellipse cx="308" cy="510" rx="9" ry="5" fill="#a83232" />
+      <circle cx="312" cy="508" r="3" fill="#fdf0ed" />
+      <circle cx="304" cy="511" r="2.5" fill="#fdf0ed" />
+      <!-- 散落裹红绳 -->
+      <path d="M 285,532 Q 275,548 290,555 T 310,550" fill="none" stroke="#9e2a2b" stroke-width="1.8" />
+
+      <!-- 散落荷叶包二（半扣在地） -->
+      <path d="M 610,530 C 595,520 575,525 570,540 C 565,555 585,565 605,560 C 620,555 625,540 610,530 Z" fill="#698f59" stroke="#38522f" stroke-width="1.5" />
+      <path d="M 590,542 Q 600,532 612,538" stroke="#38522f" stroke-width="1" fill="none" />
+
+      <!-- 地上掉落的精钢剔骨尖刀（凶器落地，寒光逼人） -->
+      <g transform="translate(370, 520) rotate(-22)">
+        <!-- 尖刀阴影 -->
+        <path d="M -5,8 L 65,3 L 60,11 Z" fill="#000" opacity="0.25" />
+        <!-- 木质刀柄 -->
+        <rect x="0" y="0" width="26" height="8" rx="2" fill="#5a3118" stroke="#2b1407" stroke-width="1.2" />
+        <circle cx="6" cy="4" r="1.2" fill="#cca45d" />
+        <circle cx="14" cy="4" r="1.2" fill="#cca45d" />
+        <circle cx="20" cy="4" r="1.2" fill="#cca45d" />
+        <!-- 护手 -->
+        <rect x="25" y="-2" width="4" height="12" rx="1" fill="#858b90" stroke="#333" stroke-width="1" />
+        <!-- 弯弧锋利剔骨刃身 -->
+        <path d="M 29,0 L 72,1 Q 88,4 82,9 L 29,7 Z" fill="url(#bladeGrad)" stroke="#495057" stroke-width="1" />
+        <!-- 刀刃血槽与反光刃线 -->
+        <path d="M 32,2 L 68,3" stroke="#ffffff" stroke-width="1" stroke-linecap="round" />
+        <line x1="33" y1="4.5" x2="62" y2="4.5" stroke="#8b939c" stroke-width="0.8" />
+      </g>
+    </g>
+  </g>
+
+  <!-- 3. 远景围观街坊群众（畏惧退缩、抱臂掩面、不敢上前） -->
+  <g id="onlookingCrowd" class="crowd-anim">
+    <!-- 投射阴影 -->
+    <ellipse cx="850" cy="435" rx="100" ry="12" fill="#000" opacity="0.18" />
+
+    <!-- 街坊甲：伸颈吃惊老者 -->
+    <g transform="translate(760, 270)">
+      <!-- 身体长袍 -->
+      <path d="M 25,75 L 45,70 L 60,150 L 15,150 Z" fill="#6c757d" stroke="#343a40" stroke-width="1.5" />
+      <!-- 头颈面容 -->
+      <circle cx="35" cy="55" r="15" fill="#dfc09f" stroke="#704e2e" stroke-width="1.2" />
+      <!-- 束发巾 -->
+      <polygon points="23,50 48,45 42,32 25,36" fill="#343a40" />
+      <!-- 惊骇五官 -->
+      <circle cx="31" cy="53" r="1.8" fill="#222" />
+      <ellipse cx="28" cy="62" rx="2.5" ry="3.5" fill="#442" />
+      <!-- 举手阻挡/劝阻势 -->
+      <path d="M 30,85 Q 10,95 8,115" stroke="#dfc09f" stroke-width="6" stroke-linecap="round" fill="none" />
+    </g>
+
+    <!-- 街坊乙：胆小后仰汉子（抱臂） -->
+    <g transform="translate(815, 260)">
+      <path d="M 25,85 L 55,80 L 65,160 L 15,160 Z" fill="#495867" stroke="#222f3e" stroke-width="1.5" />
+      <circle cx="42" cy="60" r="16" fill="#d2a679" stroke="#633918" stroke-width="1.2" />
+      <path d="M 30,55 Q 42,40 55,50 Z" fill="#212529" />
+      <circle cx="37" cy="58" r="1.8" fill="#111" />
+      <!-- 缩颈后倾与两手拢入袖中 -->
+      <ellipse cx="38" cy="102" rx="18" ry="10" fill="#34414f" stroke="#222f3e" stroke-width="1.5" />
+    </g>
+
+    <!-- 街坊丙：扯衣欲退的妇人/邻舍 -->
+    <g transform="translate(875, 280)">
+      <path d="M 25,70 L 55,70 L 70,140 L 10,140 Z" fill="#8d775f" stroke="#483c32" stroke-width="1.5" />
+      <!-- 掩面手势 -->
+      <circle cx="35" cy="50" r="13" fill="#e0bca0" stroke="#684225" stroke-width="1.2" />
+      <path d="M 25,43 Q 36,36 46,45 Z" fill="#1c1917" />
+      <path d="M 45,75 Q 35,65 30,58" stroke="#e0bca0" stroke-width="5" stroke-linecap="round" fill="none" />
+    </g>
+
+    <!-- 街坊丁：远端探头议论者 -->
+    <g transform="translate(930, 275)">
+      <path d="M 20,70 L 45,70 L 50,145 L 10,145 Z" fill="#576574" stroke="#222f3e" stroke-width="1.5" />
+      <circle cx="30" cy="52" r="14" fill="#cf9e76" stroke="#5d3516" stroke-width="1.2" />
+      <rect x="20" y="40" width="18" height="9" fill="#1e272e" rx="2" />
+    </g>
+  </g>
+
+  <!-- 4. 被制服在地、肥胖挣扎的“镇关西”郑屠 -->
+  <g id="zhenGuanXiGroup" class="zhengtu-anim">
+    <!-- 地面受压阴影 -->
+    <ellipse cx="530" cy="495" rx="90" ry="25" fill="#000" opacity="0.32" />
+
+    <!-- 屠户仰面倒地的肥硕躯体与四肢 -->
+    <g id="butcherBody">
+      <!-- 仰倒在地的肥腿一（受制压底） -->
+      <path d="M 520,470 Q 560,490 600,485 L 590,515 Q 540,515 500,490 Z" fill="#8a8175" stroke="#433e37" stroke-width="2" />
+      <!-- 挣扎乱蹬的右肥腿（带动画） -->
+      <g class="zhengtu-leg-anim">
+        <!-- 大腿至小腿 -->
+        <path d="M 550,475 Q 610,460 635,430 L 655,445 Q 625,485 565,495 Z" fill="#a39a8e" stroke="#433e37" stroke-width="2" />
+        <!-- 蹬飞扯开的布鞋 -->
+        <ellipse cx="645" cy="432" rx="14" ry="9" fill="#2b2d42" transform="rotate(-25, 645, 432)" />
+        <path d="M 638,438 L 655,430" stroke="#f8f9fa" stroke-width="2.5" />
+      </g>
+
+      <!-- 肥胖滚圆的白布油腻肚子与身躯 -->
+      <path d="M 450,450 C 450,405 540,395 565,445 C 585,485 540,520 460,505 C 440,495 440,470 450,450 Z" fill="url(#butcherRobe)" stroke="#555" stroke-width="2" />
+      <!-- 敞开的油污围裙与内衫褶皱 -->
+      <path d="M 465,425 Q 520,430 550,455" stroke="#797063" stroke-width="3" fill="none" />
+      <path d="M 455,455 Q 515,465 540,490" stroke="#797063" stroke-width="3" fill="none" />
+      <!-- 围裙系绳散乱断开 -->
+      <path d="M 490,420 Q 470,395 455,405" stroke="#3d2617" stroke-width="2" fill="none" />
+
+      <!-- 郑屠胖大头颅（仰面朝天、惊恐绝望、披头散发） -->
+      <g id="butcherHead" transform="translate(565, 440)">
+        <!-- 散乱发髻 -->
+        <path d="M -5,15 Q -10,-10 15,-15 Q 35,-15 40,10 Q 30,28 10,25 Z" fill="#1f1f1f" />
+        <!-- 胖下巴与脸盘 -->
+        <path d="M -2,0 C 15,-10 35,-5 42,12 C 48,28 35,45 15,42 C -5,40 -12,20 -2,0 Z" fill="#f0cbb1" stroke="#875338" stroke-width="1.8" />
+        <!-- 双下巴肥肉皱褶 -->
+        <path d="M 5,32 Q 18,38 30,30" stroke="#a26848" stroke-width="2" fill="none" />
+        <!-- 惊骇圆瞪的失神双眼 -->
+        <ellipse cx="12" cy="12" rx="4" ry="5" fill="#fff" stroke="#444" stroke-width="0.8" />
+        <circle cx="12" cy="11" r="2" fill="#111" />
+        <ellipse cx="26" cy="15" rx="4" ry="5" fill="#fff" stroke="#444" stroke-width="0.8" />
+        <circle cx="25" cy="14" r="2" fill="#111" />
+        <!-- 绝望斜八字眉 -->
+        <line x1="8" y1="5" x2="16" y2="8" stroke="#222" stroke-width="2.2" stroke-linecap="round" />
+        <line x1="28" y1="9" x2="22" y2="7" stroke="#222" stroke-width="2.2" stroke-linecap="round" />
+        <!-- 蒜头大鼻 -->
+        <ellipse cx="18" cy="19" rx="3.5" ry="2.5" fill="#dfa285" />
+        <!-- 惨叫告饶张开的大口（无血腥，突出惊叫神态） -->
+        <path d="M 12,25 Q 18,22 25,27 Q 22,38 14,35 Z" fill="#4d1919" stroke="#772b2b" stroke-width="1.2" />
+        <path d="M 14,26 Q 18,28 23,27" fill="#fff" />
+        <!-- 散落两旁乱发 -->
+        <path d="M 30,22 Q 45,30 48,45 M 25,32 Q 40,42 42,55" stroke="#1f1f1f" stroke-width="2" fill="none" />
+      </g>
+
+      <!-- 郑屠两只挥舞求饶遮挡的短胖手臂 -->
+      <!-- 贴地无力之左臂 -->
+      <path d="M 470,480 Q 485,520 500,535" stroke="#d5ab92" stroke-width="14" stroke-linecap="round" fill="none" />
+      <!-- 向上招架乱摇的右臂（带动画） -->
+      <g class="zhengtu-arm-anim">
+        <path d="M 500,430 Q 495,385 475,360" stroke="#f0cbb1" stroke-width="16" stroke-linecap="round" fill="none" />
+        <!-- 抓狂颤抖的胖手掌 -->
+        <ellipse cx="473" cy="355" rx="9" ry="8" fill="#f0cbb1" />
+        <!-- 手指 -->
+        <path d="M 467,350 L 460,342 M 471,348 L 468,338 M 477,349 L 476,339 M 481,353 L 485,345" stroke="#f0cbb1" stroke-width="4.5" stroke-linecap="round" />
+      </g>
+    </g>
+  </g>
+
+  <!-- 5. 核心主角：“花和尚”鲁提辖（鲁达）巍然傲立、踏胸抡拳 -->
+  <g id="luDaHeroGroup">
+    <!-- 鲁智深下盘投影 -->
+    <ellipse cx="400" cy="555" rx="80" ry="18" fill="#000" opacity="0.38" filter="url(#dropShadow)" />
+
+    <!-- 鲁提辖下盘腿脚（如苍松磐石） -->
+    <!-- 左腿稳稳踏在地面（弓步后撑支撑点） -->
+    <g id="ludaLeftLeg">
+      <!-- 扎腿肥大战袍与护膝裤管 -->
+      <path d="M 350,380 L 320,480 L 280,535 L 325,545 L 360,485 L 385,395 Z" fill="#1b4332" stroke="#081c15" stroke-width="2" />
+      <!-- 黑色行缠与登云皂靴 -->
+      <path d="M 280,535 L 325,545 L 320,565 L 260,565 C 255,550 265,535 280,535 Z" fill="#1e1e24" stroke="#000" stroke-width="2" />
+      <path d="M 260,565 L 320,565" stroke="#fff" stroke-width="3" />
+    </g>
+
+    <!-- 右腿巨力踏定——铁靴一脚牢牢踩住屠户胸腹要害 -->
+    <g id="ludaRightLeg">
+      <path d="M 400,380 L 450,430 L 465,465 L 435,475 L 415,435 L 380,390 Z" fill="#2d6a4f" stroke="#081c15" stroke-width="2" />
+      <!-- 踩在郑屠肚腹上的黑皂靴 -->
+      <path d="M 455,455 L 490,470 L 485,488 L 435,482 L 440,462 Z" fill="#1e1e24" stroke="#000" stroke-width="2" />
+      <!-- 白厚底靴边 -->
+      <path d="M 435,482 L 485,488" stroke="#e9ecef" stroke-width="4" stroke-linecap="round" />
+    </g>
+
+    <!-- 鲁达身躯（躯干随挥拳微动） -->
+    <g class="torso-anim">
+      <!-- 绿色战袍下摆（风扬飘逸） -->
+      <path d="M 325,360 Q 280,420 260,455 C 290,450 350,440 375,420 Z" fill="#2d6a4f" opacity="0.9" />
+      <path d="M 360,370 Q 370,440 395,460 C 410,430 420,400 410,370 Z" fill="#1b4332" />
+
+      <!-- 虎背熊腰的雄健躯干（军官战袍，系着压口博带） -->
+      <path d="M 330,230 L 440,225 L 435,380 L 335,380 Z" fill="url(#greenRobe)" stroke="#0b2416" stroke-width="2.5" />
+
+      <!-- 锦边盘领与护胸暗纹 -->
+      <path d="M 360,230 Q 390,265 410,230" fill="none" stroke="#b08938" stroke-width="4" />
+      <path d="M 365,228 Q 390,285 415,227" fill="none" stroke="#852b2b" stroke-width="2" />
+
+      <!-- 粗大鞓带（蛮狮宝带/皮腰带）与腰刀挂钩 -->
+      <rect x="330" y="340" width="106" height="20" rx="3" fill="#3a1c0d" stroke="#1d0a02" stroke-width="1.8" />
+      <!-- 铜质带扣 -->
+      <rect x="370" y="337" width="22" height="26" rx="2" fill="#d4af37" stroke="#8c6d1a" stroke-width="1.5" />
+      <circle cx="381" cy="350" r="3" fill="#3a1c0d" />
+
+      <!-- 鲁达左臂（青筋暴起，按定下压平衡） -->
+      <g id="ludaLeftArm">
+        <!-- 粗壮左大臂与小臂 -->
+        <path d="M 335,240 Q 280,280 295,335" stroke="#1b4332" stroke-width="28" stroke-linecap="round" fill="none" />
+        <!-- 护腕护手 -->
+        <path d="M 292,325 L 305,350" stroke="#7f4f24" stroke-width="22" stroke-linecap="round" fill="none" />
+        <!-- 紧绷钢爪般的左手大铁拳/按压掌 -->
+        <circle cx="308" cy="362" r="14" fill="#d99867" stroke="#733d16" stroke-width="1.5" />
+        <path d="M 300,355 Q 312,360 320,368" stroke="#633110" stroke-width="2" fill="none" />
+      </g>
+
+      <!-- 鲁达豹头环眼之头部（威武粗豪、怒发冲冠） -->
+      <g id="ludaHead" transform="translate(370, 160)">
+        <!-- 缁色提辖官人缁撮头巾（四方侧翅幞头） -->
+        <path d="M -15,10 C -15,-25 20,-35 45,-20 C 60,-10 65,15 55,25 Z" fill="#1c1917" stroke="#000" stroke-width="2" />
+        <!-- 头巾后飘折带 -->
+        <path d="M -10,0 C -35,-5 -45,15 -50,35 C -35,25 -25,18 -10,12 Z" fill="#292524" />
+        <rect x="5" y="-5" width="24" height="8" rx="2" fill="#991b1b" />
+
+        <!-- 脸庞（面如重枣、阳刚威武） -->
+        <path d="M -5,12 C 15,10 40,12 45,28 C 48,45 35,68 18,70 C -2,70 -12,45 -5,12 Z" fill="#d99867" stroke="#874a23" stroke-width="2" />
+
+        <!-- 根根直竖的满腮虬髯钢须（倒竖虎须） -->
+        <path d="M -14,25 Q -25,45 -18,65 Q -10,85 10,92 Q 35,95 48,78 Q 58,55 52,28" fill="#171717" stroke="#0a0a0a" stroke-width="2.5" />
+        <path d="M -8,55 L -18,68 M -2,68 L -8,85 M 12,78 L 14,96 M 28,75 L 36,90 M 42,60 L 54,72" stroke="#171717" stroke-width="2.5" stroke-linecap="round" />
+
+        <!-- 环眼圆睁（正义怒火）与扫帚浓眉 -->
+        <!-- 倒竖浓眉 -->
+        <path d="M -2,22 L 14,17 M 42,22 L 24,18" stroke="#0f0f10" stroke-width="4.5" stroke-linecap="round" />
+        <!-- 怒目双眼 -->
+        <ellipse cx="6" cy="28" rx="5" ry="6" fill="#fff" stroke="#333" stroke-width="1" />
+        <circle cx="7" cy="28" r="3" fill="#000" />
+        <circle cx="8" cy="27" r="1" fill="#fff" />
+
+        <ellipse cx="32" cy="29" rx="5" ry="6" fill="#fff" stroke="#333" stroke-width="1" />
+        <circle cx="31" cy="29" r="3" fill="#000" />
+        <circle cx="32" cy="28" r="1" fill="#fff" />
+
+        <!-- 刚毅阔鼻 -->
+        <path d="M 18,24 L 15,38 L 24,38" fill="none" stroke="#803f19" stroke-width="2.5" stroke-linecap="round" />
+
+        <!-- 怒喝阔口 -->
+        <path d="M 8,48 Q 18,44 28,49 Q 20,62 8,48 Z" fill="#3f0f0f" stroke="#1f0505" stroke-width="1.5" />
+        <path d="M 11,48 Q 18,50 25,49" stroke="#fff" stroke-width="2" fill="none" />
+      </g>
+    </g>
+
+    <!-- 6. 动效重中之重：鲁提辖高举抡起、重重砸下的夺命铁拳与右臂（独立层） -->
+    <g class="fist-anim">
+      <!-- 鲁达魁梧右肩与高举右臂大臂 -->
+      <path d="M 440,230 Q 470,180 500,120" stroke="#2d6a4f" stroke-width="32" stroke-linecap="round" fill="none" />
+      <path d="M 438,230 Q 465,185 492,130" stroke="#1b4332" stroke-width="10" stroke-linecap="round" fill="none" opacity="0.4" />
+
+      <!-- 紧束小臂（绿色锦袍挽袖 + 棕皮护臂缠带） -->
+      <path d="M 500,120 L 528,75" stroke="#7f4f24" stroke-width="26" stroke-linecap="round" fill="none" />
+      <!-- 护臂金铜箍与扎带 -->
+      <line x1="490" y1="115" x2="518" y2="130" stroke="#d4af37" stroke-width="3" />
+      <line x1="508" y1="90" x2="532" y2="102" stroke="#d4af37" stroke-width="3" />
+
+      <!-- 粗壮手腕与沙钵大的铁拳 -->
+      <g transform="translate(538, 55)">
+        <!-- 拳骨阴影与手腕骨 -->
+        <circle cx="0" cy="5" r="16" fill="#c58352" />
+        <!-- 紧攥拳头（醋钵大小的拳头，青筋凸起） -->
+        <rect x="-14" y="-12" width="28" height="26" rx="8" fill="#d99867" stroke="#7c3f15" stroke-width="2" />
+        <!-- 攥紧的四指关节 -->
+        <path d="M -12,-8 Q 0,-6 12,-8" stroke="#7c3f15" stroke-width="2" fill="none" />
+        <circle cx="-9" cy="-3" r="4.5" fill="#e2a87c" stroke="#7c3f15" stroke-width="1.2" />
+        <circle cx="-1" cy="-2" r="4.8" fill="#e2a87c" stroke="#7c3f15" stroke-width="1.2" />
+        <circle cx="7" cy="-2" r="4.8" fill="#e2a87c" stroke="#7c3f15" stroke-width="1.2" />
+        <circle cx="14" cy="-1" r="4" fill="#e2a87c" stroke="#7c3f15" stroke-width="1.2" />
+        <!-- 刚劲大拇指紧扣其上 -->
+        <path d="M -12,8 Q -2,6 8,1" stroke="#d99867" stroke-width="7" stroke-linecap="round" fill="none" />
+        <path d="M -12,8 Q -2,6 8,1" stroke="#7c3f15" stroke-width="1.5" stroke-linecap="round" fill="none" />
+        <!-- 拳背紧绷青筋 -->
+        <path d="M -4,12 Q 2,6 0,0" stroke="#255f85" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.8" />
+      </g>
+
+      <!-- 铁拳破空劲风动效线（呼呼风声） -->
+      <g opacity="0.6">
+        <path d="M 520,30 Q 560,70 540,110" stroke="#f8f9fa" stroke-width="2" fill="none" stroke-dasharray="8,6" />
+        <path d="M 545,40 Q 585,85 565,125" stroke="#f8f9fa" stroke-width="3" fill="none" stroke-dasharray="12,8" />
+      </g>
+    </g>
+  </g>
+
+  <!-- 7. 气氛与前景装饰（落叶与阳光尘埃，烘托苍劲历史感） -->
+  <g id="foregroundVibe" opacity="0.65">
+    <circle cx="480" cy="460" r="1.5" fill="#fdf0ed" />
+    <circle cx="430" cy="510" r="2" fill="#ffe8d6" />
+    <circle cx="580" cy="520" r="1.8" fill="#ddbea9" />
+    <circle cx="340" cy="460" r="1.2" fill="#fff" />
+  </g>
+</svg>

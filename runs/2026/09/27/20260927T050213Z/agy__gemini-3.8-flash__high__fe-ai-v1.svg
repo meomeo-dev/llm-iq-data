@@ -1,0 +1,546 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" width="100%" height="100%">
+  <defs>
+    <!-- Technical Background Grids and Shading Patterns -->
+    <pattern id="minorGrid" width="18" height="18" patternUnits="userSpaceOnUse">
+      <path d="M 18 0 L 0 0 0 18" fill="none" stroke="#131e30" stroke-width="0.75" />
+    </pattern>
+    <pattern id="majorGrid" width="90" height="90" patternUnits="userSpaceOnUse">
+      <rect width="90" height="90" fill="url(#minorGrid)" />
+      <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#1d2e4a" stroke-width="1.25" />
+    </pattern>
+    <pattern id="inclineHatch" width="16" height="16" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="16" stroke="#1e2c42" stroke-width="2" />
+    </pattern>
+
+    <!-- Arrow Markers for Dynamics and Impulses -->
+    <marker id="arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#38bdf8" />
+    </marker>
+    <marker id="arrow-emerald" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#10b981" />
+    </marker>
+    <marker id="arrow-rose" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#f43f5e" />
+    </marker>
+    <marker id="arrow-mint" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#34d399" />
+    </marker>
+    <marker id="arrow-purple" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#c084fc" />
+    </marker>
+    <marker id="arrow-amber" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#fbbf24" />
+    </marker>
+
+    <!-- Gradients -->
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.95" />
+      <stop offset="60%" stop-color="#0284c7" stop-opacity="0.90" />
+      <stop offset="100%" stop-color="#0369a1" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="coneGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.30" />
+      <stop offset="100%" stop-color="#f43f5e" stop-opacity="0.05" />
+    </linearGradient>
+    <linearGradient id="panelHeaderGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e293b" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#0f172a" stop-opacity="0.4" />
+    </linearGradient>
+
+    <!-- Embedded CSS Animation Keyframes & Styling -->
+    <style><![CDATA[
+      /* Typography & Font Resets */
+      text {
+        font-family: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+        letter-spacing: -0.02em;
+      }
+      .hud-title { font-weight: 800; fill: #f8fafc; }
+      .hud-sub { font-weight: 600; fill: #94a3b8; font-size: 11px; }
+      .hud-metric { font-weight: 700; fill: #38bdf8; font-size: 12px; }
+      .panel-label { font-weight: 700; fill: #cbd5e1; font-size: 11px; }
+
+      /* Animation 1: Rigid Body Kinematic & Dynamic Cycle (6.0s seamless loop) */
+      #animated-rigid-body {
+        transform-box: view-box;
+        transform-origin: 0px 0px;
+        animation: rigidBodyCycle 6s linear infinite;
+      }
+      @keyframes rigidBodyCycle {
+        0% { transform: translate(170px, 150px) rotate(0deg); opacity: 1; }
+        10% { transform: translate(245px, 220px) rotate(-120deg); opacity: 1; }
+        20% { transform: translate(335px, 315px) rotate(-250deg); opacity: 1; }
+        30% { transform: translate(446px, 457px) rotate(-375deg); opacity: 1; }
+        40% { transform: translate(525px, 360px) rotate(-310deg); opacity: 1; }
+        50% { transform: translate(605px, 310px) rotate(-230deg); opacity: 1; }
+        60% { transform: translate(685px, 335px) rotate(-140deg); opacity: 1; }
+        70% { transform: translate(766px, 371px) rotate(-50deg); opacity: 1; }
+        80% { transform: translate(825px, 345px) rotate(20deg); opacity: 1; }
+        88% { transform: translate(880px, 375px) rotate(70deg); opacity: 1; }
+        93% { transform: translate(880px, 375px) rotate(70deg); opacity: 0; }
+        96% { transform: translate(170px, 150px) rotate(0deg); opacity: 0; }
+        100% { transform: translate(170px, 150px) rotate(0deg); opacity: 1; }
+      }
+
+      /* Animation 2: Primary Contact Shockwave Expansion (Triggered at t=1.8s / 30%) */
+      .shockwave-ring {
+        animation: shockwavePulse 6s ease-out infinite;
+      }
+      @keyframes shockwavePulse {
+        0%, 28% { r: 0px; opacity: 0; stroke-width: 4px; }
+        30% { r: 6px; opacity: 1; stroke-width: 5px; }
+        36% { r: 65px; opacity: 0; stroke-width: 1px; }
+        100% { r: 0px; opacity: 0; stroke-width: 0px; }
+      }
+
+      /* Animation 3: Secondary Contact Shockwave (Triggered at t=4.2s / 70%) */
+      .sec-shockwave {
+        animation: secShockwavePulse 6s ease-out infinite;
+      }
+      @keyframes secShockwavePulse {
+        0%, 68% { r: 0px; opacity: 0; stroke-width: 3px; }
+        70% { r: 5px; opacity: 0.9; stroke-width: 4px; }
+        75% { r: 35px; opacity: 0; stroke-width: 1px; }
+        100% { r: 0px; opacity: 0; stroke-width: 0px; }
+      }
+
+      /* Animation 4: Contact Force & Impulse Vector Flare at Impact */
+      .impulse-hud-group {
+        animation: impulseFlare 6s ease-in-out infinite;
+      }
+      @keyframes impulseFlare {
+        0%, 28% { opacity: 0.25; transform: scale(0.97); }
+        30% { opacity: 1; transform: scale(1.03); }
+        38% { opacity: 0.90; transform: scale(1.0); }
+        45% { opacity: 0.25; transform: scale(0.97); }
+        100% { opacity: 0.25; transform: scale(0.97); }
+      }
+
+      /* Animation 5: Impulse Phase-Plane Tracer Point (Jn vs Jt) */
+      .phase-tracer {
+        animation: phaseTracerMotion 6s linear infinite;
+      }
+      @keyframes phaseTracerMotion {
+        0%, 28% { transform: translate(1130px, 225px); opacity: 0.4; }
+        30% { transform: translate(1280px, 250px); opacity: 1; }
+        34% { transform: translate(1412px, 277px); opacity: 1; }
+        45% { transform: translate(1412px, 277px); opacity: 0.4; }
+        68% { transform: translate(1412px, 277px); opacity: 0.4; }
+        70% { transform: translate(1425px, 281px); opacity: 0.9; }
+        75% { transform: translate(1425px, 281px); opacity: 0.4; }
+        93% { opacity: 0; }
+        96% { transform: translate(1130px, 225px); opacity: 0; }
+        100% { transform: translate(1130px, 225px); opacity: 0.4; }
+      }
+
+      /* Animation 6: Real-time Oscilloscope Time Cursor */
+      .time-cursor-sweep {
+        animation: osciSweep 6s linear infinite;
+      }
+      @keyframes osciSweep {
+        0% { transform: translateX(0px); opacity: 0.85; }
+        88% { transform: translateX(390px); opacity: 0.85; }
+        93% { opacity: 0; }
+        96% { transform: translateX(0px); opacity: 0; }
+        100% { transform: translateX(0px); opacity: 0.85; }
+      }
+
+      /* Animation 7: Telemetry Live Pulse */
+      .hud-live-tag {
+        animation: blinkTag 1.5s ease-in-out infinite alternate;
+      }
+      @keyframes blinkTag {
+        from { opacity: 0.4; }
+        to { opacity: 1; }
+      }
+    ]]></style>
+  </defs>
+
+  <!-- Canvas Deep Base Background -->
+  <rect width="1600" height="960" fill="#070b14" />
+
+  <!-- ========================================== -->
+  <!-- TOP SYSTEM HUD & BENCHMARK PARAMETERS BAR -->
+  <!-- ========================================== -->
+  <rect x="0" y="0" width="1600" height="74" fill="#0a101d" stroke="#1e293b" stroke-width="1" />
+  <g transform="translate(30, 24)">
+    <circle cx="6" cy="6" r="5" fill="#10b981" class="hud-live-tag" />
+    <text x="20" y="10" class="hud-title" font-size="16">RIGID BODY OBLIQUE MULTI-IMPACT &amp; RESTITUTION IMPULSE PHASE DYNAMICS</text>
+    <text x="20" y="28" class="hud-sub">WORLD MODEL BENCHMARK TRUTH GATE • COULOMB FRICTION CONE • NON-SMOOTH LAGRANGIAN SOLVER</text>
+  </g>
+
+  <!-- Parameter Badges in Header -->
+  <g transform="translate(840, 16)">
+    <!-- Badge 1: Mass & Inertia -->
+    <rect x="0" y="0" width="105" height="42" rx="4" fill="#111c2e" stroke="#1e293b" />
+    <text x="8" y="16" class="hud-sub" font-size="9">INERTIAL STATE</text>
+    <text x="8" y="32" class="hud-metric">m=2.0kg I=1/6mL²</text>
+
+    <!-- Badge 2: Velocity & Spin -->
+    <rect x="115" y="0" width="145" height="42" rx="4" fill="#111c2e" stroke="#1e293b" />
+    <text x="123" y="16" class="hud-sub" font-size="9">INITIAL VELOCITY &amp; SPIN</text>
+    <text x="123" y="32" class="hud-metric">v₀=(4.0,-6.0) ω₀=+2.5</text>
+
+    <!-- Badge 3: Incline & Coefficients -->
+    <rect x="270" y="0" width="135" height="42" rx="4" fill="#111c2e" stroke="#1e293b" />
+    <text x="278" y="16" class="hud-sub" font-size="9">CONTACT INTERFACE</text>
+    <text x="278" y="32" class="hud-metric">θ=15° e=0.65 μ=0.35</text>
+
+    <!-- Badge 4: Engine Status -->
+    <rect x="415" y="0" width="315" height="42" rx="4" fill="#111c2e" stroke="#1e293b" />
+    <text x="423" y="16" class="hud-sub" font-size="9">SOLVER COMPLIANCE / TIME</text>
+    <text x="423" y="32" fill="#34d399" font-weight="700" font-size="12">SIGNORINI-LCP VALID • T_CYCLE=6.0s</text>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- MAIN VIEWPORT: KINEMATICS & IMPACT RIGID BODY SIMULATION -->
+  <!-- ======================================================== -->
+  <g transform="translate(30, 85)">
+    <!-- Simulation Viewport Container Box -->
+    <rect width="980" height="620" rx="6" fill="#090f1a" stroke="#1e293b" stroke-width="1.5" />
+    <!-- Metric Grid Substrate -->
+    <rect width="980" height="620" fill="url(#majorGrid)" opacity="0.6" rx="6" />
+
+    <!-- Metric Coordinate Scale Axes & Markings -->
+    <g stroke="#334155" stroke-width="1" opacity="0.7">
+      <line x1="80" y1="50" x2="80" y2="580" />
+      <line x1="80" y1="580" x2="940" y2="580" />
+      <!-- Grid X Metric Labels (1m = 90px visual scale) -->
+      <text x="80" y="598" fill="#64748b" font-size="10" text-anchor="middle">X=0.0m</text>
+      <text x="260" y="598" fill="#64748b" font-size="10" text-anchor="middle">X=2.0m</text>
+      <text x="440" y="598" fill="#64748b" font-size="10" text-anchor="middle">X=4.0m</text>
+      <text x="620" y="598" fill="#64748b" font-size="10" text-anchor="middle">X=6.0m</text>
+      <text x="800" y="598" fill="#64748b" font-size="10" text-anchor="middle">X=8.0m</text>
+
+      <!-- Grid Y Metric Labels -->
+      <text x="70" y="583" fill="#64748b" font-size="10" text-anchor="end">Y=0.0m</text>
+      <text x="70" y="445" fill="#64748b" font-size="10" text-anchor="end">Y=1.5m</text>
+      <text x="70" y="310" fill="#64748b" font-size="10" text-anchor="end">Y=3.0m</text>
+      <text x="70" y="175" fill="#64748b" font-size="10" text-anchor="end">Y=4.5m</text>
+    </g>
+
+    <!-- Gravity Vector Indicator -->
+    <g transform="translate(110, 80)">
+      <line x1="0" y1="0" x2="0" y2="40" stroke="#fbbf24" stroke-width="2" marker-end="url(#arrow-amber)" />
+      <text x="12" y="24" fill="#fbbf24" font-size="11" font-weight="700">g = -9.80 m/s²</text>
+    </g>
+
+    <!-- Incline Plane Rigid Foundation (15.0 degree slope: rises from left to right) -->
+    <!-- Slope equation in screen space: y = 510 - (x - 460) * tan(15 deg) -->
+    <!-- At x=80: y=611.8; at x=460: y=510.0; at x=960: y=376.0 -->
+    <polygon points="80,611.8 960,376.0 960,612 80,612" fill="#0f1929" />
+    <polygon points="80,611.8 960,376.0 960,612 80,612" fill="url(#inclineHatch)" opacity="0.45" />
+    <line x1="80" y1="611.8" x2="960" y2="376.0" stroke="#64748b" stroke-width="3" />
+
+    <!-- Incline Angle Reference Gauge (15.0 degrees) -->
+    <g transform="translate(200, 579.6)">
+      <line x1="0" y1="0" x2="160" y2="0" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 3" />
+      <path d="M 90,0 A 90 90 0 0 0 86.9,-23.3" fill="none" stroke="#38bdf8" stroke-width="2" />
+      <text x="100" y="-10" fill="#38bdf8" font-size="11" font-weight="700">θ = 15.0°</text>
+    </g>
+
+    <!-- Base Foundation Constraint Markers -->
+    <text x="820" y="440" fill="#475569" font-size="11" font-weight="700" letter-spacing="0.05em">RIGID BASE (m_base → ∞)</text>
+
+    <!-- STATIC GHOST TRAJECTORIES & BALLISTIC ANALYSIS -->
+    <!-- Pre-Impact Incident Parabola (Airborne Trajectory 1) -->
+    <path d="M 170,150 C 240,225 330,330 446,457" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.75" />
+    <!-- Post-Impact Restitution Rebound Parabola (Airborne Trajectory 2) -->
+    <path d="M 446,457 C 495,370 545,310 605,310 C 665,310 715,330 766,371" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-dasharray="6 4" opacity="0.75" />
+    <!-- Secondary Hop Trajectory -->
+    <path d="M 766,371 C 790,345 810,345 825,345 C 845,345 865,360 880,375" fill="none" stroke="#ec4899" stroke-width="2" stroke-dasharray="4 3" opacity="0.6" />
+
+    <!-- Trajectory State Annotations -->
+    <circle cx="170" cy="150" r="4" fill="#38bdf8" />
+    <text x="160" y="135" fill="#38bdf8" font-size="10" font-weight="700">t=0.0s (v₀, ω₀)</text>
+
+    <circle cx="605" cy="310" r="4" fill="#c084fc" />
+    <text x="605" y="295" fill="#c084fc" font-size="10" font-weight="700" text-anchor="middle">APEX: y_max=3.12m (v_y=0)</text>
+
+    <!-- ============================================== -->
+    <!-- GHOSTED RIGID BODY ORIENTATIONS AT KEY PHASES -->
+    <!-- ============================================== -->
+    <!-- Ghost 1: Initial Free Flight -->
+    <g transform="translate(170, 150) rotate(0)" opacity="0.25">
+      <polygon points="0,55 42,18 35,-35 -10,-48 -45,-10" fill="none" stroke="#38bdf8" stroke-width="1.5" />
+      <circle cx="0" cy="0" r="6" fill="#38bdf8" />
+    </g>
+
+    <!-- Ghost 2: Rebound Apex Flight (Inverted Spin State) -->
+    <g transform="translate(605, 310) rotate(-230)" opacity="0.25">
+      <polygon points="0,55 42,18 35,-35 -10,-48 -45,-10" fill="none" stroke="#c084fc" stroke-width="1.5" />
+      <circle cx="0" cy="0" r="6" fill="#c084fc" />
+    </g>
+
+    <!-- Ghost 3: Primary Contact Frozen Stance at (446, 457) with angle -15deg -->
+    <g transform="translate(446, 457) rotate(-15)" opacity="0.45">
+      <polygon points="0,55 42,18 35,-35 -10,-48 -45,-10" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 2" />
+      <circle cx="0" cy="0" r="6" fill="#38bdf8" />
+    </g>
+
+    <!-- ======================================= -->
+    <!-- CONTACT POINT PHYSICS & COULOMB CONE HUD -->
+    <!-- ======================================= -->
+    <!-- Contact Site: (460, 510) on Incline Surface -->
+    <g transform="translate(460, 510)">
+      <!-- Animated Shockwave Rings -->
+      <circle cx="0" cy="0" r="0" fill="none" stroke="#f43f5e" class="shockwave-ring" />
+      <circle cx="0" cy="0" r="0" fill="none" stroke="#38bdf8" class="shockwave-ring" style="animation-delay: 0.1s;" />
+
+      <!-- Coulomb Friction Cone Wedge (Half Angle phi_c = arctan(0.35) = 19.29 deg) -->
+      <!-- Normal points along screen -105 deg. Cone bounds: -124.3 deg to -85.7 deg -->
+      <path d="M 0 0 L -78.9 -115.7 A 140 140 0 0 1 10.5 -139.6 Z" fill="url(#coneGrad)" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="4 3" />
+      <text x="-125" y="-125" fill="#f43f5e" font-size="10" font-weight="700">COULOMB CONE (μ=0.35, φ_c=19.3°)</text>
+
+      <!-- Impulse Vectors & Dynamic HUD (Active at Collision) -->
+      <g class="impulse-hud-group">
+        <!-- Surface Normal Unit Vector n (angle -105 deg, length 110px) -->
+        <line x1="0" y1="0" x2="-28.5" y2="-106.3" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 3" />
+        <text x="-48" y="-112" fill="#94a3b8" font-size="10">NORMAL n</text>
+
+        <!-- Surface Tangent Vector t (angle -15 deg, length 90px) -->
+        <line x1="0" y1="0" x2="86.9" y2="-23.3" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 3" marker-end="url(#arrow-cyan)" />
+        <text x="94" y="-20" fill="#94a3b8" font-size="10">TANGENT t</text>
+
+        <!-- Normal Impulse Jn (length 105px along normal) -->
+        <line x1="0" y1="0" x2="-27.2" y2="-101.4" stroke="#10b981" stroke-width="3.5" marker-end="url(#arrow-emerald)" />
+        <text x="-105" y="-95" fill="#10b981" font-size="11" font-weight="700">Jn = 14.85 N·s</text>
+
+        <!-- Tangential Friction Impulse Jt (length 45px opposite to slip) -->
+        <line x1="0" y1="0" x2="-43.5" y2="11.6" stroke="#f43f5e" stroke-width="3" marker-end="url(#arrow-rose)" />
+        <text x="-80" y="32" fill="#f43f5e" font-size="11" font-weight="700">Jt = -μ Jn</text>
+
+        <!-- Parallelogram Projection Dashes -->
+        <line x1="-27.2" y1="-101.4" x2="-70.7" y2="-89.8" stroke="#34d399" stroke-width="1" stroke-dasharray="3 2" />
+        <line x1="-43.5" y1="11.6" x2="-70.7" y2="-89.8" stroke="#34d399" stroke-width="1" stroke-dasharray="3 2" />
+
+        <!-- Total Resultant Impulse J (Saturated on Cone Boundary!) -->
+        <line x1="0" y1="0" x2="-70.7" y2="-89.8" stroke="#34d399" stroke-width="4" marker-end="url(#arrow-mint)" />
+        <text x="-165" y="-75" fill="#34d399" font-size="12" font-weight="800">J_total = 15.73 N·s</text>
+      </g>
+
+      <!-- Contact Point Spotting -->
+      <circle cx="0" cy="0" r="4" fill="#fbbf24" stroke="#000" stroke-width="1.5" />
+      <text x="12" y="16" fill="#fbbf24" font-size="11" font-weight="700">C (CONTACT TIP)</text>
+    </g>
+
+    <!-- Secondary Contact Marker at (766, 371) -->
+    <circle cx="766" cy="371" r="0" fill="none" stroke="#ec4899" class="sec-shockwave" />
+    <circle cx="766" cy="371" r="3" fill="#ec4899" />
+    <text x="778" y="390" fill="#ec4899" font-size="10" font-weight="700">SECONDARY CHATTER (t=4.20s)</text>
+
+    <!-- Eccentric Moment Arm (r = r_C - r_CoM) & Torque Annotation at Impact Instant -->
+    <!-- Vector from CoM (446, 457) to Contact (460, 510) -->
+    <g stroke-linecap="round">
+      <line x1="446" y1="457" x2="460" y2="510" stroke="#c084fc" stroke-width="2.5" marker-end="url(#arrow-purple)" />
+      <text x="400" y="490" fill="#c084fc" font-size="11" font-weight="700">r = 0.28m</text>
+
+      <!-- Torque Curl Indicator around CoM -->
+      <path d="M 436,442 A 20 20 0 1 1 458,442" fill="none" stroke="#c084fc" stroke-width="2.5" marker-end="url(#arrow-purple)" />
+      <text x="350" y="430" fill="#c084fc" font-size="11" font-weight="700">τ = r × J ⇒ Δω = -6.80 rad/s</text>
+    </g>
+
+    <!-- ============================================== -->
+    <!-- THE LIVE ANIMATED RIGID BODY (PURE CSS DRIVEN) -->
+    <!-- ============================================== -->
+    <g id="animated-rigid-body">
+      <!-- Asymmetric Rigid Polygon Chassis -->
+      <!-- CoM is exactly located at (0, 0) -->
+      <!-- Vertex V1 (contact tip) is at (0, 55) -->
+      <polygon points="0,55 42,18 35,-35 -10,-48 -45,-10" fill="url(#bodyGrad)" stroke="#f8fafc" stroke-width="2" />
+
+      <!-- Faceted Internal Structural Ribs & Chamfers -->
+      <line x1="0" y1="0" x2="0" y2="55" stroke="#38bdf8" stroke-width="1.25" stroke-dasharray="2 2" />
+      <line x1="0" y1="0" x2="42" y2="18" stroke="#38bdf8" stroke-width="1" opacity="0.6" />
+      <line x1="0" y1="0" x2="35" y2="-35" stroke="#38bdf8" stroke-width="1" opacity="0.6" />
+      <line x1="0" y1="0" x2="-10" y2="-48" stroke="#38bdf8" stroke-width="1" opacity="0.6" />
+      <line x1="0" y1="0" x2="-45" y2="-10" stroke="#38bdf8" stroke-width="1" opacity="0.6" />
+
+      <!-- Center of Mass (CoM) Target Symbol at (0, 0) -->
+      <circle cx="0" cy="0" r="10" fill="#0f172a" stroke="#f8fafc" stroke-width="1.5" />
+      <path d="M 0 0 L 10 0 A 10 10 0 0 1 0 10 Z" fill="#38bdf8" />
+      <path d="M 0 0 L -10 0 A 10 10 0 0 1 0 -10 Z" fill="#38bdf8" />
+      <circle cx="0" cy="0" r="2.5" fill="#f8fafc" />
+      <text x="14" y="4" fill="#f8fafc" font-size="9" font-weight="700">CoM</text>
+
+      <!-- Principal Body-Fixed Axes -->
+      <line x1="0" y1="0" x2="28" y2="0" stroke="#ef4444" stroke-width="1.5" marker-end="url(#arrow-cyan)" />
+      <line x1="0" y1="0" x2="0" y2="-28" stroke="#22c55e" stroke-width="1.5" marker-end="url(#arrow-cyan)" />
+
+      <!-- Contact Tip Identifier Pin -->
+      <circle cx="0" cy="55" r="3.5" fill="#fbbf24" stroke="#000" stroke-width="1" />
+    </g>
+  </g>
+
+  <!-- ============================================== -->
+  <!-- RIGHT-HAND ANALYTICAL DASHBOARDS & PHASE PLOTS -->
+  <!-- ============================================== -->
+
+  <!-- - -->
+  <!-- PANEL 1: IMPULSE-MOMENTUM PHASE SPACE (Jn vs Jt)   -->
+  <!-- - -->
+  <g transform="translate(1040, 85)">
+    <rect width="530" height="255" rx="6" fill="#090f1a" stroke="#1e293b" stroke-width="1.5" />
+    <rect width="530" height="34" rx="6" fill="url(#panelHeaderGrad)" />
+    <text x="16" y="22" class="panel-label">1. IMPULSE-MOMENTUM PHASE SPACE // STRONGE-POISSON CONTINUUM</text>
+
+    <!-- Phase Space Axis Frame -->
+    <g transform="translate(70, 45)">
+      <!-- Background Subgrid -->
+      <rect x="0" y="0" width="420" height="185" fill="#0a1220" stroke="#1e293b" />
+      <line x1="0" y1="92" x2="420" y2="92" stroke="#334155" stroke-width="1" />
+      <line x1="20" y1="0" x2="20" y2="185" stroke="#334155" stroke-width="1" />
+
+      <!-- Coulomb Friction Cone Sectors in Phase Space -->
+      <!-- Upper sliding boundary: Jt = +mu Jn (slope +0.35) -->
+      <!-- Lower sliding boundary: Jt = -mu Jn (slope -0.35) -->
+      <polygon points="20,92 400,26 400,158" fill="#f43f5e" fill-opacity="0.10" />
+      <line x1="20" y1="92" x2="400" y2="26" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="4 3" />
+      <line x1="20" y1="92" x2="400" y2="158" stroke="#f43f5e" stroke-width="2" />
+
+      <text x="310" y="55" fill="#f43f5e" font-size="9">+μ Jn (Adhesion Boundary)</text>
+      <text x="260" y="172" fill="#f43f5e" font-size="10" font-weight="700">SLIDING BOUNDARY: Jt = -μ Jn</text>
+      <text x="120" y="90" fill="#64748b" font-size="9">STICK REGIME</text>
+
+      <!-- Compression to Restitution Evolution Path -->
+      <!-- Path starts at (Jn=0, Jt=0) = (20, 92), slides down lower cone boundary to Pn,comp = 9.0 (x=190), then to Pn,total = 14.85 (x=300) -->
+      <path d="M 20,92 L 190,122 L 302,141" fill="none" stroke="#34d399" stroke-width="3" />
+
+      <!-- Critical Impulse Points along Path -->
+      <circle cx="20" cy="92" r="3" fill="#94a3b8" />
+      <text x="25" y="86" fill="#94a3b8" font-size="9">J(0)=0</text>
+
+      <circle cx="190" cy="122" r="4" fill="#fbbf24" />
+      <line x1="190" y1="122" x2="190" y2="92" stroke="#fbbf24" stroke-width="1" stroke-dasharray="2 2" />
+      <text x="175" y="84" fill="#fbbf24" font-size="9" text-anchor="middle">Pn,comp=9.0</text>
+
+      <circle cx="302" cy="141" r="5" fill="#10b981" />
+      <line x1="302" y1="141" x2="302" y2="92" stroke="#10b981" stroke-width="1" stroke-dasharray="2 2" />
+      <text x="302" y="84" fill="#10b981" font-size="9" font-weight="700" text-anchor="middle">(1+e)Pn,comp=14.85</text>
+
+      <!-- Axis Labels -->
+      <text x="410" y="88" fill="#94a3b8" font-size="10" font-weight="700">Jn (N·s)</text>
+      <text x="26" y="16" fill="#94a3b8" font-size="10" font-weight="700">Jt (N·s)</text>
+    </g>
+
+    <!-- Synchronized Live Phase Tracer Dot -->
+    <circle cx="0" cy="0" r="5" fill="#38bdf8" stroke="#f8fafc" stroke-width="1.5" class="phase-tracer" />
+  </g>
+
+  <!-- - -->
+  <!-- PANEL 2: TRANSIENT STATE CHRONOGRAPHS (1000Hz)     -->
+  <!-- - -->
+  <g transform="translate(1040, 355)">
+    <rect width="530" height="270" rx="6" fill="#090f1a" stroke="#1e293b" stroke-width="1.5" />
+    <rect width="530" height="34" rx="6" fill="url(#panelHeaderGrad)" />
+    <text x="16" y="22" class="panel-label">2. STATE JUMP CHRONOGRAPHS // v_rel,n(t) • ω(t) • E_k(t)</text>
+
+    <!-- Oscilloscope Grid Frame -->
+    <g transform="translate(70, 50)">
+      <rect x="0" y="0" width="420" height="195" fill="#0a1220" stroke="#1e293b" />
+      <!-- Horizontal division lines -->
+      <line x1="0" y1="65" x2="420" y2="65" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 3" />
+      <line x1="0" y1="130" x2="420" y2="130" stroke="#1e293b" stroke-width="1" stroke-dasharray="3 3" />
+
+      <!-- Impact Time Vertical Marker (t = 1.80s at x = 138) -->
+      <line x1="138" y1="0" x2="138" y2="195" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="4 2" />
+      <text x="142" y="14" fill="#f43f5e" font-size="9" font-weight="700">t_contact = 1.80s</text>
+
+      <!-- Secondary Chatter Marker (t = 4.20s at x = 310) -->
+      <line x1="310" y1="0" x2="310" y2="195" stroke="#ec4899" stroke-width="1" stroke-dasharray="3 3" />
+      <text x="314" y="14" fill="#ec4899" font-size="9">t_sec = 4.20s</text>
+
+      <!-- TRACE 1: Normal Relative Velocity v_rel,n (Cyan) -->
+      <!-- Pre-impact: -6.83 m/s; Jump to: +4.44 m/s (e=0.65) -->
+      <path d="M 0,55 L 138,55 L 138,18 L 310,48 L 310,38 L 420,50" fill="none" stroke="#38bdf8" stroke-width="2" />
+      <text x="8" y="48" fill="#38bdf8" font-size="10" font-weight="700">v_rel,n: -6.83 → +4.44 m/s</text>
+
+      <!-- TRACE 2: Angular Velocity omega (Violet) -->
+      <!-- Pre-impact: +2.50 rad/s; Jump to: -4.30 rad/s (Delta omega = -6.80 rad/s) -->
+      <path d="M 0,85 L 138,85 L 138,118 L 310,118 L 310,124 L 420,124" fill="none" stroke="#c084fc" stroke-width="2.5" />
+      <text x="8" y="105" fill="#c084fc" font-size="10" font-weight="700">ω: +2.50 → -4.30 rad/s (Δω = -6.80)</text>
+
+      <!-- TRACE 3: Total Kinetic Energy E_k (Amber) -->
+      <!-- Dissipates by -31.8 J due to restitution loss and Coulomb sliding friction work -->
+      <path d="M 0,150 L 138,150 L 138,180 L 310,180 L 310,186 L 420,186" fill="none" stroke="#fbbf24" stroke-width="2" />
+      <text x="8" y="172" fill="#fbbf24" font-size="10" font-weight="700">E_k: 52.4J → 20.6J (ΔE_diss = -31.8J)</text>
+
+      <!-- Sweeping Time Cursor -->
+      <line x1="0" y1="0" x2="0" y2="195" stroke="#f8fafc" stroke-width="2" class="time-cursor-sweep" />
+    </g>
+  </g>
+
+  <!-- - -->
+  <!-- PANEL 3: MATHEMATICAL TRUTH & CONSERVATION FORMULAS-->
+  <!-- - -->
+  <g transform="translate(1040, 640)">
+    <rect width="530" height="290" rx="6" fill="#090f1a" stroke="#1e293b" stroke-width="1.5" />
+    <rect width="530" height="34" rx="6" fill="url(#panelHeaderGrad)" />
+    <text x="16" y="22" class="panel-label">3. NON-SMOOTH LAGRANGIAN RIGID BODY GROUND TRUTH</text>
+
+    <!-- Formula Cards -->
+    <g transform="translate(20, 48)" font-size="11">
+      <!-- Formula 1 -->
+      <rect x="0" y="0" width="490" height="40" rx="4" fill="#0f172a" stroke="#1e293b" />
+      <text x="12" y="17" fill="#38bdf8" font-weight="700">1. IMPULSE-MOMENTUM JUMP (TRANSIENT INTEGRATION)</text>
+      <text x="12" y="32" fill="#94a3b8">J = ∫ F dt = m(v⁺ - v⁻) = [ -2.92, +10.88 ]ᵀ N·s</text>
+
+      <!-- Formula 2 -->
+      <rect x="0" y="46" width="490" height="40" rx="4" fill="#0f172a" stroke="#1e293b" />
+      <text x="12" y="63" fill="#10b981" font-weight="700">2. POISSON RESTITUTION &amp; COULOMB CONE SATURATION</text>
+      <text x="12" y="78" fill="#94a3b8">v_n⁺ = -e·v_n⁻ = +4.44 m/s  |  J_t = -μ·sgn(v_rel,t)·J_n = -5.20 N·s</text>
+
+      <!-- Formula 3 -->
+      <rect x="0" y="92" width="490" height="40" rx="4" fill="#0f172a" stroke="#1e293b" />
+      <text x="12" y="109" fill="#c084fc" font-weight="700">3. ECCENTRIC ANGULAR MOMENTUM EXCHANGE</text>
+      <text x="12" y="124" fill="#94a3b8">Δω = I⁻¹(r × J)_z = ( -0.816 N·m·s ) / ( 0.12 kg·m² ) = -6.80 rad/s</text>
+
+      <!-- Formula 4 -->
+      <rect x="0" y="138" width="490" height="40" rx="4" fill="#0f172a" stroke="#1e293b" />
+      <text x="12" y="155" fill="#fbbf24" font-weight="700">4. INELASTIC CONTACT ENERGY DISSIPATION</text>
+      <text x="12" y="170" fill="#94a3b8">W_diss = ½m(v⁺² - v⁻²) + ½I(ω⁺² - ω⁻²) = -31.8 J  (Strict Monotonicity)</text>
+
+      <!-- Verification Badge -->
+      <rect x="0" y="185" width="490" height="42" rx="4" fill="#064e3b" stroke="#10b981" stroke-width="1.25" />
+      <circle cx="20" cy="206" r="6" fill="#10b981" />
+      <text x="35" y="203" fill="#ecfdf5" font-weight="800" font-size="11">BENCHMARK PASS: 100% MOMENTUM &amp; GEOMETRIC CONSISTENCY</text>
+      <text x="35" y="217" fill="#a7f3d0" font-size="10">No Interpenetration • Coulomb Sliding Boundary Satisfied • Reversible Spin Kick</text>
+    </g>
+  </g>
+
+  <!-- ======================================================== -->
+  <!-- BOTTOM DIAGNOSTIC STRIP: WORLD MODEL FAILURE CONTRAST   -->
+  <!-- ======================================================== -->
+  <g transform="translate(30, 720)">
+    <rect width="980" height="210" rx="6" fill="#090f1a" stroke="#1e293b" stroke-width="1.5" />
+    <rect width="980" height="34" rx="6" fill="url(#panelHeaderGrad)" />
+    <text x="16" y="22" class="panel-label">WORLD MODEL BENCHMARK AUDIT: GENERATIVE AI ARTIFACTS VS PHYSICAL GROUND TRUTH</text>
+
+    <!-- Sub-Panel A: Generative AI Failure Modes -->
+    <g transform="translate(20, 48)">
+      <rect width="455" height="145" rx="4" fill="#180d13" stroke="#831843" />
+      <text x="16" y="22" fill="#f43f5e" font-weight="800" font-size="12">❌ TRADITIONAL GEN-AI HALLUCINATIONS (SORA / GENESIS-V1)</text>
+
+      <text x="16" y="46" fill="#fda4af" font-size="10.5">• <tspan font-weight="700">Penetration Artifact ("穿模"):</tspan> Rigid vertices sink 8-15cm into the anvil</text>
+      <text x="16" y="66" fill="#fda4af" font-size="10.5">• <tspan font-weight="700">Friction Cone Violation:</tspan> Specular reflection angle ignoring tangential slip</text>
+      <text x="16" y="86" fill="#fda4af" font-size="10.5">• <tspan font-weight="700">Spin Decoupling:</tspan> Angular momentum fails to jump (Δω ≈ 0), preserving</text>
+      <text x="28" y="102" fill="#fda4af" font-size="10.5">pre-collision spin despite enormous eccentric torque arm r × J</text>
+
+      <rect x="16" y="114" width="220" height="20" rx="3" fill="#4c0519" />
+      <text x="22" y="128" fill="#fb7185" font-weight="700" font-size="9.5">STATUS: PHYSICAL DRIFT REJECTED</text>
+    </g>
+
+    <!-- Sub-Panel B: Physical Ground Truth Validation -->
+    <g transform="translate(505, 48)">
+      <rect width="455" height="145" rx="4" fill="#061c18" stroke="#065f46" />
+      <text x="16" y="22" fill="#34d399" font-weight="800" font-size="12">✔ NON-SMOOTH LAGRANGIAN GROUND TRUTH (BENCHMARK GATE)</text>
+
+      <text x="16" y="46" fill="#a7f3d0" font-size="10.5">• <tspan font-weight="700">Signorini Complementarity:</tspan> Exact contact non-penetration (0 ≤ δ ⊥ Pn ≥ 0)</text>
+      <text x="16" y="66" fill="#a7f3d0" font-size="10.5">• <tspan font-weight="700">Coulomb Cone Edge Saturation:</tspan> Dynamic friction |Jt| = μ Jn during slide</text>
+      <text x="16" y="86" fill="#a7f3d0" font-size="10.5">• <tspan font-weight="700">Causal Angular Jump:</tspan> Sudden rotational reversal (+2.50 → -4.30 rad/s)</text>
+      <text x="28" y="102" fill="#a7f3d0" font-size="10.5">precisely synchronized with linear momentum restitution at t=1.80s</text>
+
+      <rect x="16" y="114" width="240" height="20" rx="3" fill="#022c22" />
+      <text x="22" y="128" fill="#34d399" font-weight="700" font-size="9.5">STATUS: RIGID RESTITUTION CERTIFIED</text>
+    </g>
+  </g>
+</svg>

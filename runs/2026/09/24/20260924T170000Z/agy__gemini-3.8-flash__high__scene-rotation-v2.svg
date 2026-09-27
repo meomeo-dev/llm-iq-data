@@ -1,0 +1,985 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" width="100%" height="100%" shape-rendering="geometricPrecision" text-rendering="geometricPrecision"><defs>
+    <!-- Single Accent Color: Lemon Yellow (#FFF01F / #FFE600 / #FFFF55) -->
+    
+    <!-- Desk lamp bulb and filament glow -->
+    <radialGradient id="lampBulbCore" cx="45%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="25%" stop-color="#FFFF77"/>
+      <stop offset="60%" stop-color="#FFF01F"/>
+      <stop offset="90%" stop-color="#FFE600"/>
+      <stop offset="100%" stop-color="#CCA800"/>
+    </radialGradient>
+
+    <!-- Hard directional volumetric light cone -->
+    <linearGradient id="hardConeBeam" x1="0%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#FFF01F" stop-opacity="0.45"/>
+      <stop offset="18%" stop-color="#FFF01F" stop-opacity="0.28"/>
+      <stop offset="50%" stop-color="#FFF01F" stop-opacity="0.14"/>
+      <stop offset="85%" stop-color="#FFF01F" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#FFF01F" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Intense sharp beam shaft -->
+    <linearGradient id="sharpShaft" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF01F" stop-opacity="0.6"/>
+      <stop offset="30%" stop-color="#FFF01F" stop-opacity="0.25"/>
+      <stop offset="80%" stop-color="#FFF01F" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#FFF01F" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Reflector interior glow -->
+    <radialGradient id="reflectorCone" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="30%" stop-color="#FFFF66"/>
+      <stop offset="70%" stop-color="#FFF01F"/>
+      <stop offset="95%" stop-color="#D4C200"/>
+      <stop offset="100%" stop-color="#807500"/>
+    </radialGradient>
+
+    <!-- Grayscale / Black & White linear & radial gradients for library shading -->
+    <linearGradient id="bgDepth" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#040507"/>
+      <stop offset="30%" stop-color="#08090D"/>
+      <stop offset="70%" stop-color="#0E1015"/>
+      <stop offset="100%" stop-color="#14161C"/>
+    </linearGradient>
+
+    <linearGradient id="leftShelfDepth" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#060709"/>
+      <stop offset="60%" stop-color="#111318"/>
+      <stop offset="100%" stop-color="#22252E"/>
+    </linearGradient>
+
+    <linearGradient id="rightShelfDepth" x1="100%" y1="50%" x2="0%" y2="50%">
+      <stop offset="0%" stop-color="#060709"/>
+      <stop offset="60%" stop-color="#111318"/>
+      <stop offset="100%" stop-color="#22252E"/>
+    </linearGradient>
+
+    <linearGradient id="metalRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="35%" stop-color="#999EAA"/>
+      <stop offset="65%" stop-color="#202229"/>
+      <stop offset="100%" stop-color="#555A66"/>
+    </linearGradient>
+
+    <linearGradient id="pelicanPouchShadow" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="45%" stop-color="#D0D3DC"/>
+      <stop offset="75%" stop-color="#6E7280"/>
+      <stop offset="100%" stop-color="#1B1C22"/>
+    </linearGradient>
+
+    <linearGradient id="pelicanBellyGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#E1E3EB"/>
+      <stop offset="85%" stop-color="#808494"/>
+      <stop offset="100%" stop-color="#1C1E26"/>
+    </linearGradient>
+
+    <!-- Halftone and Hatch patterns for comic / woodcut aesthetic -->
+    <pattern id="hatchDenser" width="5" height="5" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="5" stroke="#000000" stroke-width="1.8" />
+    </pattern>
+
+    <pattern id="hatchMedium" width="7" height="7" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#181A22" stroke-width="1.3" />
+    </pattern>
+
+    <pattern id="dotsDark" width="8" height="8" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.5" fill="#1A1C24"/>
+      <circle cx="6" cy="6" r="1.5" fill="#1A1C24"/>
+    </pattern>
+
+    <!-- Filters for point light bloom -->
+    <filter id="pointLightGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur1"/>
+      <feGaussianBlur stdDeviation="25" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="moteGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs><!-- 1. Deep Library Background & High Vaulted Ceiling -->
+  <rect width="900" height="1200" fill="url(#bgDepth)"/>
+
+  <!-- High Gothic Ribbed Vault & Ceiling Arch (Seen looking straight up) -->
+  <g id="ceilingArch" stroke="#1C1F2B" stroke-width="2.5" fill="none">
+    <!-- Outer arch ribs converging toward upper center (450, 40) -->
+    <path d="M 330 120 Q 450 -20 570 120" stroke-width="4"/>
+    <path d="M 350 140 Q 450 30 550 140" stroke-width="2.5"/>
+    <path d="M 370 160 Q 450 70 530 160" stroke-width="2"/>
+    <path d="M 450 40 L 450 160" stroke-dasharray="4,4"/>
+    <!-- Diagonal vault cross ribs -->
+    <path d="M 340 100 Q 400 60 450 40 Q 500 60 560 100" stroke-width="2"/>
+    <path d="M 320 0 L 450 40 L 580 0" stroke-width="3"/>
+    
+    <!-- Vault Keystone & carved ornament -->
+    <ellipse cx="450" cy="40" rx="16" ry="12" fill="#101218" stroke="#2D3142" stroke-width="2.5"/>
+    <circle cx="450" cy="40" r="5" fill="#090B0E" stroke="#3E4357" stroke-width="1.5"/>
+
+    <!-- Distant hanging iron lantern pendant high in shadows -->
+    <line x1="450" y1="40" x2="450" y2="85" stroke="#151720" stroke-width="2"/>
+    <polygon points="444,85 456,85 453,105 447,105" fill="#0C0D12" stroke="#222533" stroke-width="1.5"/>
+  </g>
+
+  <!-- Distant Library Hallway Perspective Lines (Vertical convergence) -->
+  <g id="convergingBeams" stroke="#161822" stroke-width="1.5" opacity="0.6">
+    <line x1="450" y1="50" x2="390" y2="1200"/>
+    <line x1="450" y1="50" x2="420" y2="1200"/>
+    <line x1="450" y1="50" x2="480" y2="1200"/>
+    <line x1="450" y1="50" x2="510" y2="1200"/>
+  </g><!-- 2. Left Bookshelf (Towering upward to vanishing point at 450, 50) -->
+  <g id="leftBookshelf">
+    <!-- Main upright side structure of the bookcase -->
+    <polygon points="0,0 345,60 270,1200 0,1200" fill="url(#leftShelfDepth)"/>
+    <line x1="345" y1="60" x2="270" y2="1200" stroke="#3A3E4E" stroke-width="3"/>
+    <line x1="337" y1="60" x2="260" y2="1200" stroke="#1B1C24" stroke-width="1.5"/>
+
+    <!-- Shelf 7 (Top-most shelf, very narrow, y=140) -->
+    <g id="leftShelf7">
+      <polygon points="0,150 340,110 338,125 0,165" fill="#1A1C24" stroke="#000000" stroke-width="1.5"/>
+      <!-- Books underside / spines -->
+      <polygon points="120,135 330,105 330,118 120,148" fill="#2E3240"/>
+      <line x1="160" y1="144" x2="160" y2="132" stroke="#50566C" stroke-width="2"/>
+      <line x1="200" y1="139" x2="200" y2="126" stroke="#414658" stroke-width="3"/>
+      <line x1="240" y1="134" x2="240" y2="120" stroke="#60677F" stroke-width="2.5"/>
+    </g>
+
+    <!-- Shelf 6 (y=245) -->
+    <g id="leftShelf6">
+      <!-- Shelf underside (visible from below) -->
+      <polygon points="0,250 330,200 327,222 0,272" fill="#13141B" stroke="#000000" stroke-width="2"/>
+      <polygon points="0,272 327,222 324,232 0,282" fill="#292D3B"/>
+      <!-- Carved wooden corbel bracket supporting shelf -->
+      <path d="M 326 230 C 315 250 310 275 320 295 L 327 295 Z" fill="#0D0E13" stroke="#383D4E" stroke-width="1.5"/>
+      <!-- Books on shelf -->
+      <rect x="140" y="210" width="18" height="35" fill="#3D4255" transform="rotate(-7 140 210)"/>
+      <rect x="162" y="206" width="24" height="38" fill="#FFFFFF" transform="rotate(-7 162 206)"/>
+      <line x1="174" y1="207" x2="170" y2="243" stroke="#000000" stroke-width="2"/>
+      <rect x="190" y="202" width="28" height="40" fill="#252834" transform="rotate(-6 190 202)"/>
+      <rect x="222" y="197" width="20" height="42" fill="#5A6178" transform="rotate(-6 222 197)"/>
+      <rect x="246" y="193" width="34" height="44" fill="#1A1C25" transform="rotate(-6 246 193)"/>
+      <line x1="262" y1="192" x2="258" y2="236" stroke="#8A92A8" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <!-- Leaning book -->
+      <polygon points="284,232 308,198 322,204 300,237" fill="#E6E8F0" stroke="#000000" stroke-width="1.5"/>
+    </g>
+
+    <!-- Shelf 5 (y=375) - LAMP MOUNTED HERE! -->
+    <g id="leftShelf5">
+      <!-- Shelf underside plane (steep worm's-eye view) -->
+      <polygon points="0,380 315,310 310,340 0,410" fill="#111218" stroke="#000000" stroke-width="2"/>
+      <polygon points="0,410 310,340 305,355 0,425" fill="#282C3A"/>
+      <!-- Shelf molding line -->
+      <line x1="0" y1="410" x2="310" y2="340" stroke="#50566C" stroke-width="2"/>
+      <!-- Carved shelf support bracket -->
+      <path d="M 307 350 C 290 380 285 410 300 440 L 308 438 Z" fill="#0C0D12" stroke="#363A4B" stroke-width="2"/>
+      <!-- Books on Shelf 5 -->
+      <polygon points="80,350 115,340 115,385 80,395" fill="#4B5166" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="120,338 155,328 155,378 120,388" fill="#FFFFFF" stroke="#000000" stroke-width="1.5"/>
+      <text x="127" y="365" font-family="monospace" font-size="9" font-weight="bold" fill="#000000" transform="rotate(-15 127 365)">VOL.IV</text>
+      <polygon points="160,327 185,320 185,372 160,380" fill="#1C1E26" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="190,318 230,307 230,365 190,375" fill="#363B4C" stroke="#000000" stroke-width="1.5"/>
+      <!-- Heavy antique book spine with ribs -->
+      <polygon points="235,305 275,294 275,357 235,367" fill="#E2E4EC" stroke="#000000" stroke-width="2"/>
+      <line x1="240" y1="315" x2="270" y2="307" stroke="#000000" stroke-width="2.5"/>
+      <line x1="240" y1="330" x2="270" y2="322" stroke="#000000" stroke-width="2.5"/>
+      <line x1="240" y1="345" x2="270" y2="337" stroke="#000000" stroke-width="2.5"/>
+    </g>
+
+    <!-- Shelf 4 (y=540) -->
+    <g id="leftShelf4">
+      <polygon points="0,545 295,450 288,490 0,585" fill="#0E0F14" stroke="#000000" stroke-width="2.5"/>
+      <polygon points="0,585 288,490 282,510 0,605" fill="#252834"/>
+      <!-- Books stacked horizontally & vertically -->
+      <polygon points="100,505 180,480 180,510 100,535" fill="#FFFFFF" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="102,480 182,455 182,485 102,510" fill="#2D313F" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="105,455 185,430 185,460 105,485" fill="#585F75" stroke="#000000" stroke-width="1.5"/>
+      <!-- Vertical books -->
+      <polygon points="195,465 240,450 240,520 195,535" fill="#1C1E26" stroke="#000000" stroke-width="2"/>
+      <polygon points="245,448 280,436 280,510 245,522" fill="#E8EAEE" stroke="#000000" stroke-width="2"/>
+      <line x1="255" y1="460" x2="272" y2="454" stroke="#000000" stroke-width="2"/>
+      <line x1="255" y1="480" x2="272" y2="474" stroke="#000000" stroke-width="2"/>
+    </g>
+
+    <!-- Shelf 3 (y=740) -->
+    <g id="leftShelf3">
+      <polygon points="0,740 275,615 265,665 0,790" fill="#0C0D12" stroke="#000000" stroke-width="2.5"/>
+      <polygon points="0,790 265,665 258,690 0,815" fill="#21242E"/>
+      <line x1="0" y1="790" x2="265" y2="665" stroke="#484E60" stroke-width="2"/>
+      <!-- Massive folios -->
+      <polygon points="50,710 120,678 120,748 50,780" fill="#3D4255" stroke="#000000" stroke-width="2"/>
+      <polygon points="125,675 190,645 190,725 125,755" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+      <polygon points="195,643 255,615 255,705 195,733" fill="#181920" stroke="#000000" stroke-width="2"/>
+    </g>
+
+    <!-- Shelf 2 (y=970, lower bookshelf) -->
+    <g id="leftShelf2">
+      <polygon points="0,980 250,810 238,870 0,1040" fill="#0A0B0E" stroke="#000000" stroke-width="3"/>
+      <polygon points="0,1040 238,870 230,900 0,1070" fill="#1B1C24"/>
+      <!-- Thick encyclopedias -->
+      <polygon points="60,930 140,880 140,970 60,1020" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+      <polygon points="145,877 225,827 225,935 145,985" fill="#2E3342" stroke="#000000" stroke-width="2.5"/>
+    </g>
+
+    <!-- Shelf 1 (Bottom-most ledge, y=1160) -->
+    <g id="leftShelf1">
+      <polygon points="0,1170 230,990 220,1070 0,1200" fill="#07080A" stroke="#000000" stroke-width="3"/>
+    </g>
+  </g><!-- 3. Right Bookshelf & Rolling Library Ladder (Towering upward) -->
+  <g id="rightBookshelf">
+    <!-- Main upright side structure -->
+    <polygon points="900,0 555,60 630,1200 900,1200" fill="url(#rightShelfDepth)"/>
+    <line x1="555" y1="60" x2="630" y2="1200" stroke="#3A3E4E" stroke-width="3"/>
+    <line x1="563" y1="60" x2="640" y2="1200" stroke="#1B1C24" stroke-width="1.5"/>
+
+    <!-- Shelf 7 (Top-most right shelf) -->
+    <g id="rightShelf7">
+      <polygon points="900,150 560,110 562,125 900,165" fill="#1A1C24" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="780,135 570,105 570,118 780,148" fill="#2E3240"/>
+    </g>
+
+    <!-- Shelf 6 (y=245 right) -->
+    <g id="rightShelf6">
+      <polygon points="900,250 570,200 573,222 900,272" fill="#13141B" stroke="#000000" stroke-width="2"/>
+      <polygon points="900,272 573,222 576,232 900,282" fill="#292D3B"/>
+      <!-- Books on shelf 6 -->
+      <polygon points="650,225 615,207 615,245 650,263" fill="#FFFFFF" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="700,233 655,210 655,255 700,278" fill="#222530" stroke="#000000" stroke-width="1.5"/>
+      <polygon points="750,240 705,218 705,268 750,290" fill="#50566A" stroke="#000000" stroke-width="1.5"/>
+    </g>
+
+    <!-- Shelf 5 (y=375 right) -->
+    <g id="rightShelf5">
+      <polygon points="900,380 585,310 590,340 900,410" fill="#111218" stroke="#000000" stroke-width="2"/>
+      <polygon points="900,410 590,340 595,355 900,425" fill="#282C3A"/>
+      <line x1="900" y1="410" x2="590" y2="340" stroke="#50566C" stroke-width="2"/>
+      <!-- Books & rolled parchment scrolls -->
+      <polygon points="650,335 605,312 605,365 650,388" fill="#DCE0EB" stroke="#000000" stroke-width="2"/>
+      <line x1="620" y1="330" x2="620" y2="360" stroke="#000000" stroke-width="2"/>
+      <polygon points="710,343 655,315 655,378 710,406" fill="#181A22" stroke="#000000" stroke-width="2"/>
+      <!-- Leaning bookstack -->
+      <polygon points="770,352 715,324 715,392 770,420" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+      <text x="735" y="375" font-family="monospace" font-size="9" font-weight="bold" fill="#000000" transform="rotate(27 735 375)">POETRY</text>
+    </g>
+
+    <!-- Shelf 4 (y=540 right) -->
+    <g id="rightShelf4">
+      <polygon points="900,545 605,450 612,490 900,585" fill="#0E0F14" stroke="#000000" stroke-width="2.5"/>
+      <polygon points="900,585 612,490 618,510 900,605" fill="#252834"/>
+      <!-- Elaborate library books -->
+      <polygon points="675,475 625,445 625,515 675,545" fill="#3D4256" stroke="#000000" stroke-width="2"/>
+      <polygon points="730,488 680,458 680,535 730,565" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+      <polygon points="790,503 735,470 735,555 790,588" fill="#1E202A" stroke="#000000" stroke-width="2"/>
+    </g>
+
+    <!-- Shelf 3 (y=740 right) -->
+    <g id="rightShelf3">
+      <polygon points="900,740 625,615 635,665 900,790" fill="#0C0D12" stroke="#000000" stroke-width="2.5"/>
+      <polygon points="900,790 635,665 642,690 900,815" fill="#21242E"/>
+      <line x1="900" y1="790" x2="635" y2="665" stroke="#484E60" stroke-width="2"/>
+      <!-- Giant tomes -->
+      <polygon points="705,650 645,615 645,705 705,740" fill="#FFFFFF" stroke="#000000" stroke-width="2.5"/>
+      <polygon points="785,670 715,630 715,735 785,775" fill="#313646" stroke="#000000" stroke-width="2.5"/>
+    </g>
+
+    <!-- Shelf 2 (y=970 right) -->
+    <g id="rightShelf2">
+      <polygon points="900,980 650,810 662,870 900,1040" fill="#0A0B0E" stroke="#000000" stroke-width="3"/>
+      <polygon points="900,1040 662,870 670,900 900,1070" fill="#1B1C24"/>
+    </g>
+
+    <!-- Rolling Library Ladder mounted on brass track -->
+    <g id="libraryLadder">
+      <!-- Brass track running along the right bookcase -->
+      <line x1="565" y1="160" x2="648" y2="1080" stroke="#7A8094" stroke-width="4.5"/>
+      <line x1="567" y1="160" x2="650" y2="1080" stroke="#FFFFFF" stroke-width="1.5"/>
+
+      <!-- Ladder rails (converging upwards in perspective) -->
+      <!-- Left rail of ladder -->
+      <line x1="590" y1="210" x2="710" y2="1180" stroke="#12141A" stroke-width="10"/>
+      <line x1="590" y1="210" x2="710" y2="1180" stroke="#3A3F52" stroke-width="6"/>
+      <line x1="590" y1="210" x2="710" y2="1180" stroke="#FFFFFF" stroke-width="1.5"/>
+      
+      <!-- Right rail of ladder -->
+      <line x1="620" y1="225" x2="780" y2="1195" stroke="#12141A" stroke-width="10"/>
+      <line x1="620" y1="225" x2="780" y2="1195" stroke="#3A3F52" stroke-width="6"/>
+      
+      <!-- Ladder rungs (seen from underneath, foreshortened) -->
+      <line x1="594" y1="240" x2="626" y2="255" stroke="#D0D4E0" stroke-width="3.5"/>
+      <line x1="603" y1="310" x2="638" y2="328" stroke="#D0D4E0" stroke-width="4"/>
+      <line x1="613" y1="400" x2="653" y2="420" stroke="#D0D4E0" stroke-width="4.5"/>
+      <line x1="625" y1="510" x2="670" y2="534" stroke="#D0D4E0" stroke-width="5"/>
+      <line x1="640" y1="640" x2="692" y2="667" stroke="#D0D4E0" stroke-width="5.5"/>
+      <line x1="658" y1="790" x2="716" y2="820" stroke="#D0D4E0" stroke-width="6"/>
+      <line x1="680" y1="960" x2="745" y2="994" stroke="#D0D4E0" stroke-width="7"/>
+
+      <!-- Ladder top roller bracket -->
+      <circle cx="585" y1="200" r="8" fill="#1C1F2B" stroke="#8E95AA" stroke-width="2.5"/>
+    </g>
+  </g><!-- 4. Narrow Library Floor (Extreme Low Perspective) -->
+  <g id="libraryFloor">
+    <!-- Wooden floorboards receding to center -->
+    <polygon points="270,1200 370,1120 530,1120 630,1200" fill="#0A0B0E" stroke="#161820" stroke-width="2"/>
+    <line x1="450" y1="1120" x2="450" y2="1200" stroke="#1F222C" stroke-width="2.5"/>
+    <line x1="410" y1="1120" x2="360" y2="1200" stroke="#1F222C" stroke-width="2"/>
+    <line x1="490" y1="1120" x2="540" y2="1200" stroke="#1F222C" stroke-width="2"/>
+    <!-- Floorboard wood grain texture lines -->
+    <line x1="430" y1="1140" x2="400" y2="1190" stroke="#14161D" stroke-width="1.5"/>
+    <line x1="470" y1="1140" x2="500" y2="1190" stroke="#14161D" stroke-width="1.5"/>
+  </g><!-- 5. The Desk Lamp: Hard Point Light Source & Single Lemon-Yellow Accent -->
+  <g id="deskLampAndBeam">
+    <!-- A. Lamp Mounting Clamp & Articulated Black-and-White Metal Arm -->
+    <g id="lampMechanicalArm">
+      <!-- Cast-iron C-clamp gripping the shelf edge -->
+      <rect x="290" y="338" width="22" height="32" rx="3" fill="#0C0D11" stroke="#4B5063" stroke-width="2"/>
+      <!-- Clamp tightening screw with T-handle -->
+      <line x1="301" y1="370" x2="301" y2="395" stroke="#8E95AA" stroke-width="3"/>
+      <line x1="290" y1="395" x2="312" y2="395" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round"/>
+      
+      <!-- Base pivot swivel bracket -->
+      <circle cx="301" cy="336" r="7" fill="#1A1C24" stroke="#8A92A6" stroke-width="2"/>
+      
+      <!-- Lower twin parallel arms extending upward-right -->
+      <line x1="300" y1="334" x2="332" y2="280" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
+      <line x1="300" y1="334" x2="332" y2="280" stroke="#60667C" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="304" y1="338" x2="336" y2="284" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
+      <line x1="304" y1="338" x2="336" y2="284" stroke="#60667C" stroke-width="2.5" stroke-linecap="round"/>
+      
+      <!-- Tension spring 1 -->
+      <path d="M 302 334 Q 312 305 328 290" stroke="#8A91A6" stroke-width="1.8" fill="none" stroke-dasharray="3,2"/>
+      
+      <!-- Articulated elbow joint -->
+      <circle cx="334" cy="282" r="8" fill="#11131A" stroke="#FFFFFF" stroke-width="2.5"/>
+      <circle cx="334" cy="282" r="3" fill="#000000"/>
+      <!-- Elbow wing nut -->
+      <path d="M 326 276 L 342 288 M 342 276 L 326 288" stroke="#7E8599" stroke-width="2"/>
+
+      <!-- Forearm extending downward-forward to lamp shade -->
+      <line x1="334" y1="282" x2="370" y2="330" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
+      <line x1="334" y1="282" x2="370" y2="330" stroke="#8E95AA" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Lamp socket ball joint -->
+      <circle cx="370" cy="330" r="7" fill="#1C1F2B" stroke="#484E62" stroke-width="2"/>
+
+      <!-- Deep conical lamp shade (Black exterior) -->
+      <!-- Back cap of shade -->
+      <path d="M 364 324 L 382 344 L 372 352 L 354 332 Z" fill="#181A22" stroke="#000000" stroke-width="2"/>
+      
+      <!-- Outer cone of the shade -->
+      <path d="M 370 327 L 416 352 L 388 402 L 358 343 Z" fill="#0D0E13" stroke="#252834" stroke-width="2"/>
+      <!-- Specular reflection streak on outer metal shade -->
+      <path d="M 374 332 L 408 351" stroke="#686F85" stroke-width="2" stroke-linecap="round"/>
+    </g>
+
+    <!-- B. THE SINGLE LEMON-YELLOW ACCENT: Point Light Source & Hard Beam -->
+    
+    <!-- Hard Volumetric Light Beam slicing diagonally across the aisle -->
+    <!-- Point light emits from (405, 380) -->
+    <g id="hardLightBeam">
+      <!-- Main wide atmospheric light cone -->
+      <polygon points="405,375 880,510 770,1200 410,1200 380,402" fill="url(#hardConeBeam)"/>
+      
+      <!-- Sharp core light shaft cutting directly across the bicycling pelican -->
+      <polygon points="405,375 860,460 740,780 380,402" fill="url(#sharpShaft)"/>
+      
+      <!-- Hard beam ray lines (accentuating the razor-sharp point light) -->
+      <line x1="405" y1="375" x2="880" y2="510" stroke="#FFF01F" stroke-width="2.5" stroke-opacity="0.85"/>
+      <line x1="380" y1="402" x2="520" y2="1200" stroke="#FFF01F" stroke-width="2" stroke-opacity="0.7"/>
+      <line x1="400" y1="388" x2="820" y2="700" stroke="#FFF01F" stroke-width="1.2" stroke-dasharray="8,6" stroke-opacity="0.4"/>
+      <line x1="392" y1="394" x2="710" y2="920" stroke="#FFF01F" stroke-width="1" stroke-dasharray="12,8" stroke-opacity="0.35"/>
+    </g>
+
+    <!-- C. Lamp Shade Interior & Intense Lemon-Yellow Bulb -->
+    <g id="lampBulbAndAperture">
+      <!-- Inner concave reflector dish (Glowing Lemon Yellow) -->
+      <ellipse cx="400" cy="380" rx="22" ry="32" transform="rotate(-30 400 380)" fill="url(#reflectorCone)" stroke="#FFF01F" stroke-width="2"/>
+      
+      <!-- Outer rim of the shade lip (stark black with crisp yellow highlight) -->
+      <ellipse cx="400" cy="380" rx="22" ry="32" transform="rotate(-30 400 380)" fill="none" stroke="#000000" stroke-width="3"/>
+      <path d="M 390 355 C 412 365 420 395 410 412" stroke="#FFF01F" stroke-width="2" fill="none"/>
+
+      <!-- Radiant Incandescent Bulb filament & bulb (Core point light) -->
+      <circle cx="400" cy="380" r="16" fill="url(#lampBulbCore)" filter="url(#intenseBulbGlow)"/>
+      <circle cx="398" cy="378" r="9" fill="#FFFFFF"/>
+      
+      <!-- Filament wire silhouette in bulb -->
+      <path d="M 393 378 L 397 373 L 401 378 L 405 373" stroke="#FFF01F" stroke-width="1.8" fill="none"/>
+    </g>
+
+    <!-- D. Floating Illuminated Dust Motes caught in the Lemon-Yellow Light Beam -->
+    <g id="dustMotes" fill="#FFF01F" filter="url(#moteGlow)">
+      <circle cx="440" cy="410" r="2.5" opacity="0.9"/>
+      <circle cx="475" cy="390" r="1.8" opacity="0.8"/>
+      <circle cx="510" cy="430" r="3.2" opacity="0.95"/>
+      <circle cx="460" cy="460" r="1.5" opacity="0.75"/>
+      <circle cx="530" cy="480" r="2.8" opacity="0.85"/>
+      <circle cx="580" cy="450" r="2.0" opacity="0.9"/>
+      <circle cx="620" cy="490" r="3.5" opacity="0.9"/>
+      <circle cx="490" cy="520" r="1.8" opacity="0.8"/>
+      <circle cx="560" cy="550" r="2.5" opacity="0.85"/>
+      <circle cx="670" cy="520" r="2.2" opacity="0.75"/>
+      <circle cx="430" cy="490" r="2.0" opacity="0.7"/>
+      <circle cx="640" cy="580" r="3.0" opacity="0.8"/>
+      <circle cx="520" cy="620" r="1.8" opacity="0.6"/>
+
+      <!-- Tiny glowing cross sparkle motes -->
+      <path d="M 510 426 L 510 434 M 506 430 L 514 430" stroke="#FFFFFF" stroke-width="1.2"/>
+      <path d="M 620 486 L 620 494 M 616 490 L 624 490" stroke="#FFFFFF" stroke-width="1.2"/>
+    </g>
+  </g><!-- 6. The Bicycle (Extreme Worm's-Eye View Looking Straight Up) -->
+  <g id="bicycle">
+    <!-- A. Rear Wheel (Receding high up in background, foreshortened) -->
+    <g id="bikeRearWheel">
+      <!-- Rear tire ellipse centered at (570, 520) -->
+      <ellipse cx="570" cy="520" rx="35" ry="85" transform="rotate(-25 570 520)" fill="none" stroke="#000000" stroke-width="14"/>
+      <ellipse cx="570" cy="520" rx="35" ry="85" transform="rotate(-25 570 520)" fill="none" stroke="#484C5C" stroke-width="10"/>
+      <!-- Chrome rim -->
+      <ellipse cx="570" cy="520" rx="31" ry="78" transform="rotate(-25 570 520)" fill="none" stroke="#DCE0EB" stroke-width="3"/>
+      <!-- Rear hub & cassette cog -->
+      <ellipse cx="570" cy="520" rx="9" ry="16" transform="rotate(-25 570 520)" fill="#181A22" stroke="#FFFFFF" stroke-width="2"/>
+      <!-- Rear spokes -->
+      <g stroke="#9DA3B4" stroke-width="1" opacity="0.7">
+        <line x1="570" y1="520" x2="540" y2="445"/>
+        <line x1="570" y1="520" x2="600" y2="595"/>
+        <line x1="570" y1="520" x2="525" y2="480"/>
+        <line x1="570" y1="520" x2="615" y2="560"/>
+        <line x1="570" y1="520" x2="595" y2="455"/>
+        <line x1="570" y1="520" x2="545" y2="585"/>
+      </g>
+    </g>
+
+    <!-- B. Rear Stays & Saddle Underside -->
+    <g id="bikeRearFrameAndSaddle">
+      <!-- Chain stays connecting bottom bracket (470, 710) to rear hub (570, 520) -->
+      <line x1="470" y1="710" x2="565" y2="525" stroke="#000000" stroke-width="8"/>
+      <line x1="470" y1="710" x2="565" y2="525" stroke="#FFFFFF" stroke-width="3"/>
+      <line x1="478" y1="715" x2="575" y2="520" stroke="#1A1C24" stroke-width="6"/>
+
+      <!-- Seat stays connecting rear hub to under-saddle cluster (525, 480) -->
+      <line x1="570" y1="520" x2="525" y2="480" stroke="#000000" stroke-width="7"/>
+      <line x1="570" y1="520" x2="525" y2="480" stroke="#E0E3ED" stroke-width="2.5"/>
+
+      <!-- Seatpost tube going down to bottom bracket -->
+      <line x1="525" y1="480" x2="470" y2="710" stroke="#000000" stroke-width="10"/>
+      <line x1="525" y1="480" x2="470" y2="710" stroke="#60667A" stroke-width="5"/>
+      <line x1="523" y1="480" x2="468" y2="710" stroke="#FFFFFF" stroke-width="1.8"/>
+
+      <!-- VINTAGE BICYCLE SADDLE UNDERSIDE (Looking straight up at seat springs) -->
+      <g id="saddleUnderside">
+        <!-- Saddle leather shell underside seen from below -->
+        <path d="M 525 450 C 500 455 480 475 490 495 C 505 515 545 515 560 495 C 570 475 550 455 525 450 Z" fill="#14161C" stroke="#000000" stroke-width="3"/>
+        <!-- Underside metal frame rails -->
+        <path d="M 505 470 L 525 455 L 545 470" stroke="#8A90A4" stroke-width="3.5" fill="none"/>
+        <!-- Classic twin coiled chrome suspension springs under the saddle! -->
+        <!-- Left spring -->
+        <g stroke="#FFFFFF" stroke-width="2.5" fill="none">
+          <ellipse cx="505" cy="490" rx="9" ry="5" fill="#1C1F28"/>
+          <path d="M 496 490 C 496 483 514 483 514 490 C 514 497 496 497 496 502 C 496 508 514 508 514 513"/>
+        </g>
+        <!-- Right spring -->
+        <g stroke="#FFFFFF" stroke-width="2.5" fill="none">
+          <ellipse cx="545" cy="490" rx="9" ry="5" fill="#1C1F28"/>
+          <path d="M 536 490 C 536 483 554 483 554 490 C 554 497 536 497 536 502 C 536 508 554 508 554 513"/>
+        </g>
+        <!-- Seatpost binder bolt clamp -->
+        <rect x="520" y="475" width="10" height="12" rx="2" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+      </g>
+    </g>
+
+    <!-- C. Drive Train & Bottom Bracket (Directly overhead) -->
+    <g id="bikeDriveTrain">
+      <!-- Bottom Bracket Shell -->
+      <circle cx="470" cy="710" r="16" fill="#181A22" stroke="#000000" stroke-width="3"/>
+      
+      <!-- Bicycle Chain (wrapping around chainring and heading back to rear wheel) -->
+      <path d="M 470 675 L 560 505 L 580 535 L 490 745 Z" fill="none" stroke="#2B2E3C" stroke-width="7"/>
+      <path d="M 470 675 L 560 505 M 580 535 L 490 745" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="5,3"/>
+
+      <!-- Large Toothed Front Chainring (Sprocket) seen in steep perspective -->
+      <ellipse cx="470" cy="710" rx="38" ry="34" transform="rotate(-15 470 710)" fill="#0C0D12" stroke="#FFFFFF" stroke-width="3"/>
+      <!-- Chainring cutouts / spokes -->
+      <ellipse cx="470" cy="710" rx="22" ry="18" transform="rotate(-15 470 710)" fill="#1A1C24" stroke="#8E95A8" stroke-width="2"/>
+      <circle cx="470" cy="710" r="8" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+      <!-- Chainring sprocket teeth -->
+      <ellipse cx="470" cy="710" rx="39" ry="35" transform="rotate(-15 470 710)" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="4,4"/>
+
+      <!-- Left Crank Arm & Left Pedal (Pointing DOWN-LEFT towards viewer) -->
+      <g id="leftCrankAndPedal">
+        <!-- Crank arm -->
+        <polygon points="466,705 385,785 395,795 476,715" fill="#E2E5F0" stroke="#000000" stroke-width="2.5"/>
+        <circle cx="390" cy="790" r="7" fill="#181A22" stroke="#FFFFFF" stroke-width="2"/>
+        <!-- Pedal axle -->
+        <line x1="390" y1="790" x2="365" y2="815" stroke="#FFFFFF" stroke-width="4.5"/>
+        <!-- Big block pedal seen in perspective -->
+        <polygon points="345,800 375,780 390,820 360,840" fill="#101116" stroke="#000000" stroke-width="2.5"/>
+        <polygon points="347,802 373,784 386,818 360,836" fill="#3D4254" stroke="#FFFFFF" stroke-width="1.5"/>
+        <!-- Pedal rubber treads -->
+        <line x1="352" y1="800" x2="368" y2="830" stroke="#000000" stroke-width="2"/>
+        <line x1="362" y1="792" x2="378" y2="822" stroke="#000000" stroke-width="2"/>
+      </g>
+
+      <!-- Right Crank Arm & Right Pedal (Pointing UP-RIGHT away) -->
+      <g id="rightCrankAndPedal">
+        <polygon points="470,705 540,640 550,650 480,715" fill="#4B5064" stroke="#000000" stroke-width="2"/>
+        <circle cx="545" cy="645" r="6" fill="#FFFFFF" stroke="#000000" stroke-width="1.5"/>
+        <!-- Right pedal -->
+        <polygon points="545,640 575,625 585,650 555,665" fill="#20222B" stroke="#FFFFFF" stroke-width="1.8"/>
+      </g>
+    </g>
+
+    <!-- D. Main Frame Tubes (Down Tube, Top Tube, Head Tube) -->
+    <g id="bikeMainTubes">
+      <!-- Down tube connecting bottom bracket (470, 710) to head tube (410, 830) -->
+      <line x1="470" y1="710" x2="415" y2="830" stroke="#000000" stroke-width="13"/>
+      <line x1="470" y1="710" x2="415" y2="830" stroke="#E6E9F2" stroke-width="7"/>
+      <line x1="467" y1="710" x2="412" y2="830" stroke="#FFFFFF" stroke-width="2.5"/>
+
+      <!-- Head Tube at (410, 835) -->
+      <polygon points="400,820 425,815 420,855 395,860" fill="#181A22" stroke="#FFFFFF" stroke-width="2.5"/>
+      <!-- Vintage bike badge on head tube -->
+      <ellipse cx="410" cy="838" rx="5" ry="8" fill="#FFFFFF" stroke="#000000" stroke-width="1.5"/>
+    </g>
+
+    <!-- E. Front Fork & Massive Front Wheel (FOREGROUND! LOOMING OVER VIEWER) -->
+    <g id="bikeFrontWheel">
+      <!-- Front Fork blades extending from head tube (410, 840) to front hub (390, 940) -->
+      <!-- Left fork blade -->
+      <line x1="405" y1="845" x2="370" y2="935" stroke="#000000" stroke-width="9" stroke-linecap="round"/>
+      <line x1="405" y1="845" x2="370" y2="935" stroke="#E2E5F0" stroke-width="5" stroke-linecap="round"/>
+      <line x1="403" y1="845" x2="368" y2="935" stroke="#FFFFFF" stroke-width="2"/>
+      
+      <!-- Right fork blade -->
+      <line x1="418" y1="845" x2="410" y2="945" stroke="#000000" stroke-width="9" stroke-linecap="round"/>
+      <line x1="418" y1="845" x2="410" y2="945" stroke="#50566A" stroke-width="5" stroke-linecap="round"/>
+
+      <!-- Front Wheel Axle Hub -->
+      <ellipse cx="390" cy="940" rx="14" ry="8" fill="#FFFFFF" stroke="#000000" stroke-width="3"/>
+      <circle cx="390" cy="940" r="5" fill="#12141A" stroke="#FFFFFF" stroke-width="1.5"/>
+
+      <!-- FRONT WHEEL RIM & TIRE (Dramatic worm's-eye foreshortened ellipse centered at 390, 940) -->
+      <!-- Outer black rubber tire with tread -->
+      <ellipse cx="390" cy="940" rx="95" ry="175" transform="rotate(-18 390 940)" fill="none" stroke="#000000" stroke-width="26"/>
+      <ellipse cx="390" cy="940" rx="95" ry="175" transform="rotate(-18 390 940)" fill="none" stroke="#252834" stroke-width="18"/>
+      <!-- Tire tread grip notches around outer perimeter -->
+      <ellipse cx="390" cy="940" rx="103" ry="183" transform="rotate(-18 390 940)" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="6,8"/>
+      <!-- Specular reflection streak on tire rubber -->
+      <path d="M 330 830 C 310 900 315 990 350 1070" stroke="#FFFFFF" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+      <!-- Shiny chrome wheel rim -->
+      <ellipse cx="390" cy="940" rx="84" ry="160" transform="rotate(-18 390 940)" fill="none" stroke="#FFFFFF" stroke-width="6"/>
+      <ellipse cx="390" cy="940" rx="82" ry="156" transform="rotate(-18 390 940)" fill="none" stroke="#000000" stroke-width="2"/>
+
+      <!-- Criss-crossing spokes radiating from hub (390, 940) -->
+      <g stroke="#FFFFFF" stroke-width="1.8" opacity="0.85">
+        <line x1="390" y1="940" x2="340" y2="785"/>
+        <line x1="390" y1="940" x2="370" y2="780"/>
+        <line x1="390" y1="940" x2="410" y2="790"/>
+        <line x1="390" y1="940" x2="445" y2="815"/>
+        <line x1="390" y1="940" x2="475" y2="865"/>
+        <line x1="390" y1="940" x2="485" y2="925"/>
+        <line x1="390" y1="940" x2="480" y2="990"/>
+        <line x1="390" y1="940" x2="455" y2="1055"/>
+        <line x1="390" y1="940" x2="420" y2="1095"/>
+        <line x1="390" y1="940" x2="380" y2="1105"/>
+        <line x1="390" y1="940" x2="340" y2="1080"/>
+        <line x1="390" y1="940" x2="310" y2="1025"/>
+        <line x1="390" y1="940" x2="295" y2="955"/>
+        <line x1="390" y1="940" x2="305" y2="890"/>
+      </g>
+      <!-- Counter-crossing spokes for realistic wire tension -->
+      <g stroke="#8A90A4" stroke-width="1.2" opacity="0.65">
+        <line x1="390" y1="940" x2="355" y2="780"/>
+        <line x1="390" y1="940" x2="390" y2="782"/>
+        <line x1="390" y1="940" x2="430" y2="800"/>
+        <line x1="390" y1="940" x2="465" y2="840"/>
+        <line x1="390" y1="940" x2="485" y2="960"/>
+        <line x1="390" y1="940" x2="440" y2="1080"/>
+        <line x1="390" y1="940" x2="320" y2="1060"/>
+        <line x1="390" y1="940" x2="300" y2="920"/>
+      </g>
+
+      <!-- Curved chrome fender over front wheel with stay struts -->
+      <path d="M 325 805 C 380 770 450 790 480 840" stroke="#000000" stroke-width="14" fill="none"/>
+      <path d="M 325 805 C 380 770 450 790 480 840" stroke="#FFFFFF" stroke-width="8" fill="none"/>
+      <path d="M 327 805 C 380 772 448 792 478 840" stroke="#A8B0C4" stroke-width="2" fill="none"/>
+      <!-- Fender stay rod -->
+      <line x1="390" y1="940" x2="335" y2="815" stroke="#FFFFFF" stroke-width="2.5"/>
+    </g>
+
+    <!-- F. Handlebars, Cockpit, Brake Lever & Vintage Bicycle Bell -->
+    <g id="bikeCockpit">
+      <!-- Handlebar stem riser from head tube -->
+      <line x1="410" y1="830" x2="400" y2="760" stroke="#000000" stroke-width="10"/>
+      <line x1="410" y1="830" x2="400" y2="760" stroke="#FFFFFF" stroke-width="5"/>
+      <circle cx="400" cy="760" r="7" fill="#1C1E26" stroke="#FFFFFF" stroke-width="2"/>
+
+      <!-- Wide curved cruiser handlebars sweeping outward -->
+      <!-- Black background stroke for handlebars -->
+      <path d="M 300 710 C 330 740 370 760 400 760 C 435 760 490 735 530 690" stroke="#000000" stroke-width="12" fill="none" stroke-linecap="round"/>
+      <!-- Chrome handlebar pipe -->
+      <path d="M 300 710 C 330 740 370 760 400 760 C 435 760 490 735 530 690" stroke="#E6E9F2" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <path d="M 300 710 C 330 740 370 760 400 760 C 435 760 490 735 530 690" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+
+      <!-- Rubber handlebar grips -->
+      <!-- Left grip (held by pelican wing) -->
+      <path d="M 290 705 L 320 722" stroke="#121318" stroke-width="14" stroke-linecap="round"/>
+      <line x1="295" y1="707" x2="315" y2="719" stroke="#50566A" stroke-width="2"/>
+      
+      <!-- Right grip -->
+      <path d="M 525 695 L 550 675" stroke="#121318" stroke-width="14" stroke-linecap="round"/>
+      
+      <!-- Brake cable looping down gracefully -->
+      <path d="M 315 725 Q 350 780 405 840" stroke="#000000" stroke-width="3" fill="none"/>
+      <path d="M 315 725 Q 350 780 405 840" stroke="#686F84" stroke-width="1.5" fill="none"/>
+
+      <!-- VINTAGE BICYCLE BELL ON RIGHT HANDLEBAR (Hit by the Lemon-Yellow light!) -->
+      <g id="bicycleBell">
+        <!-- Bell dome base clamp -->
+        <circle cx="510" cy="710" r="5" fill="#1C1F28" stroke="#FFFFFF" stroke-width="1.5"/>
+        <!-- Shiny bell dome with Lemon-Yellow rim highlight! -->
+        <circle cx="508" cy="705" r="14" fill="#FFFFFF" stroke="#000000" stroke-width="2.5"/>
+        <path d="M 496 702 C 500 694 515 694 520 702" stroke="#FFF01F" stroke-width="3" fill="none"/>
+        <circle cx="505" cy="702" r="3" fill="#FFF01F"/>
+        <!-- Bell thumb lever / striker flicking! -->
+        <line x1="520" y1="712" x2="532" y2="718" stroke="#000000" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="532" cy="718" r="3" fill="#FFF01F"/>
+
+        <!-- Comic "RING! RING!" Sound Waves & Graphic Typography -->
+        <g id="bellSoundWaves">
+          <!-- Concentric sound arcs -->
+          <path d="M 528 692 C 538 696 542 708 538 718" stroke="#FFF01F" stroke-width="2.5" fill="none"/>
+          <path d="M 536 684 C 550 690 556 708 550 724" stroke="#FFF01F" stroke-width="3" fill="none"/>
+          <path d="M 545 676 C 565 684 572 710 562 732" stroke="#FFFFFF" stroke-width="2.5" fill="none"/>
+          
+          <!-- Comic sound effect text -->
+          <text x="555" y="670" font-family="'Impact', 'Arial Black', sans-serif" font-size="18" font-style="italic" fill="#FFF01F" stroke="#000000" stroke-width="2" paint-order="stroke fill" transform="rotate(-12 555 670)">RING!</text>
+          <text x="575" y="695" font-family="'Impact', 'Arial Black', sans-serif" font-size="16" font-style="italic" fill="#FFFFFF" stroke="#000000" stroke-width="2" paint-order="stroke fill" transform="rotate(-5 575 695)">DING!!</text>
+        </g>
+      </g>
+    </g>
+  </g><!-- 7. The Pelican (The Star: Mischievous, Comic, Stuffed Pouch, Looking Straight Down) -->
+  <g id="thePelican">
+    <!-- A. Pelican Body & Underbelly (Seen from below, puffed out over bicycle top tube) -->
+    <g id="pelicanTorso">
+      <!-- Tail feathers spreading out over rear saddle & fender -->
+      <polygon points="530,470 575,430 595,455 545,490" fill="#1C1F28" stroke="#000000" stroke-width="2"/>
+      <polygon points="540,465 590,420 610,442 555,482" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+      <polygon points="550,460 605,415 618,430 565,475" fill="#E2E5F0" stroke="#000000" stroke-width="2"/>
+
+      <!-- Plump Feathered Belly & Chest (Massive spherical foreshortened volume) -->
+      <!-- Shadow under belly -->
+      <ellipse cx="485" cy="565" rx="55" ry="75" transform="rotate(15 485 565)" fill="url(#pelicanBellyGrad)" stroke="#000000" stroke-width="3"/>
+      <!-- Feathery contour lines on breast -->
+      <path d="M 450 530 C 465 545 495 550 520 535" stroke="#FFFFFF" stroke-width="2.5" fill="none"/>
+      <path d="M 440 565 C 465 585 505 585 530 560" stroke="#FFFFFF" stroke-width="3" fill="none"/>
+      <path d="M 445 605 C 475 625 515 620 535 595" stroke="#A8AFC4" stroke-width="2" fill="none"/>
+      <!-- Comic feather tufts poking out -->
+      <path d="M 430 570 L 420 575 L 432 583" fill="#FFFFFF" stroke="#000000" stroke-width="1.8"/>
+    </g>
+
+    <!-- B. Massive Webbed Feet Pedaling the Bicycle -->
+    <g id="pelicanWebbedFeet">
+      <!-- 1. LEFT FOOT: Planted on lower pedal (365, 815) - HUGE FOREGROUND WEBBED FLIPPER! -->
+      <g id="leftWebbedFoot">
+        <!-- Knobby feathered bird ankle/tarsus -->
+        <path d="M 445 640 L 385 790 L 370 780 L 430 635 Z" fill="#2B2F3D" stroke="#000000" stroke-width="2.5"/>
+        <line x1="438" y1="640" x2="380" y2="785" stroke="#FFFFFF" stroke-width="2"/>
+        
+        <!-- Enormous Webbed Foot (4 articulated splayed toes with taut webbing skin) -->
+        <!-- Webbing skin between toes -->
+        <polygon points="370,785 320,830 350,865 395,860 415,820 380,785" fill="#FFFFFF" stroke="#000000" stroke-width="3"/>
+        <polygon points="370,785 320,830 350,865 395,860 415,820 380,785" fill="#D0D5E4" stroke="#000000" stroke-width="2" opacity="0.4"/>
+        
+        <!-- Webbing stretch rays / ridges -->
+        <line x1="375" y1="790" x2="335" y2="845" stroke="#7A8196" stroke-width="2"/>
+        <line x1="375" y1="790" x2="370" y2="860" stroke="#7A8196" stroke-width="2"/>
+        <line x1="375" y1="790" x2="405" y2="835" stroke="#7A8196" stroke-width="2"/>
+        
+        <!-- 4 Long knobby toes with sharp black talons clutching the pedal -->
+        <!-- Outer left toe & talon -->
+        <path d="M 370 785 L 320 830 L 310 842" stroke="#000000" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M 310 842 L 305 848" stroke="#000000" stroke-width="6" fill="none"/><!-- Talon -->
+        <path d="M 370 785 L 320 830" stroke="#FFFFFF" stroke-width="2.5" fill="none"/>
+        
+        <!-- Center-left toe & talon -->
+        <path d="M 373 788 L 348 862 L 344 875" stroke="#000000" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M 344 875 L 340 882" stroke="#000000" stroke-width="6" fill="none"/><!-- Talon -->
+        <path d="M 373 788 L 348 862" stroke="#FFFFFF" stroke-width="2.5" fill="none"/>
+
+        <!-- Center-right toe & talon -->
+        <path d="M 376 790 L 392 858 L 392 872" stroke="#000000" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M 392 872 L 392 880" stroke="#000000" stroke-width="6" fill="none"/><!-- Talon -->
+        <path d="M 376 790 L 392 858" stroke="#FFFFFF" stroke-width="2.5" fill="none"/>
+
+        <!-- Inner right toe -->
+        <path d="M 378 790 L 415 818 L 422 825" stroke="#000000" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <path d="M 422 825 L 426 830" stroke="#000000" stroke-width="5" fill="none"/>
+        
+        <!-- Knuckle scales texture -->
+        <ellipse cx="345" cy="830" rx="3" ry="2" fill="#000000"/>
+        <ellipse cx="365" cy="840" rx="3" ry="2" fill="#000000"/>
+        <ellipse cx="390" cy="835" rx="3" ry="2" fill="#000000"/>
+      </g>
+
+      <!-- 2. RIGHT FOOT: High on upper pedal (550, 645) - Pumping furiously -->
+      <g id="rightWebbedFoot">
+        <!-- Bird tarsus leg -->
+        <path d="M 505 600 L 545 640 L 535 650 L 495 610 Z" fill="#20232E" stroke="#000000" stroke-width="2"/>
+        <!-- Webbed foot angled downward on pedal -->
+        <polygon points="545,640 575,670 600,660 580,630 550,635" fill="#E6E9F2" stroke="#000000" stroke-width="2.5"/>
+        <!-- Claws hooked over the pedal edge -->
+        <path d="M 575 670 L 580 678 M 600 660 L 606 667" stroke="#000000" stroke-width="4" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- C. Pelican Wings (One steering the bike, the other gesturing/ringing) -->
+    <g id="pelicanWings">
+      <!-- 1. LEFT WING: Gripping the left handlebar grip (310, 715) like clever fingers! -->
+      <g id="leftWingGrip">
+        <!-- Wing shoulder & bicep curving down from body -->
+        <path d="M 440 530 C 400 560 360 610 330 670 L 310 705" stroke="#000000" stroke-width="18" fill="none" stroke-linecap="round"/>
+        <path d="M 440 530 C 400 560 360 610 330 670 L 310 705" stroke="#FFFFFF" stroke-width="12" fill="none" stroke-linecap="round"/>
+        
+        <!-- Individual primary flight feathers curled around the rubber grip like human fingers! -->
+        <path d="M 315 690 C 300 695 295 710 310 715" stroke="#000000" stroke-width="4" fill="#FFFFFF"/><!-- Feather finger 1 -->
+        <path d="M 320 698 C 305 705 300 718 316 724" stroke="#000000" stroke-width="4" fill="#FFFFFF"/><!-- Feather finger 2 -->
+        <path d="M 328 706 C 315 715 310 726 324 732" stroke="#000000" stroke-width="4" fill="#FFFFFF"/><!-- Feather finger 3 -->
+        <path d="M 336 714 C 325 722 322 734 334 738" stroke="#000000" stroke-width="4" fill="#FFFFFF"/><!-- Feather finger 4 -->
+        
+        <!-- Feather shaft spine lines -->
+        <path d="M 380 600 C 350 640 330 680 320 700" stroke="#A6ADC2" stroke-width="2" fill="none"/>
+      </g>
+
+      <!-- 2. RIGHT WING: Raised high with comic flair / thumbing the bicycle bell -->
+      <g id="rightWingFlourish">
+        <!-- Wing arm arching outward to right -->
+        <path d="M 520 520 C 560 510 610 520 640 560 C 655 580 635 630 550 675" stroke="#000000" stroke-width="16" fill="none" stroke-linecap="round"/>
+        <path d="M 520 520 C 560 510 610 520 640 560 C 655 580 635 630 550 675" stroke="#FFFFFF" stroke-width="10" fill="none" stroke-linecap="round"/>
+        
+        <!-- Splayed flight feathers fanning out dynamically in the wind -->
+        <path d="M 640 560 L 675 540 L 648 575" fill="#FFFFFF" stroke="#000000" stroke-width="2.5"/>
+        <path d="M 645 572 L 685 560 L 648 590" fill="#E2E5F0" stroke="#000000" stroke-width="2.5"/>
+        <path d="M 645 588 L 680 585 L 640 605" fill="#FFFFFF" stroke="#000000" stroke-width="2.5"/>
+        <path d="M 638 602 L 665 615 L 625 625" fill="#D0D5E4" stroke="#000000" stroke-width="2.5"/>
+
+        <!-- Feather tip poised dramatically on the bell striker -->
+        <path d="M 565 660 C 555 675 540 690 534 712" stroke="#000000" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M 565 660 C 555 675 540 690 534 712" stroke="#FFFFFF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </g>
+    </g>
+
+    <!-- D. Pelican S-Curved Neck (Craning down so face looks straight at camera) -->
+    <g id="pelicanNeck">
+      <!-- Neck curves down from chest (470, 520) to head (440, 440) -->
+      <path d="M 480 530 C 475 490 495 440 465 410 C 450 395 430 405 425 430" stroke="#000000" stroke-width="24" fill="none" stroke-linecap="round"/>
+      <path d="M 480 530 C 475 490 495 440 465 410 C 450 395 430 405 425 430" stroke="#FFFFFF" stroke-width="18" fill="none" stroke-linecap="round"/>
+      <!-- Shadow on inner neck curve -->
+      <path d="M 482 525 C 478 495 492 450 468 422" stroke="#B0B6CA" stroke-width="6" fill="none"/>
+    </g>
+
+    <!-- E. THE HEAD, EYE, SPECTACLES & MISCHIEVOUS COMIC EXPRESSION -->
+    <g id="pelicanHead">
+      <!-- Skull / Crown of head -->
+      <ellipse cx="435" cy="415" rx="24" ry="20" transform="rotate(-15 435 415)" fill="#FFFFFF" stroke="#000000" stroke-width="3"/>
+      
+      <!-- Backward wispy crest feathers fluttering in the wind -->
+      <path d="M 420 405 C 400 395 385 390 370 395 C 385 402 398 408 412 412 Z" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+      <path d="M 422 412 C 405 405 390 402 375 408 C 390 414 402 418 416 418 Z" fill="#E2E5F0" stroke="#000000" stroke-width="2"/>
+
+      <!-- THE EYE: Mischievous, smug, wide comic cartoon eye looking right at the viewer -->
+      <g id="pelicanEye">
+        <!-- Eyebrow raised in cheeky deviousness -->
+        <path d="M 425 395 Q 440 385 455 396" stroke="#000000" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <!-- Eye socket / sclera -->
+        <ellipse cx="442" cy="408" rx="11" ry="13" fill="#FFFFFF" stroke="#000000" stroke-width="2.5"/>
+        <!-- Dilated pupil peering down-forward directly at the viewer! -->
+        <ellipse cx="443" cy="412" rx="6.5" ry="8" fill="#000000"/>
+        <!-- Mischievous gleam / catchlight in eye (White + Lemon-Yellow point light reflex!) -->
+        <circle cx="441" cy="408" r="2.5" fill="#FFFFFF"/>
+        <circle cx="445" cy="414" r="1.5" fill="#FFF01F"/><!-- Yellow reflection from desk lamp! -->
+      </g>
+
+      <!-- COMIC READING SPECTACLES / PINCE-NEZ perched crookedly on the beak! -->
+      <g id="scholarSpectacles">
+        <!-- Round wire rim frame -->
+        <circle cx="452" cy="414" r="12" fill="none" stroke="#000000" stroke-width="2.5"/>
+        <circle cx="452" cy="414" r="12" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+        <!-- Lens glass specular gleam -->
+        <line x1="445" y1="406" x2="455" y2="416" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+        <line x1="449" y1="406" x2="457" y2="414" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- Bridge clip over the bill ridge -->
+        <path d="M 464 416 Q 470 412 476 418" stroke="#000000" stroke-width="2.5" fill="none"/>
+        <!-- Spectacle cord flying back in the wind -->
+        <path d="M 440 422 Q 410 435 395 425" stroke="#000000" stroke-width="1.5" stroke-dasharray="3,2" fill="none"/>
+      </g>
+    </g>
+
+    <!-- F. THE GIANT BEAK & THROAT POUCH (GULAR POUCH) - STUFFED WITH STOLEN BOOKS!! -->
+    <g id="pelicanBeakAndStuffedPouch">
+      <!-- Upper Mandible (Long bony bill extending down and forward) -->
+      <!-- Black outline of upper bill -->
+      <path d="M 450 415 L 535 440 L 525 455 L 445 432 Z" fill="#FFFFFF" stroke="#000000" stroke-width="3"/>
+      <!-- The hooked nail at the tip of the upper bill (characteristic pelican anatomy) -->
+      <path d="M 535 440 C 542 443 544 449 538 454 L 525 455 Z" fill="#0C0D11" stroke="#000000" stroke-width="2"/>
+      
+      <!-- Ridge line along upper bill (Culmen) -->
+      <line x1="450" y1="416" x2="536" y2="442" stroke="#000000" stroke-width="2"/>
+      <!-- HARD LEMON-YELLOW RIM HIGHLIGHT along upper bill ridge (struck by lamp beam!) -->
+      <line x1="455" y1="417" x2="530" y2="440" stroke="#FFF01F" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- THE MASSIVE GULAR THROAT POUCH: Stuffed to bursting with library books! -->
+      <!-- Pouch outer contour: saggy, bulging with angular book corners! -->
+      <path d="M 442 432 
+               C 425 465 410 500 420 540 
+               C 428 575 455 595 490 580 
+               C 515 570 535 530 530 480 
+               L 526 455 Z" 
+            fill="url(#pelicanPouchShadow)" stroke="#000000" stroke-width="3.5"/>
+
+      <!-- LEMON-YELLOW RIM HIGHLIGHT ON POUCH (Where the hard point light catches the stretched skin) -->
+      <path d="M 440 435 C 423 470 412 505 422 542" stroke="#FFF01F" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+      <!-- VISIBLE RECTANGULAR BOOK OUTLINES BULGING AGAINST THE INSIDE OF THE POUCH! -->
+      <!-- Book 1 bulge (Corner pushing against skin) -->
+      <path d="M 432 470 L 465 480 L 460 525 L 426 515 Z" fill="#20232E" stroke="#000000" stroke-width="2"/>
+      <line x1="432" y1="470" x2="465" y2="480" stroke="#FFFFFF" stroke-width="1.8"/>
+      
+      <!-- Book 2 bulge (Massive heavy tome pressing the bottom of the pouch down) -->
+      <path d="M 445 520 L 495 510 L 485 565 L 435 555 Z" fill="#14161F" stroke="#000000" stroke-width="2.5"/>
+      <line x1="445" y1="520" x2="495" y2="510" stroke="#FFFFFF" stroke-width="2"/>
+      <line x1="485" y1="565" x2="435" y2="555" stroke="#FFFFFF" stroke-width="1.5"/>
+
+      <!-- Tension stretch lines & wrinkles on the elastic pouch skin -->
+      <path d="M 435 450 Q 455 465 480 460" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+      <path d="M 425 490 Q 450 505 490 495" stroke="#A2A9BD" stroke-width="1.8" fill="none"/>
+      <path d="M 430 530 Q 460 545 500 530" stroke="#A2A9BD" stroke-width="1.8" fill="none"/>
+      <path d="M 445 565 Q 470 575 495 560" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+
+      <!-- BOOKS ACTUALLY PROTRUDING OUT OF THE PELICAN'S OPEN BEAK! -->
+      <!-- Stolen Book 1: Thick volume sticking out -->
+      <g id="stolenBook1">
+        <polygon points="460,428 505,420 515,445 470,455" fill="#FFFFFF" stroke="#000000" stroke-width="2.5"/>
+        <polygon points="462,430 503,422 513,443 472,453" fill="#1F222C"/>
+        <!-- Spine text: "FISH" -->
+        <text x="475" y="442" font-family="'Courier New', monospace" font-size="10" font-weight="bold" fill="#FFF01F" transform="rotate(-10 475 442)">FISH</text>
+        <line x1="465" y1="432" x2="475" y2="453" stroke="#FFF01F" stroke-width="2"/>
+      </g>
+
+      <!-- Stolen Book 2: Small red/black book with ribbon bookmark dangling -->
+      <g id="stolenBook2">
+        <polygon points="495,438 528,432 532,452 500,458" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+        <text x="502" y="449" font-family="'Courier New', monospace" font-size="8" font-weight="bold" fill="#000000" transform="rotate(-12 502 449)">VOL.I</text>
+        <!-- Red/White bookmark ribbon fluttering out of beak -->
+        <path d="M 515 455 C 525 475 510 495 520 515" stroke="#FFFFFF" stroke-width="2.5" fill="none"/>
+      </g>
+    </g>
+  </g><!-- 8. Comic Chaos: Falling Books, Library Cards, Speed Lines & Dust -->
+  <g id="comicChaosAndFallingItems">
+    <!-- A. Tumbling Library Catalog Card with "OVERDUE" Stamp in Lemon-Yellow! -->
+    <!-- Positioned at (590, 860) caught right in the falling air vortex -->
+    <g id="fallingIndexCard" transform="rotate(22 590 860)">
+      <!-- Card white paper with drop shadow -->
+      <polygon points="540,810 660,810 660,890 540,890" fill="#090A0E"/>
+      <polygon points="536,806 656,806 656,886 536,886" fill="#FFFFFF" stroke="#000000" stroke-width="2.5"/>
+      <!-- Faux text / catalog lines on card -->
+      <line x1="546" y1="820" x2="646" y2="820" stroke="#8E95A8" stroke-width="1.5"/>
+      <line x1="546" y1="830" x2="620" y2="830" stroke="#8E95A8" stroke-width="1.2"/>
+      <line x1="546" y1="840" x2="640" y2="840" stroke="#8E95A8" stroke-width="1.2"/>
+      <text x="546" y="855" font-family="monospace" font-size="8" fill="#000000">DEWEY: 598.43 PEL</text>
+      <text x="546" y="865" font-family="monospace" font-size="7" fill="#4B5162">BORROWER: MR. P.</text>
+      <!-- Date stamp grid -->
+      <rect x="546" y="870" width="30" height="10" fill="none" stroke="#7A8094" stroke-width="1"/>
+      
+      <!-- GIANT BOLD LEMON-YELLOW RUBBER STAMP: "OVERDUE"!! -->
+      <g transform="rotate(-15 596 846)">
+        <rect x="550" y="832" width="94" height="26" rx="3" fill="#000000" stroke="#FFF01F" stroke-width="2.5"/>
+        <rect x="552" y="834" width="90" height="22" fill="#FFF01F"/>
+        <text x="558" y="851" font-family="'Impact', 'Arial Black', sans-serif" font-size="16" font-weight="bold" fill="#000000" letter-spacing="1.5">OVERDUE!</text>
+      </g>
+    </g>
+
+    <!-- B. Massive Foreground Book Falling Open (Splayed open right in front of camera at 220, 1020) -->
+    <g id="fallingForegroundBook" transform="rotate(-18 220 1020)">
+      <!-- Book hardcover splayed open -->
+      <path d="M 120 1040 L 220 1010 L 320 1040 L 310 1055 L 220 1025 L 130 1055 Z" fill="#0A0B0E" stroke="#000000" stroke-width="3"/>
+      <!-- Hardcover cloth binding exterior -->
+      <polygon points="120,1040 220,1010 220,1025 125,1052" fill="#2E3344" stroke="#000000" stroke-width="2"/>
+      <polygon points="220,1010 320,1040 315,1052 220,1025" fill="#2E3344" stroke="#000000" stroke-width="2"/>
+      
+      <!-- Fanned white paper pages fluttering open toward viewer! -->
+      <!-- Left fanned pages -->
+      <path d="M 220 1010 Q 170 980 120 1015 L 125 1040 Q 170 1005 220 1025 Z" fill="#E8EAF2" stroke="#000000" stroke-width="2"/>
+      <path d="M 220 1010 Q 175 965 130 995 L 135 1020 Q 175 990 220 1025 Z" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+      <!-- Right fanned pages -->
+      <path d="M 220 1010 Q 270 980 320 1015 L 315 1040 Q 270 1005 220 1025 Z" fill="#E8EAF2" stroke="#000000" stroke-width="2"/>
+      <path d="M 220 1010 Q 265 965 310 995 L 305 1020 Q 265 990 220 1025 Z" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+
+      <!-- Text lines on open book pages -->
+      <line x1="145" y1="1005" x2="205" y2="1015" stroke="#7A8094" stroke-width="1.5"/>
+      <line x1="145" y1="1015" x2="200" y2="1025" stroke="#7A8094" stroke-width="1.5"/>
+      <line x1="235" y1="1015" x2="295" y2="1005" stroke="#7A8094" stroke-width="1.5"/>
+      <line x1="240" y1="1025" x2="295" y2="1015" stroke="#7A8094" stroke-width="1.5"/>
+
+      <!-- Title stamped on front cover corner: "SILENCE" -->
+      <text x="135" y="1050" font-family="'Times New Roman', serif" font-size="9" font-weight="bold" fill="#FFFFFF" transform="rotate(15 135 1050)">SILENCE</text>
+    </g>
+
+    <!-- C. Loose Sheets of Paper Floating in the Air Currents -->
+    <g id="flutteringLooseSheets">
+      <!-- Sheet 1 (y=720, left) -->
+      <polygon points="260,700 295,685 310,725 275,740" fill="#FFFFFF" stroke="#000000" stroke-width="1.8"/>
+      <line x1="270" y1="702" x2="295" y2="720" stroke="#8E95AA" stroke-width="1"/>
+      
+      <!-- Sheet 2 (y=610, center-right) caught in the lemon beam! -->
+      <polygon points="620,590 660,600 645,635 605,625" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+      <!-- Lemon yellow highlight edge from the lamp beam! -->
+      <line x1="620" y1="590" x2="660" y2="600" stroke="#FFF01F" stroke-width="2.5"/>
+      <line x1="615" y1="608" x2="645" y2="615" stroke="#484E60" stroke-width="1"/>
+
+      <!-- Sheet 3 (y=920, right) -->
+      <polygon points="680,910 720,895 735,935 695,950" fill="#E2E5F0" stroke="#000000" stroke-width="1.8"/>
+    </g>
+
+    <!-- D. Dynamic Speed Lines & Wind Swooshes (Comic Motion) -->
+    <g id="comicMotionLines" stroke="#FFFFFF" stroke-linecap="round" opacity="0.8">
+      <!-- Spinning wheel motion arcs around front wheel -->
+      <path d="M 280 870 C 270 930 280 1000 310 1060" stroke-width="3" stroke-dasharray="16,14" fill="none"/>
+      <path d="M 495 870 C 510 930 500 1010 470 1080" stroke-width="3" stroke-dasharray="16,14" fill="none"/>
+      
+      <!-- Furious pedaling wind circles around pedals -->
+      <path d="M 330 790 C 320 830 350 870 390 870" stroke-width="2.5" stroke-dasharray="10,8" fill="none"/>
+      <path d="M 530 620 C 570 610 600 640 590 670" stroke-width="2" stroke-dasharray="8,6" fill="none"/>
+
+      <!-- Downward speed streaks (showing pelican zooming past camera) -->
+      <line x1="380" y1="630" x2="380" y2="690" stroke-width="2" stroke-dasharray="12,12"/>
+      <line x1="420" y1="660" x2="420" y2="740" stroke-width="2.5" stroke-dasharray="14,10"/>
+      <line x1="550" y1="580" x2="550" y2="640" stroke-width="2" stroke-dasharray="10,10"/>
+      <line x1="460" y1="780" x2="460" y2="860" stroke-width="3" stroke-dasharray="18,12"/>
+      <line x1="350" y1="740" x2="350" y2="820" stroke-width="2.5" stroke-dasharray="15,10"/>
+    </g>
+
+    <!-- E. Tilted Library Plaque swinging on chain overhead: "QUIET PLEASE" -->
+    <g id="quietPleaseSign" transform="rotate(-14 490 230)">
+      <!-- Brass hanging chains -->
+      <line x1="430" y1="180" x2="430" y2="220" stroke="#7A8094" stroke-width="2" stroke-dasharray="3,3"/>
+      <line x1="550" y1="180" x2="550" y2="220" stroke="#7A8094" stroke-width="2" stroke-dasharray="3,3"/>
+      <!-- Wooden plaque -->
+      <rect x="410" y="220" width="160" height="42" rx="4" fill="#0E1016" stroke="#FFFFFF" stroke-width="2.5"/>
+      <rect x="414" y="224" width="152" height="34" rx="2" fill="#1C1F2B" stroke="#484E62" stroke-width="1.5"/>
+      <!-- Bold text -->
+      <text x="424" y="246" font-family="'Times New Roman', serif" font-size="16" font-weight="bold" fill="#FFFFFF" letter-spacing="2">SILENCE</text>
+      <text x="444" y="255" font-family="'Times New Roman', serif" font-size="8" font-style="italic" fill="#A8AFC4">IN THE LIBRARY</text>
+      <!-- Comic motion swing arcs showing sign was just jolted! -->
+      <path d="M 575 235 C 585 242 585 255 575 262" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+    </g>
+  </g></svg>

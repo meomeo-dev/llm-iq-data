@@ -1,0 +1,968 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 820" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <radialGradient id="bg-glow" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#0e172a" />
+      <stop offset="60%" stop-color="#070b14" />
+      <stop offset="100%" stop-color="#030508" />
+    </radialGradient>
+
+    <linearGradient id="panel-card-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#111c30" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0a1120" stop-opacity="0.95" />
+    </linearGradient>
+
+    <linearGradient id="si-sub-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a3b5c" />
+      <stop offset="30%" stop-color="#19253d" />
+      <stop offset="100%" stop-color="#0d1424" />
+    </linearGradient>
+
+    <linearGradient id="dielectric-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.3" />
+      <stop offset="50%" stop-color="#007799" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#003344" stop-opacity="0.4" />
+    </linearGradient>
+
+    <!-- Atom Radial Spherical Shaders -->
+    <radialGradient id="atom-al" cx="35%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#7df9ff" />
+      <stop offset="45%" stop-color="#00c8e6" />
+      <stop offset="85%" stop-color="#006b80" />
+      <stop offset="100%" stop-color="#003844" />
+    </radialGradient>
+
+    <radialGradient id="atom-o" cx="35%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#ff6b8b" />
+      <stop offset="45%" stop-color="#e6194b" />
+      <stop offset="85%" stop-color="#8a0c2c" />
+      <stop offset="100%" stop-color="#4d0517" />
+    </radialGradient>
+
+    <radialGradient id="atom-c" cx="35%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#ffd166" />
+      <stop offset="45%" stop-color="#f4a261" />
+      <stop offset="85%" stop-color="#b25d19" />
+      <stop offset="100%" stop-color="#5a2c08" />
+    </radialGradient>
+
+    <radialGradient id="atom-h" cx="35%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="60%" stop-color="#d9e6f2" />
+      <stop offset="90%" stop-color="#8fa3b8" />
+      <stop offset="100%" stop-color="#546575" />
+    </radialGradient>
+
+    <radialGradient id="atom-n" cx="35%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="#b39ddb" />
+      <stop offset="50%" stop-color="#7e57c2" />
+      <stop offset="85%" stop-color="#4527a0" />
+      <stop offset="100%" stop-color="#241259" />
+    </radialGradient>
+
+    <!-- Filter Glow Effects -->
+    <filter id="glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-amber" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="glow-rose" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Background Blueprint Grid Pattern -->
+    <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#101d36" stroke-width="0.8" />
+      <path d="M 200 0 L 0 0 0 200" fill="none" stroke="#162747" stroke-width="1.2" />
+      <circle cx="40" cy="40" r="0.8" fill="#1b3158" />
+    </pattern>
+
+    <style><![CDATA[
+      /* Global Typography & Transitions */
+      text {
+        font-family: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+        user-select: none;
+      }
+      .font-sans {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      }
+
+      /* Master 16-Second 4-Phase Chronometer Timing */
+      /* Phase A: 0.0s - 4.0s (0% - 25%)   TMA Precursor Pulse */
+      /* Phase B: 4.0s - 8.0s (25% - 50%)  Inert N2 Gas Purge 1 */
+      /* Phase C: 8.0s - 12.0s (50% - 75%) H2O Oxidant Pulse */
+      /* Phase D: 12.0s - 16.0s (75% - 100%) Inert N2 Gas Purge 2 */
+
+      /* Continuous Timeline Scanner */
+      @keyframes timelineSweep {
+        0% { transform: translateX(0px); }
+        100% { transform: translateX(1170px); }
+      }
+      .timeline-runner {
+        animation: timelineSweep 16s linear infinite;
+      }
+
+      /* Phase Cards Glow Orchestration */
+      @keyframes highlightA {
+        0%, 24.5% { stroke: #00f3ff; stroke-width: 2.2px; filter: drop-shadow(0 0 10px rgba(0,243,255,0.45)); opacity: 1; }
+        25%, 100% { stroke: #1e3256; stroke-width: 1px; filter: none; opacity: 0.45; }
+      }
+      @keyframes highlightB {
+        0%, 24.9% { stroke: #1e3256; stroke-width: 1px; filter: none; opacity: 0.45; }
+        25%, 49.5% { stroke: #8a7aff; stroke-width: 2.2px; filter: drop-shadow(0 0 10px rgba(138,122,255,0.45)); opacity: 1; }
+        50%, 100% { stroke: #1e3256; stroke-width: 1px; filter: none; opacity: 0.45; }
+      }
+      @keyframes highlightC {
+        0%, 49.9% { stroke: #1e3256; stroke-width: 1px; filter: none; opacity: 0.45; }
+        50%, 74.5% { stroke: #ff3366; stroke-width: 2.2px; filter: drop-shadow(0 0 10px rgba(255,51,102,0.45)); opacity: 1; }
+        75%, 100% { stroke: #1e3256; stroke-width: 1px; filter: none; opacity: 0.45; }
+      }
+      @keyframes highlightD {
+        0%, 74.9% { stroke: #1e3256; stroke-width: 1px; filter: none; opacity: 0.45; }
+        75%, 99.5% { stroke: #8a7aff; stroke-width: 2.2px; filter: drop-shadow(0 0 10px rgba(138,122,255,0.45)); opacity: 1; }
+        100% { stroke: #1e3256; stroke-width: 1px; filter: none; opacity: 0.45; }
+      }
+      .phase-card-a { animation: highlightA 16s infinite; }
+      .phase-card-b { animation: highlightB 16s infinite; }
+      .phase-card-c { animation: highlightC 16s infinite; }
+      .phase-card-d { animation: highlightD 16s infinite; }
+
+      /* Gas Influx & Valve Animations */
+      @keyframes valveTMA {
+        0%, 23% { fill: #00f3ff; filter: drop-shadow(0 0 8px #00f3ff); opacity: 1; }
+        24%, 100% { fill: #1a2a44; filter: none; opacity: 0.35; }
+      }
+      @keyframes valveN2 {
+        0%, 24.9% { fill: #1a2a44; filter: none; opacity: 0.35; }
+        25%, 48% { fill: #9d8cff; filter: drop-shadow(0 0 8px #9d8cff); opacity: 1; }
+        49%, 74.9% { fill: #1a2a44; filter: none; opacity: 0.35; }
+        75%, 98% { fill: #9d8cff; filter: drop-shadow(0 0 8px #9d8cff); opacity: 1; }
+        99%, 100% { fill: #1a2a44; filter: none; opacity: 0.35; }
+      }
+      @keyframes valveH2O {
+        0%, 49.9% { fill: #1a2a44; filter: none; opacity: 0.35; }
+        50%, 73% { fill: #ff3366; filter: drop-shadow(0 0 8px #ff3366); opacity: 1; }
+        74%, 100% { fill: #1a2a44; filter: none; opacity: 0.35; }
+      }
+      .valve-tma-led { animation: valveTMA 16s infinite; }
+      .valve-n2-led { animation: valveN2 16s infinite; }
+      .valve-h2o-led { animation: valveH2O 16s infinite; }
+
+      /* Molecular Motion Kinetics: Phase A TMA Influx & Chemisorption */
+      @keyframes tmaTrajectory1 {
+        0% { transform: translate(440px, 140px) scale(0.65); opacity: 0; }
+        3% { opacity: 1; }
+        15% { transform: translate(380px, 355px) scale(1); opacity: 1; }
+        19%, 100% { transform: translate(380px, 358px) scale(1); opacity: 0; }
+      }
+      @keyframes tmaTrajectory2 {
+        0% { transform: translate(520px, 135px) scale(0.65); opacity: 0; }
+        4% { opacity: 1; }
+        16% { transform: translate(470px, 355px) scale(1); opacity: 1; }
+        20%, 100% { transform: translate(470px, 358px) scale(1); opacity: 0; }
+      }
+      @keyframes tmaTrajectory3 {
+        0% { transform: translate(600px, 140px) scale(0.65); opacity: 0; }
+        5% { opacity: 1; }
+        17% { transform: translate(560px, 355px) scale(1); opacity: 1; }
+        21%, 100% { transform: translate(560px, 358px) scale(1); opacity: 0; }
+      }
+      @keyframes tmaTrajectory4 {
+        0% { transform: translate(680px, 140px) scale(0.65); opacity: 0; }
+        6% { opacity: 1; }
+        18% { transform: translate(650px, 355px) scale(1); opacity: 1; }
+        22%, 100% { transform: translate(650px, 358px) scale(1); opacity: 0; }
+      }
+      .anim-tma-1 { animation: tmaTrajectory1 16s infinite cubic-bezier(0.2, 0.7, 0.4, 1); }
+      .anim-tma-2 { animation: tmaTrajectory2 16s infinite cubic-bezier(0.2, 0.7, 0.4, 1); }
+      .anim-tma-3 { animation: tmaTrajectory3 16s infinite cubic-bezier(0.2, 0.7, 0.4, 1); }
+      .anim-tma-4 { animation: tmaTrajectory4 16s infinite cubic-bezier(0.2, 0.7, 0.4, 1); }
+
+      /* Methane (CH4) Desorption & Exhaust */
+      @keyframes methaneRiseA1 {
+        0%, 13% { transform: translate(380px, 350px) scale(0.6); opacity: 0; }
+        15% { opacity: 1; }
+        24% { transform: translate(340px, 170px) scale(1); opacity: 0.9; }
+        28%, 100% { transform: translate(310px, 120px) scale(1.1); opacity: 0; }
+      }
+      @keyframes methaneRiseA2 {
+        0%, 15% { transform: translate(560px, 350px) scale(0.6); opacity: 0; }
+        17% { opacity: 1; }
+        25% { transform: translate(620px, 170px) scale(1); opacity: 0.9; }
+        29%, 100% { transform: translate(680px, 120px) scale(1.1); opacity: 0; }
+      }
+      @keyframes methaneRiseC1 {
+        0%, 63% { transform: translate(425px, 350px) scale(0.6); opacity: 0; }
+        65% { opacity: 1; }
+        73% { transform: translate(360px, 170px) scale(1); opacity: 0.9; }
+        78%, 100% { transform: translate(310px, 120px) scale(1.1); opacity: 0; }
+      }
+      @keyframes methaneRiseC2 {
+        0%, 65% { transform: translate(605px, 350px) scale(0.6); opacity: 0; }
+        67% { opacity: 1; }
+        75% { transform: translate(660px, 170px) scale(1); opacity: 0.9; }
+        80%, 100% { transform: translate(710px, 120px) scale(1.1); opacity: 0; }
+      }
+      .anim-ch4-a1 { animation: methaneRiseA1 16s infinite ease-out; }
+      .anim-ch4-a2 { animation: methaneRiseA2 16s infinite ease-out; }
+      .anim-ch4-c1 { animation: methaneRiseC1 16s infinite ease-out; }
+      .anim-ch4-c2 { animation: methaneRiseC2 16s infinite ease-out; }
+
+      /* Phase B & D Inert N2 Purge Streamlines */
+      @keyframes purgeSweepB {
+        0%, 24.5% { opacity: 0; transform: translateX(-40px); }
+        26% { opacity: 0.85; }
+        47% { opacity: 0.85; transform: translateX(480px); }
+        49.5%, 100% { opacity: 0; transform: translateX(520px); }
+      }
+      @keyframes purgeSweepD {
+        0%, 74.5% { opacity: 0; transform: translateX(-40px); }
+        76% { opacity: 0.85; }
+        97% { opacity: 0.85; transform: translateX(480px); }
+        99.5%, 100% { opacity: 0; transform: translateX(520px); }
+      }
+      .anim-purge-b { animation: purgeSweepB 16s infinite linear; }
+      .anim-purge-d { animation: purgeSweepD 16s infinite linear; }
+
+      /* Phase C: H2O Influx & Hydrolysis Kinetics */
+      @keyframes h2oTrajectory1 {
+        0%, 49.5% { transform: translate(450px, 140px) scale(0.7); opacity: 0; }
+        52% { opacity: 1; }
+        64% { transform: translate(425px, 355px) scale(1); opacity: 1; }
+        68%, 100% { transform: translate(425px, 358px) scale(1); opacity: 0; }
+      }
+      @keyframes h2oTrajectory2 {
+        0%, 51% { transform: translate(550px, 140px) scale(0.7); opacity: 0; }
+        54% { opacity: 1; }
+        65% { transform: translate(515px, 355px) scale(1); opacity: 1; }
+        69%, 100% { transform: translate(515px, 358px) scale(1); opacity: 0; }
+      }
+      @keyframes h2oTrajectory3 {
+        0%, 52.5% { transform: translate(650px, 140px) scale(0.7); opacity: 0; }
+        55% { opacity: 1; }
+        66% { transform: translate(605px, 355px) scale(1); opacity: 1; }
+        70%, 100% { transform: translate(605px, 358px) scale(1); opacity: 0; }
+      }
+      .anim-h2o-1 { animation: h2oTrajectory1 16s infinite cubic-bezier(0.2, 0.7, 0.4, 1); }
+      .anim-h2o-2 { animation: h2oTrajectory2 16s infinite cubic-bezier(0.2, 0.7, 0.4, 1); }
+      .anim-h2o-3 { animation: h2oTrajectory3 16s infinite cubic-bezier(0.2, 0.7, 0.4, 1); }
+
+      /* Substrate Surface State Morphing */
+      /* State 1: Active -OH surface (Initial: 0-14%, Regenerated: 68-100%) */
+      @keyframes surfaceOHState {
+        0%, 13% { opacity: 1; transform: scaleY(1); }
+        17%, 66% { opacity: 0; transform: scaleY(0.5); }
+        70%, 100% { opacity: 1; transform: scaleY(1); }
+      }
+      /* State 2: Methyl-passivated surface (-Al(CH3)2) (Active: 16-65%) */
+      @keyframes surfaceMethylState {
+        0%, 14% { opacity: 0; transform: translateY(8px) scale(0.8); }
+        18%, 64% { opacity: 1; transform: translateY(0px) scale(1); }
+        68%, 100% { opacity: 0; transform: translateY(-6px) scale(0.8); }
+      }
+      .state-oh-group { animation: surfaceOHState 16s infinite; }
+      .state-methyl-group { animation: surfaceMethylState 16s infinite; }
+
+      /* Atomic Layer Step Gauge (+1.10 Å Climb) */
+      @keyframes layerClimb {
+        0%, 64% { transform: translateY(0px); }
+        72%, 100% { transform: translateY(-16px); }
+      }
+      @keyframes thicknessTextClimb {
+        0%, 64% { opacity: 0.7; }
+        70%, 100% { opacity: 1; filter: drop-shadow(0 0 6px #00ffaa); fill: #00ffaa; }
+      }
+      .anim-layer-growth { animation: layerClimb 16s infinite cubic-bezier(0.34, 1.56, 0.64, 1); }
+      .anim-vernier-readout { animation: thicknessTextClimb 16s infinite; }
+
+      /* Langmuir Saturation Curve Tracking Beacon */
+      @keyframes langmuirBeaconA {
+        0% { transform: translate(945px, 222px); opacity: 0; }
+        2% { opacity: 1; }
+        18%, 48% { transform: translate(1075px, 148px); opacity: 1; }
+        49.5%, 100% { opacity: 0; }
+      }
+      @keyframes langmuirBeaconC {
+        0%, 49.9% { opacity: 0; }
+        51% { transform: translate(1105px, 222px); opacity: 1; }
+        68%, 98% { transform: translate(1235px, 148px); opacity: 1; }
+        99.5%, 100% { opacity: 0; }
+      }
+      .beacon-langmuir-a { animation: langmuirBeaconA 16s infinite cubic-bezier(0.1, 0.7, 0.3, 1); }
+      .beacon-langmuir-c { animation: langmuirBeaconC 16s infinite cubic-bezier(0.1, 0.7, 0.3, 1); }
+
+      /* Transient Pressure Oscilloscope Sweep */
+      @keyframes pressureScopeSweep {
+        0% { transform: translateX(0px); }
+        100% { transform: translateX(300px); }
+      }
+      .scope-time-cursor { animation: pressureScopeSweep 16s linear infinite; }
+    ]]></style>
+  </defs>
+
+  <!-- Deep Vacuum Chamber Background with Engineering Grid -->
+  <rect width="1280" height="820" fill="url(#bg-glow)" />
+  <rect width="1280" height="820" fill="url(#grid-pattern)" />
+
+  <!-- Outer Technical HUD Frame & Header -->
+  <g id="hud-header">
+    <rect x="25" y="18" width="1230" height="64" rx="8" fill="url(#panel-card-bg)" stroke="#1a2d4d" stroke-width="1.2" />
+    <path d="M 25 35 L 25 18 L 45 18 M 1255 35 L 1255 18 L 1235 18 M 25 65 L 25 82 L 45 82 M 1255 65 L 1255 82 L 1235 82" stroke="#00f3ff" stroke-width="2.5" fill="none" />
+    
+    <!-- Title & Reactor Telemetry -->
+    <text x="45" y="44" fill="#ffffff" font-size="16" font-weight="700" letter-spacing="1">ALD 4-PHASE SELF-LIMITING CHEMISORPTION &amp; MONOLAYER SATURATION</text>
+    <text x="45" y="65" fill="#00f3ff" font-size="10.5" letter-spacing="1.5">ATOMIC LAYER DEPOSITION // Al₂O₃ SYNTHESIS [TMA + H₂O] // SUB-2nm GAA &amp; 3D-NAND METROLOGY</text>
+
+    <!-- Telemetry Status Pills -->
+    <g transform="translate(790, 28)">
+      <rect x="0" y="0" width="105" height="24" rx="4" fill="#0a1526" stroke="#1f3760" stroke-width="1" />
+      <text x="8" y="16" fill="#8ca5c7" font-size="9">GPC CONSTANT:</text>
+      <text x="75" y="16" fill="#00ffaa" font-size="10" font-weight="700">1.10 Å</text>
+    </g>
+
+    <g transform="translate(905, 28)">
+      <rect x="0" y="0" width="115" height="24" rx="4" fill="#0a1526" stroke="#1f3760" stroke-width="1" />
+      <text x="8" y="16" fill="#8ca5c7" font-size="9">TEMP WINDOW:</text>
+      <text x="74" y="16" fill="#ffaa00" font-size="10" font-weight="700">220°C</text>
+    </g>
+
+    <g transform="translate(1030, 28)">
+      <rect x="0" y="0" width="105" height="24" rx="4" fill="#0a1526" stroke="#1f3760" stroke-width="1" />
+      <text x="8" y="16" fill="#8ca5c7" font-size="9">CONFORMAL:</text>
+      <text x="74" y="16" fill="#00f3ff" font-size="10" font-weight="700">100%</text>
+    </g>
+
+    <g transform="translate(1145, 28)">
+      <rect x="0" y="0" width="95" height="24" rx="4" fill="#0a1526" stroke="#1f3760" stroke-width="1" />
+      <circle cx="14" cy="12" r="4" fill="#00ffaa" filter="url(#glow-cyan)" />
+      <text x="25" y="16" fill="#00ffaa" font-size="9.5" font-weight="700">ACTIVE</text>
+    </g>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- LEFT PANEL: 3D-NAND / GAA Conformal Step Coverage Trench (Meso Scale) -->
+  <!-- ===================================================================== -->
+  <g id="panel-trench" transform="translate(25, 96)">
+    <rect width="250" height="494" rx="8" fill="url(#panel-card-bg)" stroke="#1a2d4d" stroke-width="1.2" />
+    <text x="16" y="24" fill="#8ca5c7" font-size="10" font-weight="700" letter-spacing="1">MESO-SCALE CONFORMALITY</text>
+    <text x="16" y="38" fill="#4d6b94" font-size="8.5">HAR 3D-NAND TRENCH (AR 40:1)</text>
+
+    <!-- Deep Trench Aspect Ratio Visualizer -->
+    <g transform="translate(20, 52)">
+      <!-- Silicon Bulk Matrix -->
+      <path d="M 10 20 L 75 20 L 75 320 L 135 320 L 135 20 L 200 20 L 200 360 L 10 360 Z" fill="#131e33" stroke="#223961" stroke-width="1.5" />
+      
+      <!-- Hatching pattern for Si substrate -->
+      <path d="M 15 50 L 45 20 M 15 90 L 75 30 M 15 130 L 75 70 M 15 170 L 75 110 M 15 210 L 75 150 M 15 250 L 75 190 M 15 290 L 75 230 M 15 330 L 75 270 
+               M 140 80 L 200 20 M 140 120 L 200 60 M 140 160 L 200 100 M 140 200 L 200 140 M 140 240 L 200 180 M 140 280 L 200 220 M 140 320 L 200 260" 
+            stroke="#1a2c4a" stroke-width="0.8" />
+
+      <!-- High-Conformality ALD Thin Film (Uniform Everywhere, No Pinch-off) -->
+      <path d="M 10 20 L 75 20 L 75 320 L 135 320 L 135 20 L 200 20" fill="none" stroke="#00e5ff" stroke-width="5" stroke-linecap="square" opacity="0.85" filter="url(#glow-cyan)" />
+      <!-- Previous Deposition Sub-Layer -->
+      <path d="M 10 22 L 73 22 L 73 322 L 137 322 L 137 22 L 200 22" fill="none" stroke="#007799" stroke-width="3" opacity="0.5" />
+
+      <!-- Step Coverage Dimension Markers -->
+      <line x1="75" y1="12" x2="135" y2="12" stroke="#8ca5c7" stroke-width="0.8" marker-start="url(#dot)" marker-end="url(#dot)" />
+      <text x="105" y="9" fill="#8ca5c7" font-size="8" text-anchor="middle">CD = 15 nm</text>
+
+      <line x1="145" y1="20" x2="145" y2="320" stroke="#8ca5c7" stroke-width="0.8" stroke-dasharray="2,2" />
+      <text x="175" y="170" fill="#8ca5c7" font-size="8" text-anchor="middle" transform="rotate(90, 175, 170)">DEPTH = 600 nm</text>
+
+      <!-- Bottom Step Coverage Callout -->
+      <circle cx="105" cy="320" r="14" fill="#00e5ff" fill-opacity="0.1" stroke="#00e5ff" stroke-width="0.8" stroke-dasharray="1.5,1.5" />
+      <line x1="105" y1="335" x2="105" y2="385" stroke="#00e5ff" stroke-width="1" />
+      <rect x="35" y="385" width="140" height="28" rx="4" fill="#0a1526" stroke="#00e5ff" stroke-width="1" />
+      <text x="105" y="398" fill="#00e5ff" font-size="8.5" font-weight="700" text-anchor="middle">BOTTOM STEP COVERAGE</text>
+      <text x="105" y="408" fill="#ffffff" font-size="8" text-anchor="middle">100.0% (Pinhole-Free)</text>
+    </g>
+
+    <!-- Comparison Summary Footer -->
+    <g transform="translate(16, 442)">
+      <rect width="218" height="38" rx="4" fill="#0b1322" stroke="#162744" stroke-width="0.8" />
+      <text x="10" y="15" fill="#587499" font-size="7.5">PVD: 8% Bottom Shadowing (Void Risk)</text>
+      <text x="10" y="27" fill="#ffaa00" font-size="7.5">CVD: 48% Overhang Pinch-Off</text>
+      <text x="145" y="27" fill="#00ffaa" font-size="8" font-weight="700">ALD: 100% Ideal</text>
+    </g>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- CENTER PANEL: Sub-Nanometer Chemisorption Reactor Chamber (Micro)     -->
+  <!-- ===================================================================== -->
+  <g id="panel-reactor" transform="translate(290, 96)">
+    <rect width="590" height="494" rx="8" fill="url(#panel-card-bg)" stroke="#1a2d4d" stroke-width="1.2" />
+    
+    <!-- Chamber Status Bar -->
+    <rect x="0" y="0" width="590" height="42" rx="8" fill="#0f192b" />
+    <text x="20" y="24" fill="#ffffff" font-size="11" font-weight="700" letter-spacing="1">SUB-NANOMETER SURFACE REACTION ZONE</text>
+    <text x="20" y="36" fill="#00f3ff" font-size="8">IN-SITU HIGH-RESOLUTION QUAD-PHASE CHEMICAL DYNAMICS</text>
+
+    <!-- Gas Showerhead / Injector Array -->
+    <g id="showerhead" transform="translate(45, 48)">
+      <!-- Chamber Top Flange -->
+      <rect x="0" y="0" width="500" height="24" rx="4" fill="#142138" stroke="#223961" stroke-width="1" />
+      
+      <!-- Valve Port 1: TMA (Phase A) -->
+      <g transform="translate(70, 0)">
+        <rect x="0" y="0" width="70" height="18" rx="2" fill="#0c1729" stroke="#1c345c" stroke-width="1" />
+        <circle cx="12" cy="9" r="4.5" class="valve-tma-led" fill="#00f3ff" />
+        <text x="22" y="12" fill="#00f3ff" font-size="7.5" font-weight="700">TMA (g)</text>
+        <line x1="35" y1="18" x2="35" y2="28" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="2,2" />
+      </g>
+
+      <!-- Valve Port 2: High-Purity N2 Carrier/Purge (Phase B & D) -->
+      <g transform="translate(215, 0)">
+        <rect x="0" y="0" width="70" height="18" rx="2" fill="#0c1729" stroke="#1c345c" stroke-width="1" />
+        <circle cx="12" cy="9" r="4.5" class="valve-n2-led" fill="#9d8cff" />
+        <text x="24" y="12" fill="#9d8cff" font-size="7.5" font-weight="700">N₂ PURGE</text>
+        <line x1="35" y1="18" x2="35" y2="28" stroke="#9d8cff" stroke-width="1.5" stroke-dasharray="2,2" />
+      </g>
+
+      <!-- Valve Port 3: H2O Vapor Oxidant (Phase C) -->
+      <g transform="translate(360, 0)">
+        <rect x="0" y="0" width="70" height="18" rx="2" fill="#0c1729" stroke="#1c345c" stroke-width="1" />
+        <circle cx="12" cy="9" r="4.5" class="valve-h2o-led" fill="#ff3366" />
+        <text x="23" y="12" fill="#ff3366" font-size="7.5" font-weight="700">H₂O (g)</text>
+        <line x1="35" y1="18" x2="35" y2="28" stroke="#ff3366" stroke-width="1.5" stroke-dasharray="2,2" />
+      </g>
+
+      <!-- Gas Showerhead Nozzle Grid Dispersers -->
+      <g fill="#243b66" opacity="0.6">
+        <circle cx="20" cy="22" r="1.5" /><circle cx="40" cy="22" r="1.5" /><circle cx="60" cy="22" r="1.5" />
+        <circle cx="80" cy="22" r="1.5" /><circle cx="100" cy="22" r="1.5" /><circle cx="120" cy="22" r="1.5" />
+        <circle cx="140" cy="22" r="1.5" /><circle cx="160" cy="22" r="1.5" /><circle cx="180" cy="22" r="1.5" />
+        <circle cx="200" cy="22" r="1.5" /><circle cx="220" cy="22" r="1.5" /><circle cx="240" cy="22" r="1.5" />
+        <circle cx="260" cy="22" r="1.5" /><circle cx="280" cy="22" r="1.5" /><circle cx="300" cy="22" r="1.5" />
+        <circle cx="320" cy="22" r="1.5" /><circle cx="340" cy="22" r="1.5" /><circle cx="360" cy="22" r="1.5" />
+        <circle cx="380" cy="22" r="1.5" /><circle cx="400" cy="22" r="1.5" /><circle cx="420" cy="22" r="1.5" />
+        <circle cx="440" cy="22" r="1.5" /><circle cx="460" cy="22" r="1.5" /><circle cx="480" cy="22" r="1.5" />
+      </g>
+    </g>
+
+    <!-- Vacuum Exhaust Duct Outlets -->
+    <g transform="translate(15, 80)">
+      <path d="M 0 0 L 20 0 L 20 20 L 0 35 Z" fill="#0d182b" stroke="#1f3760" stroke-width="1" />
+      <text x="3" y="16" fill="#4d6b94" font-size="6.5">EXHAUST</text>
+    </g>
+    <g transform="translate(555, 80)">
+      <path d="M 20 0 L 0 0 L 0 20 L 20 35 Z" fill="#0d182b" stroke="#1f3760" stroke-width="1" />
+      <text x="2" y="16" fill="#4d6b94" font-size="6.5">PUMP</text>
+    </g>
+
+    <!-- ========================================================= -->
+    <!-- DYNAMIC ANIMATED MOLECULAR SPECIES IN FLIGHT              -->
+    <!-- ========================================================= -->
+
+    <!-- Phase A: TMA Molecules Influx (Center Al + 3 Planar Methyls) -->
+    <g id="tma-influx-group">
+      <!-- TMA Molecule 1 -->
+      <g class="anim-tma-1">
+        <line x1="0" y1="0" x2="0" y2="-12" stroke="#55bbcc" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="-11" y2="8" stroke="#55bbcc" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="11" y2="8" stroke="#55bbcc" stroke-width="2.5" />
+        <circle cx="0" cy="0" r="10" fill="url(#atom-al)" filter="url(#glow-cyan)" />
+        <text x="0" y="3" fill="#ffffff" font-size="7" font-weight="700" text-anchor="middle">Al</text>
+        <!-- 3 Methyl Groups (CH3) -->
+        <circle cx="0" cy="-14" r="8" fill="url(#atom-c)" />
+        <text x="0" y="-12" fill="#2d1704" font-size="5" font-weight="700" text-anchor="middle">CH₃</text>
+        <circle cx="-13" cy="9" r="8" fill="url(#atom-c)" />
+        <text x="-13" y="11" fill="#2d1704" font-size="5" font-weight="700" text-anchor="middle">CH₃</text>
+        <circle cx="13" cy="9" r="8" fill="url(#atom-c)" />
+        <text x="13" y="11" fill="#2d1704" font-size="5" font-weight="700" text-anchor="middle">CH₃</text>
+      </g>
+
+      <!-- TMA Molecule 2 -->
+      <g class="anim-tma-2">
+        <line x1="0" y1="0" x2="-9" y2="-10" stroke="#55bbcc" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="12" y2="-6" stroke="#55bbcc" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="-2" y2="13" stroke="#55bbcc" stroke-width="2.5" />
+        <circle cx="0" cy="0" r="10" fill="url(#atom-al)" filter="url(#glow-cyan)" />
+        <text x="0" y="3" fill="#ffffff" font-size="7" font-weight="700" text-anchor="middle">Al</text>
+        <circle cx="-10" cy="-12" r="8" fill="url(#atom-c)" /><circle cx="13" cy="-7" r="8" fill="url(#atom-c)" /><circle cx="-3" cy="14" r="8" fill="url(#atom-c)" />
+      </g>
+
+      <!-- TMA Molecule 3 -->
+      <g class="anim-tma-3">
+        <line x1="0" y1="0" x2="0" y2="-12" stroke="#55bbcc" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="-11" y2="8" stroke="#55bbcc" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="11" y2="8" stroke="#55bbcc" stroke-width="2.5" />
+        <circle cx="0" cy="0" r="10" fill="url(#atom-al)" filter="url(#glow-cyan)" />
+        <text x="0" y="3" fill="#ffffff" font-size="7" font-weight="700" text-anchor="middle">Al</text>
+        <circle cx="0" cy="-14" r="8" fill="url(#atom-c)" /><circle cx="-13" cy="9" r="8" fill="url(#atom-c)" /><circle cx="13" cy="9" r="8" fill="url(#atom-c)" />
+      </g>
+
+      <!-- TMA Molecule 4 -->
+      <g class="anim-tma-4">
+        <line x1="0" y1="0" x2="-8" y2="-11" stroke="#55bbcc" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="12" y2="-5" stroke="#55bbcc" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="-3" y2="12" stroke="#55bbcc" stroke-width="2.5" />
+        <circle cx="0" cy="0" r="10" fill="url(#atom-al)" filter="url(#glow-cyan)" />
+        <text x="0" y="3" fill="#ffffff" font-size="7" font-weight="700" text-anchor="middle">Al</text>
+        <circle cx="-10" cy="-13" r="8" fill="url(#atom-c)" /><circle cx="13" cy="-6" r="8" fill="url(#atom-c)" /><circle cx="-4" cy="13" r="8" fill="url(#atom-c)" />
+      </g>
+    </g>
+
+    <!-- Phase B & D: High-Speed N2 Purge Streamlines -->
+    <g id="purge-streamlines-b" class="anim-purge-b">
+      <path d="M 60 160 Q 200 150 420 160 M 80 200 Q 230 190 450 200 M 50 250 Q 220 240 430 250 M 90 290 Q 250 280 460 290" 
+            stroke="#9d8cff" stroke-width="2" stroke-dasharray="14,10" fill="none" opacity="0.7" />
+      <g transform="translate(180, 195)"><circle cx="0" cy="0" r="5" fill="url(#atom-n)" /><circle cx="8" cy="0" r="5" fill="url(#atom-n)" /><line x1="0" y1="0" x2="8" y2="0" stroke="#b39ddb" stroke-width="2" /></g>
+      <g transform="translate(320, 245)"><circle cx="0" cy="0" r="5" fill="url(#atom-n)" /><circle cx="8" cy="0" r="5" fill="url(#atom-n)" /><line x1="0" y1="0" x2="8" y2="0" stroke="#b39ddb" stroke-width="2" /></g>
+    </g>
+
+    <g id="purge-streamlines-d" class="anim-purge-d">
+      <path d="M 60 170 Q 200 160 420 170 M 70 215 Q 230 205 450 215 M 50 265 Q 220 255 430 265 M 80 305 Q 250 295 460 305" 
+            stroke="#9d8cff" stroke-width="2" stroke-dasharray="14,10" fill="none" opacity="0.7" />
+      <g transform="translate(200, 210)"><circle cx="0" cy="0" r="5" fill="url(#atom-n)" /><circle cx="8" cy="0" r="5" fill="url(#atom-n)" /><line x1="0" y1="0" x2="8" y2="0" stroke="#b39ddb" stroke-width="2" /></g>
+      <g transform="translate(340, 260)"><circle cx="0" cy="0" r="5" fill="url(#atom-n)" /><circle cx="8" cy="0" r="5" fill="url(#atom-n)" /><line x1="0" y1="0" x2="8" y2="0" stroke="#b39ddb" stroke-width="2" /></g>
+    </g>
+
+    <!-- Phase C: H2O Molecules Influx (Bent Geometry, 104.5° Angle) -->
+    <g id="h2o-influx-group">
+      <!-- Water Molecule 1 -->
+      <g class="anim-h2o-1">
+        <line x1="0" y1="0" x2="-8" y2="8" stroke="#e6194b" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="8" y2="8" stroke="#e6194b" stroke-width="2.5" />
+        <circle cx="0" cy="0" r="9" fill="url(#atom-o)" filter="url(#glow-rose)" />
+        <text x="0" y="3" fill="#ffffff" font-size="6.5" font-weight="700" text-anchor="middle">O</text>
+        <circle cx="-9" cy="9" r="5.5" fill="url(#atom-h)" />
+        <circle cx="9" cy="9" r="5.5" fill="url(#atom-h)" />
+        <!-- Callout arc indicating 104.5 deg -->
+        <path d="M -5 5 A 7 7 0 0 0 5 5" fill="none" stroke="#ffffff" stroke-width="0.7" stroke-dasharray="1,1" />
+      </g>
+
+      <!-- Water Molecule 2 -->
+      <g class="anim-h2o-2">
+        <line x1="0" y1="0" x2="-8" y2="8" stroke="#e6194b" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="8" y2="8" stroke="#e6194b" stroke-width="2.5" />
+        <circle cx="0" cy="0" r="9" fill="url(#atom-o)" filter="url(#glow-rose)" />
+        <text x="0" y="3" fill="#ffffff" font-size="6.5" font-weight="700" text-anchor="middle">O</text>
+        <circle cx="-9" cy="9" r="5.5" fill="url(#atom-h)" /><circle cx="9" cy="9" r="5.5" fill="url(#atom-h)" />
+      </g>
+
+      <!-- Water Molecule 3 -->
+      <g class="anim-h2o-3">
+        <line x1="0" y1="0" x2="-8" y2="8" stroke="#e6194b" stroke-width="2.5" />
+        <line x1="0" y1="0" x2="8" y2="8" stroke="#e6194b" stroke-width="2.5" />
+        <circle cx="0" cy="0" r="9" fill="url(#atom-o)" filter="url(#glow-rose)" />
+        <text x="0" y="3" fill="#ffffff" font-size="6.5" font-weight="700" text-anchor="middle">O</text>
+        <circle cx="-9" cy="9" r="5.5" fill="url(#atom-h)" /><circle cx="9" cy="9" r="5.5" fill="url(#atom-h)" />
+      </g>
+    </g>
+
+    <!-- By-product: Methane (CH4) Desorbing Gas Molecules -->
+    <g class="anim-ch4-a1">
+      <circle cx="0" cy="0" r="8" fill="url(#atom-c)" filter="url(#glow-amber)" />
+      <circle cx="0" cy="-8" r="4" fill="url(#atom-h)" /><circle cx="-7" cy="4" r="4" fill="url(#atom-h)" />
+      <circle cx="7" cy="4" r="4" fill="url(#atom-h)" /><circle cx="0" cy="2" r="3.5" fill="url(#atom-h)" />
+      <text x="12" y="2" fill="#ffd166" font-size="8" font-weight="700">CH₄↑</text>
+    </g>
+
+    <g class="anim-ch4-a2">
+      <circle cx="0" cy="0" r="8" fill="url(#atom-c)" filter="url(#glow-amber)" />
+      <circle cx="0" cy="-8" r="4" fill="url(#atom-h)" /><circle cx="-7" cy="4" r="4" fill="url(#atom-h)" /><circle cx="7" cy="4" r="4" fill="url(#atom-h)" />
+      <text x="12" y="2" fill="#ffd166" font-size="8" font-weight="700">CH₄↑</text>
+    </g>
+
+    <g class="anim-ch4-c1">
+      <circle cx="0" cy="0" r="8" fill="url(#atom-c)" filter="url(#glow-amber)" />
+      <circle cx="0" cy="-8" r="4" fill="url(#atom-h)" /><circle cx="-7" cy="4" r="4" fill="url(#atom-h)" /><circle cx="7" cy="4" r="4" fill="url(#atom-h)" />
+      <text x="12" y="2" fill="#ffd166" font-size="8" font-weight="700">CH₄↑</text>
+    </g>
+
+    <g class="anim-ch4-c2">
+      <circle cx="0" cy="0" r="8" fill="url(#atom-c)" filter="url(#glow-amber)" />
+      <circle cx="0" cy="-8" r="4" fill="url(#atom-h)" /><circle cx="-7" cy="4" r="4" fill="url(#atom-h)" /><circle cx="7" cy="4" r="4" fill="url(#atom-h)" />
+      <text x="12" y="2" fill="#ffd166" font-size="8" font-weight="700">CH₄↑</text>
+    </g>
+
+    <!-- ========================================================= -->
+    <!-- SUBSTRATE SOLID MATRIX & ACTIVE MONOLAYER INTERFACE       -->
+    <!-- ========================================================= -->
+    <g id="substrate-matrix" transform="translate(45, 385)">
+      <!-- Bulk Silicon Substrate Base -->
+      <rect x="0" y="45" width="460" height="52" fill="url(#si-sub-grad)" stroke="#223961" stroke-width="1.2" />
+      <text x="12" y="78" fill="#4d6b94" font-size="9" font-weight="700" letter-spacing="1">CRYSTALLINE SILICON SUBSTRATE Si(100)</text>
+
+      <!-- Pre-deposited Al2O3 Dielectric Matrix -->
+      <g class="anim-layer-growth">
+        <rect x="0" y="15" width="460" height="30" fill="url(#dielectric-grad)" stroke="#00e5ff" stroke-width="0.8" stroke-dasharray="4,2" />
+        <text x="12" y="32" fill="#00e5ff" font-size="8.5" letter-spacing="0.8">Al₂O₃ DIELECTRIC FILM [GROWTH: +1.10 Å/cycle]</text>
+        
+        <!-- Underlying Network Atomic Spheres (Al-O Lattice Bonds) -->
+        <g stroke="#0088aa" stroke-width="1.5">
+          <line x1="30" y1="28" x2="55" y2="28" /><line x1="75" y1="28" x2="100" y2="28" />
+          <line x1="120" y1="28" x2="145" y2="28" /><line x1="165" y1="28" x2="190" y2="28" />
+          <line x1="210" y1="28" x2="235" y2="28" /><line x1="255" y1="28" x2="280" y2="28" />
+          <line x1="300" y1="28" x2="325" y2="28" /><line x1="345" y1="28" x2="370" y2="28" />
+          <line x1="390" y1="28" x2="415" y2="28" />
+        </g>
+        <g>
+          <circle cx="30" cy="28" r="6" fill="url(#atom-al)" /><circle cx="55" cy="28" r="5" fill="url(#atom-o)" />
+          <circle cx="75" cy="28" r="6" fill="url(#atom-al)" /><circle cx="100" cy="28" r="5" fill="url(#atom-o)" />
+          <circle cx="120" cy="28" r="6" fill="url(#atom-al)" /><circle cx="145" cy="28" r="5" fill="url(#atom-o)" />
+          <circle cx="165" cy="28" r="6" fill="url(#atom-al)" /><circle cx="190" cy="28" r="5" fill="url(#atom-o)" />
+          <circle cx="210" cy="28" r="6" fill="url(#atom-al)" /><circle cx="235" cy="28" r="5" fill="url(#atom-o)" />
+          <circle cx="255" cy="28" r="6" fill="url(#atom-al)" /><circle cx="280" cy="28" r="5" fill="url(#atom-o)" />
+          <circle cx="300" cy="28" r="6" fill="url(#atom-al)" /><circle cx="325" cy="28" r="5" fill="url(#atom-o)" />
+          <circle cx="345" cy="28" r="6" fill="url(#atom-al)" /><circle cx="370" cy="28" r="5" fill="url(#atom-o)" />
+          <circle cx="390" cy="28" r="6" fill="url(#atom-al)" /><circle cx="415" cy="28" r="5" fill="url(#atom-o)" />
+        </g>
+      </g>
+
+      <!-- ========================================================= -->
+      <!-- SURFACE ATOMIC SITES TRANSFORMATION STATE MACHINE         -->
+      <!-- 5 Reaction Sites across the Substrate Shelf               -->
+      <!-- ========================================================= -->
+
+      <!-- Site 1: x = 50 -->
+      <g transform="translate(50, 15)">
+        <!-- State A: Active Hydroxyl Site -OH* -->
+        <g class="state-oh-group">
+          <line x1="0" y1="0" x2="0" y2="-12" stroke="#e6194b" stroke-width="2.5" />
+          <circle cx="0" cy="-12" r="7.5" fill="url(#atom-o)" />
+          <text x="0" y="-9.5" fill="#ffffff" font-size="5.5" font-weight="700" text-anchor="middle">O</text>
+          <line x1="0" y1="-12" x2="0" y2="-22" stroke="#ffffff" stroke-width="1.8" />
+          <circle cx="0" cy="-22" r="4.5" fill="url(#atom-h)" />
+        </g>
+        <!-- State B: Methyl-Passivated Adsorption State -O-Al(CH3)2 -->
+        <g class="state-methyl-group">
+          <line x1="0" y1="0" x2="0" y2="-10" stroke="#e6194b" stroke-width="2.5" />
+          <circle cx="0" cy="-10" r="6" fill="url(#atom-o)" />
+          <line x1="0" y1="-10" x2="0" y2="-22" stroke="#00c8e6" stroke-width="2.5" />
+          <circle cx="0" cy="-22" r="8" fill="url(#atom-al)" />
+          <text x="0" y="-19.5" fill="#ffffff" font-size="6" font-weight="700" text-anchor="middle">Al</text>
+          <line x1="0" y1="-22" x2="-10" y2="-32" stroke="#f4a261" stroke-width="2" />
+          <circle cx="-10" cy="-32" r="6" fill="url(#atom-c)" />
+          <line x1="0" y1="-22" x2="10" y2="-32" stroke="#f4a261" stroke-width="2" />
+          <circle cx="10" cy="-32" r="6" fill="url(#atom-c)" />
+        </g>
+      </g>
+
+      <!-- Site 2: x = 140 -->
+      <g transform="translate(140, 15)">
+        <g class="state-oh-group">
+          <line x1="0" y1="0" x2="0" y2="-12" stroke="#e6194b" stroke-width="2.5" />
+          <circle cx="0" cy="-12" r="7.5" fill="url(#atom-o)" />
+          <line x1="0" y1="-12" x2="0" y2="-22" stroke="#ffffff" stroke-width="1.8" />
+          <circle cx="0" cy="-22" r="4.5" fill="url(#atom-h)" />
+        </g>
+        <g class="state-methyl-group">
+          <line x1="0" y1="0" x2="0" y2="-10" stroke="#e6194b" stroke-width="2.5" />
+          <circle cx="0" cy="-10" r="6" fill="url(#atom-o)" />
+          <line x1="0" y1="-10" x2="0" y2="-22" stroke="#00c8e6" stroke-width="2.5" />
+          <circle cx="0" cy="-22" r="8" fill="url(#atom-al)" />
+          <line x1="0" y1="-22" x2="-10" y2="-32" stroke="#f4a261" stroke-width="2" />
+          <circle cx="-10" cy="-32" r="6" fill="url(#atom-c)" />
+          <line x1="0" y1="-22" x2="10" y2="-32" stroke="#f4a261" stroke-width="2" />
+          <circle cx="10" cy="-32" r="6" fill="url(#atom-c)" />
+        </g>
+      </g>
+
+      <!-- Site 3: x = 230 -->
+      <g transform="translate(230, 15)">
+        <g class="state-oh-group">
+          <line x1="0" y1="0" x2="0" y2="-12" stroke="#e6194b" stroke-width="2.5" />
+          <circle cx="0" cy="-12" r="7.5" fill="url(#atom-o)" />
+          <line x1="0" y1="-12" x2="0" y2="-22" stroke="#ffffff" stroke-width="1.8" />
+          <circle cx="0" cy="-22" r="4.5" fill="url(#atom-h)" />
+        </g>
+        <g class="state-methyl-group">
+          <line x1="0" y1="0" x2="0" y2="-10" stroke="#e6194b" stroke-width="2.5" />
+          <circle cx="0" cy="-10" r="6" fill="url(#atom-o)" />
+          <line x1="0" y1="-10" x2="0" y2="-22" stroke="#00c8e6" stroke-width="2.5" />
+          <circle cx="0" cy="-22" r="8" fill="url(#atom-al)" />
+          <line x1="0" y1="-22" x2="-10" y2="-32" stroke="#f4a261" stroke-width="2" />
+          <circle cx="-10" cy="-32" r="6" fill="url(#atom-c)" />
+          <line x1="0" y1="-22" x2="10" y2="-32" stroke="#f4a261" stroke-width="2" />
+          <circle cx="10" cy="-32" r="6" fill="url(#atom-c)" />
+        </g>
+      </g>
+
+      <!-- Site 4: x = 320 -->
+      <g transform="translate(320, 15)">
+        <g class="state-oh-group">
+          <line x1="0" y1="0" x2="0" y2="-12" stroke="#e6194b" stroke-width="2.5" />
+          <circle cx="0" cy="-12" r="7.5" fill="url(#atom-o)" />
+          <line x1="0" y1="-12" x2="0" y2="-22" stroke="#ffffff" stroke-width="1.8" />
+          <circle cx="0" cy="-22" r="4.5" fill="url(#atom-h)" />
+        </g>
+        <g class="state-methyl-group">
+          <line x1="0" y1="0" x2="0" y2="-10" stroke="#e6194b" stroke-width="2.5" />
+          <circle cx="0" cy="-10" r="6" fill="url(#atom-o)" />
+          <line x1="0" y1="-10" x2="0" y2="-22" stroke="#00c8e6" stroke-width="2.5" />
+          <circle cx="0" cy="-22" r="8" fill="url(#atom-al)" />
+          <line x1="0" y1="-22" x2="-10" y2="-32" stroke="#f4a261" stroke-width="2" />
+          <circle cx="-10" cy="-32" r="6" fill="url(#atom-c)" />
+          <line x1="0" y1="-22" x2="10" y2="-32" stroke="#f4a261" stroke-width="2" />
+          <circle cx="10" cy="-32" r="6" fill="url(#atom-c)" />
+        </g>
+      </g>
+
+      <!-- Site 5: x = 410 -->
+      <g transform="translate(410, 15)">
+        <g class="state-oh-group">
+          <line x1="0" y1="0" x2="0" y2="-12" stroke="#e6194b" stroke-width="2.5" />
+          <circle cx="0" cy="-12" r="7.5" fill="url(#atom-o)" />
+          <line x1="0" y1="-12" x2="0" y2="-22" stroke="#ffffff" stroke-width="1.8" />
+          <circle cx="0" cy="-22" r="4.5" fill="url(#atom-h)" />
+        </g>
+        <g class="state-methyl-group">
+          <line x1="0" y1="0" x2="0" y2="-10" stroke="#e6194b" stroke-width="2.5" />
+          <circle cx="0" cy="-10" r="6" fill="url(#atom-o)" />
+          <line x1="0" y1="-10" x2="0" y2="-22" stroke="#00c8e6" stroke-width="2.5" />
+          <circle cx="0" cy="-22" r="8" fill="url(#atom-al)" />
+          <line x1="0" y1="-22" x2="-10" y2="-32" stroke="#f4a261" stroke-width="2" />
+          <circle cx="-10" cy="-32" r="6" fill="url(#atom-c)" />
+          <line x1="0" y1="-22" x2="10" y2="-32" stroke="#f4a261" stroke-width="2" />
+          <circle cx="10" cy="-32" r="6" fill="url(#atom-c)" />
+        </g>
+      </g>
+    </g>
+
+    <!-- Precision Vernier Caliper / Film Thickness Scale -->
+    <g id="thickness-vernier" transform="translate(520, 375)">
+      <rect x="0" y="0" width="55" height="105" rx="3" fill="#0b1424" stroke="#1f3760" stroke-width="1" />
+      <text x="27" y="14" fill="#8ca5c7" font-size="7.5" font-weight="700" text-anchor="middle">FILM THICK</text>
+      
+      <!-- Vernier Ruler Markings -->
+      <line x1="8" y1="24" x2="22" y2="24" stroke="#8ca5c7" stroke-width="1" />
+      <text x="26" y="26" fill="#8ca5c7" font-size="6.5">2.2 Å</text>
+      <line x1="8" y1="40" x2="18" y2="40" stroke="#8ca5c7" stroke-width="0.8" />
+      <line x1="8" y1="56" x2="22" y2="56" stroke="#8ca5c7" stroke-width="1" />
+      <text x="26" y="58" fill="#8ca5c7" font-size="6.5">1.1 Å</text>
+      <line x1="8" y1="72" x2="18" y2="72" stroke="#8ca5c7" stroke-width="0.8" />
+      <line x1="8" y1="88" x2="22" y2="88" stroke="#8ca5c7" stroke-width="1" />
+      <text x="26" y="90" fill="#8ca5c7" font-size="6.5">0.0 Å</text>
+
+      <!-- Active Measurement Cursor Needle -->
+      <g class="anim-layer-growth">
+        <polygon points="5,56 0,53 0,59" fill="#00ffaa" filter="url(#glow-cyan)" />
+        <line x1="5" y1="56" x2="22" y2="56" stroke="#00ffaa" stroke-width="1.8" />
+      </g>
+
+      <!-- Delta-h Readout Callout -->
+      <rect x="-8" y="94" width="70" height="18" rx="3" fill="#06101e" stroke="#00ffaa" stroke-width="1" />
+      <text x="27" y="106" fill="#00ffaa" class="anim-vernier-readout" font-size="8" font-weight="700" text-anchor="middle">Δh = +1.10 Å</text>
+    </g>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- RIGHT PANEL: In-situ Kinetics & Langmuir Saturation Analytics          -->
+  <!-- ===================================================================== -->
+  <g id="panel-analytics" transform="translate(895, 96)">
+    <rect width="360" height="494" rx="8" fill="url(#panel-card-bg)" stroke="#1a2d4d" stroke-width="1.2" />
+    
+    <!-- Section 1: Langmuir Chemisorption Kinetics Curve -->
+    <g transform="translate(16, 16)">
+      <text x="0" y="10" fill="#ffffff" font-size="10" font-weight="700" letter-spacing="0.8">LANGMUIR SELF-LIMITING ISOTHERM</text>
+      <text x="0" y="23" fill="#00f3ff" font-size="8">dθ/dt = k_ads · P_TMA(1 - θ)  [k_des ≈ 0]</text>
+
+      <!-- Graph Canvas -->
+      <rect x="0" y="32" width="328" height="115" rx="4" fill="#09111f" stroke="#162744" stroke-width="0.8" />
+      <!-- Grid lines -->
+      <line x1="35" y1="42" x2="35" y2="132" stroke="#162744" stroke-width="1" />
+      <line x1="35" y1="132" x2="315" y2="132" stroke="#162744" stroke-width="1" />
+      <line x1="35" y1="52" x2="315" y2="52" stroke="#1f3760" stroke-width="0.8" stroke-dasharray="3,3" />
+      <text x="28" y="55" fill="#00ffaa" font-size="7" text-anchor="end">1.0</text>
+      <text x="28" y="94" fill="#8ca5c7" font-size="7" text-anchor="end">0.5</text>
+      <text x="28" y="135" fill="#8ca5c7" font-size="7" text-anchor="end">0</text>
+      <text x="12" y="90" fill="#8ca5c7" font-size="7.5" transform="rotate(-90, 12, 90)" text-anchor="middle">COVERAGE θ</text>
+
+      <!-- Phase A Saturation Curve: Exponential Rise to θ = 1.0 -->
+      <path d="M 35 132 Q 55 58 165 52 L 175 52" fill="none" stroke="#00f3ff" stroke-width="2.2" />
+      <text x="75" y="125" fill="#00f3ff" font-size="7.5">Phase A (TMA)</text>
+
+      <!-- Phase C Saturation Curve: Ligand Exchange Conversion -->
+      <path d="M 175 132 Q 195 58 305 52 L 315 52" fill="none" stroke="#ff3366" stroke-width="2.2" />
+      <text x="215" y="125" fill="#ff3366" font-size="7.5">Phase C (H₂O)</text>
+
+      <!-- Dynamic Tracing Beacons -->
+      <circle cx="0" cy="0" r="4.5" fill="#00f3ff" filter="url(#glow-cyan)" class="beacon-langmuir-a" />
+      <circle cx="0" cy="0" r="4.5" fill="#ff3366" filter="url(#glow-rose)" class="beacon-langmuir-c" />
+
+      <!-- Saturation Limit Annotations -->
+      <rect x="180" y="40" width="128" height="16" rx="2" fill="#06101c" stroke="#00ffaa" stroke-width="0.8" />
+      <text x="244" y="51" fill="#00ffaa" font-size="7.5" font-weight="700" text-anchor="middle">STERIC SELF-TERMINATION</text>
+    </g>
+
+    <!-- Section 2: Transient Partial Pressures Quad-Pulse Train -->
+    <g transform="translate(16, 182)">
+      <text x="0" y="10" fill="#ffffff" font-size="10" font-weight="700" letter-spacing="0.8">CHAMBER TRANSIENT PRESSURES</text>
+      <text x="0" y="23" fill="#8a7aff" font-size="8">QUAD-PULSE LOGARITHMIC TRANSIENT RESPONSE</text>
+
+      <rect x="0" y="30" width="328" height="98" rx="4" fill="#09111f" stroke="#162744" stroke-width="0.8" />
+      <!-- Baseline axes -->
+      <line x1="25" y1="38" x2="25" y2="116" stroke="#162744" stroke-width="1" />
+      <line x1="25" y1="116" x2="320" y2="116" stroke="#162744" stroke-width="1" />
+      <text x="10" y="78" fill="#8ca5c7" font-size="7" transform="rotate(-90, 10, 78)" text-anchor="middle">PRESSURE</text>
+
+      <!-- Pulse Train Shapes -->
+      <!-- Pulse 1: TMA (Phase A) -->
+      <path d="M 28 116 L 33 50 L 88 50 L 96 116" fill="none" stroke="#00f3ff" stroke-width="1.8" />
+      <text x="60" y="44" fill="#00f3ff" font-size="7" font-weight="700" text-anchor="middle">P_TMA</text>
+
+      <!-- Pulse 2: N2 (Phase B) -->
+      <path d="M 100 116 L 105 60 L 160 60 L 168 116" fill="none" stroke="#9d8cff" stroke-width="1.8" />
+      <text x="135" y="54" fill="#9d8cff" font-size="7" font-weight="700" text-anchor="middle">P_N₂</text>
+
+      <!-- Pulse 3: H2O (Phase C) -->
+      <path d="M 172 116 L 177 50 L 232 50 L 240 116" fill="none" stroke="#ff3366" stroke-width="1.8" />
+      <text x="205" y="44" fill="#ff3366" font-size="7" font-weight="700" text-anchor="middle">P_H₂O</text>
+
+      <!-- Pulse 4: N2 (Phase D) -->
+      <path d="M 244 116 L 249 60 L 304 60 L 312 116" fill="none" stroke="#9d8cff" stroke-width="1.8" />
+      <text x="278" y="54" fill="#9d8cff" font-size="7" font-weight="700" text-anchor="middle">P_N₂</text>
+
+      <!-- Synchronized Scanning Time Line -->
+      <g transform="translate(25, 30)">
+        <line x1="0" y1="0" x2="0" y2="88" stroke="#ffffff" stroke-width="1.2" stroke-dasharray="2,2" class="scope-time-cursor" />
+      </g>
+    </g>
+
+    <!-- Section 3: Chemical Stoichiometry & Thermodynamic State -->
+    <g transform="translate(16, 330)">
+      <rect width="328" height="85" rx="4" fill="#08101d" stroke="#162744" stroke-width="0.8" />
+      <text x="10" y="16" fill="#8ca5c7" font-size="8" font-weight="700">ELEMENTARY SURFACE HALF-REACTIONS:</text>
+      
+      <!-- Phase A Chemisorption Equation -->
+      <text x="10" y="32" fill="#00f3ff" font-size="7.5" font-weight="700">(A) Al-OH* + Al(CH₃)₃(g) → Al-O-Al(CH₃)₂* + CH₄↑</text>
+      
+      <!-- Phase C Hydrolysis Equation -->
+      <text x="10" y="48" fill="#ff3366" font-size="7.5" font-weight="700">(C) Al-CH₃* + H₂O(g) → Al-OH* + CH₄↑</text>
+      
+      <!-- Net ALD Reaction -->
+      <text x="10" y="66" fill="#00ffaa" font-size="8" font-weight="700">NET: 2 Al(CH₃)₃ + 3 H₂O → Al₂O₃ + 6 CH₄↑</text>
+      <text x="10" y="78" fill="#8ca5c7" font-size="7">ΔH = -376 kJ/mol (Exothermic Chemisorption, Irreversible)</text>
+    </g>
+
+    <!-- Section 4: Molecular Color Legend -->
+    <g transform="translate(16, 428)">
+      <rect width="328" height="54" rx="4" fill="#08101d" stroke="#162744" stroke-width="0.8" />
+      <text x="10" y="14" fill="#8ca5c7" font-size="7.5" font-weight="700">SPECIES COLOR CODING:</text>
+      
+      <circle cx="20" cy="32" r="7" fill="url(#atom-al)" />
+      <text x="32" y="35" fill="#8ca5c7" font-size="7.5">Al (Cyan)</text>
+
+      <circle cx="95" cy="32" r="7" fill="url(#atom-o)" />
+      <text x="107" y="35" fill="#8ca5c7" font-size="7.5">O (Red)</text>
+
+      <circle cx="165" cy="32" r="7" fill="url(#atom-c)" />
+      <text x="177" y="35" fill="#8ca5c7" font-size="7.5">CH₃ (Amber)</text>
+
+      <circle cx="250" cy="32" r="6" fill="url(#atom-h)" />
+      <text x="260" y="35" fill="#8ca5c7" font-size="7.5">H (Silver)</text>
+    </g>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- BOTTOM PANEL: 4-Phase Time-Synchronized State Machine Ribbon          -->
+  <!-- ===================================================================== -->
+  <g id="panel-bottom-timeline" transform="translate(25, 606)">
+    <!-- Base Ribbon Container -->
+    <rect width="1230" height="196" rx="8" fill="url(#panel-card-bg)" stroke="#1a2d4d" stroke-width="1.2" />
+
+    <!-- Phase 1 Card (0 - 4s): Phase A -->
+    <g transform="translate(15, 12)">
+      <rect width="288" height="135" rx="6" fill="#0b1424" class="phase-card-a" stroke="#1e3256" stroke-width="1" />
+      <rect x="10" y="10" width="60" height="18" rx="3" fill="#00f3ff" fill-opacity="0.15" stroke="#00f3ff" stroke-width="1" />
+      <text x="40" y="22" fill="#00f3ff" font-size="8.5" font-weight="700" text-anchor="middle">PHASE A</text>
+      <text x="80" y="23" fill="#8ca5c7" font-size="8">DURATION: t₁ = 1.0 s</text>
+
+      <text x="12" y="44" fill="#ffffff" font-size="11" font-weight="700">TMA PRECURSOR PULSE</text>
+      <text x="12" y="60" fill="#00f3ff" font-size="8.5" font-weight="700">Self-Limiting Chemisorption</text>
+      
+      <text x="12" y="78" fill="#8ca5c7" font-size="8">· Vapor diffusion to hydroxylated surface</text>
+      <text x="12" y="92" fill="#8ca5c7" font-size="8">· Al-OH* + Al(CH₃)₃ → Al-O-Al(CH₃)₂* + CH₄↑</text>
+      <text x="12" y="106" fill="#8ca5c7" font-size="8">· Releases methane; terminates by steric block</text>
+      <text x="12" y="120" fill="#00ffaa" font-size="8" font-weight="700">Surface Saturation: θ → 1.00</text>
+    </g>
+
+    <!-- Phase 2 Card (4 - 8s): Phase B -->
+    <g transform="translate(318, 12)">
+      <rect width="288" height="135" rx="6" fill="#0b1424" class="phase-card-b" stroke="#1e3256" stroke-width="1" />
+      <rect x="10" y="10" width="60" height="18" rx="3" fill="#8a7aff" fill-opacity="0.15" stroke="#8a7aff" stroke-width="1" />
+      <text x="40" y="22" fill="#8a7aff" font-size="8.5" font-weight="700" text-anchor="middle">PHASE B</text>
+      <text x="80" y="23" fill="#8ca5c7" font-size="8">DURATION: t₂ = 1.0 s</text>
+
+      <text x="12" y="44" fill="#ffffff" font-size="11" font-weight="700">INERT N₂ GAS PURGE 1</text>
+      <text x="12" y="60" fill="#8a7aff" font-size="8.5" font-weight="700">Desorption &amp; Residual Evacuation</text>
+      
+      <text x="12" y="78" fill="#8ca5c7" font-size="8">· High-purity N₂ laminar sweep (15 slm)</text>
+      <text x="12" y="92" fill="#8ca5c7" font-size="8">· Flushes physisorbed unreacted TMA</text>
+      <text x="12" y="106" fill="#8ca5c7" font-size="8">· Evacuates volatile CH₄ by-product</text>
+      <text x="12" y="120" fill="#00ffaa" font-size="8" font-weight="700">Prevents Parasitic CVD Gas-Phase Phase</text>
+    </g>
+
+    <!-- Phase 3 Card (8 - 12s): Phase C -->
+    <g transform="translate(621, 12)">
+      <rect width="288" height="135" rx="6" fill="#0b1424" class="phase-card-c" stroke="#1e3256" stroke-width="1" />
+      <rect x="10" y="10" width="60" height="18" rx="3" fill="#ff3366" fill-opacity="0.15" stroke="#ff3366" stroke-width="1" />
+      <text x="40" y="22" fill="#ff3366" font-size="8.5" font-weight="700" text-anchor="middle">PHASE C</text>
+      <text x="80" y="23" fill="#8ca5c7" font-size="8">DURATION: t₃ = 1.0 s</text>
+
+      <text x="12" y="44" fill="#ffffff" font-size="11" font-weight="700">H₂O OXIDANT PULSE</text>
+      <text x="12" y="60" fill="#ff3366" font-size="8.5" font-weight="700">Hydrolysis &amp; -OH Regeneration</text>
+      
+      <text x="12" y="78" fill="#8ca5c7" font-size="8">· Water vapor exposure into reactor</text>
+      <text x="12" y="92" fill="#8ca5c7" font-size="8">· Al-CH₃* + H₂O → Al-OH* + CH₄↑</text>
+      <text x="12" y="106" fill="#8ca5c7" font-size="8">· Creates durable Al-O-Al bridging network</text>
+      <text x="12" y="120" fill="#00ffaa" font-size="8" font-weight="700">Single Monolayer Incremented (+1.1 Å)</text>
+    </g>
+
+    <!-- Phase 4 Card (12 - 16s): Phase D -->
+    <g transform="translate(924, 12)">
+      <rect width="288" height="135" rx="6" fill="#0b1424" class="phase-card-d" stroke="#1e3256" stroke-width="1" />
+      <rect x="10" y="10" width="60" height="18" rx="3" fill="#8a7aff" fill-opacity="0.15" stroke="#8a7aff" stroke-width="1" />
+      <text x="40" y="22" fill="#8a7aff" font-size="8.5" font-weight="700" text-anchor="middle">PHASE D</text>
+      <text x="80" y="23" fill="#8ca5c7" font-size="8">DURATION: t₄ = 1.0 s</text>
+
+      <text x="12" y="44" fill="#ffffff" font-size="11" font-weight="700">INERT N₂ GAS PURGE 2</text>
+      <text x="12" y="60" fill="#8a7aff" font-size="8.5" font-weight="700">Final Cleanse &amp; Baseline Reset</text>
+      
+      <text x="12" y="78" fill="#8ca5c7" font-size="8">· Rapid chamber purge of excess water vapor</text>
+      <text x="12" y="92" fill="#8ca5c7" font-size="8">· Removes residual methane by-product</text>
+      <text x="12" y="106" fill="#8ca5c7" font-size="8">· Leaves pristine hydroxylated monolayer</text>
+      <text x="12" y="120" fill="#00ffaa" font-size="8" font-weight="700">Cycle N Complete → Ready for Cycle N+1</text>
+    </g>
+
+    <!-- Master Synchronized Timeline Track & Glowing Scanner Bar -->
+    <g id="timeline-track" transform="translate(15, 158)">
+      <rect width="1197" height="24" rx="4" fill="#070d18" stroke="#162744" stroke-width="1" />
+      
+      <!-- Phase Boundary Dividers -->
+      <line x1="300" y1="0" x2="300" y2="24" stroke="#1f3760" stroke-width="1.2" stroke-dasharray="2,2" />
+      <line x1="600" y1="0" x2="600" y2="24" stroke="#1f3760" stroke-width="1.2" stroke-dasharray="2,2" />
+      <line x1="900" y1="0" x2="900" y2="24" stroke="#1f3760" stroke-width="1.2" stroke-dasharray="2,2" />
+
+      <!-- Timeline Metric Ticks -->
+      <text x="6" y="16" fill="#8ca5c7" font-size="8" font-weight="700">0.0 s</text>
+      <text x="306" y="16" fill="#8ca5c7" font-size="8" font-weight="700">1.0 s [End Phase A]</text>
+      <text x="606" y="16" fill="#8ca5c7" font-size="8" font-weight="700">2.0 s [End Phase B]</text>
+      <text x="906" y="16" fill="#8ca5c7" font-size="8" font-weight="700">3.0 s [End Phase C]</text>
+      <text x="1155" y="16" fill="#8ca5c7" font-size="8" font-weight="700">4.0 s [End Cycle]</text>
+
+      <!-- Smoothly Sweeping Chronometer Indicator -->
+      <g class="timeline-runner">
+        <line x1="0" y1="0" x2="0" y2="24" stroke="#00ffaa" stroke-width="3.5" filter="url(#glow-cyan)" />
+        <polygon points="-6,0 6,0 0,6" fill="#00ffaa" />
+        <polygon points="-6,24 6,24 0,18" fill="#00ffaa" />
+      </g>
+    </g>
+  </g>
+</svg>
