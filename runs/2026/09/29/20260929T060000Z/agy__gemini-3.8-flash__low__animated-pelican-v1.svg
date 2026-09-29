@@ -1,0 +1,500 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#72afd3"/>
+      <stop offset="60%" stop-color="#bfe3f7"/>
+      <stop offset="100%" stop-color="#eef7fa"/>
+    </linearGradient>
+
+    <linearGradient id="sunGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fff5cc"/>
+      <stop offset="100%" stop-color="#ffcc66"/>
+    </linearGradient>
+
+    <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c8a882"/>
+      <stop offset="25%" stop-color="#b69570"/>
+      <stop offset="100%" stop-color="#806243"/>
+    </linearGradient>
+
+    <!-- Metallic & Pelican Gradients -->
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e6e8eb"/>
+      <stop offset="50%" stop-color="#9aa0a6"/>
+      <stop offset="100%" stop-color="#5f6368"/>
+    </linearGradient>
+
+    <linearGradient id="frameGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e53935"/>
+      <stop offset="60%" stop-color="#c62828"/>
+      <stop offset="100%" stop-color="#8e0000"/>
+    </linearGradient>
+
+    <linearGradient id="pouchGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb74d"/>
+      <stop offset="50%" stop-color="#f57c00"/>
+      <stop offset="100%" stop-color="#b23c17"/>
+    </linearGradient>
+
+    <linearGradient id="billGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#795548"/>
+      <stop offset="65%" stop-color="#d7ccc8"/>
+      <stop offset="90%" stop-color="#ff7043"/>
+      <stop offset="100%" stop-color="#d84315"/>
+    </linearGradient>
+
+    <!-- Reusable Spoked Wheel (Radius = 110, Center = 0,0) -->
+    <g id="wheel">
+      <!-- Shadow & Tire -->
+      <circle cx="0" cy="0" r="114" fill="none" stroke="#212121" stroke-width="12"/>
+      <circle cx="0" cy="0" r="110" fill="none" stroke="#424242" stroke-width="6"/>
+      <!-- Rim -->
+      <circle cx="0" cy="0" r="102" fill="none" stroke="url(#metalGrad)" stroke-width="6"/>
+      <!-- 24 Spokes (12 cross-diameter lines) -->
+      <g stroke="#cfd8dc" stroke-width="1.8" opacity="0.85">
+        <line x1="0" y1="-102" x2="0" y2="102"/>
+        <line x1="-102" y1="0" x2="102" y2="0"/>
+        <line x1="-72.1" y1="-72.1" x2="72.1" y2="72.1"/>
+        <line x1="-72.1" y1="72.1" x2="72.1" y2="-72.1"/>
+        <line x1="-98.5" y1="-26.4" x2="98.5" y2="26.4"/>
+        <line x1="-98.5" y1="26.4" x2="98.5" y2="-26.4"/>
+        <line x1="-26.4" y1="-98.5" x2="26.4" y2="98.5"/>
+        <line x1="-26.4" y1="98.5" x2="26.4" y2="-98.5"/>
+        <line x1="-88.3" y1="-51" x2="88.3" y2="51"/>
+        <line x1="-88.3" y1="51" x2="88.3" y2="-51"/>
+        <line x1="-51" y1="-88.3" x2="51" y2="88.3"/>
+        <line x1="-51" y1="88.3" x2="51" y2="-88.3"/>
+      </g>
+      <!-- Hub & Fasteners -->
+      <circle cx="0" cy="0" r="16" fill="url(#metalGrad)" stroke="#37474f" stroke-width="2"/>
+      <circle cx="0" cy="0" r="6" fill="#263238"/>
+      <!-- Valve Stem for visible rotation track -->
+      <rect x="-2.5" y="-98" width="5" height="12" rx="1.5" fill="#ffd54f"/>
+    </g>
+
+    <!-- Coast/Ocean Path Filter for soft glow -->
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <style><![CDATA[
+    /* Cycle timing base: 1.2s smooth full cadence */
+    :root {
+      --tempo: 1.2s;
+    }
+
+    /* Ambient environment motions */
+    .road-dash {
+      animation: roadScroll 0.35s linear infinite;
+    }
+    @keyframes roadScroll {
+      0% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -120; }
+    }
+
+    .ocean-wave {
+      animation: waveDrift 4s ease-in-out infinite alternate;
+    }
+    @keyframes waveDrift {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-40px); }
+    }
+
+    /* Wheel continuous forward spin (CW) */
+    .wheel-rotate-rear {
+      transform-origin: 260px 480px;
+      animation: wheelSpin var(--tempo) linear infinite;
+    }
+    .wheel-rotate-front {
+      transform-origin: 740px 480px;
+      animation: wheelSpin var(--tempo) linear infinite;
+    }
+    @keyframes wheelSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Bottom bracket crank system: Center = (510, 480) */
+    .crank-assembly {
+      transform-origin: 510px 480px;
+      animation: wheelSpin var(--tempo) linear infinite;
+    }
+
+    /* Pedals counter-rotate so they stay horizontally level under the pelican's feet */
+    .pedal-counter-right {
+      transform-origin: 552.4px 522.4px; /* 510 + 60*cos(45°), 480 + 60*sin(45°) */
+      animation: counterSpin var(--tempo) linear infinite;
+    }
+    .pedal-counter-left {
+      transform-origin: 467.6px 437.6px; /* 510 - 60*cos(45°), 480 - 60*sin(45°) */
+      animation: counterSpin var(--tempo) linear infinite;
+    }
+    @keyframes counterSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(-360deg); }
+    }
+
+    /* Dynamic Pelican Anatomy: Legs, Body, Neck, Head & Cap */
+    /* Right Leg (Foreground, attached to Right Pedal at radius 60, starts at 45 deg) */
+    .right-thigh {
+      transform-origin: 426px 338px; /* Hip joint */
+      animation: rightThighMotion var(--tempo) ease-in-out infinite;
+    }
+    .right-shin {
+      transform-origin: 485px 425px; /* Knee joint */
+      animation: rightShinMotion var(--tempo) ease-in-out infinite;
+    }
+    .right-foot {
+      transform-origin: 540px 512px; /* Ankle joint */
+      animation: rightFootMotion var(--tempo) ease-in-out infinite;
+    }
+
+    @keyframes rightThighMotion {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(11deg); }  /* pedal pushes down */
+      50%  { transform: rotate(3deg); }   /* bottom of stroke */
+      75%  { transform: rotate(-10deg); } /* upstroke */
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes rightShinMotion {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(14deg); }
+      50%  { transform: rotate(-8deg); }
+      75%  { transform: rotate(-16deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes rightFootMotion {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(-12deg); }
+      50%  { transform: rotate(6deg); }
+      75%  { transform: rotate(18deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* Left Leg (Background, 180° out of phase with Right Leg) */
+    .left-thigh {
+      transform-origin: 420px 334px;
+      animation: leftThighMotion var(--tempo) ease-in-out infinite;
+    }
+    .left-shin {
+      transform-origin: 456px 410px;
+      animation: leftShinMotion var(--tempo) ease-in-out infinite;
+    }
+    .left-foot {
+      transform-origin: 470px 445px;
+      animation: leftFootMotion var(--tempo) ease-in-out infinite;
+    }
+
+    @keyframes leftThighMotion {
+      0%   { transform: rotate(3deg); }
+      25%  { transform: rotate(-10deg); }
+      50%  { transform: rotate(0deg); }
+      75%  { transform: rotate(11deg); }
+      100% { transform: rotate(3deg); }
+    }
+    @keyframes leftShinMotion {
+      0%   { transform: rotate(-8deg); }
+      25%  { transform: rotate(-16deg); }
+      50%  { transform: rotate(0deg); }
+      75%  { transform: rotate(14deg); }
+      100% { transform: rotate(-8deg); }
+    }
+    @keyframes leftFootMotion {
+      0%   { transform: rotate(6deg); }
+      25%  { transform: rotate(18deg); }
+      50%  { transform: rotate(0deg); }
+      75%  { transform: rotate(-12deg); }
+      100% { transform: rotate(6deg); }
+    }
+
+    /* Natural Riding Cadence Bobbing: Pelvis and Torso */
+    .pelican-rider {
+      animation: bodyBob var(--tempo) ease-in-out infinite;
+    }
+    @keyframes bodyBob {
+      0%   { transform: translateY(0px) rotate(0deg); }
+      25%  { transform: translateY(-4px) rotate(-0.5deg); }
+      50%  { transform: translateY(1.5px) rotate(0deg); }
+      75%  { transform: translateY(-4px) rotate(0.5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    /* Pelican Gular Pouch Wobble & Throat Breathing */
+    .pouch-elastic {
+      transform-origin: 575px 145px;
+      animation: pouchBreathe 2.4s ease-in-out infinite alternate;
+    }
+    @keyframes pouchBreathe {
+      0%   { transform: scale(1) skewX(0deg); }
+      100% { transform: scale(1.05, 0.96) skewX(-1.5deg); }
+    }
+
+    /* Pelican Cap Bow Ribbon Fluttering in Headwind */
+    .ribbon-flutter {
+      transform-origin: 485px 105px;
+      animation: ribbonFlow 0.4s ease-in-out infinite alternate;
+    }
+    @keyframes ribbonFlow {
+      0% { transform: rotate(-5deg) skewY(-2deg); }
+      100% { transform: rotate(9deg) skewY(5deg); }
+    }
+  ]]></style>
+
+  <!-- BACKGROUND: Pacific Coastline & Highway 1 Setting -->
+  <rect x="0" y="0" width="1000" height="700" fill="url(#skyGrad)"/>
+  <circle cx="860" cy="140" r="70" fill="url(#sunGrad)" opacity="0.85" filter="url(#softGlow)"/>
+
+  <!-- Ocean Horizon & Distant Coastal Headlands -->
+  <path d="M0,320 Q200,310 420,325 T840,318 Q930,322 1000,320 L1000,430 L0,430 Z" fill="#6ba7c4" opacity="0.6"/>
+  <path class="ocean-wave" d="M-50,335 C150,330 220,345 400,338 C600,330 750,348 1050,336 L1050,430 L-50,430 Z" fill="#4d8dae" opacity="0.75"/>
+  <line x1="0" y1="345" x2="1000" y2="345" stroke="#ffffff" stroke-width="1.5" opacity="0.4" stroke-dasharray="80 35 120 45"/>
+
+  <!-- Beach Dunes & Boardwalk Shoreline -->
+  <path d="M0,390 Q220,370 510,395 T1000,380 L1000,470 L0,470 Z" fill="#d9bf98"/>
+  <path d="M0,430 Q340,415 680,440 T1000,425 L1000,700 L0,700 Z" fill="url(#groundGrad)"/>
+
+  <!-- Bike Path Asphalt & Road Marking -->
+  <polygon points="0,550 1000,550 1000,700 0,700" fill="#374140"/>
+  <line x1="0" y1="552" x2="1000" y2="552" stroke="#e0e0e0" stroke-width="4"/>
+  <line class="road-dash" x1="-150" y1="640" x2="1150" y2="640" stroke="#fbc02d" stroke-width="8" stroke-dasharray="70 50"/>
+
+  <!-- BICYCLE SHADOW -->
+  <ellipse cx="500" cy="596" rx="310" ry="18" fill="#1b1c1d" opacity="0.32"/>
+
+  <!-- ==================== BACKGROUND BICYCLE LAYER & LEFT LEG ==================== -->
+  <!-- Left Pedal Crank Arm (180 deg offset from right, pointing up-back at 225 deg: x=467.6, y=437.6) -->
+  <g class="crank-assembly">
+    <line x1="510" y1="480" x2="467.6" y2="437.6" stroke="#78909c" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="467.6" cy="437.6" r="6" fill="#37474f"/>
+  </g>
+
+  <!-- Left Pedal Platform (Kept level via counter-rotation) -->
+  <g class="pedal-counter-left">
+    <rect x="447.6" y="433.6" width="40" height="8" rx="3" fill="#263238" stroke="#ffb300" stroke-width="1.5"/>
+  </g>
+
+  <!-- LEFT LEG (Drawn behind the bike frame & pelican body) -->
+  <g class="pelican-rider">
+    <g class="left-thigh">
+      <!-- Darker shaded leg in background -->
+      <path d="M420,334 C410,360 435,395 456,410" fill="none" stroke="#6d573f" stroke-width="18" stroke-linecap="round"/>
+      <g class="left-shin">
+        <path d="M456,410 L470,445" fill="none" stroke="#5d4037" stroke-width="11" stroke-linecap="round"/>
+        <g class="left-foot">
+          <!-- Webbed Pelican Left Foot resting on left pedal -->
+          <polygon points="450,440 488,435 480,447" fill="#e65100"/>
+          <path d="M450,440 Q470,432 488,435 L484,443 Q466,444 450,440 Z" fill="#bf360c"/>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== WHEELS (Animated Rotation) ==================== -->
+  <!-- Rear Wheel (Axle at 260, 480) -->
+  <g class="wheel-rotate-rear">
+    <use href="#wheel" x="260" y="480"/>
+  </g>
+
+  <!-- Front Wheel (Axle at 740, 480) -->
+  <g class="wheel-rotate-front">
+    <use href="#wheel" x="740" y="480"/>
+  </g>
+
+  <!-- ==================== BICYCLE FRAMEWORK ==================== -->
+  <!-- Rear Dropouts, Chainstay & Seatstay -->
+  <line x1="260" y1="480" x2="510" y2="480" stroke="#a31515" stroke-width="9" stroke-linecap="round"/> <!-- Chainstay -->
+  <line x1="260" y1="480" x2="415" y2="330" stroke="#a31515" stroke-width="8" stroke-linecap="round"/> <!-- Seatstay -->
+
+  <!-- Rear Derailleur / Gear Cluster -->
+  <circle cx="260" cy="480" r="22" fill="url(#metalGrad)" stroke="#37474f" stroke-width="2"/>
+  <circle cx="260" cy="480" r="14" fill="#263238"/>
+
+  <!-- Drive Chain (Upper & Lower path) -->
+  <line x1="260" y1="462" x2="510" y2="455" stroke="#37474f" stroke-width="3.5" stroke-dasharray="5 3"/>
+  <line x1="260" y1="498" x2="510" y2="505" stroke="#37474f" stroke-width="3.5" stroke-dasharray="5 3"/>
+
+  <!-- Main Diamond Triangle Frame -->
+  <!-- Seat Tube: Bottom Bracket (510,480) to Seat Lug (415,330) -->
+  <line x1="510" y1="480" x2="415" y2="330" stroke="url(#frameGrad)" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Down Tube: Bottom Bracket (510,480) to Head Tube Lower (645, 305) -->
+  <line x1="510" y1="480" x2="645" y2="305" stroke="url(#frameGrad)" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- Top Tube: Seat Lug (415,330) to Head Tube Upper (635, 270) -->
+  <line x1="415" y1="330" x2="635" y2="270" stroke="url(#frameGrad)" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- Head Tube (635,260 to 650,320) -->
+  <line x1="632" y1="258" x2="649" y2="318" stroke="#8e0000" stroke-width="15" stroke-linecap="round"/>
+
+  <!-- Front Fork: From Head Tube through dropouts to Front Hub (740,480) -->
+  <path d="M644,305 L695,430 Q705,465 740,480" fill="none" stroke="url(#metalGrad)" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- Saddle & Seatpost -->
+  <line x1="415" y1="330" x2="400" y2="300" stroke="url(#metalGrad)" stroke-width="9" stroke-linecap="round"/>
+  <!-- Ergonomic Leather Saddle -->
+  <path d="M355,296 C375,290 425,292 445,302 C440,312 425,310 405,307 C380,305 362,310 355,296 Z" fill="#2b1704" stroke="#4e342e" stroke-width="2"/>
+  <ellipse cx="375" cy="298" rx="20" ry="6" fill="#3e2723"/>
+
+  <!-- Handlebar Stem & Touring Drop Bar -->
+  <path d="M632,258 L626,220 L650,220" fill="none" stroke="url(#metalGrad)" stroke-width="9" stroke-linecap="square"/>
+  <!-- Handlebars (Swept road/cruiser bar with grips) -->
+  <path d="M635,230 C655,230 670,225 675,245 C678,258 660,268 642,266" fill="none" stroke="#212121" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="642" cy="266" r="5" fill="#d32f2f"/> <!-- Bar-end plug -->
+
+  <!-- ==================== BROWN PELICAN RIDER (Foreground) ==================== -->
+  <g class="pelican-rider">
+    <!-- Tail Feathers -->
+    <path d="M335,295 C310,295 285,315 280,335 C300,330 325,322 345,318 Z" fill="#4e3b31" stroke="#3b2b22" stroke-width="2"/>
+    <path d="M340,305 C315,315 295,335 290,355 C310,345 330,335 352,326 Z" fill="#6e5849"/>
+
+    <!-- Large Pelican Torso & Body Mass (Characteristic California Brown plumage) -->
+    <!-- Belly & Flank (Warm grayish brown with slate feathering) -->
+    <path d="M365,300 C340,330 355,385 400,390 C450,395 495,365 500,310 C505,270 450,250 405,260 C375,268 360,285 365,300 Z" fill="#54473f" stroke="#3e342d" stroke-width="2"/>
+    
+    <!-- Feather Layering / Mantle -->
+    <path d="M380,265 C410,260 450,270 475,295 C460,335 410,365 375,340 C365,310 365,285 380,265 Z" fill="#6e5d52"/>
+    <path d="M395,275 C435,280 460,310 455,350 C420,370 385,345 395,275 Z" fill="#806e63" opacity="0.8"/>
+
+    <!-- Folded Wing with detailed flight feather texture -->
+    <!-- Wing Coverts -->
+    <path d="M375,285 Q420,290 465,330 Q425,380 375,340 Q360,310 375,285 Z" fill="#3c312a"/>
+    <path d="M390,295 C420,300 450,330 445,360 C420,368 390,345 390,295 Z" fill="#635246"/>
+    <!-- Scapular streak highlights (Silvery/gray tones typical of Pelecanus occidentalis) -->
+    <path d="M395,295 L460,355 M405,290 L470,342 M415,285 L475,330" stroke="#a09388" stroke-width="2.5" stroke-linecap="round" opacity="0.85"/>
+
+    <!-- Pelican S-Curved Neck (Breeding plumage: rich chestnut-brown hindneck & white side stripe) -->
+    <!-- Neck Base & Throat -->
+    <path d="M470,280 C490,260 520,225 505,180 C495,145 520,125 545,120 C565,116 575,130 570,150 C560,195 530,225 510,275 Z" fill="#ffffff"/>
+    
+    <!-- Dark Chestnut Nape / Hindneck Stripe -->
+    <path d="M470,280 C488,255 512,220 500,180 C492,150 515,130 540,123 C530,140 520,175 535,210 C545,235 528,260 505,282 Z" fill="#3e2316"/>
+
+    <!-- Wing/Forearm extending forward to grip Handlebar -->
+    <!-- Elbow & Primary wing joint functioning as cyclist's arm -->
+    <path d="M440,310 C480,300 540,290 595,275 C625,268 648,255 658,245" fill="none" stroke="#4e3b31" stroke-width="20" stroke-linecap="round"/>
+    <path d="M440,310 C480,300 540,290 595,275 C625,268 648,255 658,245" fill="none" stroke="#6e5849" stroke-width="14" stroke-linecap="round"/>
+    <!-- Pale feather trim on wing -->
+    <path d="M490,300 L610,270" stroke="#9e8e81" stroke-width="4" stroke-linecap="round"/>
+    <!-- Wing tip feathers curling over handlebar grip -->
+    <path d="M648,242 C660,238 672,248 664,258 C655,268 642,262 648,242 Z" fill="#2d221b"/>
+
+    <!-- Pelican Head Structure -->
+    <!-- Crown / Forehead (Straw yellow wash of breeding adult) -->
+    <path d="M530,125 C540,95 575,95 595,120 C600,128 590,142 575,145 C550,150 535,142 530,125 Z" fill="#fff59d" stroke="#fbc02d" stroke-width="1.5"/>
+    <path d="M545,108 C560,98 580,102 590,118" stroke="#fffde7" stroke-width="4" fill="none"/>
+
+    <!-- Keen Eye (Light straw eye surrounded by bare dark skin) -->
+    <circle cx="566" cy="122" r="8.5" fill="#424242"/>
+    <circle cx="566" cy="122" r="5" fill="#e8f5e9"/>
+    <circle cx="567" cy="122" r="2.8" fill="#1b1b1b"/>
+    <circle cx="568" cy="120" r="1.2" fill="#ffffff"/> <!-- Sparkle -->
+
+    <!-- Giant Pelican Bill & Gular Pouch (Realistic, long beak with hooked nail at tip) -->
+    <!-- Enormous Expandable Gular Pouch (Animated elastic breathing/wobble) -->
+    <g class="pouch-elastic">
+      <path d="M575,145 Q640,175 700,195 Q750,210 760,180 Q690,150 610,140 Z" fill="url(#pouchGrad)" opacity="0.95"/>
+      <!-- Vascular & Texture striations in the expandable pouch skin -->
+      <path d="M600,145 Q650,165 710,185 M620,143 Q670,165 735,180 M590,146 Q630,175 680,190" stroke="#bf360c" stroke-width="1.2" fill="none" opacity="0.6"/>
+    </g>
+
+    <!-- Upper Mandible (Long, bony, ridged culmen) -->
+    <path d="M580,125 L795,168 Q810,171 806,178 Q798,185 785,178 L575,145 Z" fill="url(#billGrad)" stroke="#4e342e" stroke-width="1.5"/>
+    <!-- Sharp Hooked Nail (Unguis) at Bill Tip -->
+    <path d="M795,168 Q814,171 808,182 Q800,189 792,180 Z" fill="#bf360c" stroke="#3e2723" stroke-width="1.5"/>
+    <!-- Culmen Ridge -->
+    <line x1="582" y1="126" x2="795" y2="168" stroke="#cfd8dc" stroke-width="2"/>
+
+    <!-- Lower Mandible Frame -->
+    <path d="M575,145 L788,178" stroke="#5d4037" stroke-width="3" fill="none"/>
+
+    <!-- Pelican Crest Feathers / Nape Tuft -->
+    <path d="M532,120 Q505,122 492,135 Q515,135 530,130 Z" fill="#fff59d"/>
+
+    <!-- Whimsical California Bicyclist Cap (Coastal Sailor/Cycling Cap) -->
+    <path d="M535,115 C540,90 575,85 595,105 C605,100 620,104 626,112 C610,118 580,112 535,115 Z" fill="#1565c0"/>
+    <path d="M580,105 C605,102 628,105 642,114 C620,118 595,115 580,105 Z" fill="#0d47a1"/> <!-- Visor -->
+    <circle cx="568" cy="94" r="4" fill="#ffca28"/> <!-- Cap Button -->
+
+    <!-- Cap Ribbons Fluttering in the Wind -->
+    <g class="ribbon-flutter">
+      <path d="M536,112 C510,108 480,115 460,110 C475,118 505,118 534,116 Z" fill="#d32f2f"/>
+      <path d="M536,114 C515,116 490,128 470,126 C488,130 515,125 534,117 Z" fill="#b71c1c"/>
+    </g>
+  </g>
+
+  <!-- ==================== CHAINRING, RIGHT CRANK & RIGHT LEG (Foreground) ==================== -->
+  <!-- Bottom Bracket Main Chrome Spindle -->
+  <circle cx="510" cy="480" r="18" fill="url(#metalGrad)" stroke="#37474f" stroke-width="2"/>
+
+  <!-- Rotating Front Chainring Sprocket -->
+  <g class="crank-assembly">
+    <!-- Big Chainring (48-Tooth Styled Disc) -->
+    <circle cx="510" cy="480" r="42" fill="none" stroke="#78909c" stroke-width="6" stroke-dasharray="6 2.5"/>
+    <circle cx="510" cy="480" r="38" fill="#90a4ae" opacity="0.35"/>
+    <!-- 5-Arm Crank Spider -->
+    <line x1="510" y1="480" x2="550" y2="480" stroke="#cfd8dc" stroke-width="4"/>
+    <line x1="510" y1="480" x2="522" y2="518" stroke="#cfd8dc" stroke-width="4"/>
+    <line x1="510" y1="480" x2="478" y2="503" stroke="#cfd8dc" stroke-width="4"/>
+    <line x1="510" y1="480" x2="478" y2="457" stroke="#cfd8dc" stroke-width="4"/>
+    <line x1="510" y1="480" x2="522" y2="442" stroke="#cfd8dc" stroke-width="4"/>
+
+    <!-- Right Crank Arm (Length = 60px, starts at angle 45 deg -> End: 552.4, 522.4) -->
+    <line x1="510" y1="480" x2="552.4" y2="522.4" stroke="url(#metalGrad)" stroke-width="12" stroke-linecap="round"/>
+    <circle cx="552.4" cy="522.4" r="7" fill="#37474f"/>
+  </g>
+
+  <!-- Right Pedal Platform (Rotating with arm, counter-rotated to stay flat) -->
+  <g class="pedal-counter-right">
+    <rect x="532.4" y="518.4" width="40" height="9" rx="3" fill="#212121" stroke="#ffb300" stroke-width="1.5"/>
+    <!-- Orange safety pedal reflector -->
+    <rect x="540.4" y="520.9" width="24" height="4" rx="1" fill="#ffa000"/>
+  </g>
+
+  <!-- RIGHT LEG (Foreground: Thigh, Shin, Large Webbed Foot firmly on pedal) -->
+  <g class="pelican-rider">
+    <g class="right-thigh">
+      <!-- Thigh Musculature & Plumage -->
+      <path d="M426,338 C420,370 455,405 485,425" fill="none" stroke="#54473f" stroke-width="24" stroke-linecap="round"/>
+      <path d="M426,338 C420,370 455,405 485,425" fill="none" stroke="#756356" stroke-width="17" stroke-linecap="round"/>
+      <!-- Soft feather fringe on leg joint -->
+      <path d="M470,412 Q488,422 492,434 Q475,430 460,420 Z" fill="#4e3b31"/>
+
+      <g class="right-shin">
+        <!-- Bare Orange/Yellow-Brown Pelican Tarsus (Shin) -->
+        <line x1="485" y1="425" x2="540" y2="512" stroke="#e65100" stroke-width="11" stroke-linecap="round"/>
+        <line x1="487" y1="427" x2="538" y2="510" stroke="#f57c00" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="485" cy="425" r="7" fill="#bf360c"/> <!-- Knee joint -->
+
+        <g class="right-foot">
+          <!-- Ankle -->
+          <circle cx="540" cy="512" r="6" fill="#bf360c"/>
+          <!-- Broad Totipalmate (Fully Webbed) Pelican Foot gripping pedal -->
+          <!-- Outer Toe -->
+          <path d="M532,510 L518,522 L568,522 Z" fill="#e65100" opacity="0.8"/>
+          <!-- Main Webbing Membrane -->
+          <polygon points="526,512 576,515 572,525 528,522" fill="#ff9800"/>
+          <!-- Inner Toes & Claws firmly engaged over pedal platform -->
+          <path d="M528,510 L572,517 C577,522 572,526 560,525 L525,520 Z" fill="#f57c00" stroke="#bf360c" stroke-width="1.5"/>
+          <path d="M572,517 Q580,519 576,523" stroke="#212121" stroke-width="2" fill="none"/> <!-- Claw -->
+          <path d="M568,523 Q574,525 570,528" stroke="#212121" stroke-width="2" fill="none"/> <!-- Claw 2 -->
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Bracket Cap Nut -->
+  <circle cx="510" cy="480" r="7" fill="#263238"/>
+  <circle cx="510" cy="480" r="3" fill="#cfd8dc"/>
+
+  <!-- SPEED & BREEZE ACCENTS (Emphasizing smooth forward cycling motion) -->
+  <g stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.55">
+    <line x1="830" y1="170" x2="900" y2="170" stroke-dasharray="30 15"/>
+    <line x1="710" y1="230" x2="790" y2="230" stroke-dasharray="40 20"/>
+    <line x1="210" y1="460" x2="140" y2="460" stroke-dasharray="25 15"/>
+    <line x1="200" y1="510" x2="110" y2="510" stroke-dasharray="35 25"/>
+    <line x1="170" y1="360" x2="90" y2="360" stroke-dasharray="40 20"/>
+  </g>
+</svg>
