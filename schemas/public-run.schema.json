@@ -212,6 +212,9 @@
             "null"
           ]
         },
+        "judge": {
+          "$ref": "#/$defs/PublicJudgement"
+        },
         "usage": {
           "type": [
             "object",
@@ -299,6 +302,45 @@
         "error",
         "usage"
       ],
+      "additionalProperties": false
+    },
+    "PublicJudgement": {
+      "description": "随调用内嵌的评审记录：主仓 docs/research/judge/judge.schema.json 去掉 contactSheet 与 judges[].rawFile；没有评审的调用不带此字段",
+      "type": "object",
+      "properties": {
+        "schemaVersion": { "const": 1 },
+        "subject": { "type": "object" },
+        "rubric": { "type": "object" },
+        "judges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "kind": { "enum": ["code", "ai"] },
+              "id": { "type": "string" },
+              "promptVersion": { "type": "integer", "minimum": 1 },
+              "judgedAt": { "type": "string", "format": "date-time" },
+              "durationMs": { "type": "integer", "minimum": 0 }
+            },
+            "required": ["kind", "id", "judgedAt"],
+            "additionalProperties": false
+          }
+        },
+        "blindDescription": { "type": "string" },
+        "gates": { "type": "array" },
+        "criteria": { "type": "array" },
+        "total": {
+          "type": "object",
+          "properties": {
+            "score": { "type": "integer" },
+            "maxScore": { "type": "integer" },
+            "verdict": { "enum": ["online", "degraded", "pending"] },
+            "judgedAt": { "type": "string", "format": "date-time" }
+          },
+          "required": ["score", "maxScore", "verdict"]
+        }
+      },
+      "required": ["schemaVersion", "subject", "rubric", "judges", "gates", "criteria", "total"],
       "additionalProperties": false
     },
     "PublicProfile": {

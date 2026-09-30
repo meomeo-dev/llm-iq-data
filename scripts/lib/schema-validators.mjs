@@ -171,7 +171,7 @@ function validatePublicAttempt(attempt, index) {
   for (const field of requiredFields) {
     if (!(field in attempt)) errors.push(`${prefix} 缺少必需字段: ${field}`);
   }
-  const unexpected = getUnexpectedKeys(attempt, [...requiredFields, 'profile']);
+  const unexpected = getUnexpectedKeys(attempt, [...requiredFields, 'profile', 'judge']);
   if (unexpected.length > 0) {
     errors.push(`${prefix} 含有多余字段: ${unexpected.join(', ')}`);
   }
@@ -181,6 +181,53 @@ function validatePublicAttempt(attempt, index) {
 
   errors.push(...checkAttemptFields(attempt, prefix));
   errors.push(...validateUsage(attempt.usage, prefix));
+  if ('judge' in attempt) errors.push(...validateJudge(attempt.judge, `${prefix}.judge`));
+  return errors;
+}
+
+/** 公开评审记录允许的顶层字段：本地 .judge.json 去掉 contactSheet（联系图不发布） */
+const JUDGE_FIELDS = [
+  'schemaVersion', 'subject', 'rubric', 'judges', 'blindDescription', 'gates', 'criteria', 'total',
+];
+/** judges[] 允许的字段：去掉 rawFile（裁判转录不发布） */
+const JUDGE_ACTOR_FIELDS = ['kind', 'id', 'promptVersion', 'judgedAt', 'durationMs'];
+
+/**
+ * 校验随调用内嵌的评审记录（PublicJudgement）：结构见主仓 docs/research/judge/judge.schema.json，
+ * 这里只核对发布边界与关键字段，逐项口径由主仓负责。
+ * @param {unknown} judge
+ * @param {string} prefix
+ * @returns {string[]}
+ */
+function validateJudge(judge, prefix) {
+  if (!judge || typeof judge !== 'object' || Array.isArray(judge)) return [`${prefix} 必须为 object`];
+  const errors = [];
+  const unexpected = getUnexpectedKeys(judge, JUDGE_FIELDS);
+  if (unexpected.length > 0) errors.push(`${prefix} 含有不发布的字段: ${unexpected.join(', ')}`);
+  if (judge.schemaVersion !== 1) errors.push(`${prefix}.schemaVersion 必须为 1`);
+  if (!Array.isArray(judge.judges)) {
+    errors.push(`${prefix}.judges 必须为数组`);
+  } else {
+    for (const [i, actor] of judge.judges.entries()) {
+      const extra = actor && typeof actor === 'object' ? getUnexpectedKeys(actor, JUDGE_ACTOR_FIELDS) : ['(非对象)'];
+      if (extra.length > 0) errors.push(`${prefix}.judges[${i}] 含有不发布的字段: ${extra.join(', ')}`);
+      if (!['code', 'ai'].includes(actor?.kind)) errors.push(`${prefix}.judges[${i}].kind 必须为 code|ai`);
+    }
+  }
+  const total = judge.total;
+  if (!total || typeof total !== 'object') {
+    errors.push(`${prefix}.total 必须为 object`);
+  } else {
+    if (!['online', 'degraded', 'pending'].includes(total.verdict)) {
+      errors.push(`${prefix}.total.verdict 必须为 online|degraded|pending`);
+    }
+    if (!Number.isInteger(total.score) || !Number.isInteger(total.maxScore)) {
+      errors.push(`${prefix}.total.score 与 maxScore 必须为整数`);
+    }
+  }
+  if (!Array.isArray(judge.gates) || !Array.isArray(judge.criteria)) {
+    errors.push(`${prefix}.gates 与 criteria 必须为数组`);
+  }
   return errors;
 }
 
