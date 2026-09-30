@@ -184,11 +184,11 @@ function validatePublicAttempt(attempt, index) {
   return errors;
 }
 
-/** 公开 profile 视图允许的全部字段；接口地址、查询参数与 key 状态永远不在其中 */
-const PUBLIC_PROFILE_FIELDS = ['name', 'label', 'cli', 'upstreamType', 'group', 'website', 'multiplier', 'enabled'];
+/** 公开 profile 视图允许的全部字段；官网、接口地址、查询参数与 key 状态永远不在其中 */
+const PUBLIC_PROFILE_FIELDS = ['name', 'label', 'cli', 'upstreamType', 'group', 'multiplier', 'enabled'];
 
 /**
- * 校验 profiles 数组：每项只允许八个公开字段，name 唯一
+ * 校验 profiles 数组：每项只允许七个公开字段，name 唯一
  * @param {unknown} profiles
  * @returns {string[]}
  */
@@ -214,9 +214,7 @@ function validateProfiles(profiles) {
     for (const field of ['label', 'cli', 'upstreamType']) {
       if (typeof p[field] !== 'string') errors.push(`${prefix}.${field} 必须为 string`);
     }
-    for (const field of ['group', 'website']) {
-      if (p[field] !== null && typeof p[field] !== 'string') errors.push(`${prefix}.${field} 必须为 string 或 null`);
-    }
+    if (p.group !== null && typeof p.group !== 'string') errors.push(`${prefix}.group 必须为 string 或 null`);
     if (typeof p.multiplier !== 'number' || !(p.multiplier >= 0)) errors.push(`${prefix}.multiplier 必须为非负数`);
     if (typeof p.enabled !== 'boolean') errors.push(`${prefix}.enabled 必须为 boolean`);
   });

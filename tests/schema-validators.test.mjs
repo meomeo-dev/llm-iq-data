@@ -159,7 +159,7 @@ test('validatePublicRun: 反例测试 (版本、字段缺少、rawFile不为null
 
 const PROFILE = {
   name: 'relay-a', label: '甲', cli: 'codex', upstreamType: 'chatgpt-pro-5x',
-  group: null, website: 'https://example.com', multiplier: 0.07, enabled: true,
+  group: null, multiplier: 0.07, enabled: true,
 };
 
 test('validatePublicRun: profiles 与 attempt.profile 正例', () => {
@@ -175,6 +175,10 @@ test('validatePublicRun: profiles 反例 (多余字段、缺字段、未登记�
   const leaking = JSON.parse(JSON.stringify(sampleRun));
   leaking.profiles = [{ ...PROFILE, baseUrl: 'https://api.example.com/v1' }];
   assert.ok(validatePublicRun(leaking).some((e) => e.includes('含有不允许的字段: baseUrl')));
+
+  const website = JSON.parse(JSON.stringify(sampleRun));
+  website.profiles = [{ ...PROFILE, website: 'https://example.com' }];
+  assert.ok(validatePublicRun(website).some((e) => e.includes('含有不允许的字段: website')));
 
   const missing = JSON.parse(JSON.stringify(sampleRun));
   const { multiplier: _m, ...noMultiplier } = PROFILE;

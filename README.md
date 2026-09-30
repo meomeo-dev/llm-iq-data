@@ -103,13 +103,12 @@ llm-iq-data/
 * `profiles`: 可选，本轮调用用到的上游 profile 公开视图（`PublicProfile[]`）；引入前的记录没有此字段。
 
 #### 上游 profile 公开视图 (`PublicProfile`)
-同一家 CLI 通往第三方上游的一套配置，只发布对比结果时要看的八个字段，按导出时主仓配置快照；接口地址、查询参数与 key 状态永远不入库，校验器对多余字段拒收：
+同一家 CLI 通往第三方上游的一套配置，只发布对比结果时要看的七个字段，按导出时主仓配置快照；官网、接口地址、查询参数与 key 状态永远不入库（数据仓不为第三方上游导流），校验器对多余字段拒收：
 * `name`: 全局唯一的 kebab-case 名字，`attempts[].profile` 引用它；
 * `label`: 显示名；
 * `cli`: 所属 CLI；
 * `upstreamType`: 上游类型（如 `"chatgpt-pro-5x"`、`"official-api-key"`）；
 * `group`: 上游侧分组名（`string | null`）；
-* `website`: 上游官网（`string | null`）；
 * `multiplier`: 相对官价的倍率（非负数），只用于显示折算成本；
 * `enabled`: 导出时该 profile 是否启用。
 
