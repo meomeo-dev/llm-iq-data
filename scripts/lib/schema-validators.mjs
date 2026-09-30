@@ -190,7 +190,7 @@ const JUDGE_FIELDS = [
   'schemaVersion', 'subject', 'rubric', 'judges', 'blindDescription', 'gates', 'criteria', 'total',
 ];
 /** judges[] 允许的字段：去掉 rawFile（裁判转录不发布） */
-const JUDGE_ACTOR_FIELDS = ['kind', 'id', 'promptVersion', 'judgedAt', 'durationMs'];
+const JUDGE_ACTOR_FIELDS = ['kind', 'id', 'promptVersion', 'judgedAt', 'durationMs', 'usage', 'asks'];
 
 /**
  * 校验随调用内嵌的评审记录（PublicJudgement）：结构见主仓 docs/research/judge/judge.schema.json，
