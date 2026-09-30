@@ -156,3 +156,40 @@ test('validatePublicRun: 反例测试 (版本、字段缺少、rawFile不为null
     validatePublicRun(badRedactions).some((e) => e.includes('redactions[0]'))
   );
 });
+
+const PROFILE = {
+  name: 'relay-a', label: '甲', cli: 'codex', upstreamType: 'chatgpt-pro-5x',
+  group: null, website: 'https://example.com', multiplier: 0.07, enabled: true,
+};
+
+test('validatePublicRun: profiles 与 attempt.profile 正例', () => {
+  const withProfile = JSON.parse(JSON.stringify(sampleRun));
+  withProfile.profiles = [PROFILE];
+  withProfile.attempts[0].profile = 'relay-a';
+  assert.deepEqual(validatePublicRun(withProfile), []);
+  // 没有 profiles 字段的旧记录照常通过
+  assert.deepEqual(validatePublicRun(sampleRun), []);
+});
+
+test('validatePublicRun: profiles 反例 (多余字段、缺字段、未登记引用、重名)', () => {
+  const leaking = JSON.parse(JSON.stringify(sampleRun));
+  leaking.profiles = [{ ...PROFILE, baseUrl: 'https://api.example.com/v1' }];
+  assert.ok(validatePublicRun(leaking).some((e) => e.includes('含有不允许的字段: baseUrl')));
+
+  const missing = JSON.parse(JSON.stringify(sampleRun));
+  const { multiplier: _m, ...noMultiplier } = PROFILE;
+  missing.profiles = [noMultiplier];
+  assert.ok(validatePublicRun(missing).some((e) => e.includes('缺少必需字段: multiplier')));
+
+  const unregistered = JSON.parse(JSON.stringify(sampleRun));
+  unregistered.attempts[0].profile = 'relay-b';
+  assert.ok(validatePublicRun(unregistered).some((e) => e.includes('未在 profiles 里登记: relay-b')));
+
+  const duplicated = JSON.parse(JSON.stringify(sampleRun));
+  duplicated.profiles = [PROFILE, PROFILE];
+  assert.ok(validatePublicRun(duplicated).some((e) => e.includes('name 重复')));
+
+  const emptyName = JSON.parse(JSON.stringify(sampleRun));
+  emptyName.attempts[0].profile = '';
+  assert.ok(validatePublicRun(emptyName).some((e) => e.includes('profile 若存在必须为非空字符串')));
+});

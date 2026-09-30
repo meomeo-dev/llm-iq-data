@@ -105,6 +105,13 @@
         ],
         "additionalProperties": false
       }
+    },
+    "profiles": {
+      "type": "array",
+      "description": "本轮调用用到的上游 profile 公开视图；引入前的记录没有此字段",
+      "items": {
+        "$ref": "#/$defs/PublicProfile"
+      }
     }
   },
   "required": [
@@ -132,6 +139,11 @@
         },
         "cli": {
           "type": "string"
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1,
+          "description": "非登录态的上游 profile 名，须在顶层 profiles 里登记；登录态不写"
         },
         "model": {
           "type": "string"
@@ -286,6 +298,54 @@
         "svgBytes",
         "error",
         "usage"
+      ],
+      "additionalProperties": false
+    },
+    "PublicProfile": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string"
+        },
+        "cli": {
+          "type": "string"
+        },
+        "upstreamType": {
+          "type": "string"
+        },
+        "group": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "website": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "multiplier": {
+          "type": "number",
+          "minimum": 0
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "cli",
+        "upstreamType",
+        "group",
+        "website",
+        "multiplier",
+        "enabled"
       ],
       "additionalProperties": false
     }

@@ -99,12 +99,25 @@ llm-iq-data/
 * `cancelledAt`: 可选取消时间（ISO 8601 或 null）；
 * `budgetStop`: 可选预算熔断终止状态；
 * `attempts`: 各模型执行评测明细（`PublicAttempt[]`）；
-* `redactions`: 被脱敏拦截的作品列表（`{ file: string, reason: string }[]`）。
+* `redactions`: 被脱敏拦截的作品列表（`{ file: string, reason: string }[]`）；
+* `profiles`: 可选，本轮调用用到的上游 profile 公开视图（`PublicProfile[]`）；引入前的记录没有此字段。
+
+#### 上游 profile 公开视图 (`PublicProfile`)
+同一家 CLI 通往第三方上游的一套配置，只发布对比结果时要看的八个字段，按导出时主仓配置快照；接口地址、查询参数与 key 状态永远不入库，校验器对多余字段拒收：
+* `name`: 全局唯一的 kebab-case 名字，`attempts[].profile` 引用它；
+* `label`: 显示名；
+* `cli`: 所属 CLI；
+* `upstreamType`: 上游类型（如 `"chatgpt-pro-5x"`、`"official-api-key"`）；
+* `group`: 上游侧分组名（`string | null`）；
+* `website`: 上游官网（`string | null`）；
+* `multiplier`: 相对官价的倍率（非负数），只用于显示折算成本；
+* `enabled`: 导出时该 profile 是否启用。
 
 #### 被测模型明细项 (`PublicAttempt`)
 * `targetId`: 评测目标唯一标识符；
 * `promptId`: 对应题目 ID；
 * `cli`: 调用的执行命令行工具；
+* `profile`: 可选，非登录态调用所经的上游 profile 名，须在顶层 `profiles` 里登记；登录态不写；
 * `model`: 模型标识符；
 * `effort`: 设定的思考强度（如 `"high"`、`"medium"`、`"low"` 或 `null`）；
 * `appliedEffort`: 实际生效的思考强度；

@@ -171,13 +171,72 @@ function validatePublicAttempt(attempt, index) {
   for (const field of requiredFields) {
     if (!(field in attempt)) errors.push(`${prefix} 缺少必需字段: ${field}`);
   }
-  const unexpected = getUnexpectedKeys(attempt, requiredFields);
+  const unexpected = getUnexpectedKeys(attempt, [...requiredFields, 'profile']);
   if (unexpected.length > 0) {
     errors.push(`${prefix} 含有多余字段: ${unexpected.join(', ')}`);
+  }
+  if ('profile' in attempt && (typeof attempt.profile !== 'string' || attempt.profile.length === 0)) {
+    errors.push(`${prefix}.profile 若存在必须为非空字符串`);
   }
 
   errors.push(...checkAttemptFields(attempt, prefix));
   errors.push(...validateUsage(attempt.usage, prefix));
+  return errors;
+}
+
+/** 公开 profile 视图允许的全部字段；接口地址、查询参数与 key 状态永远不在其中 */
+const PUBLIC_PROFILE_FIELDS = ['name', 'label', 'cli', 'upstreamType', 'group', 'website', 'multiplier', 'enabled'];
+
+/**
+ * 校验 profiles 数组：每项只允许八个公开字段，name 唯一
+ * @param {unknown} profiles
+ * @returns {string[]}
+ */
+function validateProfiles(profiles) {
+  if (profiles === undefined) return [];
+  if (!Array.isArray(profiles)) return ['profiles 若存在必须为数组'];
+  const errors = [];
+  const seen = new Set();
+  profiles.forEach((p, idx) => {
+    const prefix = `profiles[${idx}]`;
+    if (!p || typeof p !== 'object' || Array.isArray(p)) {
+      errors.push(`${prefix} 必须为 object`);
+      return;
+    }
+    for (const field of PUBLIC_PROFILE_FIELDS) {
+      if (!(field in p)) errors.push(`${prefix} 缺少必需字段: ${field}`);
+    }
+    const unexpected = getUnexpectedKeys(p, PUBLIC_PROFILE_FIELDS);
+    if (unexpected.length > 0) errors.push(`${prefix} 含有不允许的字段: ${unexpected.join(', ')}`);
+    if (typeof p.name !== 'string' || p.name.length === 0) errors.push(`${prefix}.name 必须为非空字符串`);
+    else if (seen.has(p.name)) errors.push(`${prefix}.name 重复: ${p.name}`);
+    seen.add(p.name);
+    for (const field of ['label', 'cli', 'upstreamType']) {
+      if (typeof p[field] !== 'string') errors.push(`${prefix}.${field} 必须为 string`);
+    }
+    for (const field of ['group', 'website']) {
+      if (p[field] !== null && typeof p[field] !== 'string') errors.push(`${prefix}.${field} 必须为 string 或 null`);
+    }
+    if (typeof p.multiplier !== 'number' || !(p.multiplier >= 0)) errors.push(`${prefix}.multiplier 必须为非负数`);
+    if (typeof p.enabled !== 'boolean') errors.push(`${prefix}.enabled 必须为 boolean`);
+  });
+  return errors;
+}
+
+/**
+ * 每个 attempt.profile 都要在顶层 profiles 里登记
+ * @param {unknown[]} attempts
+ * @param {unknown} profiles
+ * @returns {string[]}
+ */
+function validateProfileReferences(attempts, profiles) {
+  const names = new Set(Array.isArray(profiles) ? profiles.map((p) => p?.name) : []);
+  const errors = [];
+  attempts.forEach((att, idx) => {
+    if (att && typeof att.profile === 'string' && !names.has(att.profile)) {
+      errors.push(`attempts[${idx}].profile 未在 profiles 里登记: ${att.profile}`);
+    }
+  });
   return errors;
 }
 
@@ -234,6 +293,7 @@ export function validatePublicRun(data) {
     'budgetStop',
     'attempts',
     'redactions',
+    'profiles',
   ];
   const unexpected = getUnexpectedKeys(data, allowedKeys);
   if (unexpected.length > 0) {
@@ -271,12 +331,15 @@ export function validatePublicRun(data) {
     });
   }
 
+  errors.push(...validateProfiles(data.profiles));
+
   if (!Array.isArray(data.attempts)) {
     errors.push('attempts 必须为数组');
   } else {
     data.attempts.forEach((att, idx) => {
       errors.push(...validatePublicAttempt(att, idx));
     });
+    errors.push(...validateProfileReferences(data.attempts, data.profiles));
   }
 
   return errors;
