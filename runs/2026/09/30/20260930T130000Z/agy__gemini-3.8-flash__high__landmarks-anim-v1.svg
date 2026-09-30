@@ -1,0 +1,569 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="100%" height="100%">
+  <defs>
+    <!-- 柔和背景漫射光渐变 -->
+    <linearGradient id="bgGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#f6f8fb"/>
+      <stop offset="60%" stop-color="#edf1f6"/>
+      <stop offset="100%" stop-color="#e1e7ee"/>
+    </linearGradient>
+
+    <!-- 底座底部柔和阴影滤镜 -->
+    <filter id="baseShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="16"/>
+    </filter>
+
+    <!-- 模型主体在水面上的柔和投影滤镜 -->
+    <filter id="mountainShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10"/>
+    </filter>
+
+    <!-- 微缩景深轻微柔化滤镜 -->
+    <filter id="softDof" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="1.2"/>
+    </filter>
+
+    <!-- 展示底座侧壁金属/石材质感渐变 -->
+    <linearGradient id="pedestalSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2a3e47"/>
+      <stop offset="25%" stop-color="#344d58"/>
+      <stop offset="60%" stop-color="#25373f"/>
+      <stop offset="85%" stop-color="#1b282e"/>
+      <stop offset="100%" stop-color="#141e23"/>
+    </linearGradient>
+
+    <!-- 海湾水面主渐变（蓝绿色 #3f9fa8，近岸浅，背光深） -->
+    <radialGradient id="waterSurface" cx="44%" cy="56%" r="58%">
+      <stop offset="0%" stop-color="#60c2ca"/>
+      <stop offset="28%" stop-color="#4db4bd"/>
+      <stop offset="55%" stop-color="#3f9fa8"/>
+      <stop offset="80%" stop-color="#318790"/>
+      <stop offset="100%" stop-color="#246a72"/>
+    </radialGradient>
+
+    <!-- 岸边浅水光晕渐变 -->
+    <linearGradient id="shallowWater" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#80d8dd" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#4bb3bc" stop-opacity="0.1"/>
+    </linearGradient>
+
+    <!-- 主峰花岗岩裸岩受光面渐变（暖灰偏亮） -->
+    <linearGradient id="sugarloafLit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#aba59d"/>
+      <stop offset="50%" stop-color="#9d978f"/>
+      <stop offset="100%" stop-color="#8b8680"/>
+    </linearGradient>
+
+    <!-- 主峰花岗岩裸岩背光面渐变（冷灰偏暗） -->
+    <linearGradient id="sugarloafShade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#777472"/>
+      <stop offset="50%" stop-color="#656261"/>
+      <stop offset="100%" stop-color="#545252"/>
+    </linearGradient>
+
+    <!-- 矮山植被受光面渐变 (#4f8a4b 偏暖绿) -->
+    <linearGradient id="urcaLit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#63a55e"/>
+      <stop offset="60%" stop-color="#549550"/>
+      <stop offset="100%" stop-color="#4f8a4b"/>
+    </linearGradient>
+
+    <!-- 矮山植被背光面渐变 -->
+    <linearGradient id="urcaShade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#41753d"/>
+      <stop offset="60%" stop-color="#345e31"/>
+      <stop offset="100%" stop-color="#274825"/>
+    </linearGradient>
+
+    <!-- 沙滩浅黄渐变 -->
+    <linearGradient id="sandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5e8be"/>
+      <stop offset="50%" stop-color="#ebd8a4"/>
+      <stop offset="100%" stop-color="#dec68d"/>
+    </linearGradient>
+
+    <!-- 船尾白色尾迹渐变 -->
+    <linearGradient id="wakeGrad1" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="wakeGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.85"/>
+      <stop offset="60%" stop-color="#ffffff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- 缆车车厢定义 (圆角小方块，微型精细模型质感) -->
+    <g id="cableCarDef">
+      <!-- 阴影 -->
+      <rect x="-5" y="4" width="10" height="8" rx="2" fill="#1b2830" opacity="0.35"/>
+      <!-- 车体顶部受光面 -->
+      <path d="M -4.5,-2 L 2.5,-3.5 L 5,-1 L -2,0.5 Z" fill="#fff5d6"/>
+      <!-- 车体左侧受光面 (明亮暖黄小方块) -->
+      <path d="M -5,-1 L -2,0.5 L -2,5.5 L -5,4 Z" fill="#f5af24"/>
+      <!-- 车体右侧/前部中间明度面 -->
+      <path d="M -2,0.5 L 5,-1 L 5,4 L -2,5.5 Z" fill="#d99114"/>
+      <!-- 观察小窗暗部开口 -->
+      <rect x="-1" y="0.8" width="4.5" height="2" rx="0.5" fill="#1a313d"/>
+      <rect x="-4.2" y="0.6" width="1.8" height="2" rx="0.4" fill="#24414f"/>
+      <!-- 悬挂转向架吊臂 -->
+      <line x1="0" y1="-6.5" x2="0" y2="-1" stroke="#4a555c" stroke-width="1.2" stroke-linecap="round"/>
+      <rect x="-1.5" y="-7.5" width="3" height="1.8" rx="0.5" fill="#2f3b42"/>
+    </g>
+  </defs>
+
+  <!-- ================= 1. 展厅背景 ================= -->
+  <rect width="1000" height="800" fill="url(#bgGrad)"/>
+
+  <!-- ================= 2. 展示底座系统 ================= -->
+  <!-- 底座下方的漫射柔和椭圆阴影 -->
+  <ellipse cx="500" cy="565" rx="405" ry="175" fill="#1b262f" opacity="0.28" filter="url(#baseShadow)"/>
+  <ellipse cx="495" cy="558" rx="360" ry="145" fill="#141e26" opacity="0.22" filter="url(#baseShadow)"/>
+
+  <!-- 圆形展示底座厚度侧壁 (30°俯视视角圆柱侧面，高度 55px) -->
+  <path d="M 110,470 A 390,185 0 0,0 890,470 L 890,525 A 390,185 0 0,1 110,525 Z" fill="url(#pedestalSide)"/>
+
+  <!-- 侧壁底部边缘压暗窄边 -->
+  <path d="M 110,525 A 390,185 0 0,0 890,525" fill="none" stroke="#0e171b" stroke-width="3" opacity="0.9"/>
+  <!-- 侧壁分层金属台阶细节线 -->
+  <path d="M 110,500 A 390,185 0 0,0 890,500" fill="none" stroke="#23353e" stroke-width="1.2" opacity="0.7"/>
+
+  <!-- 底座顶面（即海面/水体顶面，三面环水，远端留出完整空白） -->
+  <ellipse id="pedestalTop" cx="500" cy="470" rx="390" ry="185" fill="url(#waterSurface)"/>
+
+  <!-- 底座顶面外沿细细的极亮反光边缘 -->
+  <ellipse cx="500" cy="470" rx="389" ry="184.2" fill="none" stroke="#b2eaf0" stroke-width="1.8" opacity="0.6"/>
+  <path d="M 160,430 A 390,185 0 0,1 550,286" fill="none" stroke="#ffffff" stroke-width="2.5" opacity="0.85" stroke-linecap="round"/>
+
+  <!-- ================= 3. 海湾水体与微缩水面环境 ================= -->
+  <!-- 浅水层与近岸珊瑚沙底光晕 -->
+  <path d="M 230,470 C 250,430 330,410 400,415 C 470,420 520,380 570,380 C 650,380 720,440 700,500 C 680,550 560,570 420,575 C 310,580 220,530 230,470 Z" fill="url(#shallowWater)"/>
+
+  <!-- 主体山体在水面上的真实漫射阴影（朝向右下方，光源左上45°） -->
+  <g filter="url(#mountainShadow)" opacity="0.4">
+    <!-- 矮山倒影与投影 -->
+    <ellipse cx="485" cy="475" rx="75" ry="32" fill="#173e44"/>
+    <!-- 主峰在海面上的巨大厚重斜向投影 -->
+    <path d="M 580,480 L 730,520 C 760,530 750,560 690,560 L 590,510 Z" fill="#113238"/>
+  </g>
+
+  <!-- 水面微弱的漫反射与水波纹细节 -->
+  <g stroke="#ffffff" stroke-opacity="0.22" stroke-linecap="round" fill="none">
+    <path d="M 210,480 C 235,475 255,482 275,478" stroke-width="1.2"/>
+    <path d="M 680,440 C 715,445 745,438 775,443" stroke-width="1.4"/>
+    <path d="M 620,570 C 650,566 685,572 710,568" stroke-width="1.3"/>
+    <path d="M 330,575 C 360,570 395,576 430,572" stroke-width="1"/>
+    <path d="M 740,490 C 760,494 790,488 810,492" stroke-width="1.1"/>
+    <path d="M 180,450 C 205,454 225,448 245,451" stroke-width="0.9"/>
+  </g>
+
+  <!-- ================= 4. 半岛陆地与鞍部轮廓 ================= -->
+  <!-- 半岛基岩与暗色湿岩海岸裙边 (三面环水，清晰独立) -->
+  <path d="M 270,510 C 260,470 300,430 360,425 C 410,420 440,430 470,440 C 500,450 520,440 540,430 C 580,410 650,420 680,470 C 700,510 670,535 620,535 C 570,535 530,515 480,515 C 420,515 370,545 310,545 C 280,545 270,530 270,510 Z" fill="#3a4843" stroke="#25322e" stroke-width="1.5"/>
+
+  <!-- ================= 5. 近景：沙滩与前缘低矮城区 ================= -->
+  <!-- ① 底座前缘岸边的一小段浅黄色沙滩 (Praia Vermelha) -->
+  <path d="M 280,528 C 305,548 350,552 385,538 C 375,532 355,528 335,527 C 310,526 292,525 280,528 Z" fill="url(#sandGrad)"/>
+  <!-- 沙滩浪花细白线 -->
+  <path d="M 282,531 C 308,550 352,554 384,540" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.8" stroke-linecap="round"/>
+  <!-- 沙滩上方近海草坪/绿化基地 -->
+  <path d="M 285,524 C 310,522 345,522 378,531 C 385,510 375,485 340,480 C 300,475 280,500 285,524 Z" fill="#4d7e48"/>
+
+  <!-- ① 一片成排铺满、形态散落、高低错落的小方块楼房 (不超过矮山1/5高度，即<=26px) -->
+  <g id="urbanDistrict">
+    <!-- 城区地基微投影 -->
+    <ellipse cx="335" cy="510" rx="46" ry="22" fill="#1c3022" opacity="0.35"/>
+
+    <!-- 楼块组合 (每栋独立分出受光面、中间面、背光面，受光顶边提亮，背光底边压暗) -->
+
+    <!-- Building 1 (较矮扁平公寓) -->
+    <g transform="translate(290, 510)">
+      <polygon points="0,0 8,-3 16,0 8,3" fill="#ffffff"/><!-- 顶面 -->
+      <polygon points="0,0 8,3 8,11 0,8" fill="#ded7cd"/><!-- 受光面 -->
+      <polygon points="8,3 16,0 16,8 8,11" fill="#888c94"/><!-- 背光面 -->
+      <line x1="0" y1="0" x2="8" y2="-3" stroke="#ffffff" stroke-width="0.6"/>
+      <line x1="8" y1="11" x2="16" y2="8" stroke="#4d535b" stroke-width="0.7"/>
+    </g>
+
+    <!-- Building 2 (稍高小方块) -->
+    <g transform="translate(305, 512)">
+      <polygon points="0,0 7,-3 14,0 7,3" fill="#f5ede1"/>
+      <polygon points="0,0 7,3 7,16 0,13" fill="#e8ded1"/>
+      <polygon points="7,3 14,0 14,13 7,16" fill="#7a828e"/>
+      <line x1="0" y1="0" x2="7" y2="-3" stroke="#ffffff" stroke-width="0.6"/>
+      <line x1="7" y1="16" x2="14" y2="13" stroke="#444a54" stroke-width="0.7"/>
+      <!-- 开口小窗暗部 -->
+      <rect x="2" y="4" width="2" height="3" fill="#363e48"/>
+      <rect x="2" y="8" width="2" height="3" fill="#363e48"/>
+    </g>
+
+    <!-- Building 3 (砖红顶微型公建) -->
+    <g transform="translate(318, 518)">
+      <polygon points="0,0 9,-3 18,0 9,3" fill="#d97d64"/>
+      <polygon points="0,0 9,3 9,10 0,7" fill="#ebd2c8"/>
+      <polygon points="9,3 18,0 18,7 9,10" fill="#935b4c"/>
+      <line x1="0" y1="0" x2="9" y2="-3" stroke="#ffb9a6" stroke-width="0.6"/>
+    </g>
+
+    <!-- Building 4 (后排较宽公寓) -->
+    <g transform="translate(295, 496)">
+      <polygon points="0,0 10,-4 20,0 10,4" fill="#f7f9fa"/>
+      <polygon points="0,0 10,4 10,14 0,10" fill="#dfdad2"/>
+      <polygon points="10,4 20,0 20,10 10,14" fill="#808995"/>
+      <line x1="0" y1="0" x2="10" y2="-4" stroke="#ffffff" stroke-width="0.6"/>
+      <line x1="10" y1="14" x2="20" y2="10" stroke="#4d535b" stroke-width="0.7"/>
+    </g>
+
+    <!-- Building 5 (细高楼，高18px) -->
+    <g transform="translate(315, 498)">
+      <polygon points="0,0 6,-3 12,0 6,3" fill="#fdfbf7"/>
+      <polygon points="0,0 6,3 6,19 0,16" fill="#e5ded6"/>
+      <polygon points="6,3 12,0 12,16 6,19" fill="#6d7682"/>
+      <line x1="0" y1="0" x2="6" y2="-3" stroke="#ffffff" stroke-width="0.6"/>
+      <line x1="6" y1="19" x2="12" y2="16" stroke="#373d45" stroke-width="0.7"/>
+      <rect x="1.5" y="5" width="2" height="2.5" fill="#2d3640"/>
+      <rect x="1.5" y="9" width="2" height="2.5" fill="#2d3640"/>
+      <rect x="1.5" y="13" width="2" height="2.5" fill="#2d3640"/>
+    </g>
+
+    <!-- Building 6 (中排楼宇) -->
+    <g transform="translate(328, 506)">
+      <polygon points="0,0 7,-3 14,0 7,3" fill="#eaeef2"/>
+      <polygon points="0,0 7,3 7,15 0,12" fill="#d3d9e0"/>
+      <polygon points="7,3 14,0 14,12 7,15" fill="#757e8a"/>
+      <line x1="0" y1="0" x2="7" y2="-3" stroke="#ffffff" stroke-width="0.6"/>
+    </g>
+
+    <!-- Building 7 (沿海右侧小方块) -->
+    <g transform="translate(345, 512)">
+      <polygon points="0,0 6,-2.5 12,0 6,2.5" fill="#fdfbf7"/>
+      <polygon points="0,0 6,2.5 6,11 0,8.5" fill="#dbd4cb"/>
+      <polygon points="6,2.5 12,0 12,8.5 6,11" fill="#78818e"/>
+      <line x1="0" y1="0" x2="6" y2="-2.5" stroke="#ffffff" stroke-width="0.6"/>
+    </g>
+
+    <!-- Building 8 (靠山脚矮房) -->
+    <g transform="translate(338, 492)">
+      <polygon points="0,0 8,-3 16,0 8,3" fill="#f5ede1"/>
+      <polygon points="0,0 8,3 8,12 0,9" fill="#ded4c5"/>
+      <polygon points="8,3 16,0 16,9 8,12" fill="#727b87"/>
+    </g>
+
+    <!-- Building 9 (后排微型方块) -->
+    <g transform="translate(310, 485)">
+      <polygon points="0,0 6,-2.5 12,0 6,2.5" fill="#ffffff"/>
+      <polygon points="0,0 6,2.5 6,10 0,7.5" fill="#ded7cd"/>
+      <polygon points="6,2.5 12,0 12,7.5 6,10" fill="#77808c"/>
+    </g>
+
+    <!-- Building 10 (深处密集微小建筑群组) -->
+    <g transform="translate(325, 480)">
+      <polygon points="0,0 5,-2 10,0 5,2" fill="#e9ecf0"/>
+      <polygon points="0,0 5,2 5,8 0,6" fill="#ccd3db"/>
+      <polygon points="5,2 10,0 10,6 5,8" fill="#67707d"/>
+    </g>
+    <g transform="translate(355, 502)">
+      <polygon points="0,0 6,-2.5 12,0 6,2.5" fill="#ecd9c6"/>
+      <polygon points="0,0 6,2.5 6,9 0,6.5" fill="#dbbeaa"/>
+      <polygon points="6,2.5 12,0 12,6.5 6,9" fill="#8c6c59"/>
+    </g>
+    <g transform="translate(300, 524)">
+      <polygon points="0,0 5,-2 10,0 5,2" fill="#fcfcfc"/>
+      <polygon points="0,0 5,2 5,7 0,5" fill="#dbd7d0"/>
+      <polygon points="5,2 10,0 10,5 5,7" fill="#7a828e"/>
+    </g>
+
+    <!-- 城区散落的点缀树球 (两种尺寸) -->
+    <circle cx="305" cy="522" r="3.2" fill="#396c34"/>
+    <circle cx="304" cy="521" r="2" fill="#589752"/>
+    <circle cx="332" cy="524" r="2.5" fill="#396c34"/>
+    <circle cx="343" cy="505" r="3" fill="#396c34"/>
+    <circle cx="342" cy="504" r="1.8" fill="#589752"/>
+    <circle cx="324" cy="494" r="2.8" fill="#2d5729"/>
+
+    <!-- ③ 岸边第一缆车站房 (起点站房) -->
+    <g id="shoreStation" transform="translate(352, 480)">
+      <!-- 站房地基阴影 -->
+      <polygon points="-2,12 18,5 24,14 4,20" fill="#1c3022" opacity="0.4"/>
+      <!-- 站房本体 -->
+      <polygon points="0,2 10,-3 20,2 10,7" fill="#f0f4f8"/>
+      <polygon points="0,2 10,7 10,16 0,11" fill="#d2dbe3"/>
+      <polygon points="10,7 20,2 20,11 10,16" fill="#697785"/>
+      <!-- 缆车缆线出入暗口 -->
+      <polygon points="8,5 12,3 12,9 8,11" fill="#1b252d"/>
+      <!-- 站房顶边缘高光 -->
+      <line x1="0" y1="2" x2="10" y2="-3" stroke="#ffffff" stroke-width="0.8"/>
+      <!-- 小型出线支架 -->
+      <line x1="10" y1="1" x2="10" y2="-3" stroke="#4a555e" stroke-width="1.2"/>
+    </g>
+  </g>
+
+  <!-- ================= 6. 中景：矮山 (Morro da Urca) 与 鞍部 ================= -->
+  <!-- ② 一座圆缓的矮山，山顶略平，全覆绿色植被 (#4f8a4b) -->
+  <g id="morroDaUrca">
+    <!-- 矮山山体本体 (圆缓体态，顶端微平，高度约145px) -->
+    <!-- 整体底座阴影层 / 环境光遮蔽 -->
+    <path d="M 370,490 C 375,440 395,365 425,346 C 445,334 475,335 490,352 C 520,385 540,445 550,485 Z" fill="#1b3820" opacity="0.5"/>
+
+    <!-- 矮山主体背光面 (东侧向阴面，冷暗绿) -->
+    <path d="M 455,335 C 475,336 492,352 518,390 C 538,425 548,460 550,485 C 515,488 475,475 440,470 C 455,420 452,370 455,335 Z" fill="url(#urcaShade)"/>
+
+    <!-- 矮山主体受光面 (西侧向阳面，温润亮绿) -->
+    <path d="M 372,488 C 376,438 395,362 425,345 C 440,336 455,335 455,335 C 452,370 455,420 440,470 C 410,475 385,482 372,488 Z" fill="url(#urcaLit)"/>
+
+    <!-- 顶脊过渡与山体饱满度起伏 (微缩树冠肌理层叠，宁多分一档明度) -->
+    <path d="M 410,380 C 420,360 440,345 455,340 C 465,360 460,400 450,440 C 430,445 418,410 410,380 Z" fill="#5ca056" opacity="0.6"/>
+    <path d="M 445,342 C 458,345 470,365 480,395 C 468,435 452,450 445,465 C 440,425 440,380 445,342 Z" fill="#3f753b" opacity="0.7"/>
+
+    <!-- 受光山脊顶部高亮微缘 -->
+    <path d="M 425,345 C 438,337 452,335 465,337" fill="none" stroke="#8ae07f" stroke-width="1.2" stroke-linecap="round" opacity="0.75"/>
+    <!-- 矮山背阴底缘压暗边 -->
+    <path d="M 495,472 C 520,478 540,483 550,485" fill="none" stroke="#162e19" stroke-width="1.8" opacity="0.8"/>
+
+    <!-- 树丛起伏散落微斑（表现浓密植被微缩质感） -->
+    <circle cx="405" cy="420" r="7" fill="#52964d"/>
+    <circle cx="403" cy="418" r="5" fill="#69b363"/>
+    <circle cx="420" cy="390" r="8" fill="#4d8f48"/>
+    <circle cx="418" cy="388" r="6" fill="#65ad5f"/>
+    <circle cx="435" cy="415" r="9" fill="#3c7338"/>
+    <circle cx="475" cy="385" r="8" fill="#325d2f"/>
+    <circle cx="490" cy="415" r="10" fill="#2d532a"/>
+    <circle cx="465" cy="445" r="11" fill="#366332"/>
+
+    <!-- ② 矮山山顶略平处：极简小站房 (转接一二期缆车) -->
+    <g id="urcaStation" transform="translate(448, 328)">
+      <!-- 站房阴影 -->
+      <polygon points="-4,10 18,2 24,8 2,16" fill="#17311b" opacity="0.6"/>
+      <!-- 站房底座微平台 -->
+      <polygon points="-6,7 8,1 22,7 8,13" fill="#828d94"/>
+      <!-- 站房主建筑受光面 -->
+      <polygon points="-4,5 8,0 8,8 -4,13" fill="#eef3f7"/>
+      <!-- 站房主建筑背光面 -->
+      <polygon points="8,0 20,5 20,13 8,8" fill="#75828d"/>
+      <!-- 站房平顶板 -->
+      <polygon points="-5,4 8,-2 21,4 8,10" fill="#ffffff"/>
+      <line x1="-5" y1="4" x2="8" y2="-2" stroke="#ffffff" stroke-width="0.8"/>
+      <!-- 双向出入缆孔暗部 -->
+      <rect x="-1" y="4" width="3.5" height="4" rx="0.5" fill="#1b252c"/>
+      <rect x="13" y="4" width="3.5" height="4" rx="0.5" fill="#1b252c"/>
+      <!-- 极简观景栏杆 -->
+      <line x1="-5" y1="3" x2="6" y2="-2" stroke="#a4b3be" stroke-width="0.7"/>
+    </g>
+  </g>
+
+  <!-- 明显的鞍部 (矮山与主峰之间的低平连接部，绿树葱茏，岩石露头) -->
+  <g id="saddleRidge">
+    <!-- 鞍部山脊深陷下凹，最低点至 y=442 -->
+    <path d="M 500,430 C 518,442 536,444 555,420 L 565,465 C 535,472 505,465 490,455 Z" fill="#2d522a"/>
+    <path d="M 505,432 C 522,442 536,442 548,426 C 545,438 535,455 520,458 C 510,455 505,445 505,432 Z" fill="#467e41"/>
+    <!-- 鞍部微型裸岩出露 -->
+    <polygon points="522,440 530,436 534,444 525,446" fill="#78746f"/>
+    <!-- 鞍部沿海凹陷水湾边缘 -->
+    <path d="M 525,470 C 540,473 555,468 565,462" stroke="#6cd6dd" stroke-width="1" fill="none" opacity="0.7"/>
+  </g>
+
+  <!-- ================= 7. 主体核心：陡壁圆顶花岗岩主峰 (Pão de Açúcar) ================= -->
+  <!-- ④ 陡壁圆顶的花岗岩主峰，从海水中直接拔起，四壁近乎垂直，顶部浑圆，像一块竖起的面包 -->
+  <!-- 比例：主峰高约矮山1.8倍(265px vs 145px)；高大于顶宽(265px vs 95px)；底宽于顶(155px vs 95px) -->
+  <!-- 材质：灰色裸岩(#8b8680)，受光暖灰，背光冷灰，风化竖纹沟槽；山脚与岩缝长绿色植被 -->
+  <g id="sugarloafPeak">
+    <!-- 山脚垂直插进深水区的接触暗部与环境光遮蔽 (AO) -->
+    <ellipse cx="615" cy="482" rx="72" ry="24" fill="#0d282e" opacity="0.65"/>
+    <path d="M 545,465 C 555,488 610,508 675,485 C 685,475 680,455 660,450 C 625,455 570,445 545,465 Z" fill="#1b2e2d"/>
+
+    <!-- 主峰主体：背光面轮廓（东侧偏冷灰 #545252 ~ #777472，悬崖陡峭近乎垂直直插海底） -->
+    <path d="M 598,212 C 632,216 652,242 656,285 C 662,345 666,410 674,475 C 645,486 615,485 585,480 C 598,410 600,320 598,212 Z" fill="url(#sugarloafShade)"/>
+
+    <!-- 主峰主体：受光面轮廓（西侧受光，偏暖灰 #aba59d ~ #8b8680，从鞍部直插云霄） -->
+    <path d="M 598,212 C 565,214 548,238 544,285 C 538,345 536,410 542,472 C 562,478 580,480 585,480 C 600,320 598,250 598,212 Z" fill="url(#sugarloafLit)"/>
+
+    <!-- 顶部浑圆的面包形穹顶高光过渡面 -->
+    <path d="M 552,250 C 555,225 572,213 598,212 C 624,213 642,225 646,250 C 632,260 615,264 598,264 C 578,264 562,258 552,250 Z" fill="#bab4ac" opacity="0.45"/>
+
+    <!-- 浑圆顶边极细的高亮窄边 (硬质岩石顶缘受光反光) -->
+    <path d="M 560,235 C 572,218 588,212 602,212 C 618,212 632,218 642,230" fill="none" stroke="#f0ece6" stroke-width="1.8" stroke-linecap="round"/>
+
+    <!-- 背光面底缘压一道更暗的深色窄边 -->
+    <path d="M 645,462 C 660,470 670,475 675,476" fill="none" stroke="#252424" stroke-width="2.5" stroke-linecap="round"/>
+
+    <!-- 岩面上竖向的浅色条纹（表现千万年风化侵蚀的纵向花岗岩沟槽与剥蚀纹） -->
+    <!-- 纹理只在受光与中间面绘制，背光面并入暗部 -->
+    <g fill="none" stroke-linecap="round" opacity="0.65">
+      <path d="M 568,245 C 564,295 558,365 555,445" stroke="#d5cfc7" stroke-width="2"/>
+      <path d="M 576,238 C 573,285 570,360 568,455" stroke="#c8c2ba" stroke-width="2.5"/>
+      <path d="M 586,225 C 585,280 582,355 580,465" stroke="#ded8d0" stroke-width="2"/>
+      <path d="M 595,220 C 596,275 595,350 594,468" stroke="#f2ece4" stroke-width="1.8"/>
+      <!-- 沟槽背阴微阴线，强化微缩凹凸刻画 -->
+      <path d="M 570,255 C 566,305 560,375 557,445" stroke="#6e6a64" stroke-width="1.2" opacity="0.5"/>
+      <path d="M 578,245 C 575,295 572,370 570,455" stroke="#6e6a64" stroke-width="1.2" opacity="0.5"/>
+      <path d="M 588,235 C 587,290 584,365 582,465" stroke="#6e6a64" stroke-width="1" opacity="0.4"/>
+    </g>
+
+    <!-- 岩面细微横向节理与风化台阶 -->
+    <path d="M 552,320 C 565,324 580,322 594,318" fill="none" stroke="#7d7872" stroke-width="1.2" opacity="0.55"/>
+    <path d="M 548,375 C 565,380 582,378 598,370" fill="none" stroke="#77736d" stroke-width="1.4" opacity="0.6"/>
+    <path d="M 545,415 C 560,422 580,418 596,412" fill="none" stroke="#706c66" stroke-width="1.3" opacity="0.6"/>
+
+    <!-- 严守要求：只在山脚与岩缝处长着绿色植被 -->
+    <!-- ① 山脚处环绕生长的深绿色灌木群落 -->
+    <path d="M 540,465 C 545,455 555,458 560,465 C 565,458 575,458 580,468 C 585,462 595,462 602,472 C 600,478 580,482 542,475 Z" fill="#386334"/>
+    <circle cx="550" cy="462" r="4.5" fill="#4d8247"/>
+    <circle cx="562" cy="462" r="5" fill="#589451"/>
+    <circle cx="574" cy="464" r="5.5" fill="#4a7e44"/>
+    <circle cx="590" cy="466" r="4.8" fill="#3c6b38"/>
+    <!-- 东侧山脚岩缝灌木 -->
+    <path d="M 645,465 C 652,456 662,458 668,468 C 662,474 650,472 645,465 Z" fill="#2b4d28"/>
+
+    <!-- ② 陡壁岩缝处顽强附着的几簇微小灌木 -->
+    <path d="M 552,373 C 555,369 562,370 564,374 C 558,377 554,376 552,373 Z" fill="#42733d"/>
+    <circle cx="558" cy="371" r="2" fill="#5ea156"/>
+    <path d="M 578,322 C 581,318 588,319 590,323 C 585,325 580,324 578,322 Z" fill="#396335"/>
+    <path d="M 548,414 C 552,410 558,411 560,415 C 554,417 550,416 548,414 Z" fill="#42733d"/>
+
+    <!-- ⑥ 主峰顶部：一座极简精致的小站房 (终点站与观景台) -->
+    <g id="summitStation" transform="translate(584, 203)">
+      <!-- 站房投影 -->
+      <polygon points="-2,10 16,3 22,9 4,15" fill="#242322" opacity="0.65"/>
+      <!-- 观景台小基座 -->
+      <polygon points="-4,8 8,2 20,7 8,12" fill="#9ea5ab"/>
+      <!-- 主站房受光面 -->
+      <polygon points="-2,6 8,1 8,9 -2,13" fill="#f8fafc"/>
+      <!-- 主站房背光面 -->
+      <polygon points="8,1 18,5 18,12 8,9" fill="#757f87"/>
+      <!-- 顶盖薄板 -->
+      <polygon points="-4,5 8,-1 20,4 8,9" fill="#ffffff"/>
+      <line x1="-4" y1="5" x2="8" y2="-1" stroke="#ffffff" stroke-width="0.8"/>
+      <!-- 缆绳入口深色凹槽 -->
+      <rect x="0" y="4" width="4" height="4.5" rx="0.5" fill="#182228"/>
+      <!-- 顶层微型全景围栏 -->
+      <line x1="-3" y1="4" x2="6" y2="0" stroke="#cbd5e1" stroke-width="0.7"/>
+    </g>
+  </g>
+
+  <!-- ================= 8. 缆车索道系统与动态缆车 ================= -->
+  <!-- 索道比例严谨规划：
+       第一段（岸边到矮山）：(362, 483) -> (448, 335)   dx=86, dy=-148, 长度=171.2px, 斜度=1.72 (约60°)
+       第二段（矮山到主峰）：(468, 335) -> (584, 208)   dx=116, dy=-127, 长度=172.0px, 斜度更陡峭！两段长度极其相近！
+       画成两条平行的细线，各挂一个圆角小方块缆车 -->
+
+  <g id="cableCarSystem">
+    <!-- 第一段缆索：岸边站房至矮山顶 (两条平行细线，间距2px) -->
+    <g id="trackSection1">
+      <!-- 细微下投影 -->
+      <line x1="363" y1="486" x2="449" y2="338" stroke="#1d3025" stroke-width="0.8" opacity="0.3"/>
+      <line x1="361" y1="484" x2="447" y2="336" stroke="#ffffff" stroke-width="0.75" opacity="0.95"/>
+      <line x1="363" y1="486" x2="449" y2="338" stroke="#71828a" stroke-width="0.75" opacity="0.85"/>
+    </g>
+
+    <!-- 第二段缆索：矮山顶至主峰顶 (比第一段更陡，长度相近，平行细线) -->
+    <g id="trackSection2">
+      <!-- 悬空高处的双细缆线 -->
+      <line x1="469" y1="337" x2="585" y2="210" stroke="#192830" stroke-width="0.8" opacity="0.25"/>
+      <line x1="467" y1="335" x2="583" y2="208" stroke="#ffffff" stroke-width="0.75" opacity="0.95"/>
+      <line x1="469" y1="337" x2="585" y2="210" stroke="#71828a" stroke-width="0.75" opacity="0.85"/>
+    </g>
+
+    <!-- 动态缆车 1（第一段索道，在岸边与矮山之间平稳平移滑行，周期 8s，缓入缓出） -->
+    <g transform="translate(405, 410)">
+      <g>
+        <use href="#cableCarDef"/>
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          dur="8s"
+          repeatCount="indefinite"
+          values="25,-43; -25,43; 25,-43"
+          keyTimes="0; 0.5; 1"
+          calcMode="spline"
+          keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+      </g>
+    </g>
+
+    <!-- 动态缆车 2（第二段索道，在矮山与主峰之间陡峭索道上滑行，周期 10s，缓入缓出） -->
+    <g transform="translate(526, 272)">
+      <g>
+        <use href="#cableCarDef"/>
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          dur="10s"
+          repeatCount="indefinite"
+          values="-35,38; 35,-38; -35,38"
+          keyTimes="0; 0.5; 1"
+          calcMode="spline"
+          keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================= 9. 水面微缩动态细节：帆船与尾迹 ================= -->
+  <!-- 凡写到的每件都按可以凑近看的小模型来画，带运动痕迹与小投影 -->
+
+  <!-- 小帆船 1 (航行于右侧开阔海面，缓缓巡弋) -->
+  <g id="sailboat1" transform="translate(720, 465)">
+    <!-- SMIL 驱动小帆船在海面平缓巡航航行，周期 9 秒 -->
+    <animateTransform
+      attributeName="transform"
+      type="translate"
+      dur="9s"
+      repeatCount="indefinite"
+      values="720,465; 695,455; 720,465"
+      keyTimes="0; 0.5; 1"
+      calcMode="spline"
+      keySplines="0.42 0 0.58 1; 0.42 0 0.58 1"/>
+
+    <!-- 船尾白色羽状展开的尾迹 (会动的东西带上它运动留下的痕迹) -->
+    <polygon points="12,4 38,1 32,8 10,5" fill="url(#wakeGrad1)"/>
+    <path d="M 12,4.5 C 24,3.5 35,2 45,0" stroke="#ffffff" stroke-width="0.8" stroke-opacity="0.7" fill="none"/>
+
+    <!-- 船体在水中的微小暗色倒影/投影 -->
+    <ellipse cx="2" cy="7" rx="9" ry="3" fill="#133d42" opacity="0.5"/>
+
+    <!-- 船体 (受光面、背光面明度分档) -->
+    <polygon points="-8,4 8,1 12,4 -4,6" fill="#f8fafc"/><!-- 船甲板 -->
+    <polygon points="-8,4 -4,6 -4,8 -8,5" fill="#d2dbe3"/><!-- 船身左侧受光面 -->
+    <polygon points="-4,6 12,4 10,7 -4,8" fill="#788896"/><!-- 船身右侧背光面 -->
+
+    <!-- 桅杆 -->
+    <line x1="1" y1="3" x2="1" y2="-15" stroke="#37434d" stroke-width="0.9" stroke-linecap="round"/>
+
+    <!-- 主三角白帆 (微风受光与背阴折角) -->
+    <polygon points="1,-14 1,1 -7,2" fill="#ffffff"/>
+    <polygon points="1,-14 9,0 1,1" fill="#dbe3eb"/>
+    <line x1="1" y1="-14" x2="1" y2="1" stroke="#ffffff" stroke-width="0.6"/>
+  </g>
+
+  <!-- 小帆船 2 (停泊或缓行于前缘海湾水域，微幅悠闲晃动) -->
+  <g id="sailboat2" transform="translate(245, 530)">
+    <animateTransform
+      attributeName="transform"
+      type="translate"
+      dur="7s"
+      repeatCount="indefinite"
+      values="245,530; 253,535; 245,530"
+      keyTimes="0; 0.5; 1"
+      calcMode="spline"
+      keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+
+    <!-- 船尾微弱弧形尾迹 -->
+    <polygon points="-4,-2 -26,-10 -20,-16 -2,-4" fill="url(#wakeGrad2)"/>
+
+    <!-- 水下投影 -->
+    <ellipse cx="1" cy="4" rx="7" ry="2.5" fill="#17484e" opacity="0.45"/>
+
+    <!-- 船身 -->
+    <polygon points="-6,2 6,0 9,2 -3,4" fill="#ffffff"/>
+    <polygon points="-6,2 -3,4 -3,6 -6,3.5" fill="#d9e2ec"/>
+    <polygon points="-3,4 9,2 8,5 -3,6" fill="#8295a5"/>
+
+    <!-- 桅杆与三角帆 -->
+    <line x1="0" y1="1" x2="0" y2="-12" stroke="#485663" stroke-width="0.8"/>
+    <polygon points="0,-11 0,0 -5,1" fill="#f4f7fa"/>
+    <polygon points="0,-11 6,0 0,0" fill="#cbd7e3"/>
+  </g>
+
+  <!-- ================= 10. 微缩模型展示罩反光与高光质感 ================= -->
+  <!-- 顶光在整个微缩水面模型上投下的柔和纯净环形漫射光，强化沙盘模型的精细通透感 -->
+  <ellipse cx="500" cy="470" rx="388" ry="183" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.3"/>
+</svg>

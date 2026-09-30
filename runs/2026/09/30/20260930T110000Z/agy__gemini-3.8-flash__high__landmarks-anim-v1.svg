@@ -1,0 +1,497 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 850" width="100%" height="100%">
+  <defs>
+    <!-- Background studio gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#edf2f6" />
+      <stop offset="50%" stop-color="#f5f7fa" />
+      <stop offset="100%" stop-color="#ffffff" />
+    </linearGradient>
+
+    <!-- Pedestal bottom shadow filter -->
+    <filter id="pedestalShadowBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="18" />
+    </filter>
+    <filter id="softBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" />
+    </filter>
+
+    <!-- Pedestal side bevel & shading -->
+    <linearGradient id="pedestalSideGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3d434a" />
+      <stop offset="25%" stop-color="#4f565f" />
+      <stop offset="65%" stop-color="#353b42" />
+      <stop offset="100%" stop-color="#1f2327" />
+    </linearGradient>
+    <linearGradient id="pedestalRimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#eaf4f8" stop-opacity="0.9" />
+      <stop offset="40%" stop-color="#9dc1cf" stop-opacity="0.6" />
+      <stop offset="80%" stop-color="#445763" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#1a252c" stop-opacity="0.2" />
+    </linearGradient>
+
+    <!-- Sea water gradients -->
+    <radialGradient id="seaGrad" cx="48%" cy="62%" r="58%" fx="42%" fy="55%">
+      <stop offset="0%" stop-color="#48aeb8" />
+      <stop offset="35%" stop-color="#3f9fa8" />
+      <stop offset="70%" stop-color="#2d7c86" />
+      <stop offset="100%" stop-color="#1f5d65" />
+    </radialGradient>
+    <linearGradient id="shallowShoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#72d3dc" stop-opacity="0.8" />
+      <stop offset="60%" stop-color="#4db1bb" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#3f9fa8" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Mountain materials: Sugarloaf Bare Granite -->
+    <linearGradient id="sugarloafLitGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a6a098" />
+      <stop offset="60%" stop-color="#8b8680" />
+      <stop offset="100%" stop-color="#736f69" />
+    </linearGradient>
+    <linearGradient id="sugarloafShadowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#69676c" />
+      <stop offset="50%" stop-color="#555358" />
+      <stop offset="100%" stop-color="#3f3e42" />
+    </linearGradient>
+    <linearGradient id="sugarloafDomeRim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d6d1c9" />
+      <stop offset="100%" stop-color="#8b8680" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Morro da Urca Vegetation -->
+    <linearGradient id="urcaLitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6bb365" />
+      <stop offset="55%" stop-color="#4f8a4b" />
+      <stop offset="100%" stop-color="#3d6f3a" />
+    </linearGradient>
+    <linearGradient id="urcaShadowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3e733a" />
+      <stop offset="60%" stop-color="#2d572a" />
+      <stop offset="100%" stop-color="#1f3d1d" />
+    </linearGradient>
+
+    <!-- Mountain cast shadows on ground/water -->
+    <radialGradient id="mountainWaterShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#13383d" stop-opacity="0.65" />
+      <stop offset="60%" stop-color="#184b52" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#256e77" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Pedestal display top clipping ellipse -->
+    <clipPath id="pedestalClip">
+      <ellipse cx="500" cy="560" rx="400" ry="210" />
+    </clipPath>
+
+    <!-- Reusable Building Model Block (Isometric Miniature) -->
+    <g id="bldg-type-a">
+      <!-- Lit Left Face -->
+      <polygon points="0,0 8,-4 8,-18 0,-14" fill="#dfd8cb" />
+      <!-- Shadow Right Face -->
+      <polygon points="8,-4 18,1 18,-13 8,-18" fill="#8f877c" />
+      <!-- Top Lit Roof -->
+      <polygon points="0,-14 8,-18 18,-13 10,-9" fill="#f4eee4" stroke="#ffffff" stroke-width="0.3" />
+      <!-- Roof Box / AC / Parapet -->
+      <polygon points="7,-16 10,-14 13,-16 10,-17" fill="#c5bdb0" />
+      <!-- Windows (only on lit face) -->
+      <line x1="2" y1="-11" x2="6" y2="-13" stroke="#5d574d" stroke-width="0.8" stroke-dasharray="1.2 1" />
+      <line x1="2" y1="-6" x2="6" y2="-8" stroke="#5d574d" stroke-width="0.8" stroke-dasharray="1.2 1" />
+    </g>
+
+    <g id="bldg-type-b">
+      <!-- Taller block -->
+      <polygon points="0,0 11,-5 11,-26 0,-21" fill="#ede7dd" />
+      <polygon points="11,-5 22,0 22,-21 11,-26" fill="#7a7369" />
+      <polygon points="0,-21 11,-26 22,-21 11,-16" fill="#fcf9f2" stroke="#ffffff" stroke-width="0.4" />
+      <!-- Roof terrace -->
+      <polygon points="8,-23 11,-21 14,-23 11,-24" fill="#a89f92" />
+      <line x1="2.5" y1="-17" x2="8.5" y2="-20" stroke="#4a443a" stroke-width="0.8" stroke-dasharray="1.4 1" />
+      <line x1="2.5" y1="-12" x2="8.5" y2="-15" stroke="#4a443a" stroke-width="0.8" stroke-dasharray="1.4 1" />
+      <line x1="2.5" y1="-7" x2="8.5" y2="-10" stroke="#4a443a" stroke-width="0.8" stroke-dasharray="1.4 1" />
+    </g>
+
+    <g id="bldg-type-c">
+      <!-- Low compact block -->
+      <polygon points="0,0 12,-6 12,-16 0,-10" fill="#d5cebe" />
+      <polygon points="12,-6 20,-2 20,-12 12,-16" fill="#888074" />
+      <polygon points="0,-10 12,-16 20,-12 8,-6" fill="#eae4d8" />
+    </g>
+
+    <style>
+      <![CDATA[
+        /* SMIL/CSS Animations within 4-12s, smooth continuous loops, self-centered motion */
+        .car-span1 {
+          animation: moveCar1 9s ease-in-out infinite;
+        }
+        .car-span2 {
+          animation: moveCar2 11s ease-in-out infinite;
+        }
+        .sailboat-main {
+          animation: sailDriftMain 10s ease-in-out infinite;
+        }
+        .sailboat-outer {
+          animation: sailDriftOuter 8s ease-in-out infinite;
+        }
+        .wake-stretch {
+          animation: wakePulse 5s ease-in-out infinite;
+        }
+
+        @keyframes moveCar1 {
+          0%, 100% {
+            transform: translate(0px, 0px);
+          }
+          50% {
+            transform: translate(110px, -55px);
+          }
+        }
+
+        @keyframes moveCar2 {
+          0%, 100% {
+            transform: translate(0px, 0px);
+          }
+          50% {
+            transform: translate(96px, -92px);
+          }
+        }
+
+        @keyframes sailDriftMain {
+          0%, 100% {
+            transform: translate(0px, 0px) rotate(0deg);
+          }
+          50% {
+            transform: translate(32px, -11px) rotate(1.5deg);
+          }
+        }
+
+        @keyframes sailDriftOuter {
+          0%, 100% {
+            transform: translate(0px, 0px) rotate(0deg);
+          }
+          50% {
+            transform: translate(-22px, 8px) rotate(-1.5deg);
+          }
+        }
+
+        @keyframes wakePulse {
+          0%, 100% {
+            opacity: 0.65;
+            transform: scaleX(1);
+          }
+          50% {
+            opacity: 0.9;
+            transform: scaleX(1.18);
+          }
+        }
+      ]]>
+    </style>
+  </defs>
+
+  <!-- Clean Exhibition Room Backdrop (Only neutral vertical gradient) -->
+  <rect x="0" y="0" width="1000" height="850" fill="url(#bgGrad)" />
+
+  <!-- Pedestal Drop Shadow on Floor -->
+  <ellipse cx="505" cy="640" rx="420" ry="195" fill="#18232c" opacity="0.22" filter="url(#pedestalShadowBlur)" />
+  <ellipse cx="500" cy="625" rx="395" ry="175" fill="#141c22" opacity="0.18" filter="url(#pedestalShadowBlur)" />
+
+  <!-- Pedestal Cylinder Side (Thickness = 52px) -->
+  <path d="M 100,560 A 400,210 0 0,0 900,560 L 900,612 A 400,210 0 0,1 100,612 Z" fill="url(#pedestalSideGrad)" />
+  <!-- Dark Bevel & Ground AO under Pedestal Base -->
+  <path d="M 100,610 A 400,210 0 0,0 900,610 L 900,614 A 400,210 0 0,1 100,614 Z" fill="#14181c" opacity="0.8" />
+
+  <!-- MODEL DIORAMA INTERIOR (Clipped to Pedestal Top Ellipse) -->
+  <g clip-path="url(#pedestalClip)">
+    <!-- Base Water Surface (Guanabara Bay) -->
+    <ellipse cx="500" cy="560" rx="400" ry="210" fill="url(#seaGrad)" />
+
+    <!-- Subtle Water Depth Currents / Depth Rings -->
+    <path d="M 160,530 C 260,460 480,430 760,490 C 830,510 880,550 860,590 C 830,650 650,710 450,710 C 280,710 150,640 160,530 Z" fill="#297780" opacity="0.35" />
+    <path d="M 220,550 C 310,500 500,480 720,530 C 800,550 810,610 740,650 C 650,700 450,680 320,660 C 230,640 180,590 220,550 Z" fill="#368e98" opacity="0.4" />
+
+    <!-- Shallows near shore -->
+    <path d="M 190,610 C 230,645 320,670 420,660 C 470,655 490,630 460,600 C 400,560 300,550 220,560 Z" fill="url(#shallowShoreGrad)" />
+
+    <!-- Mountain Cast Shadows on Water & Land (Top-Left 45° Sun Light -> Shadow extends to Bottom-Right) -->
+    <path d="M 440,560 C 490,570 540,590 570,620 C 590,640 560,660 500,665 C 440,670 380,640 370,615 Z" fill="url(#mountainWaterShadow)" />
+    <!-- Sugarloaf Enormous Granite Cast Shadow across water -->
+    <path d="M 640,490 C 720,510 800,550 830,600 C 850,635 830,665 770,670 C 710,675 640,640 600,590 C 570,555 580,510 640,490 Z" fill="url(#mountainWaterShadow)" opacity="0.8" />
+
+    <!-- THE PENINSULA LANDMASS (Surrounded by water on 3 sides; margins kept clear to pedestal rim) -->
+    <!-- Peninsula Base Silhouette -->
+    <path d="M 215,595 C 240,625 280,652 350,658 C 420,664 470,645 520,625 C 570,610 640,612 705,595 C 750,582 765,550 760,528 C 755,505 710,488 650,485 C 570,480 500,495 440,505 C 380,515 300,525 240,548 C 210,560 200,580 215,595 Z" fill="#2d5733" />
+
+    <!-- Sandy Beach (一小段浅黄色沙滩 at the front shore) -->
+    <path d="M 225,605 C 255,635 295,655 365,658 C 390,659 415,654 430,648 C 425,643 385,644 350,642 C 290,638 250,622 225,605 Z" fill="#edd89f" />
+    <path d="M 227,604 C 255,632 295,652 365,655 C 385,656 410,652 425,647 C 418,644 380,646 350,644 C 290,640 252,624 227,604 Z" fill="#fff3cd" opacity="0.6" />
+    <!-- Wet shoreline edge -->
+    <path d="M 223,607 C 253,637 295,657 367,660 C 395,661 422,655 435,649" stroke="#bda56e" stroke-width="1.2" fill="none" />
+
+    <!-- Shoreline White Surf Water Caustics -->
+    <path d="M 218,610 C 250,642 295,662 370,664 C 405,665 435,657 445,651" stroke="#e0f9fb" stroke-width="1.5" stroke-dasharray="8 4 14 3" fill="none" opacity="0.75" />
+
+    <!-- FOREGROUND CITY (低矮城区: Clusters of 3D miniature blocks, heights < 1/5 of hill = max 30px) -->
+    <!-- Ground surface under city (Urca district urban ground) -->
+    <polygon points="230,595 320,645 425,640 435,605 350,565 245,568" fill="#526055" opacity="0.7" />
+
+    <!-- City Buildings Array (Scattered, grouped, distinct heights: 12px, 16px, 20px, 24px) -->
+    <!-- Row 1: Along beach promenade -->
+    <g transform="translate(245, 615)"><use href="#bldg-type-a" /></g>
+    <g transform="translate(265, 626)"><use href="#bldg-type-c" /></g>
+    <g transform="translate(285, 633)"><use href="#bldg-type-b" /></g>
+    <g transform="translate(310, 638)"><use href="#bldg-type-a" /></g>
+    <g transform="translate(330, 642)"><use href="#bldg-type-c" /></g>
+    <g transform="translate(352, 642)"><use href="#bldg-type-a" /></g>
+    <g transform="translate(372, 638)"><use href="#bldg-type-b" /></g>
+    <g transform="translate(395, 632)"><use href="#bldg-type-c" /></g>
+
+    <!-- Row 2: Mid urban blocks -->
+    <g transform="translate(255, 600)"><use href="#bldg-type-b" /></g>
+    <g transform="translate(278, 610)"><use href="#bldg-type-a" /></g>
+    <g transform="translate(300, 616)"><use href="#bldg-type-b" /></g>
+    <g transform="translate(325, 622)"><use href="#bldg-type-c" /></g>
+    <g transform="translate(345, 624)"><use href="#bldg-type-a" /></g>
+    <g transform="translate(368, 620)"><use href="#bldg-type-b" /></g>
+    <g transform="translate(390, 615)"><use href="#bldg-type-a" /></g>
+    <g transform="translate(410, 608)"><use href="#bldg-type-c" /></g>
+
+    <!-- Row 3: Near foot of Urca hill -->
+    <g transform="translate(270, 588)"><use href="#bldg-type-a" /></g>
+    <g transform="translate(290, 595)"><use href="#bldg-type-c" /></g>
+    <g transform="translate(312, 602)"><use href="#bldg-type-b" /></g>
+    <g transform="translate(335, 606)"><use href="#bldg-type-a" /></g>
+    <g transform="translate(358, 604)"><use href="#bldg-type-b" /></g>
+    <g transform="translate(380, 598)"><use href="#bldg-type-c" /></g>
+    <g transform="translate(400, 590)"><use href="#bldg-type-a" /></g>
+
+    <!-- Ground Shoreline Cable Car Terminal (岸边站房 at Praia Vermelha) -->
+    <!-- Minimalist station pavilion: lit flat roof, glass slot, bracket tower -->
+    <g id="ground-station" transform="translate(235, 545)">
+      <!-- Station shadow -->
+      <polygon points="0,5 20,12 28,8 10,2" fill="#1b2e22" opacity="0.5" />
+      <!-- Station building body -->
+      <polygon points="0,0 12,-6 12,-16 0,-10" fill="#ede8de" />
+      <polygon points="12,-6 24,-1 24,-11 12,-16" fill="#8e8679" />
+      <!-- Glass facade slot -->
+      <polygon points="2,-9 10,-13 10,-11 2,-7" fill="#1f3644" />
+      <!-- Cantilever flat roof with bright white edge -->
+      <polygon points="-2,-10 12,-17 26,-11 12,-4" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.5" />
+      <!-- Cable Pylon & Sheave Mount -->
+      <line x1="12" y1="-14" x2="12" y2="-22" stroke="#475569" stroke-width="1.8" />
+      <line x1="8" y1="-22" x2="16" y2="-22" stroke="#64748b" stroke-width="1.8" stroke-linecap="round" />
+    </g>
+
+    <!-- MORRO DA URCA (矮山: Rounded, Flattish Top, Covered in Vegetation #4f8a4b) -->
+    <!-- Elevation: Base ~575, Summit 430 -> Height = 145px -->
+    <g id="morro-da-urca">
+      <!-- Ambient Occlusion at base -->
+      <path d="M 330,585 C 380,590 460,580 505,550 C 470,540 370,545 330,585 Z" fill="#183618" opacity="0.6" />
+
+      <!-- Shadow Flank (Back & Right side) -->
+      <path d="M 425,432 C 455,435 480,455 495,490 C 510,525 510,548 505,558 C 470,565 425,568 395,572 C 415,530 420,470 425,432 Z" fill="url(#urcaShadowGrad)" />
+
+      <!-- Lit & Midtone Dome Body -->
+      <path d="M 340,578 C 345,540 365,480 395,448 C 410,432 430,430 445,432 C 430,470 425,530 405,575 C 380,578 355,578 340,578 Z" fill="url(#urcaLitGrad)" />
+
+      <!-- Sculpted Volumetric Rainforest Canopy Bumps on Urca -->
+      <!-- Lit facets of canopy -->
+      <path d="M 365,540 Q 380,515 400,522 Q 415,490 425,470 Q 432,445 440,435 C 425,435 410,442 398,455 C 378,480 360,515 352,550 Z" fill="#62a85c" opacity="0.8" />
+      <path d="M 380,490 Q 395,470 415,480 Q 430,460 442,445 C 432,442 418,448 408,460 C 392,480 382,510 375,530 Z" fill="#75be6e" opacity="0.6" />
+
+      <!-- Upper Edge Crisp Highlight -->
+      <path d="M 385,458 C 400,438 420,432 445,432" stroke="#a1e398" stroke-width="1.4" fill="none" stroke-linecap="round" />
+
+      <!-- Urca Summit Minimalist Station (矮山极简小站房) -->
+      <g id="urca-station" transform="translate(422, 422)">
+        <!-- Station base shadow -->
+        <polygon points="0,6 18,10 26,7 8,3" fill="#132c1b" opacity="0.7" />
+        <!-- Main station volume -->
+        <polygon points="0,2 10,-3 10,-10 0,-5" fill="#f0ece1" />
+        <polygon points="10,-3 22,1 22,-6 10,-10" fill="#807a6f" />
+        <!-- Panoramic observation slot -->
+        <polygon points="2,-4 9,-7 9,-5 2,-2" fill="#1e303d" />
+        <!-- Cantilever roof deck -->
+        <polygon points="-2,-5 10,-11 24,-5 12,1" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.5" />
+        <!-- Pylon cable guide structure -->
+        <line x1="0" y1="-8" x2="0" y2="-15" stroke="#475569" stroke-width="1.6" />
+        <line x1="-3" y1="-15" x2="3" y2="-15" stroke="#64748b" stroke-width="1.6" />
+        <line x1="22" y1="-4" x2="22" y2="-13" stroke="#475569" stroke-width="1.6" />
+        <line x1="19" y1="-13" x2="25" y2="-13" stroke="#64748b" stroke-width="1.6" />
+      </g>
+    </g>
+
+    <!-- SADDLE (矮山与主峰之间明显的鞍部) -->
+    <!-- Deep saddle dip dropping to y~530-545, dramatic physical drop connecting the two land masses -->
+    <g id="saddle">
+      <!-- Saddle shadow cavity -->
+      <path d="M 480,510 C 510,530 535,535 560,528 C 555,545 520,555 485,550 C 475,535 475,520 480,510 Z" fill="#1a3b20" />
+      <!-- Saddle green ridge -->
+      <path d="M 455,480 C 490,525 520,535 565,518 C 555,532 525,542 490,535 C 470,515 460,495 455,480 Z" fill="#417c3e" />
+      <path d="M 470,498 C 495,524 518,528 545,518" stroke="#6ab564" stroke-width="1.5" fill="none" />
+      <!-- Rocky outcrop in saddle -->
+      <polygon points="505,525 515,518 522,524 512,530" fill="#757069" />
+    </g>
+
+    <!-- SUGARLOAF MONOLITH (陡壁圆顶花岗岩主峰: Pão de Açúcar) -->
+    <!-- Height = 270px (1.8x Urca's 150px); Base y~550 to Summit y~280; Vertical walls, rounded bread-loaf top -->
+    <g id="sugarloaf-monolith">
+      <!-- Contact AO / Base Shadow where sheer rock plunges into sea -->
+      <path d="M 545,562 C 600,580 670,580 740,550 C 725,538 640,545 545,562 Z" fill="#0f262b" opacity="0.85" />
+
+      <!-- Sugarloaf Monolith Shadow Flank (Cold slate grey #555358 / #3f3e42) -->
+      <path d="M 645,280 C 675,283 705,310 715,355 C 725,400 735,470 742,545 C 710,560 670,565 635,562 C 640,490 642,400 645,280 Z" fill="url(#sugarloafShadowGrad)" />
+
+      <!-- Sugarloaf Monolith Lit Flank (Warm grey #8b8680 / #a6a098) -->
+      <path d="M 575,558 C 565,490 562,405 575,355 C 585,310 615,283 645,280 C 642,400 640,490 635,562 C 610,564 590,562 575,558 Z" fill="url(#sugarloafLitGrad)" />
+
+      <!-- Monolith Dome Highlight Cap (Rounded top like an upright loaf of bread) -->
+      <path d="M 585,340 C 595,300 620,280 645,280 C 670,280 695,300 705,340 C 685,320 655,310 630,312 C 605,315 592,328 585,340 Z" fill="url(#sugarloafDomeRim)" />
+      <!-- Narrow Specular Edge on Lit Summit Dome -->
+      <path d="M 590,328 C 605,295 625,281 645,281 C 660,281 678,290 692,310" stroke="#f1eee9" stroke-width="1.8" stroke-linecap="round" fill="none" />
+
+      <!-- Vertical Weathering Striations / Erosion Grooves (风化的浅色沟槽) -->
+      <!-- Groove 1 (Lit warm face) -->
+      <path d="M 605,325 C 598,370 592,440 590,520" stroke="#c0bab0" stroke-width="1.6" fill="none" opacity="0.85" />
+      <path d="M 606,325 C 599,370 593,440 591,520" stroke="#68635c" stroke-width="0.8" fill="none" opacity="0.6" />
+      <!-- Groove 2 (Center lit face) -->
+      <path d="M 622,312 C 618,365 614,435 612,545" stroke="#cac4bb" stroke-width="2.2" fill="none" opacity="0.9" />
+      <path d="M 623.5,312 C 619.5,365 615.5,435 613.5,545" stroke="#5a5650" stroke-width="0.9" fill="none" opacity="0.5" />
+      <!-- Groove 3 (Near crest line) -->
+      <path d="M 638,295 C 636,350 634,420 632,555" stroke="#ded8cf" stroke-width="1.8" fill="none" opacity="0.8" />
+      <!-- Groove 4 (Shadow side transition) -->
+      <path d="M 662,305 C 665,360 670,430 675,540" stroke="#7e7a80" stroke-width="1.5" fill="none" opacity="0.7" />
+      <!-- Groove 5 (Deep shadow side) -->
+      <path d="M 688,335 C 694,380 702,450 710,530" stroke="#4d4b50" stroke-width="2.0" fill="none" opacity="0.8" />
+
+      <!-- Green Vegetation restricted ONLY to Foot & Rock Crevices (山脚与岩缝处的植被) -->
+      <!-- Foot vegetation clusters (where rock meets peninsula and bay) -->
+      <path d="M 548,560 C 560,548 575,555 585,558 C 580,565 565,568 548,560 Z" fill="#3a6e37" />
+      <path d="M 552,558 C 562,550 572,554 580,556" stroke="#60a85b" stroke-width="1" fill="none" />
+      <path d="M 625,562 C 640,550 660,554 675,560 C 660,566 640,566 625,562 Z" fill="#2d582b" />
+      <path d="M 715,545 C 728,535 738,542 742,548 C 735,552 725,552 715,545 Z" fill="#224420" />
+
+      <!-- Horizontal Crevice Ledge 1 (Lower Cliff at y~460) -->
+      <path d="M 580,465 C 595,462 610,466 620,468" stroke="#1f3b1e" stroke-width="2.5" fill="none" stroke-linecap="round" />
+      <path d="M 582,464 C 595,461 608,465 618,467" stroke="#488644" stroke-width="1.4" fill="none" stroke-linecap="round" />
+
+      <!-- Horizontal Crevice Ledge 2 (Mid-cliff at y~410) -->
+      <path d="M 602,410 C 612,408 625,411 632,414" stroke="#254823" stroke-width="2" fill="none" stroke-linecap="round" />
+      <path d="M 603,409 C 612,407 623,410 630,413" stroke="#5da358" stroke-width="1.1" fill="none" stroke-linecap="round" />
+
+      <!-- Sugarloaf Summit Station (主峰顶部小站房) -->
+      <g id="sugarloaf-summit-station" transform="translate(632, 272)">
+        <!-- Station shadow on rock -->
+        <polygon points="0,6 18,10 24,7 6,3" fill="#232225" opacity="0.8" />
+        <!-- Station core -->
+        <polygon points="0,2 8,-2 8,-9 0,-5" fill="#f4efe6" />
+        <polygon points="8,-2 18,1 18,-6 8,-9" fill="#756f66" />
+        <!-- Viewing window strip -->
+        <polygon points="1,-4 7,-7 7,-5 1,-2" fill="#1b2a36" />
+        <!-- Observation deck cantilever roof -->
+        <polygon points="-2,-5 8,-10 20,-5 10,0" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.5" />
+        <!-- Terminal cable bullwheel mount -->
+        <line x1="0" y1="-5" x2="0" y2="-12" stroke="#475569" stroke-width="1.6" />
+        <line x1="-3" y1="-12" x2="3" y2="-12" stroke="#64748b" stroke-width="1.6" />
+      </g>
+    </g>
+
+    <!-- CABLE CAR SYSTEMS (两段索道、四根细线、两个微缩缆车) -->
+    <!-- Proportions: Span 1 L~212px (Slope 31°); Span 2 L~222px (Slope 43° - noticeably steeper) -->
+    <g id="cable-system">
+      <!-- SPAN 1: Shore Station to Morro da Urca (Two parallel fine lines) -->
+      <!-- Cable 1A -->
+      <line x1="247" y1="527" x2="422" y2="411" stroke="#374151" stroke-width="1.1" />
+      <!-- Cable 1B -->
+      <line x1="249" y1="530" x2="424" y2="414" stroke="#4b5563" stroke-width="1.1" />
+
+      <!-- SPAN 2: Morro da Urca to Sugarloaf Summit (Steeper slope, two parallel fine lines) -->
+      <!-- Cable 2A -->
+      <line x1="444" y1="413" x2="632" y2="263" stroke="#374151" stroke-width="1.1" />
+      <!-- Cable 2B -->
+      <line x1="446" y1="416" x2="634" y2="266" stroke="#4b5563" stroke-width="1.1" />
+
+      <!-- CABLE CAR 1 (On Span 1: Travels smoothly between Shore and Urca) -->
+      <g transform="translate(290, 498)">
+        <g class="car-span1">
+          <!-- Suspension arm & trolley wheels -->
+          <line x1="7" y1="-7" x2="7" y2="0" stroke="#334155" stroke-width="1.2" />
+          <circle cx="6" cy="-7" r="1.2" fill="#1e293b" />
+          <circle cx="8" cy="-8" r="1.2" fill="#1e293b" />
+          <!-- Cable Car Body: Rounded small cuboid (圆角小方块) -->
+          <!-- Drop shadow of car -->
+          <rect x="0.5" y="1.5" width="13" height="10" rx="3" fill="#1e293b" opacity="0.3" />
+          <!-- Car lit outer shell -->
+          <rect x="0" y="0" width="13" height="9.5" rx="2.8" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="0.5" />
+          <!-- Tinted glass band -->
+          <rect x="1.5" y="2.5" width="10" height="4" rx="1.2" fill="#0284c7" />
+          <!-- Highlight on glass -->
+          <line x1="2.5" y1="3.5" x2="5.5" y2="3.5" stroke="#bae6fd" stroke-width="0.8" />
+          <!-- Vibrant miniature stripe -->
+          <rect x="0" y="6.8" width="13" height="1.8" rx="0.8" fill="#e11d48" />
+        </g>
+      </g>
+
+      <!-- CABLE CAR 2 (On Span 2: Travels smoothly along the steeper cable) -->
+      <g transform="translate(485, 380)">
+        <g class="car-span2">
+          <!-- Suspension arm aligned with vertical gravity, trolley tilted with steep cable -->
+          <line x1="7" y1="-9" x2="7" y2="0" stroke="#334155" stroke-width="1.3" />
+          <line x1="4" y1="-11" x2="10" y2="-6" stroke="#1e293b" stroke-width="1.4" />
+          <circle cx="5" cy="-10" r="1.2" fill="#0f172a" />
+          <circle cx="9" cy="-7" r="1.2" fill="#0f172a" />
+          <!-- Car Body: Rounded small cuboid -->
+          <rect x="0.5" y="1.5" width="13" height="9.5" rx="3" fill="#1e293b" opacity="0.3" />
+          <rect x="0" y="0" width="13" height="9.5" rx="2.8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.5" />
+          <rect x="1.5" y="2.5" width="10" height="4" rx="1.2" fill="#0369a1" />
+          <line x1="2.5" y1="3.5" x2="5.5" y2="3.5" stroke="#7dd3fc" stroke-width="0.8" />
+          <rect x="0" y="6.8" width="13" height="1.8" rx="0.8" fill="#e11d48" />
+        </g>
+      </g>
+    </g>
+
+    <!-- WATER DETAILS: SAILBOATS & WAKES (水面上点缀的小帆船与白色尾迹) -->
+    <!-- Sailboat 1 (Main boat in foreground bay, sailing gently toward right) -->
+    <g transform="translate(290, 685)">
+      <g class="sailboat-main">
+        <!-- Expanding White Wake Trail (白色尾迹) behind the stern -->
+        <g class="wake-stretch">
+          <path d="M -8,2 C -24,5 -45,10 -70,16 C -45,7 -24,4 -8,2 Z" fill="#ffffff" opacity="0.65" />
+          <path d="M -8,-1 C -26,-2 -50,-4 -75,-6 C -48,-1 -26,0 -8,-1 Z" fill="#ffffff" opacity="0.55" />
+          <!-- Inner frothy wake line -->
+          <line x1="-4" y1="0.5" x2="-55" y2="4" stroke="#ffffff" stroke-width="1.2" stroke-dasharray="8 4 15 5" opacity="0.8" />
+        </g>
+        <!-- Boat contact shadow in water -->
+        <ellipse cx="6" cy="4" rx="14" ry="4" fill="#143e44" opacity="0.45" />
+        <!-- Miniature Yacht Hull -->
+        <!-- Lit port side -->
+        <path d="M -6,2 L 14,0 C 18,1 19,3 15,4 L -4,5 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.4" />
+        <!-- Teak wood deck -->
+        <path d="M -4,2 L 12,0.5 L 14,2 L -3,3.5 Z" fill="#d97706" opacity="0.8" />
+        <!-- Slender Mast -->
+        <line x1="5" y1="1" x2="5" y2="-22" stroke="#475569" stroke-width="0.9" />
+        <!-- Mainsail (Crisp white triangular sail with wind belly) -->
+        <path d="M 4,-20 L 4,-3 L -7, -1 C -2,-9 1,-16 4,-20 Z" fill="#f8fafc" stroke="#e2e8f0" stroke-width="0.4" />
+        <!-- Jib / Headsail -->
+        <path d="M 6,-18 L 16,-1 L 6,-2 Z" fill="#ffffff" opacity="0.9" />
+      </g>
+    </g>
+
+    <!-- Sailboat 2 (Distanced miniature boat out on the eastern bay) -->
+    <g transform="translate(735, 625)">
+      <g class="sailboat-outer">
+        <!-- Expanding fine wake -->
+        <path d="M 6,-1 C 20,-3 38,-5 55,-7 C 38,-3 20,-1 6,-1 Z" fill="#ffffff" opacity="0.6" />
+        <path d="M 6,1 C 22,3 40,6 60,9 C 40,4 22,2 6,1 Z" fill="#ffffff" opacity="0.5" />
+        <line x1="4" y1="0" x2="48" y2="1" stroke="#ffffff" stroke-width="0.9" opacity="0.7" />
+        <!-- Hull -->
+        <ellipse cx="-2" cy="2" rx="9" ry="2.5" fill="#164e56" opacity="0.4" />
+        <path d="M -8,1 L 6,0 C 9,1 9,2 7,3 L -6,3 Z" fill="#f1f5f9" />
+        <!-- Tiny white sails -->
+        <line x1="-1" y1="1" x2="-1" y2="-14" stroke="#334155" stroke-width="0.7" />
+        <path d="M -1,-13 L -1,-1 L -8,0 Z" fill="#ffffff" />
+        <path d="M 0,-11 L 6,0 L 0,-1 Z" fill="#f8fafc" />
+      </g>
+    </g>
+  </g>
+
+  <!-- DISPLAY PEDESTAL TOP BEVEL & HIGHLIGHT RIM (细细的亮边, perfectly overlaying top contour) -->
+  <ellipse cx="500" cy="560" rx="400" ry="210" fill="none" stroke="url(#pedestalRimGrad)" stroke-width="2.5" />
+  <ellipse cx="500" cy="560" rx="399" ry="209" fill="none" stroke="#ffffff" stroke-width="0.8" opacity="0.6" />
+</svg>
