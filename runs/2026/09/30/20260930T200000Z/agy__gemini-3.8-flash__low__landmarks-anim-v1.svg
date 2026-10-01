@@ -1,0 +1,395 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 850" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="studioBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#edf3f6" />
+      <stop offset="100%" stop-color="#dfe6ec" />
+    </linearGradient>
+
+    <!-- Plinth Shadow -->
+    <radialGradient id="dropShadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(30, 45, 55, 0.28)" />
+      <stop offset="60%" stop-color="rgba(30, 45, 55, 0.12)" />
+      <stop offset="100%" stop-color="rgba(30, 45, 55, 0)" />
+    </radialGradient>
+
+    <!-- Plinth Base Colors -->
+    <linearGradient id="plinthSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b6bec6" />
+      <stop offset="35%" stop-color="#cbd3dc" />
+      <stop offset="70%" stop-color="#9da7b0" />
+      <stop offset="100%" stop-color="#8a949d" />
+    </linearGradient>
+
+    <!-- Water Gradients -->
+    <radialGradient id="waterSurface" cx="42%" cy="46%" r="56%">
+      <stop offset="0%" stop-color="#5ec5cc" />
+      <stop offset="45%" stop-color="#3f9fa8" />
+      <stop offset="75%" stop-color="#338a93" />
+      <stop offset="100%" stop-color="#2a777f" />
+    </radialGradient>
+
+    <!-- Mountain Lighting: Morro da Urca (矮山) -->
+    <linearGradient id="urcaLit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6bb366" />
+      <stop offset="45%" stop-color="#4f8a4b" />
+      <stop offset="100%" stop-color="#396636" />
+    </linearGradient>
+
+    <!-- Mountain Lighting: Sugarloaf (主峰 - 灰色花岗岩) -->
+    <linearGradient id="sugarloafLit" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b8b3ad" />
+      <stop offset="25%" stop-color="#9d9892" />
+      <stop offset="55%" stop-color="#8b8680" />
+      <stop offset="85%" stop-color="#726d68" />
+      <stop offset="100%" stop-color="#5a5e65" />
+    </linearGradient>
+
+    <!-- Weathering Vertical Grooves Pattern -->
+    <linearGradient id="grooveLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(235, 230, 222, 0.45)" />
+      <stop offset="50%" stop-color="rgba(215, 210, 202, 0.25)" />
+      <stop offset="100%" stop-color="rgba(235, 230, 222, 0)" />
+    </linearGradient>
+    <linearGradient id="grooveDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(65, 60, 58, 0.35)" />
+      <stop offset="70%" stop-color="rgba(55, 50, 50, 0.2)" />
+      <stop offset="100%" stop-color="rgba(55, 50, 50, 0)" />
+    </linearGradient>
+
+    <!-- Cable Car Reusable Def -->
+    <g id="cableCar">
+      <!-- Hanger Arm & Pulley Wheel -->
+      <circle cx="0" cy="-11" r="2.2" fill="#50555a" />
+      <path d="M 0,-11 L 0,-4" stroke="#454a4f" stroke-width="1.3" stroke-linecap="round" />
+      <!-- Car Body -->
+      <rect x="-6" y="-4" width="12" height="9" rx="2.5" fill="#f5aa38" stroke="#d4881e" stroke-width="0.7" />
+      <!-- Window Band (Dark Glazing with depth) -->
+      <rect x="-4.5" y="-1.8" width="9" height="3.4" rx="1" fill="#24333d" />
+      <rect x="-4.5" y="-1.8" width="4.2" height="1.4" rx="0.5" fill="#5c8296" opacity="0.8" />
+      <!-- Highlight & Underside Shade -->
+      <line x1="-5" y1="-3.3" x2="5" y2="-3.3" stroke="#ffde87" stroke-width="0.7" stroke-linecap="round" />
+      <rect x="-5" y="3.6" width="10" height="1.2" fill="#b06b0e" />
+    </g>
+
+    <!-- Stylized Tiny Sailboat -->
+    <g id="sailboat">
+      <!-- Hull -->
+      <path d="M -9,0 L 7,0 Q 9,0 10,-2 L -9,-2 Z" fill="#ffffff" stroke="#cdd5db" stroke-width="0.5" />
+      <path d="M -9,-0.2 L 8,-0.2 L 6,1.8 L -8,1.8 Z" fill="#1b454a" opacity="0.35" />
+      <!-- Mast -->
+      <line x1="0" y1="-2" x2="0" y2="-15" stroke="#716253" stroke-width="0.9" />
+      <!-- Main Sail -->
+      <path d="M 0.8,-3.5 L 6.5,-4.5 L 0.8,-13.5 Z" fill="#f8fafc" />
+      <!-- Jib Sail -->
+      <path d="M -0.8,-3.5 L -5.8,-4 L -0.8,-12 Z" fill="#e8edf2" />
+    </g>
+
+    <style><![CDATA[
+      /* Smooth continuous cable car travel animations */
+      @keyframes cableMoveLower {
+        0% {
+          transform: translate(295px, 482px);
+        }
+        50% {
+          transform: translate(405px, 427px);
+        }
+        100% {
+          transform: translate(295px, 482px);
+        }
+      }
+
+      @keyframes cableMoveUpper {
+        0% {
+          transform: translate(455px, 395px);
+        }
+        50% {
+          transform: translate(625px, 240px);
+        }
+        100% {
+          transform: translate(455px, 395px);
+        }
+      }
+
+      @keyframes boatDrift {
+        0% {
+          transform: translate(660px, 570px);
+        }
+        50% {
+          transform: translate(678px, 560px);
+        }
+        100% {
+          transform: translate(660px, 570px);
+        }
+      }
+
+      .anim-cable-lower {
+        animation: cableMoveLower 10s ease-in-out infinite;
+      }
+      .anim-cable-upper {
+        animation: cableMoveUpper 11s ease-in-out infinite;
+      }
+      .anim-boat {
+        animation: boatDrift 12s ease-in-out infinite;
+      }
+    ]]></style>
+  </defs>
+
+  <!-- Clean Exhibition Room Backdrop -->
+  <rect width="1000" height="850" fill="url(#studioBg)" />
+
+  <!-- Base Outer Drop Shadow -->
+  <ellipse cx="500" cy="590" rx="420" ry="185" fill="url(#dropShadow)" />
+
+  <!-- ==================== DISPLAY PLINTH ==================== -->
+  <!-- Cylinder Side Thickness -->
+  <path d="M 100,530 C 100,645 279,720 500,720 C 721,720 900,645 900,530 L 900,572 C 900,687 721,762 500,762 C 279,762 100,687 100,572 Z" fill="url(#plinthSide)" />
+  <!-- Under-bevel shading line -->
+  <path d="M 100,572 C 100,687 279,762 500,762 C 721,762 900,687 900,572" fill="none" stroke="#68727b" stroke-width="2" opacity="0.6" />
+
+  <!-- Plinth Top Edge Outer Rim Highlight -->
+  <ellipse cx="500" cy="530" rx="401" ry="176" fill="#f4f8fa" />
+
+  <!-- Plinth Top Surface (Water of Guanabara Bay) -->
+  <ellipse cx="500" cy="530" rx="399" ry="174" fill="url(#waterSurface)" />
+
+  <!-- Shallows / Coastal Shoal Color Bands -->
+  <path d="M 230,550 C 270,510 330,480 430,485 C 500,490 560,460 620,440 C 690,420 730,430 750,460 C 710,500 640,540 540,560 C 420,585 300,590 230,550 Z" fill="#69d1d8" opacity="0.45" filter="blur(6px)" />
+
+  <!-- Soft Ground Ambient Occlusion Cast by Mountain Complex -->
+  <ellipse cx="445" cy="505" rx="140" ry="52" fill="#1b4b50" opacity="0.32" filter="blur(8px)" />
+  <ellipse cx="645" cy="455" rx="120" ry="60" fill="#184347" opacity="0.4" filter="blur(9px)" />
+
+  <!-- Boat 2 (Far, static miniature boat) -->
+  <g transform="translate(310, 420) scale(0.65)">
+    <!-- White Wake -->
+    <path d="M -12,2 Q -30,6 -52,10 Q -32,1 -12,0 Z" fill="#ffffff" opacity="0.5" />
+    <path d="M -8,0 L 5,0 L 7,-2 L -8,-2 Z" fill="#ffffff" />
+    <line x1="0" y1="-2" x2="0" y2="-12" stroke="#63584e" stroke-width="1" />
+    <path d="M 0.5,-3 L 5,-4 L 0.5,-10 Z" fill="#f4f8fa" />
+  </g>
+
+  <!-- Boat 1 (Foreground Animated Sailboat with Wake) -->
+  <g class="anim-boat">
+    <!-- Smooth Boat Wake in Water -->
+    <path d="M -8,1 Q -30,6 -65,14 M -8,2 Q -35,11 -75,20" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" opacity="0.65" />
+    <path d="M -12,2 Q -45,10 -85,16" fill="none" stroke="#e0f8fa" stroke-width="1.2" opacity="0.45" />
+    <use href="#sailboat" />
+  </g>
+
+  <!-- ==================== PENINSULA & FOREGROUND ==================== -->
+  <!-- Peninsula Base Landmass protruding into bay -->
+  <path d="M 195,532 C 215,505 270,490 340,492 C 400,495 440,510 490,495 C 530,480 580,455 640,445 C 705,435 745,445 765,470 C 740,495 680,518 610,528 C 520,540 450,535 390,548 C 300,568 230,565 195,532 Z" fill="#437d40" />
+
+  <!-- Yellow Sand Beach Strip along waterfront (一小段浅黄色沙滩) -->
+  <path d="M 196,532 C 208,522 225,516 245,518 C 265,520 280,532 295,540 C 315,550 335,554 360,554 C 340,559 315,562 290,558 C 255,554 225,550 196,532 Z" fill="#ebd694" stroke="#dfc77c" stroke-width="0.6" />
+  <path d="M 215,524 C 235,524 255,535 275,544 C 295,552 320,556 345,556" fill="none" stroke="#fff8dc" stroke-width="0.8" opacity="0.8" />
+
+  <!-- Shoreline Shore Cable Car Base Station (岸边站房) -->
+  <g id="shoreStation" transform="translate(290, 484)">
+    <ellipse cx="6" cy="11" rx="14" ry="5" fill="#2b5428" opacity="0.4" />
+    <!-- Building block -->
+    <path d="M 0,2 L 12,-3 L 19,0 L 7,6 Z" fill="#eceff1" />
+    <path d="M 0,2 L 7,6 L 7,12 L 0,8 Z" fill="#b0bec5" />
+    <path d="M 7,6 L 19,0 L 19,6 L 7,12 Z" fill="#cfd8dc" />
+    <!-- Pylon support -->
+    <line x1="8" y1="2" x2="8" y2="-6" stroke="#455a64" stroke-width="1.8" />
+    <line x1="5" y1="-5" x2="11" y2="-5" stroke="#37474f" stroke-width="1.4" />
+  </g>
+
+  <!-- Foreground City Blocks (低矮城区: 一片小方块楼房, 高度不超过矮山1/5 ~15-22px) -->
+  <g id="cityBlocks">
+    <!-- Row 1 (furthest in town) -->
+    <path d="M 232,504 l 7,-3 l 7,3 l -7,3 z" fill="#f5f7fa" />
+    <path d="M 232,504 l 7,3 l 0,9 l -7,-3 z" fill="#9aa9b5" />
+    <path d="M 239,507 l 7,-3 l 0,9 l -7,3 z" fill="#c4d0d9" />
+
+    <path d="M 250,500 l 9,-3 l 8,3 l -9,3 z" fill="#ffffff" />
+    <path d="M 250,500 l 8,3 l 0,14 l -8,-3 z" fill="#a4b4c2" />
+    <path d="M 258,503 l 9,-3 l 0,14 l -9,3 z" fill="#d2dce3" />
+
+    <path d="M 271,498 l 8,-3 l 7,2 l -8,3 z" fill="#f0ede6" />
+    <path d="M 271,498 l 7,3 l 0,11 l -7,-3 z" fill="#a6a097" />
+    <path d="M 278,501 l 8,-3 l 0,11 l -8,3 z" fill="#cfc8bd" />
+
+    <!-- Row 2 -->
+    <path d="M 218,516 l 8,-3 l 8,3 l -8,3 z" fill="#fdfefe" />
+    <path d="M 218,516 l 8,3 l 0,10 l -8,-3 z" fill="#8f9fa8" />
+    <path d="M 226,519 l 8,-3 l 0,10 l -8,3 z" fill="#b9c9d4" />
+
+    <path d="M 238,515 l 10,-3 l 9,3 l -10,3 z" fill="#f8ece1" />
+    <path d="M 238,515 l 10,3 l 0,15 l -10,-3 z" fill="#ad9c8f" />
+    <path d="M 248,518 l 9,-3 l 0,15 l -9,3 z" fill="#dbcbbf" />
+
+    <path d="M 261,512 l 8,-3 l 7,3 l -8,3 z" fill="#edf3f5" />
+    <path d="M 261,512 l 8,3 l 0,12 l -8,-3 z" fill="#99abb8" />
+    <path d="M 269,515 l 7,-3 l 0,12 l -7,3 z" fill="#c8d7e0" />
+
+    <path d="M 279,510 l 9,-3 l 8,3 l -9,3 z" fill="#f5f5f5" />
+    <path d="M 279,510 l 8,3 l 0,13 l -8,-3 z" fill="#a2adb5" />
+    <path d="M 287,513 l 9,-3 l 0,13 l -9,3 z" fill="#d3dde3" />
+
+    <!-- Row 3 (closest to sand beach) -->
+    <path d="M 230,530 l 8,-3 l 7,3 l -8,3 z" fill="#f7fbfd" />
+    <path d="M 230,530 l 7,3 l 0,9 l -7,-3 z" fill="#899da8" />
+    <path d="M 237,533 l 8,-3 l 0,9 l -8,3 z" fill="#bdd0db" />
+
+    <path d="M 249,528 l 10,-3 l 9,3 l -10,3 z" fill="#fff" />
+    <path d="M 249,528 l 9,3 l 0,11 l -9,-3 z" fill="#9cb0bd" />
+    <path d="M 258,531 l 10,-3 l 0,11 l -10,3 z" fill="#d8e3ea" />
+
+    <path d="M 272,525 l 8,-3 l 8,3 l -8,3 z" fill="#ebe6df" />
+    <path d="M 272,525 l 8,3 l 0,10 l -8,-3 z" fill="#a89f94" />
+    <path d="M 280,528 l 8,-3 l 0,10 l -8,3 z" fill="#d4cbc0" />
+
+    <path d="M 292,521 l 7,-2 l 8,2 l -7,3 z" fill="#f2f7f9" />
+    <path d="M 292,521 l 8,3 l 0,9 l -8,-3 z" fill="#90a1ad" />
+    <path d="M 300,524 l 7,-2 l 0,9 l -7,2 z" fill="#c3d5e0" />
+
+    <!-- Tiny scattered garden trees among buildings -->
+    <circle cx="236" cy="514" r="3.2" fill="#356930" />
+    <circle cx="235" cy="513" r="2.7" fill="#4d8c47" />
+    <circle cx="260" cy="510" r="3" fill="#4d8c47" />
+    <circle cx="270" cy="522" r="3.5" fill="#356930" />
+    <circle cx="269" cy="521" r="2.9" fill="#589e51" />
+  </g>
+
+  <!-- ==================== MIDDLEGROUND: LOW MOUNTAIN (MORRO DA URCA) ==================== -->
+  <!-- Height: ~125px (Top at y=390, Base at y=515) -->
+  <g id="morroDaUrca">
+    <!-- Base contact shadow into peninsula saddle -->
+    <path d="M 320,525 C 360,535 440,535 490,520 C 510,510 530,505 550,505 C 520,518 470,532 410,534 C 360,536 330,530 320,525 Z" fill="#20401d" opacity="0.45" />
+
+    <!-- Main Hill Volume (Rounded, gently sloping, slightly flattened top) -->
+    <path d="M 325,518 C 340,465 375,415 415,400 C 430,395 450,395 465,402 C 500,418 525,465 545,510 C 510,522 470,526 425,525 C 380,525 345,522 325,518 Z" fill="url(#urcaLit)" />
+
+    <!-- Volume Shading: Sunward rim and shadow flank -->
+    <!-- Light Crest (Top & Left) -->
+    <path d="M 345,490 C 365,445 395,408 425,400 C 445,395 462,401 465,404 C 445,403 425,408 405,420 C 375,442 355,480 345,490 Z" fill="#88ce82" opacity="0.75" />
+
+    <!-- Right Flank Shading (Backlight side) -->
+    <path d="M 455,401 C 485,418 515,460 545,510 C 525,516 500,519 475,516 C 470,470 455,425 455,401 Z" fill="#2d572a" opacity="0.42" />
+
+    <!-- Miniature Tree Texture Clumps (散落的灌木树丛) -->
+    <g fill="#2e5929" opacity="0.85">
+      <ellipse cx="370" cy="480" rx="9" ry="6" fill="#3c7036" />
+      <ellipse cx="368" cy="478" rx="7" ry="5" fill="#589950" />
+      <ellipse cx="400" cy="460" rx="12" ry="7" fill="#366631" />
+      <ellipse cx="398" cy="458" rx="10" ry="5.5" fill="#52914b" />
+      <ellipse cx="435" cy="445" rx="14" ry="8" fill="#366631" />
+      <ellipse cx="433" cy="443" rx="11" ry="6.5" fill="#52914b" />
+      <ellipse cx="470" cy="460" rx="11" ry="7" fill="#274a23" />
+      <ellipse cx="500" cy="485" rx="13" ry="8" fill="#274a23" />
+      <ellipse cx="500" cy="483" rx="9" ry="6" fill="#3c6e37" />
+    </g>
+
+    <!-- Urca Summit Station Building (极简的小站房) -->
+    <g id="urcaStation" transform="translate(434, 388)">
+      <!-- Base deck -->
+      <path d="M -1,-1 L 18,-6 L 28,-2 L 9,3 Z" fill="#78909c" />
+      <!-- Building volume -->
+      <path d="M 2,1 L 12,-2 L 18,0 L 8,3 Z" fill="#ffffff" />
+      <path d="M 2,1 L 8,3 L 8,8 L 2,6 Z" fill="#90a4ae" />
+      <path d="M 8,3 L 18,0 L 18,5 L 8,8 Z" fill="#cfd8dc" />
+      <!-- Observation slit window -->
+      <path d="M 3,3 L 7,4.5 L 7,5.5 L 3,4 Z" fill="#263238" />
+      <!-- Cable Pylon Frame (Dual directional) -->
+      <line x1="0" y1="2" x2="0" y2="-7" stroke="#37474f" stroke-width="1.6" />
+      <line x1="-3" y1="-5" x2="3" y2="-5" stroke="#37474f" stroke-width="1.3" />
+      <line x1="20" y1="-2" x2="20" y2="-12" stroke="#37474f" stroke-width="1.6" />
+      <line x1="17" y1="-9" x2="23" y2="-9" stroke="#37474f" stroke-width="1.3" />
+    </g>
+  </g>
+
+  <!-- ==================== SADDLE (矮山与主峰之间的明显鞍部) ==================== -->
+  <path d="M 520,512 C 540,518 565,520 585,502 C 575,488 560,480 545,480 C 535,492 525,504 520,512 Z" fill="#3a6936" />
+  <!-- Saddle beachlet & rock edge -->
+  <path d="M 545,516 C 560,522 578,518 588,502" fill="none" stroke="#6ec5cb" stroke-width="2" opacity="0.6" />
+
+  <!-- ==================== BACKGROUND/MAIN: SUGARLOAF MOUNTAIN (主峰) ==================== -->
+  <!-- Height: ~225px (1.8x of Urca's 125px). Top at y=175, Base at y=485. Steep monolithic granite dome -->
+  <g id="sugarloafMountain">
+    <!-- Rock Ambient Occlusion at water interface (从海水中直接拔起) -->
+    <path d="M 565,495 C 600,520 700,510 745,465 C 720,455 660,470 595,475 Z" fill="#16383b" opacity="0.55" filter="blur(4px)" />
+
+    <!-- Main Sugarloaf Monolith Silhouette -->
+    <!-- Proportions: Base slightly wider than rounded top; height strictly greater than width -->
+    <path d="M 565,485 C 565,420 572,310 595,240 C 612,185 635,174 662,174 C 690,174 712,188 728,245 C 748,320 758,415 754,468 C 730,482 680,490 625,492 C 590,493 572,490 565,485 Z" fill="url(#sugarloafLit)" />
+
+    <!-- Left Illuminated Crest (受光面偏暖灰, 提亮窄边) -->
+    <path d="M 566,480 C 567,420 574,312 597,242 C 613,188 635,176 662,176 C 650,178 630,192 615,246 C 595,316 585,415 580,483 Z" fill="#d2ccc4" opacity="0.6" />
+    <path d="M 625,178 C 642,174 662,174 675,177 C 660,175 640,176 625,178 Z" fill="#ffffff" opacity="0.8" stroke="#ffffff" stroke-width="1" />
+
+    <!-- Right Shadow Face (背光面偏冷灰, 垂直陡峭阴影) -->
+    <path d="M 668,175 C 692,177 713,192 728,245 C 748,320 758,415 754,468 C 735,476 710,480 690,480 C 708,420 710,320 696,245 C 688,198 678,182 668,175 Z" fill="#4d535c" opacity="0.6" />
+    <!-- Deepest Backlight Edge (更暗的窄边) -->
+    <path d="M 728,248 C 744,320 755,410 752,465 C 746,467 738,470 732,472 C 738,420 732,320 718,252 Z" fill="#363b42" opacity="0.5" />
+
+    <!-- Vertical Weathering Grooves on Exposed Granite (风化沟槽: 浅色与深色细条纹) -->
+    <!-- Lit Side Highlights -->
+    <path d="M 608,245 C 612,280 610,335 615,385 C 618,420 616,450 618,485" stroke="url(#grooveLight)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+    <path d="M 626,220 C 630,265 628,320 633,375 C 636,415 635,445 637,485" stroke="url(#grooveLight)" stroke-width="3" fill="none" stroke-linecap="round" />
+    <path d="M 645,195 C 648,250 647,310 651,370 C 653,410 652,445 654,486" stroke="url(#grooveLight)" stroke-width="2" fill="none" stroke-linecap="round" />
+    <path d="M 658,190 C 660,240 659,300 663,365 C 665,405 664,440 666,486" stroke="url(#grooveLight)" stroke-width="2" fill="none" stroke-linecap="round" />
+
+    <!-- Shadow Grooves & Fissures -->
+    <path d="M 674,198 C 676,250 673,310 678,380 C 681,425 679,455 682,482" stroke="url(#grooveDark)" stroke-width="3.5" fill="none" stroke-linecap="round" />
+    <path d="M 692,230 C 695,280 691,340 697,410 C 700,445 698,465 701,478" stroke="url(#grooveDark)" stroke-width="3" fill="none" stroke-linecap="round" />
+    <path d="M 714,270 C 718,325 715,380 720,440 C 722,458 721,468 722,474" stroke="url(#grooveDark)" stroke-width="2.5" fill="none" stroke-linecap="round" />
+
+    <!-- Green Vegetation restricted strictly to Base & Rock Fissures (只在山脚与岩缝处长着绿色植被) -->
+    <!-- Base Vegetation Girdle -->
+    <path d="M 565,487 C 575,475 588,472 602,482 C 612,472 628,470 642,482 C 655,472 672,474 685,482 C 698,472 715,472 730,477 C 745,465 754,468 754,468 C 748,478 730,486 700,488 C 660,492 610,494 565,487 Z" fill="#366631" />
+    <path d="M 570,488 C 580,480 592,478 605,486 C 620,478 635,477 648,486 C 662,478 678,480 690,487" fill="none" stroke="#52944b" stroke-width="3.5" stroke-linecap="round" />
+
+    <!-- Crevice Vegetation Tufts (岩缝微绿) -->
+    <ellipse cx="612" cy="390" rx="3.5" ry="2" fill="#437d3c" />
+    <ellipse cx="632" cy="340" rx="4" ry="2.2" fill="#437d3c" />
+    <ellipse cx="676" cy="360" rx="4.5" ry="2.2" fill="#2d5428" />
+    <ellipse cx="678" cy="305" rx="3" ry="1.8" fill="#2d5428" />
+    <ellipse cx="695" cy="385" rx="5" ry="2.5" fill="#274723" />
+
+    <!-- Sugarloaf Summit Station Building (主峰顶部一座小站房) -->
+    <g id="summitStation" transform="translate(650, 168)">
+      <!-- Deck foundation -->
+      <path d="M 2,6 L 22,1 L 28,3 L 8,8 Z" fill="#546e7a" />
+      <!-- Building Block -->
+      <path d="M 5,5 L 18,2 L 23,3.5 L 10,7 Z" fill="#f5f7fa" />
+      <path d="M 5,5 L 10,7 L 10,11 L 5,9 Z" fill="#90a4ae" />
+      <path d="M 10,7 L 23,3.5 L 23,7.5 L 10,11 Z" fill="#b0bec5" />
+      <!-- Glass facade reflection -->
+      <line x1="11" y1="8" x2="21" y2="5.5" stroke="#37474f" stroke-width="1.2" />
+      <!-- Pylon Frame for Cable 2 -->
+      <line x1="4" y1="5" x2="4" y2="-2" stroke="#263238" stroke-width="1.5" />
+      <line x1="1" y1="-1" x2="7" y2="-1" stroke="#263238" stroke-width="1.2" />
+    </g>
+  </g>
+
+  <!-- ==================== CABLEWAYS & CARS (两段平行的细线索道与缆车) ==================== -->
+  <!-- Cableway 1: Shore Station to Morro da Urca -->
+  <g id="cablewaySection1">
+    <!-- Parallel Fine Track Ropes -->
+    <line x1="298" y1="479" x2="434" y2="381" stroke="#303b42" stroke-width="0.85" opacity="0.85" />
+    <line x1="298" y1="481" x2="434" y2="383" stroke="#222b30" stroke-width="0.85" opacity="0.85" />
+
+    <!-- Cable Car 1 (Animated along section 1) -->
+    <g class="anim-cable-lower">
+      <use href="#cableCar" />
+    </g>
+  </g>
+
+  <!-- Cableway 2: Morro da Urca to Sugarloaf Summit (Steeper incline, comparable span) -->
+  <g id="cablewaySection2">
+    <!-- Parallel Fine Track Ropes -->
+    <line x1="454" y1="386" x2="654" y2="167" stroke="#222b30" stroke-width="0.85" opacity="0.85" />
+    <line x1="454" y1="388" x2="654" y2="169" stroke="#151b1e" stroke-width="0.85" opacity="0.85" />
+
+    <!-- Cable Car 2 (Animated along section 2) -->
+    <g class="anim-cable-upper">
+      <use href="#cableCar" />
+    </g>
+  </g>
+
+  <!-- Diorama Display Glass Soft Highlight Arc (Subtle exhibition shine) -->
+  <path d="M 140,510 C 140,430 290,390 490,390" fill="none" stroke="#ffffff" stroke-width="1.8" opacity="0.3" filter="blur(2px)" />
+</svg>

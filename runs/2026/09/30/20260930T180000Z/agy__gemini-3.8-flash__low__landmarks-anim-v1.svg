@@ -1,0 +1,387 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 800" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#edf2f7"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+
+    <!-- Base Gradients -->
+    <linearGradient id="pedestalSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#727d88"/>
+      <stop offset="50%" stop-color="#8b97a3"/>
+      <stop offset="100%" stop-color="#5a6570"/>
+    </linearGradient>
+    <radialGradient id="waterGrad" cx="42%" cy="40%" r="58%">
+      <stop offset="0%" stop-color="#5ec3cc"/>
+      <stop offset="45%" stop-color="#3f9fa8"/>
+      <stop offset="85%" stop-color="#2c7982"/>
+      <stop offset="100%" stop-color="#236169"/>
+    </radialGradient>
+
+    <!-- Filters for Shadows & Depth -->
+    <filter id="softShadow" x="-20%" y="-20%" width="150%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.1   0 0 0 0 0.15   0 0 0 0 0.2  0 0 0 0.35 0"/>
+      <feOffset dx="15" dy="25"/>
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+    </filter>
+
+    <filter id="baseDropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="22"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.25  0 0 0 0 0.32  0 0 0 0.28 0"/>
+      <feOffset dx="0" dy="38"/>
+    </filter>
+
+    <!-- Shading Gradients for Mountains -->
+    <linearGradient id="urcaLight" x1="25%" y1="20%" x2="80%" y2="85%">
+      <stop offset="0%" stop-color="#6bb865"/>
+      <stop offset="45%" stop-color="#4f8a4b"/>
+      <stop offset="80%" stop-color="#3a6837"/>
+      <stop offset="100%" stop-color="#274725"/>
+    </linearGradient>
+
+    <linearGradient id="sugarLoafSun" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b5afa8"/>
+      <stop offset="32%" stop-color="#9a948e"/>
+      <stop offset="68%" stop-color="#807b75"/>
+      <stop offset="100%" stop-color="#5c5853"/>
+    </linearGradient>
+
+    <!-- Buildings Defs -->
+    <g id="bldgSmall">
+      <path d="M 0,0 L 9,-5 L 18,0 L 18,12 L 9,17 L 0,12 Z" fill="#e9ecef"/>
+      <path d="M 0,0 L 9,-5 L 9,17 L 0,12 Z" fill="#ffffff" opacity="0.9"/>
+      <path d="M 9,-5 L 18,0 L 18,12 L 9,17 Z" fill="#cfd4da"/>
+      <path d="M 9,17 L 18,12 L 23,15 L 14,20 Z" fill="#203a43" opacity="0.25"/>
+    </g>
+    <g id="bldgTall">
+      <path d="M 0,0 L 11,-6 L 22,0 L 22,18 L 11,24 L 0,18 Z" fill="#f8f9fa"/>
+      <path d="M 0,0 L 11,-6 L 11,24 L 0,18 Z" fill="#ffffff"/>
+      <path d="M 11,-6 L 22,0 L 22,18 L 11,24 Z" fill="#c4cad1"/>
+      <path d="M 11,24 L 22,18 L 28,21 L 17,27 Z" fill="#203a43" opacity="0.25"/>
+    </g>
+
+    <!-- Cable Car Def -->
+    <g id="cableCar">
+      <!-- Hanger Arm & Pulley Wheels -->
+      <path d="M 7,0 L 7,7 L 0,11" stroke="#374151" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <circle cx="7" cy="0" r="1.3" fill="#1f2937"/>
+      <!-- Cabin Body -->
+      <rect x="-6" y="11" width="12" height="9" rx="2.5" fill="#f59e0b"/>
+      <!-- Window highlight & Shadowed underbelly -->
+      <rect x="-4.5" y="13" width="9" height="3.5" rx="1" fill="#fef3c7"/>
+      <path d="M -6,17.5 L 6,17.5 L 6,17.5 C 6,18.8 4.8,20 3.5,20 L -3.5,20 C -4.8,20 -6,18.8 -6,17.5 Z" fill="#b45309"/>
+    </g>
+  </defs>
+
+  <style><![CDATA[
+    .subtle-pulse {
+      animation: floatSail 6s ease-in-out infinite alternate;
+      transform-origin: 640px 380px;
+    }
+    @keyframes floatSail {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(6px, -4px) rotate(1.2deg); }
+    }
+    .slow-car-1 {
+      animation: moveCar1 10s ease-in-out infinite alternate;
+    }
+    @keyframes moveCar1 {
+      0% { transform: translate(295px, 470px); }
+      100% { transform: translate(430px, 385px); }
+    }
+    .slow-car-2 {
+      animation: moveCar2 8s ease-in-out infinite alternate;
+    }
+    @keyframes moveCar2 {
+      0% { transform: translate(465px, 370px); }
+      100% { transform: translate(660px, 208px); }
+    }
+  ]]></style>
+
+  <!-- Ambient Background -->
+  <rect width="1000" height="800" fill="url(#bgGrad)"/>
+
+  <!-- Pedestal Floor Drop Shadow -->
+  <ellipse cx="500" cy="565" rx="415" ry="175" fill="none" filter="url(#baseDropShadow)"/>
+
+  <!-- ==================== DISPLAY PEDESTAL ==================== -->
+  <g id="dioramaBase">
+    <!-- Cylinder Base Thickness (Side Rim) -->
+    <path d="M 100,530 C 100,625 279,700 500,700 C 721,700 900,625 900,530 L 900,560 C 900,655 721,730 500,730 C 279,730 100,655 100,560 Z" fill="url(#pedestalSide)"/>
+    <!-- Bottom Rim Accent Line -->
+    <path d="M 100,560 C 100,655 279,730 500,730 C 721,730 900,655 900,560" stroke="#3e454d" stroke-width="2.5" fill="none"/>
+
+    <!-- Cylinder Top Surface (Water Surface) -->
+    <ellipse cx="500" cy="530" rx="400" ry="170" fill="url(#waterGrad)"/>
+    <!-- Outer Bright Bevel Edge -->
+    <ellipse cx="500" cy="530" rx="400" ry="170" fill="none" stroke="#d5e8ea" stroke-width="2" opacity="0.85"/>
+
+    <!-- Shallow Water Depth Ring around Peninsula -->
+    <path d="M 160,540 C 200,610 370,645 520,620 C 650,600 770,550 780,480 C 760,430 650,420 540,430 C 400,435 240,470 160,540 Z" fill="#6bd6df" opacity="0.22"/>
+  </g>
+
+  <!-- ==================== WATER ELEMENTS: SAILBOATS & WAKES ==================== -->
+  <!-- Sailboat 1 (Middle Right) -->
+  <g class="subtle-pulse">
+    <!-- Curved Wake -->
+    <path d="M 640,380 C 665,378 695,373 725,368" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" opacity="0.5" fill="none"/>
+    <path d="M 642,382 C 670,381 700,378 728,375" stroke="#ffffff" stroke-width="1" stroke-linecap="round" opacity="0.3" fill="none"/>
+    <!-- Hull Shadow -->
+    <ellipse cx="642" cy="382" rx="10" ry="3.5" fill="#143e42" opacity="0.4"/>
+    <!-- Hull -->
+    <path d="M 632,380 L 648,377 L 652,381 L 634,383 Z" fill="#fdfdfd"/>
+    <!-- Sail Light/Shadow -->
+    <path d="M 643,379 L 643,361 L 650,378 Z" fill="#f8fafc"/>
+    <path d="M 643,379 L 643,361 L 637,378 Z" fill="#cbd5e1"/>
+  </g>
+
+  <!-- Sailboat 2 (Distal, Smaller, Softer) -->
+  <g opacity="0.75">
+    <path d="M 330,410 C 350,405 375,400 395,397" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" opacity="0.4" fill="none"/>
+    <ellipse cx="330" cy="411" rx="6" ry="2" fill="#143e42" opacity="0.3"/>
+    <path d="M 324,410 L 334,408 L 337,411 L 326,412 Z" fill="#f1f5f9"/>
+    <path d="M 331,409 L 331,396 L 336,408 Z" fill="#e2e8f0"/>
+  </g>
+
+  <!-- ==================== LANDSCAPE / PENINSULA BASE ==================== -->
+  <!-- Cast Soft Shadows from Peninsula & Mountains on Sea -->
+  <path d="M 230,550 C 340,580 500,590 620,560 C 740,530 830,470 820,440 C 770,410 650,430 550,440 C 430,450 290,480 220,530 Z" fill="#184b50" opacity="0.32" filter="url(#softShadow)"/>
+
+  <!-- Peninsula Landmass Body -->
+  <!-- Sandy Beach Fringe (0.5 to 1.8m above water in scale) -->
+  <path d="M 185,532 C 180,520 220,490 280,480 C 360,465 480,455 580,440 C 670,425 760,425 785,450 C 790,470 750,495 680,520 C 580,555 450,575 320,575 C 240,575 190,550 185,532 Z" fill="#edd69a"/>
+  <!-- Shoreline Wet Sand / Contact Ambient Occlusion -->
+  <path d="M 185,532 C 220,550 300,572 400,570 C 520,568 640,535 730,500 C 770,480 790,460 785,450 C 775,445 745,465 675,498 C 570,535 440,555 315,555 C 235,555 190,536 185,532 Z" fill="#d9be79"/>
+
+  <!-- Peninsula Green Ground Overlay -->
+  <path d="M 205,524 C 230,490 320,474 440,465 C 560,455 670,440 755,446 C 765,458 720,482 650,505 C 550,538 420,555 310,555 C 240,555 210,540 205,524 Z" fill="#4f8a4b"/>
+  <!-- Peninsula Grassy Light Surface -->
+  <path d="M 215,520 C 240,492 330,478 440,469 C 550,460 650,448 735,450 C 720,468 630,495 530,520 C 430,542 320,550 250,546 C 220,542 212,530 215,520 Z" fill="#5ea658"/>
+
+  <!-- ==================== URBAN FOREGROUND (TOWN / BLOCKS) ==================== -->
+  <!-- City Blocks (Max height < 1/5th of Urca ~ 24px tall) arranged along beach/inland -->
+  <g id="townClusters">
+    <!-- Back row (flatter/distant) -->
+    <use href="#bldgSmall" x="235" y="492"/>
+    <use href="#bldgSmall" x="252" y="488"/>
+    <use href="#bldgSmall" x="270" y="485"/>
+    <use href="#bldgTall"  x="288" y="480"/>
+    <use href="#bldgSmall" x="312" y="482"/>
+
+    <!-- Middle clusters -->
+    <use href="#bldgTall"  x="215" y="504"/>
+    <use href="#bldgSmall" x="238" y="506"/>
+    <use href="#bldgSmall" x="256" y="501"/>
+    <use href="#bldgTall"  x="274" y="498"/>
+    <use href="#bldgSmall" x="296" y="496"/>
+    <use href="#bldgTall"  x="315" y="495"/>
+    <use href="#bldgSmall" x="338" y="498"/>
+
+    <!-- Foreground beachside row -->
+    <use href="#bldgSmall" x="200" y="516"/>
+    <use href="#bldgTall"  x="218" y="520"/>
+    <use href="#bldgSmall" x="240" y="518"/>
+    <use href="#bldgSmall" x="260" y="517"/>
+    <use href="#bldgTall"  x="278" y="514"/>
+    <use href="#bldgSmall" x="302" y="512"/>
+    <use href="#bldgSmall" x="322" y="512"/>
+    <use href="#bldgSmall" x="344" y="515"/>
+
+    <!-- Tiny trees/greenery accents scattered among houses -->
+    <circle cx="233" cy="515" r="3.5" fill="#2d5e2a"/>
+    <circle cx="273" cy="510" r="4.2" fill="#387434"/>
+    <circle cx="314" cy="508" r="3.2" fill="#2d5e2a"/>
+    <circle cx="335" cy="510" r="4" fill="#387434"/>
+  </g>
+
+  <!-- Waterfront Lower Cable Station (Praia Vermelha Station) -->
+  <g id="stationShore">
+    <path d="M 285,472 L 297,466 L 310,472 L 310,482 L 297,488 L 285,482 Z" fill="#d1d5db"/>
+    <path d="M 285,472 L 297,466 L 297,488 L 285,482 Z" fill="#f3f4f6"/>
+    <path d="M 297,466 L 310,472 L 310,482 L 297,488 Z" fill="#9ca3af"/>
+    <!-- Terminal Cable Exit Aperture (Dark Opening) -->
+    <rect x="294" y="468" width="5" height="5" rx="1" fill="#1f2937"/>
+  </g>
+
+
+  <!-- ==================== MORRO DA URCA (GENTLE LOW MOUNTAIN) ==================== -->
+  <!-- Relative height ~ 125 units; rounded with slightly flattened summit -->
+  <g id="morroDaUrca">
+    <!-- Mountain Shadow on Land behind it -->
+    <path d="M 370,495 C 440,515 510,480 540,465 C 510,455 450,450 370,495 Z" fill="#193b1e" opacity="0.3" filter="url(#softShadow)"/>
+
+    <!-- Mountain Main Silhouette (Sunlit West & Crest, Ambient East) -->
+    <path d="M 345,495 C 345,455 385,395 425,385 C 455,378 480,380 495,390 C 530,412 555,465 550,485 C 500,495 410,505 345,495 Z" fill="url(#urcaLight)"/>
+
+    <!-- Left Flank Highlight (Warm Afternoon Top-Left Light) -->
+    <path d="M 348,490 C 352,450 390,395 430,385 C 455,380 460,398 435,425 C 410,452 375,475 348,490 Z" fill="#7ac774" opacity="0.75"/>
+
+    <!-- Flattened Summit Terrace (Plateau Park) -->
+    <ellipse cx="458" cy="386" rx="34" ry="9" fill="#589a53"/>
+    <ellipse cx="454" cy="385" rx="30" ry="7" fill="#6db567"/>
+
+    <!-- Middle Cable Car Station on Urca Summit -->
+    <g id="stationUrca">
+      <!-- Pedestal / Observation Deck -->
+      <path d="M 436,386 L 454,380 L 472,386 L 472,392 L 454,398 L 436,392 Z" fill="#e5e7eb"/>
+      <path d="M 436,386 L 454,380 L 454,398 L 436,392 Z" fill="#ffffff"/>
+      <path d="M 454,380 L 472,386 L 472,392 L 454,398 Z" fill="#9ca3af"/>
+      <!-- Small Roof/Cabin -->
+      <rect x="448" y="375" width="13" height="7" rx="1.5" fill="#f3f4f6"/>
+      <rect x="455" y="375" width="6" height="7" rx="1" fill="#6b7280"/>
+      <!-- Pylon/Entry Port -->
+      <line x1="440" y1="384" x2="440" y2="378" stroke="#374151" stroke-width="1.2"/>
+      <line x1="466" y1="381" x2="466" y2="373" stroke="#374151" stroke-width="1.2"/>
+    </g>
+
+    <!-- Natural Vegetation Clumping Texture on slopes -->
+    <ellipse cx="410" cy="425" rx="15" ry="8" fill="#447940"/>
+    <ellipse cx="380" cy="460" rx="20" ry="9" fill="#3f723c"/>
+    <ellipse cx="490" cy="420" rx="22" ry="12" fill="#345e31"/>
+    <ellipse cx="520" cy="450" rx="18" ry="10" fill="#2d522a"/>
+  </g>
+
+
+  <!-- ==================== SADDLE VALLEY (鞍部) ==================== -->
+  <!-- Clear distinct depression between Urca and Sugarloaf -->
+  <path d="M 525,480 C 540,465 565,455 580,458 C 570,470 550,480 525,480 Z" fill="#315c2f"/>
+  <path d="M 535,475 C 550,465 565,462 575,465 C 565,472 550,476 535,475 Z" fill="#244823"/>
+
+
+  <!-- ==================== SUGARLOAF MOUNTAIN (PAO DE ACUCAR) ==================== -->
+  <!-- Granite monolith, rising sheer from bay; Height ~ 225 (1.8x of Urca ~ 125);
+       Height > top width; bottom slightly wider than rounded dome summit -->
+  <g id="sugarLoafGroup">
+    <!-- Huge Cast Shadow on Bay Water & Footing to the East/Southeast -->
+    <path d="M 640,480 C 720,490 840,460 880,425 C 840,405 750,410 690,440 Z" fill="#133d42" opacity="0.45" filter="url(#softShadow)"/>
+
+    <!-- Mountain Base AO / Deep Crevice -->
+    <path d="M 575,470 C 585,455 605,445 640,445 C 690,445 745,460 765,478 C 730,495 640,500 575,470 Z" fill="#1e2224" opacity="0.6"/>
+
+    <!-- Sugarloaf Monolith Granite Body -->
+    <!-- Dome apex around (675, 195), base spanning ~ 585 to 755 (width ~170), top width ~110, height ~235 -->
+    <path d="M 590,462
+             C 575,395 595,290 625,230
+             C 645,190 660,185 680,185
+             C 705,185 725,195 740,235
+             C 765,295 770,390 755,465
+             C 715,480 635,480 590,462 Z"
+          fill="url(#sugarLoafSun)"/>
+
+    <!-- Rock Shading Planes: 3-Tone Sculptural Form -->
+    <!-- 1. Left Lit Facet (Warm Grey #a8a29a) -->
+    <path d="M 590,462
+             C 575,395 595,290 625,230
+             C 645,190 660,185 680,185
+             C 685,210 680,310 670,475
+             C 635,475 605,470 590,462 Z"
+          fill="#a49e97" opacity="0.65"/>
+
+    <!-- 2. Crest Top Highlight (Soft diffuse skylight) -->
+    <path d="M 632,222
+             C 648,190 662,187 680,187
+             C 698,187 712,193 726,220
+             C 705,210 665,208 632,222 Z"
+          fill="#d8d3cd" opacity="0.75"/>
+
+    <!-- 3. Sheer Right Shaded Cliff (Cold Grey #535961 / #4b5056) -->
+    <path d="M 680,185
+             C 705,185 725,195 740,235
+             C 765,295 770,390 755,465
+             C 720,477 690,476 670,475
+             C 680,310 685,210 680,185 Z"
+          fill="#4f555e" opacity="0.55"/>
+
+    <!-- Deep Ambient Occlusion along Rightmost Vertical Abrupt Drop -->
+    <path d="M 726,220
+             C 745,265 765,340 755,465
+             C 745,467 732,467 730,450
+             C 740,360 735,270 715,225 Z"
+          fill="#2b313a" opacity="0.4"/>
+
+    <!-- Granite Weathering Grooves / Vertical Striations (风化沟槽) -->
+    <g stroke="#beb9b2" stroke-width="1.8" opacity="0.45" stroke-linecap="round" fill="none">
+      <path d="M 626,275 C 624,320 622,375 620,440"/>
+      <path d="M 645,240 C 646,285 645,340 644,420"/>
+      <path d="M 662,225 C 665,280 664,350 662,450"/>
+      <path d="M 678,220 C 677,280 673,365 670,440"/>
+    </g>
+    <!-- Darker Striations on Mid/Right Face -->
+    <g stroke="#3b3e43" stroke-width="1.5" opacity="0.35" stroke-linecap="round" fill="none">
+      <path d="M 698,230 C 702,280 706,340 708,430"/>
+      <path d="M 718,255 C 725,305 730,365 732,435"/>
+      <path d="M 738,290 C 743,340 745,390 745,440"/>
+    </g>
+
+    <!-- Mountain Crest Highlight Rim Line (Left-Top) -->
+    <path d="M 618,245 C 638,198 656,187 678,187" stroke="#ffffff" stroke-width="1.8" fill="none" opacity="0.7" stroke-linecap="round"/>
+
+    <!-- Clustered Vegetation Only at Base & Rock Crevices (山脚与岩缝处) -->
+    <!-- Base Greenery -->
+    <path d="M 580,465 C 585,450 600,445 615,455 C 625,448 640,448 650,458 C 665,450 685,452 695,465 C 680,475 620,478 580,465 Z" fill="#3a6936"/>
+    <path d="M 730,468 C 738,452 752,452 760,464 C 755,472 740,475 730,468 Z" fill="#2d532a"/>
+    <!-- Crevice Vegetation Tufts -->
+    <path d="M 642,350 C 646,346 652,347 653,353 C 650,356 644,355 642,350 Z" fill="#43773e"/>
+    <path d="M 660,395 C 665,390 672,392 673,398 C 668,401 661,400 660,395 Z" fill="#3a6936"/>
+    <path d="M 695,360 C 699,355 706,357 706,363 C 701,366 695,364 695,360 Z" fill="#284925"/>
+    <path d="M 622,310 C 625,306 630,307 631,312 C 627,315 623,313 622,310 Z" fill="#4d8647"/>
+
+    <!-- Summit Station (极简小站房 & 观景台) -->
+    <g id="sugarLoafStation">
+      <!-- Deck foundation -->
+      <path d="M 664,188 L 682,182 L 696,188 L 696,193 L 682,198 L 664,193 Z" fill="#e5e7eb"/>
+      <path d="M 664,188 L 682,182 L 682,198 L 664,193 Z" fill="#ffffff"/>
+      <path d="M 682,182 L 696,188 L 696,193 L 682,198 Z" fill="#9ca3af"/>
+      <!-- Main Upper Pavilion -->
+      <rect x="674" y="177" width="12" height="6.5" rx="1.5" fill="#f8fafc"/>
+      <rect x="680" y="177" width="6" height="6.5" rx="1" fill="#64748b"/>
+      <!-- Tiny View Platform Railing -->
+      <line x1="666" y1="187" x2="674" y2="184" stroke="#94a3b8" stroke-width="1"/>
+      <!-- Terminal Ingress Opening -->
+      <rect x="672" y="180" width="3" height="3" fill="#1e293b"/>
+    </g>
+  </g>
+
+
+  <!-- ==================== CABLEWAYS & CABLE CARS ==================== -->
+  <!-- Both segments: ~ equal lengths, segment 2 steeper than segment 1 -->
+
+  <!-- Segment 1: Shore Station (297, 472) to Morro da Urca Station (440, 384) -->
+  <g id="cableTrack1">
+    <!-- Dual Parallel Track Cables -->
+    <line x1="297" y1="471" x2="440" y2="383" stroke="#475569" stroke-width="1.1" stroke-linecap="round"/>
+    <line x1="298" y1="474" x2="441" y2="386" stroke="#475569" stroke-width="1.1" stroke-linecap="round"/>
+    <!-- Highlight shimmer on cable -->
+    <line x1="297" y1="470.5" x2="440" y2="382.5" stroke="#cbd5e1" stroke-width="0.5" opacity="0.6"/>
+
+    <!-- Small Shadow on Land Below -->
+    <ellipse cx="360" cy="485" rx="20" ry="4" fill="#143e42" opacity="0.15" filter="url(#softShadow)"/>
+
+    <!-- Animated Cable Car 1 -->
+    <g class="slow-car-1">
+      <use href="#cableCar"/>
+    </g>
+  </g>
+
+  <!-- Segment 2: Morro da Urca (466, 381) to Sugarloaf Summit (672, 185) (Steeper) -->
+  <g id="cableTrack2">
+    <!-- Dual Parallel Track Cables across deep saddle -->
+    <line x1="466" y1="379" x2="672" y2="183" stroke="#334155" stroke-width="1.2" stroke-linecap="round"/>
+    <line x1="467" y1="382" x2="673" y2="186" stroke="#334155" stroke-width="1.2" stroke-linecap="round"/>
+    <!-- Top metallic specular glint -->
+    <line x1="466" y1="378.5" x2="672" y2="182.5" stroke="#f1f5f9" stroke-width="0.6" opacity="0.75"/>
+
+    <!-- Soft suspended shadow in saddle zone -->
+    <ellipse cx="560" cy="460" rx="25" ry="6" fill="#143e42" opacity="0.2" filter="url(#softShadow)"/>
+
+    <!-- Animated Cable Car 2 -->
+    <g class="slow-car-2">
+      <use href="#cableCar"/>
+    </g>
+  </g>
+
+  <!-- Specular Rim Edge on Diorama Base -->
+  <path d="M 120,540 C 230,620 400,660 500,660 C 600,660 770,620 880,540" stroke="#ffffff" stroke-width="1.5" fill="none" opacity="0.45"/>
+</svg>
