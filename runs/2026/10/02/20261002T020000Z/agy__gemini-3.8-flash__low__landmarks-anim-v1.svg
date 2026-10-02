@@ -1,0 +1,509 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" width="100%" height="100%">
+  <defs>
+    <!-- Background & Base Gradients -->
+    <radialGradient id="studio-bg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#f8f9fa"/>
+      <stop offset="60%" stop-color="#e9ecef"/>
+      <stop offset="100%" stop-color="#dee2e6"/>
+    </radialGradient>
+    <radialGradient id="plinth-shadow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(30, 35, 42, 0.28)"/>
+      <stop offset="70%" stop-color="rgba(30, 35, 42, 0.08)"/>
+      <stop offset="100%" stop-color="rgba(30, 35, 42, 0)"/>
+    </radialGradient>
+    <linearGradient id="plinth-rim" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a6abae"/>
+      <stop offset="30%" stop-color="#d8dcde"/>
+      <stop offset="70%" stop-color="#8c9196"/>
+      <stop offset="100%" stop-color="#676b70"/>
+    </linearGradient>
+    <linearGradient id="plinth-side" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#55585c"/>
+      <stop offset="100%" stop-color="#34373a"/>
+    </linearGradient>
+
+    <!-- Earth & Cutaway Gradients -->
+    <linearGradient id="grass-surface" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#a4c66e"/>
+      <stop offset="50%" stop-color="#8fae5c"/>
+      <stop offset="100%" stop-color="#769446"/>
+    </linearGradient>
+    <linearGradient id="earth-cut" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#8e6b4f"/>
+      <stop offset="50%" stop-color="#7a5c42"/>
+      <stop offset="100%" stop-color="#5c432e"/>
+    </linearGradient>
+
+    <!-- Structural Materials -->
+    <linearGradient id="conc-facade" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#dedcd5"/>
+      <stop offset="100%" stop-color="#c9c7bf"/>
+    </linearGradient>
+    <linearGradient id="conc-wall-heavy" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#b0aea7"/>
+      <stop offset="100%" stop-color="#93918b"/>
+    </linearGradient>
+    <linearGradient id="blast-door" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6d7279"/>
+      <stop offset="50%" stop-color="#55595e"/>
+      <stop offset="100%" stop-color="#3e4246"/>
+    </linearGradient>
+    <linearGradient id="vault-bronze" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#bfa268"/>
+      <stop offset="40%" stop-color="#8a6b3c"/>
+      <stop offset="100%" stop-color="#543e1d"/>
+    </linearGradient>
+
+    <!-- Concrete Texture Pattern (Rebar Dots) -->
+    <pattern id="rebar-mesh" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="8" cy="8" r="0.9" fill="#58544d" opacity="0.45"/>
+    </pattern>
+
+    <!-- Reusable Props -->
+    <!-- Visitor Figures (Pedestrians) -->
+    <g id="figure-a">
+      <ellipse cx="0" cy="0" rx="3.5" ry="1.4" fill="rgba(0,0,0,0.2)"/>
+      <rect x="-1.8" y="-12" width="3.6" height="11" rx="1.8" fill="#4a5568"/>
+      <circle cx="0" cy="-14" r="2.2" fill="#d2a078"/>
+    </g>
+    <g id="figure-b">
+      <ellipse cx="0" cy="0" rx="3" ry="1.2" fill="rgba(0,0,0,0.2)"/>
+      <rect x="-1.6" y="-10.5" width="3.2" height="9.5" rx="1.6" fill="#9b2c2c"/>
+      <circle cx="0" cy="-12.5" r="2" fill="#ecc94b"/>
+    </g>
+    <!-- Interior Figure Silhouette -->
+    <g id="figure-bunker">
+      <rect x="-1.2" y="-9" width="2.4" height="8" rx="1" fill="#363d44"/>
+      <circle cx="0" cy="-10.5" r="1.5" fill="#363d44"/>
+    </g>
+
+    <style><![CDATA[
+      @keyframes walkCycle1 {
+        0%, 100% { transform: translate(1100px, 475px); }
+        50% { transform: translate(1070px, 460px); }
+      }
+      @keyframes walkCycle2 {
+        0%, 100% { transform: translate(1085px, 480px); }
+        50% { transform: translate(1060px, 468px); }
+      }
+      @keyframes walkCycle3 {
+        0%, 100% { transform: translate(1030px, 452px); }
+        50% { transform: translate(1005px, 442px); }
+      }
+      @keyframes swaySlow {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(1.2deg); }
+      }
+      .anim-walker-1 { animation: walkCycle1 9s ease-in-out infinite; }
+      .anim-walker-2 { animation: walkCycle2 8.5s ease-in-out infinite; }
+      .anim-walker-3 { animation: walkCycle3 10s ease-in-out infinite; }
+      .tree-sway { transform-origin: bottom center; animation: swaySlow 6s ease-in-out infinite; }
+    ]]></style>
+  </defs>
+
+  <!-- Studio Background -->
+  <rect width="100%" height="100%" fill="url(#studio-bg)"/>
+
+  <!-- Plinth Soft Contact Shadow -->
+  <ellipse cx="800" cy="790" rx="630" ry="290" fill="url(#plinth-shadow)"/>
+
+  <!-- BASE PLINTH STRUCTURE -->
+  <!-- Plinth Lower Cylindrical Base Extrusion -->
+  <path d="M 210,730 C 210,900 470,1020 800,1020 C 1130,1020 1390,900 1390,730 L 1390,790 C 1390,960 1130,1080 800,1080 C 470,1080 210,960 210,790 Z" fill="url(#plinth-side)"/>
+
+  <!-- Base Circular Top Surface (Back Rim) -->
+  <ellipse cx="800" cy="730" rx="590" ry="260" fill="#46494d"/>
+  <ellipse cx="800" cy="728" rx="588" ry="258" fill="url(#plinth-rim)"/>
+
+  <!-- ==================== GROUND SURFACE / TERRAIN ==================== -->
+  <!-- Top Grass Surface of the Model with subtle mound profile -->
+  <g id="ground-top">
+    <!-- Uncut Back Hemisphere & Landscape Plateau -->
+    <path d="M 214,726 C 214,560 480,470 800,470 C 1120,470 1386,560 1386,726 C 1386,750 1370,772 1340,792 L 1260,670 C 1220,630 1100,580 940,560 C 820,545 680,550 560,580 C 420,615 280,670 214,726 Z" fill="url(#grass-surface)"/>
+
+    <!-- Subtle Mound behind the cut (Earth covering the bunker) -->
+    <ellipse cx="580" cy="550" rx="270" ry="60" fill="#9ec167" opacity="0.6"/>
+    <ellipse cx="570" cy="545" rx="220" ry="45" fill="#a8cb71" opacity="0.7"/>
+
+    <!-- Country Pathway & Small Car Parking Lot -->
+    <path d="M 1260,670 Q 1190,620 1120,580 Q 1060,545 980,520" fill="none" stroke="#d5c8b2" stroke-width="26" stroke-linecap="round"/>
+    <path d="M 1258,668 Q 1189,619 1119,579 Q 1059,544 980,520" fill="none" stroke="#e6dbca" stroke-width="20" stroke-linecap="round"/>
+
+    <!-- Mini Parking Bay Area -->
+    <path d="M 1120,550 L 1220,620 L 1180,650 L 1080,580 Z" fill="#9e9c96" opacity="0.8"/>
+    <!-- Small Parked Cars -->
+    <g transform="translate(1160, 600) rotate(35)">
+      <rect x="-10" y="-5" width="20" height="10" rx="3" fill="#2b6cb0"/>
+      <rect x="-6" y="-3.5" width="11" height="7" rx="1.5" fill="#a0aec0"/>
+      <ellipse cx="0" cy="6" rx="8" ry="2" fill="rgba(0,0,0,0.2)"/>
+    </g>
+    <g transform="translate(1135, 580) rotate(35)">
+      <rect x="-10" y="-5" width="20" height="10" rx="3" fill="#c53030"/>
+      <rect x="-6" y="-3.5" width="11" height="7" rx="1.5" fill="#e2e8f0"/>
+      <ellipse cx="0" cy="6" rx="8" ry="2" fill="rgba(0,0,0,0.2)"/>
+    </g>
+    <g transform="translate(1110, 560) rotate(35)">
+      <rect x="-9" y="-4.5" width="18" height="9" rx="3" fill="#e2e8f0"/>
+      <rect x="-5" y="-3" width="10" height="6" rx="1.5" fill="#cbd5e0"/>
+    </g>
+
+    <!-- Mini Trees (Round canopies beside the mound) -->
+    <g class="tree-sway" style="transform-origin: 900px 520px;">
+      <ellipse cx="900" cy="522" rx="10" ry="4" fill="rgba(0,0,0,0.2)"/>
+      <rect x="898" y="505" width="4" height="15" fill="#5c4033"/>
+      <circle cx="900" cy="495" r="18" fill="#5b8a3c"/>
+      <circle cx="896" cy="490" r="14" fill="#72a848"/>
+    </g>
+    <g class="tree-sway" style="transform-origin: 860px 535px; animation-delay: -2s;">
+      <ellipse cx="860" cy="537" rx="8" ry="3.5" fill="rgba(0,0,0,0.2)"/>
+      <rect x="858" y="522" width="3.5" height="14" fill="#5c4033"/>
+      <circle cx="860" cy="514" r="14" fill="#4d7831"/>
+      <circle cx="857" cy="510" r="11" fill="#65983f"/>
+    </g>
+    <g class="tree-sway" style="transform-origin: 935px 540px; animation-delay: -4s;">
+      <ellipse cx="935" cy="542" rx="9" ry="3.5" fill="rgba(0,0,0,0.2)"/>
+      <rect x="933.5" y="528" width="3.5" height="12" fill="#5c4033"/>
+      <circle cx="935" cy="520" r="15" fill="#5b8a3c"/>
+      <circle cx="931" cy="516" r="11.5" fill="#7aa84e"/>
+    </g>
+
+    <!-- Animated Walking Tourist Groups on ground surface -->
+    <g class="anim-walker-1"><use href="#figure-a"/></g>
+    <g class="anim-walker-2"><use href="#figure-b"/></g>
+    <g class="anim-walker-3"><use href="#figure-a" transform="scale(0.9)"/></g>
+  </g>
+
+  <!-- ==================== SURFACE ENTRANCE BUILDING ==================== -->
+  <!-- Modest single-storey concrete blast entry building at the mound terminal -->
+  <g id="surface-entrance">
+    <!-- Drop Shadow of Entry Shack -->
+    <polygon points="970,515 1070,515 1090,535 960,535" fill="rgba(30,35,40,0.25)"/>
+
+    <!-- Building Walls (Isometric/3D block) -->
+    <!-- Northeast Back/Side wall -->
+    <polygon points="1035,445 1065,465 1065,510 1035,490" fill="#b0aea6"/>
+    <!-- Top Flat Roof (Light grey concrete) -->
+    <polygon points="965,445 1035,445 1065,465 995,465" fill="#dedbd2"/>
+    <polyline points="965,445 1035,445 1065,465" fill="none" stroke="#f1efe8" stroke-width="1.5"/>
+    <!-- Front Face (South-facing blast portal) -->
+    <polygon points="965,445 995,465 995,520 965,500" fill="#c4c1b8"/>
+    <!-- Main Entrance Front Blast Door Opening -->
+    <polygon points="972,468 988,479 988,514 972,503" fill="#2d3135"/>
+    <!-- Massive Square Blast Door (Ajar slightly) -->
+    <polygon points="974,470 985,478 985,511 974,503" fill="url(#blast-door)"/>
+    <line x1="974" y1="470" x2="974" y2="503" stroke="#a0aec0" stroke-width="1.2"/>
+
+    <!-- Vent Pipes & Antennae Rods -->
+    <line x1="1020" y1="445" x2="1020" y2="405" stroke="#718096" stroke-width="1.8"/>
+    <circle cx="1020" cy="404" r="1.5" fill="#a0aec0"/>
+    <line x1="1028" y1="445" x2="1028" y2="415" stroke="#4a5568" stroke-width="1.5"/>
+    <!-- Mushroom style air intake cap -->
+    <path d="M 1038,452 L 1038,438 M 1033,438 C 1033,434 1043,434 1043,438 Z" stroke="#4a5568" stroke-width="1.5" fill="#718096"/>
+    <path d="M 1048,458 L 1048,442 M 1044,442 C 1044,439 1052,439 1052,442 Z" stroke="#4a5568" stroke-width="1.2" fill="#718096"/>
+  </g>
+
+  <!-- ==================== SUBTERRANEAN SECTION / CUTAWAY ==================== -->
+  <!-- Huge Cutaway Front Face: Earth Strata + Bunker Cut Face -->
+  <g id="cutaway-section">
+    <!-- Massive Earth Cross-Section (Cut face occupying front half of model plinth) -->
+    <path d="M 214,726 L 965,500 L 995,520 L 1260,670 C 1340,730 1386,760 1386,760 L 1386,790 C 1386,960 1130,1080 800,1080 C 470,1080 210,960 210,790 L 210,726 Z" fill="url(#earth-cut)"/>
+
+    <!-- Soil Strata / Rock inclusions inside the cut earth -->
+    <path d="M 214,760 Q 550,830 800,840 Q 1100,850 1386,785" fill="none" stroke="#684c34" stroke-width="14" opacity="0.6"/>
+    <path d="M 220,820 Q 580,900 800,910 Q 1050,915 1370,820" fill="none" stroke="#4a3420" stroke-width="20" opacity="0.5"/>
+
+    <!-- Environmental Occlusion Shadow inside the excavated hollow for bunker -->
+    <rect x="250" y="650" width="1000" height="420" fill="rgba(0,0,0,0.18)" filter="blur(8px)"/>
+
+    <!-- ==================== BLAST TUNNEL (③) ==================== -->
+    <!-- Tunnel Length ~1.5x Bunker length, sloping down from surface shack (980, 515) to bunker entry (690, 715) -->
+    <!-- Outer Thick Concrete Shell of Tunnel -->
+    <polygon points="985,510 985,548 680,755 680,695" fill="url(#conc-wall-heavy)"/>
+    <polygon points="985,510 985,548 680,755 680,695" fill="url(#rebar-mesh)"/>
+    <!-- Tunnel Interior Square Bore (Walkway slope) -->
+    <polygon points="982,518 982,538 692,735 692,708" fill="#323538"/>
+
+    <!-- Baffle Blast Doors along Tunnel (staggered square openings with high metal doors) -->
+    <!-- Blast Door Baffle 1 -->
+    <g transform="translate(900, 565)">
+      <rect x="0" y="0" width="7" height="24" fill="url(#blast-door)"/>
+      <line x1="0" y1="0" x2="0" y2="24" stroke="#8fa3b0" stroke-width="1"/>
+      <rect x="2" y="16" width="5" height="10" fill="#1a1c1e"/> <!-- Offset opening -->
+    </g>
+    <!-- Blast Door Baffle 2 -->
+    <g transform="translate(830, 613)">
+      <rect x="0" y="0" width="8" height="28" fill="url(#blast-door)"/>
+      <line x1="0" y1="0" x2="0" y2="28" stroke="#8fa3b0" stroke-width="1"/>
+      <rect x="0" y="2" width="6" height="11" fill="#1a1c1e"/> <!-- Staggered opening -->
+    </g>
+    <!-- Blast Door Baffle 3 -->
+    <g transform="translate(760, 661)">
+      <rect x="0" y="0" width="9" height="32" fill="url(#blast-door)"/>
+      <line x1="0" y1="0" x2="0" y2="32" stroke="#8fa3b0" stroke-width="1.2"/>
+      <rect x="3" y="20" width="6" height="13" fill="#1a1c1e"/>
+    </g>
+
+    <!-- Perspective Rails/Floor inside Tunnel -->
+    <line x1="982" y1="538" x2="692" y2="735" stroke="#718096" stroke-width="1.5"/>
+    <line x1="982" y1="520" x2="692" y2="710" stroke="#ffeb8a" stroke-width="0.8" opacity="0.6"/> <!-- Conduit line -->
+
+
+    <!-- ==================== FOUR-STOREY CONCRETE BUNKER BOX (④) ==================== -->
+    <!-- Proportions: L ~ 4x Total H. H = 4 equal floors. Overburden earth ~ 1 floor height. -->
+    <!-- Total Bunker Box Dimensions: X=270 to X=690 (Length=420), Y=710 to Y=990 (Height=280). Ratio = 420:105 per floor approx -->
+    <!-- Overburden Earth thickness = 710 - 640 = ~70px (approx 1 floor height) -->
+
+    <!-- Outer Structural Monolithic Concrete Enclosure (Ultra-Thick Blast Walls) -->
+    <rect x="254" y="694" width="452" height="312" rx="4" fill="url(#conc-wall-heavy)"/>
+    <rect x="254" y="694" width="452" height="312" rx="4" fill="url(#rebar-mesh)"/>
+    <!-- Outer Wall Highlight (Top Edge Light Catch) -->
+    <line x1="254" y1="694" x2="706" y2="694" stroke="#e8e7e1" stroke-width="2.5"/>
+    <!-- Ambient Shadow Under Soil Cap -->
+    <rect x="254" y="694" width="452" height="6" fill="rgba(0,0,0,0.3)"/>
+
+    <!-- Interior Cavity (Divided into 4 equal levels) -->
+    <!-- Floor Height = 67px each. Ceilings/Floors slab thickness = 8px -->
+    <!-- Level 4 (Top): Y=706 to 773 -->
+    <!-- Level 3:       Y=777 to 844 -->
+    <!-- Level 2:       Y=848 to 915 -->
+    <!-- Level 1 (Btm): Y=919 to 986 -->
+
+    <!-- Central Elevator Shaft & Stairwell Vertical Spine (⑤) -->
+    <!-- Located at X=470 to X=515 -->
+    <rect x="466" y="704" width="50" height="290" fill="#2d3033"/>
+    <!-- Elevator Guide Rails & Counterweight -->
+    <line x1="482" y1="704" x2="482" y2="994" stroke="#565d63" stroke-width="1.8"/>
+    <line x1="498" y1="704" x2="498" y2="994" stroke="#565d63" stroke-width="1.8"/>
+    <!-- Metal Elevator Cab (Resting at Level 2) -->
+    <rect x="477" y="855" width="26" height="50" fill="#4a5259" stroke="#7e8b95" stroke-width="1.2"/>
+    <rect x="481" y="865" width="8" height="15" fill="#fbd38d" opacity="0.7"/> <!-- Small cab light -->
+    <!-- Zig-zag Stairway flights beside shaft -->
+    <path d="M 470,710 L 485,738 L 470,772 M 470,778 L 485,806 L 470,840 M 470,850 L 485,878 L 470,912 M 470,922 L 485,950 L 470,984" fill="none" stroke="#9aa5b1" stroke-width="1.5"/>
+
+    <!-- ==================== FLOOR LEVEL 4 (Top Floor) ==================== -->
+    <!-- Thick Floor Slab -->
+    <rect x="268" y="704" width="424" height="68" fill="#b9ad9a"/>
+    <!-- Corridor & Rooms Floor Plate (darker floor base) -->
+    <rect x="268" y="764" width="424" height="8" fill="#8c7f6e"/>
+
+    <!-- Room 4-1 (Left): Command Center -->
+    <rect x="272" y="708" width="95" height="56" fill="#c4b8a5"/>
+    <rect x="278" y="742" width="28" height="18" fill="#525c66"/> <!-- Big plotting desk -->
+    <rect x="312" y="736" width="48" height="24" fill="#3f4a54"/> <!-- Status consoles -->
+    <rect x="315" y="740" width="12" height="8" fill="#63b3ed" opacity="0.8"/> <!-- Map screen -->
+    <rect x="330" y="740" width="12" height="8" fill="#68d391" opacity="0.8"/>
+    <rect x="345" y="740" width="12" height="8" fill="#fc8181" opacity="0.8"/>
+    <use href="#figure-bunker" x="290" y="745"/>
+
+    <!-- Room 4-2: Telecommunications & Switchboards -->
+    <rect x="372" y="708" width="90" height="56" fill="#c0b3a0"/>
+    <rect x="378" y="726" width="38" height="34" fill="#4a5568"/>
+    <!-- Racks of equipment -->
+    <line x1="384" y1="730" x2="384" y2="756" stroke="#ecc94b" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <line x1="392" y1="730" x2="392" y2="756" stroke="#63b3ed" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <line x1="400" y1="730" x2="400" y2="756" stroke="#fc8181" stroke-width="1.5" stroke-dasharray="2,2"/>
+    <rect x="424" y="744" width="22" height="16" fill="#68635c"/> <!-- Operator desk -->
+    <use href="#figure-bunker" x="432" y="748"/>
+
+    <!-- Shaft Area (466-516) -->
+
+    <!-- Room 4-3: Senior Official Quarters (Desk + Bunk) -->
+    <rect x="520" y="708" width="80" height="56" fill="#c7bba8"/>
+    <rect x="526" y="745" width="28" height="15" fill="#4a5568"/> <!-- Bunk bed -->
+    <rect x="526" y="735" width="28" height="3" fill="#2d3748"/>  <!-- Upper bunk frame -->
+    <rect x="562" y="746" width="20" height="14" fill="#745e48"/> <!-- Desk -->
+    <rect x="584" y="744" width="7" height="16" fill="#4a5568"/>  <!-- Locker -->
+
+    <!-- Room 4-4 (Far Right): Emergency CBC Radio Broadcast Studio (⑦) -->
+    <rect x="605" y="708" width="84" height="56" fill="#b3a592"/>
+    <!-- Soundproof Partition Wall with Large Acoustic Glass Window -->
+    <rect x="635" y="714" width="6" height="48" fill="#4a525a"/>
+    <!-- Studio Glass Window with reflection highlight -->
+    <rect x="636" y="722" width="4" height="32" fill="#bee3f8" opacity="0.8"/>
+    <line x1="637" y1="724" x2="639" y2="746" stroke="#ffffff" stroke-width="1" opacity="0.8"/>
+    <!-- Inside Studio: Console desk & Microphone block -->
+    <rect x="647" y="742" width="26" height="18" fill="#4a5568"/>
+    <circle cx="658" cy="738" r="2.5" fill="#cbd5e0"/> <!-- Mic -->
+    <line x1="658" y1="740" x2="658" y2="744" stroke="#1a202c" stroke-width="1.2"/>
+    <!-- Acoustic Wall Panels (stripe pattern) -->
+    <line x1="678" y1="714" x2="678" y2="758" stroke="#8c7f6e" stroke-width="2"/>
+    <line x1="683" y1="714" x2="683" y2="758" stroke="#8c7f6e" stroke-width="2"/>
+    <use href="#figure-bunker" x="652" y="745"/>
+
+    <!-- ==================== FLOOR LEVEL 3 (Operations & War Cabinet) ==================== -->
+    <g transform="translate(0, 71)">
+      <!-- Base Slab -->
+      <rect x="268" y="705" width="424" height="68" fill="#b9ad9a"/>
+      <rect x="268" y="765" width="424" height="8" fill="#8c7f6e"/>
+
+      <!-- Room 3-1: War Cabinet Conference Room -->
+      <rect x="272" y="709" width="105" height="56" fill="#c2b5a2"/>
+      <ellipse cx="324" cy="746" rx="36" ry="12" fill="#5c442c"/> <!-- Long Mahogany Council Table -->
+      <ellipse cx="324" cy="745" rx="32" ry="10" fill="#7b5e3f"/>
+      <!-- Chairs around Table -->
+      <rect x="296" y="736" width="6" height="6" rx="1" fill="#2d3748"/>
+      <rect x="310" y="734" width="6" height="6" rx="1" fill="#2d3748"/>
+      <rect x="324" y="734" width="6" height="6" rx="1" fill="#2d3748"/>
+      <rect x="338" y="734" width="6" height="6" rx="1" fill="#2d3748"/>
+      <rect x="352" y="736" width="6" height="6" rx="1" fill="#2d3748"/>
+      <use href="#figure-bunker" x="320" y="740"/>
+      <use href="#figure-bunker" x="336" y="742"/>
+
+      <!-- Room 3-2: Intelligence & Map Room -->
+      <rect x="382" y="709" width="80" height="56" fill="#bdb09d"/>
+      <rect x="388" y="720" width="35" height="2" fill="#4a5568"/>
+      <rect x="388" y="723" width="35" height="20" fill="#e2e8f0"/> <!-- Map board -->
+      <rect x="428" y="743" width="28" height="17" fill="#4a5568"/>
+      <use href="#figure-bunker" x="438" y="746"/>
+
+      <!-- Room 3-3: Decontamination & Medical Clinic -->
+      <rect x="520" y="709" width="85" height="56" fill="#cad0d4"/>
+      <rect x="526" y="744" width="24" height="15" fill="#edf2f7" stroke="#cbd5e0" stroke-width="1"/> <!-- Clinic Bed -->
+      <rect x="556" y="744" width="24" height="15" fill="#edf2f7" stroke="#cbd5e0" stroke-width="1"/>
+      <rect x="590" y="728" width="10" height="32" fill="#a0aec0"/> <!-- Med cabinet -->
+      <use href="#figure-bunker" x="576" y="746"/>
+
+      <!-- Room 3-4: Cryptographic Teletype Room -->
+      <rect x="610" y="709" width="79" height="56" fill="#beaf9c"/>
+      <rect x="616" y="736" width="16" height="24" fill="#394149"/>
+      <rect x="636" y="736" width="16" height="24" fill="#394149"/>
+      <rect x="656" y="736" width="16" height="24" fill="#394149"/>
+    </g>
+
+    <!-- ==================== FLOOR LEVEL 2 (Mess Hall & Living Quarters) ==================== -->
+    <g transform="translate(0, 142)">
+      <!-- Base Slab -->
+      <rect x="268" y="705" width="424" height="68" fill="#b9ad9a"/>
+      <rect x="268" y="765" width="424" height="8" fill="#8c7f6e"/>
+
+      <!-- Room 2-1: Dormitory (Rows of double bunks) -->
+      <rect x="272" y="709" width="95" height="56" fill="#c3b6a3"/>
+      <!-- Bunk Units -->
+      <g transform="translate(278, 730)">
+        <rect x="0" y="0" width="20" height="28" fill="#4a5568"/>
+        <line x1="0" y1="14" x2="20" y2="14" stroke="#2d3748" stroke-width="1.5"/>
+        <rect x="2" y="2" width="16" height="10" fill="#a0aec0"/>
+        <rect x="2" y="16" width="16" height="10" fill="#a0aec0"/>
+      </g>
+      <g transform="translate(304, 730)">
+        <rect x="0" y="0" width="20" height="28" fill="#4a5568"/>
+        <line x1="0" y1="14" x2="20" y2="14" stroke="#2d3748" stroke-width="1.5"/>
+        <rect x="2" y="2" width="16" height="10" fill="#cbd5e0"/>
+        <rect x="2" y="16" width="16" height="10" fill="#cbd5e0"/>
+      </g>
+      <g transform="translate(330, 730)">
+        <rect x="0" y="0" width="20" height="28" fill="#4a5568"/>
+        <line x1="0" y1="14" x2="20" y2="14" stroke="#2d3748" stroke-width="1.5"/>
+        <rect x="2" y="2" width="16" height="10" fill="#a0aec0"/>
+        <rect x="2" y="16" width="16" height="10" fill="#a0aec0"/>
+      </g>
+      <use href="#figure-bunker" x="358" y="746"/>
+
+      <!-- Room 2-2: Cafeteria & Dining Hall -->
+      <rect x="372" y="709" width="90" height="56" fill="#c5b8a5"/>
+      <rect x="378" y="744" width="38" height="12" rx="2" fill="#718096"/>
+      <rect x="382" y="738" width="30" height="4" fill="#a0aec0"/>
+      <rect x="382" y="758" width="30" height="4" fill="#a0aec0"/>
+      <rect x="424" y="744" width="32" height="12" rx="2" fill="#718096"/>
+      <use href="#figure-bunker" x="430" y="740"/>
+
+      <!-- Room 2-3: Food Rations Storage Depot -->
+      <rect x="520" y="709" width="80" height="56" fill="#baab97"/>
+      <rect x="526" y="724" width="70" height="6" fill="#745e48"/>
+      <rect x="526" y="736" width="70" height="6" fill="#745e48"/>
+      <rect x="526" y="748" width="70" height="6" fill="#745e48"/>
+      <!-- Wooden ration crates -->
+      <rect x="530" y="742" width="10" height="6" fill="#b7791f"/>
+      <rect x="542" y="742" width="10" height="6" fill="#d69e2e"/>
+      <rect x="554" y="742" width="8" height="6" fill="#b7791f"/>
+
+      <!-- Room 2-4: Water Filtration & Air Scrubbers -->
+      <rect x="605" y="709" width="84" height="56" fill="#b0a394"/>
+      <!-- Cylindrical water cisterns / filtration tanks -->
+      <rect x="614" y="724" width="16" height="36" rx="4" fill="#4a5568"/>
+      <rect x="634" y="724" width="16" height="36" rx="4" fill="#4a5568"/>
+      <rect x="654" y="728" width="28" height="32" rx="2" fill="#2d3748"/>
+      <!-- Interconnecting heavy pipes -->
+      <path d="M 622,720 L 622,714 L 664,714 L 664,728" fill="none" stroke="#cbd5e0" stroke-width="2.5"/>
+    </g>
+
+    <!-- ==================== FLOOR LEVEL 1 (Lowest Level: Power & Vault) ==================== -->
+    <g transform="translate(0, 213)">
+      <!-- Base Foundation Concrete Floor Slab -->
+      <rect x="268" y="705" width="424" height="70" fill="#b9ad9a"/>
+      <rect x="268" y="767" width="424" height="8" fill="#7c7060"/>
+
+      <!-- Room 1-1 (Far Left): ULTRA-SECURE BANK OF CANADA GOLD VAULT (⑥) -->
+      <!-- Built with extra thick reinforced blast concrete walls -->
+      <rect x="270" y="708" width="102" height="58" fill="#9e9180"/>
+      <!-- Extra Reinforced Wall Enclosure around Vault -->
+      <rect x="270" y="708" width="102" height="58" fill="none" stroke="#635f59" stroke-width="4"/>
+      <!-- Giant Round Bank Vault Door at Left Side of Corridor -->
+      <g transform="translate(366, 737)">
+        <!-- Circular Door Architrave / Frame -->
+        <circle cx="0" cy="0" r="19" fill="#3a3022" stroke="#52432d" stroke-width="3"/>
+        <!-- Heavy Massive Round Bronze Door Face swung slightly open in perspective -->
+        <ellipse cx="-3" cy="0" rx="17" ry="18" fill="url(#vault-bronze)"/>
+        <!-- Central Dial Locking Hub & Radial Locking Bolts -->
+        <circle cx="-3" cy="0" r="7" fill="#6d542e" stroke="#e2d09b" stroke-width="1.2"/>
+        <line x1="-3" y1="-14" x2="-3" y2="14" stroke="#2b2011" stroke-width="2.2"/>
+        <line x1="-15" y1="0" x2="9" y2="0" stroke="#2b2011" stroke-width="2.2"/>
+        <!-- Heavy Hinge Lug Arm -->
+        <rect x="-17" y="-8" width="6" height="16" rx="2" fill="#423522"/>
+      </g>
+      <!-- Inside Vault: Gold Bullion Pallets stacked neatly -->
+      <rect x="276" y="744" width="22" height="16" fill="#d69e2e" stroke="#b7791f" stroke-width="1"/>
+      <line x1="276" y1="749" x2="298" y2="749" stroke="#ecc94b" stroke-width="1"/>
+      <line x1="276" y1="754" x2="298" y2="754" stroke="#ecc94b" stroke-width="1"/>
+      <rect x="303" y="744" width="22" height="16" fill="#d69e2e" stroke="#b7791f" stroke-width="1"/>
+      <line x1="303" y1="749" x2="325" y2="749" stroke="#ecc94b" stroke-width="1"/>
+      <line x1="303" y1="754" x2="325" y2="754" stroke="#ecc94b" stroke-width="1"/>
+      <rect x="330" y="748" width="18" height="12" fill="#d69e2e" stroke="#b7791f" stroke-width="1"/>
+
+      <!-- Room 1-2: Massive Diesel Generators & Power Plant -->
+      <rect x="382" y="708" width="80" height="58" fill="#b0a392"/>
+      <!-- Giant V-12 Diesel Generator Unit 1 -->
+      <rect x="390" y="726" width="32" height="32" rx="2" fill="#2d3748"/>
+      <circle cx="406" cy="742" r="9" fill="#1a202c"/>
+      <circle cx="406" cy="742" r="4" fill="#4a5568"/>
+      <!-- Exhaust / Cooling ducts -->
+      <path d="M 406,726 L 406,712 L 460,712" fill="none" stroke="#718096" stroke-width="3"/>
+      <!-- Switchgear Console Panels with LED indicators -->
+      <rect x="430" y="730" width="26" height="28" fill="#3f474e"/>
+      <circle cx="436" cy="736" r="1.5" fill="#48bb78"/>
+      <circle cx="442" cy="736" r="1.5" fill="#f56565"/>
+      <circle cx="448" cy="736" r="1.5" fill="#ecc94b"/>
+      <use href="#figure-bunker" x="424" y="746"/>
+
+      <!-- Room 1-3: Machine Workshop & Heavy Maintenance -->
+      <rect x="520" y="708" width="80" height="58" fill="#b5a695"/>
+      <rect x="526" y="742" width="40" height="18" fill="#4a5568"/> <!-- Tool bench -->
+      <rect x="572" y="730" width="22" height="30" fill="#2d3748"/> <!-- Drill/Lathe machinery -->
+      <use href="#figure-bunker" x="550" y="745"/>
+
+      <!-- Room 1-4: Fuel Reserves & Battery Banks -->
+      <rect x="605" y="708" width="84" height="58" fill="#aba091"/>
+      <rect x="614" y="734" width="66" height="24" rx="2" fill="#2c3035"/>
+      <!-- Individual cell batteries in rack -->
+      <line x1="620" y1="738" x2="620" y2="754" stroke="#48bb78" stroke-width="2"/>
+      <line x1="626" y1="738" x2="626" y2="754" stroke="#48bb78" stroke-width="2"/>
+      <line x1="632" y1="738" x2="632" y2="754" stroke="#48bb78" stroke-width="2"/>
+      <line x1="638" y1="738" x2="638" y2="754" stroke="#48bb78" stroke-width="2"/>
+      <line x1="644" y1="738" x2="644" y2="754" stroke="#48bb78" stroke-width="2"/>
+      <line x1="650" y1="738" x2="650" y2="754" stroke="#48bb78" stroke-width="2"/>
+      <line x1="656" y1="738" x2="656" y2="754" stroke="#48bb78" stroke-width="2"/>
+      <line x1="662" y1="738" x2="662" y2="754" stroke="#48bb78" stroke-width="2"/>
+    </g>
+
+    <!-- Structural Floor Separator Slabs (Continuous horizontal reinforced beams) -->
+    <rect x="254" y="771" width="452" height="6" fill="#8f8c85"/>
+    <rect x="254" y="842" width="452" height="6" fill="#8f8c85"/>
+    <rect x="254" y="913" width="452" height="6" fill="#8f8c85"/>
+  </g>
+
+  <!-- ==================== FOREGROUND CUT SECTION RIM HIGHLIGHT ==================== -->
+  <!-- Crisp highlight line tracing the cutaway perimeter for that sharp physical diorama look -->
+  <path d="M 214,726 L 965,500 L 995,520 L 1260,670 C 1340,730 1386,760 1386,760" fill="none" stroke="#ffffff" stroke-width="1.8" opacity="0.45"/>
+  <!-- Front Bottom Curved Plinth Highlight -->
+  <path d="M 210,790 C 470,960 800,1080 800,1080 C 800,1080 1130,960 1390,790" fill="none" stroke="#7e8388" stroke-width="1.5" opacity="0.6"/>
+</svg>
