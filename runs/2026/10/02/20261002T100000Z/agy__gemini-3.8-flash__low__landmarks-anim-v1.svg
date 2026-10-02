@@ -1,0 +1,679 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" width="100%" height="100%">
+  <defs>
+    <!-- 背景柔和渐变 -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#edf2f7"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+
+    <!-- 底座柔和阴影滤镜 -->
+    <filter id="plinthShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="28"/>
+      <feOffset dx="0" dy="48"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.18"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- 地表及小物件投影滤镜 -->
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6"/>
+      <feOffset dx="-8" dy="12"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.25"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- 混凝土钢筋微细点纹理 -->
+    <pattern id="rebarPattern" width="12" height="12" patternUnits="userSpaceOnUse">
+      <circle cx="6" cy="6" r="0.9" fill="#58544d" opacity="0.55"/>
+    </pattern>
+
+    <!-- 覆土断面土质纹理 -->
+    <pattern id="soilTexture" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 0 12 Q 6 10, 12 12 T 24 12" stroke="#5d432e" stroke-width="1" fill="none" opacity="0.35"/>
+      <circle cx="4" cy="18" r="1" fill="#4d3522" opacity="0.4"/>
+      <circle cx="16" cy="6" r="1.2" fill="#4d3522" opacity="0.4"/>
+    </pattern>
+
+    <!-- 走廊荧光灯片 pattern -->
+    <pattern id="stripLight" width="28" height="6" patternUnits="userSpaceOnUse">
+      <rect x="4" y="1" width="20" height="2" rx="1" fill="#fffef8" opacity="0.95"/>
+      <rect x="2" y="0" width="24" height="4" fill="#ffeeaa" opacity="0.18"/>
+    </pattern>
+
+    <!-- 样式与关键帧动画：游客走动与小汽车运动 -->
+    <style><![CDATA[
+      @keyframes visitorMove1 {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(32px, -14px); }
+      }
+      @keyframes visitorMove2 {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(24px, -11px); }
+      }
+      @keyframes carMove {
+        0%, 100% { transform: translate(0, 0); }
+        50% { transform: translate(45px, -20px); }
+      }
+      @keyframes treeBreeze {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(1.8deg); }
+      }
+      .anim-visitor-1 { animation: visitorMove1 8s ease-in-out infinite; }
+      .anim-visitor-2 { animation: visitorMove2 9.5s ease-in-out infinite; }
+      .anim-car { animation: carMove 11s ease-in-out infinite; }
+      .anim-tree-1 { transform-origin: 1040px 320px; animation: treeBreeze 5.5s ease-in-out infinite; }
+      .anim-tree-2 { transform-origin: 1105px 300px; animation: treeBreeze 6.5s ease-in-out infinite; }
+    ]]></style>
+
+    <!-- 可复用构件定义 -->
+    <!-- 仪表台 -->
+    <g id="consoleRack">
+      <rect x="0" y="0" width="24" height="22" rx="1" fill="#444a52"/>
+      <rect x="2" y="2" width="20" height="8" fill="#2d333b"/>
+      <rect x="4" y="4" width="7" height="4" fill="#64b5f6" opacity="0.85"/>
+      <rect x="13" y="4" width="7" height="4" fill="#81c784" opacity="0.85"/>
+      <circle cx="5" cy="14" r="1.2" fill="#e57373"/>
+      <circle cx="9" cy="14" r="1.2" fill="#fff176"/>
+      <circle cx="13" cy="14" r="1.2" fill="#81c784"/>
+      <line x1="2" y1="18" x2="22" y2="18" stroke="#33383f" stroke-width="1.5"/>
+    </g>
+
+    <!-- 双层行军床铺 -->
+    <g id="bunkBed">
+      <rect x="0" y="0" width="34" height="28" fill="none"/>
+      <!-- 床架 -->
+      <rect x="1" y="2" width="32" height="4" rx="1" fill="#6d7680"/>
+      <rect x="1" y="16" width="32" height="4" rx="1" fill="#6d7680"/>
+      <line x1="2" y1="2" x2="2" y2="28" stroke="#485058" stroke-width="2"/>
+      <line x1="32" y1="2" x2="32" y2="28" stroke="#485058" stroke-width="2"/>
+      <!-- 床垫与床单被褥 -->
+      <rect x="3" y="1" width="10" height="3" fill="#e2ded4"/>
+      <rect x="13" y="1" width="19" height="3" fill="#617056"/>
+      <rect x="3" y="15" width="10" height="3" fill="#e2ded4"/>
+      <rect x="13" y="15" width="19" height="3" fill="#617056"/>
+    </g>
+
+    <!-- 办公桌椅套件 -->
+    <g id="officeDesk">
+      <rect x="2" y="12" width="26" height="15" rx="1" fill="#786854"/>
+      <rect x="3" y="10" width="24" height="3" fill="#998772"/>
+      <rect x="5" y="14" width="6" height="4" fill="#a4937d"/>
+      <rect x="5" y="19" width="6" height="4" fill="#a4937d"/>
+      <!-- 台灯与文件夹 -->
+      <rect x="20" y="7" width="5" height="3" fill="#e3dbce"/>
+      <!-- 椅子 -->
+      <path d="M 31 14 L 35 14 L 35 27 L 31 27 Z" fill="#44413c"/>
+      <line x1="31" y1="20" x2="27" y2="20" stroke="#44413c" stroke-width="2"/>
+    </g>
+
+    <!-- 站立微缩人物剪影 -->
+    <g id="miniFigureStanding">
+      <ellipse cx="4" cy="3" rx="2.2" ry="2.6" fill="#30353b"/>
+      <path d="M 1.5 6.5 C 1.5 5.5, 6.5 5.5, 6.5 6.5 L 7 17 L 5 17 L 4.5 25 L 3.5 25 L 3 17 L 1 17 Z" fill="#3a4048"/>
+    </g>
+
+    <!-- 走廊错列厚重防爆隔离门 -->
+    <g id="tunnelBlastDoor">
+      <!-- 门框受光与内凹 -->
+      <path d="M 0 0 L 14 -6 L 14 54 L 0 60 Z" fill="#3e4348"/>
+      <!-- 门板实体 -->
+      <path d="M 3 2 L 12 -2 L 12 50 L 3 55 Z" fill="#55595e"/>
+      <!-- 冷色边缘高光 -->
+      <line x1="3" y1="2" x2="3" y2="55" stroke="#9bb1c4" stroke-width="1.2"/>
+      <!-- 铰链与锁闩 -->
+      <rect x="4" y="10" width="4" height="5" fill="#2c3035"/>
+      <rect x="4" y="38" width="4" height="5" fill="#2c3035"/>
+      <circle cx="8" cy="28" r="2.5" fill="#3a3f45"/>
+    </g>
+  </defs>
+
+  <!-- 1. 背景陈列室柔光环境 -->
+  <rect x="0" y="0" width="1600" height="1200" fill="url(#bgGrad)"/>
+
+  <!-- 2. 圆形展示底座整体投影 -->
+  <ellipse cx="800" cy="855" rx="630" ry="255" fill="#000" opacity="0.08" filter="url(#plinthShadow)"/>
+  <ellipse cx="800" cy="840" rx="590" ry="230" fill="#000" opacity="0.12" filter="url(#plinthShadow)"/>
+
+  <!-- ==================== 3. 实体展示台底座 ==================== -->
+  <g id="plinthGroup">
+    <!-- 底座深色圆柱下裙侧壁 (暗部及环境遮蔽) -->
+    <path d="M 190 730
+             A 610 230 0 0 0 1410 730
+             L 1410 835
+             A 610 230 0 0 1 190 835 Z"
+          fill="#4f5259"/>
+
+    <!-- 底座圆柱侧壁主体 -->
+    <path d="M 190 710
+             A 610 230 0 0 0 1410 710
+             L 1410 810
+             A 610 230 0 0 1 190 810 Z"
+          fill="#6b6f77"/>
+
+    <!-- 侧壁明暗过渡受光面（左侧偏亮，右侧背光微暗） -->
+    <path d="M 190 710
+             A 610 230 0 0 0 800 940
+             L 800 1040
+             A 610 230 0 0 1 190 810 Z"
+          fill="#7d828c" opacity="0.35"/>
+    <path d="M 800 940
+             A 610 230 0 0 0 1410 710
+             L 1410 810
+             A 610 230 0 0 1 800 1040 Z"
+          fill="#2b2d32" opacity="0.3"/>
+
+    <!-- 底座顶面边缘精致高光环 (细窄亮边) -->
+    <ellipse cx="800" cy="710" rx="611" ry="231" fill="none" stroke="#dbe1ea" stroke-width="2.5"/>
+
+    <!-- 底座顶面后半段完整圆弧，前半切开 -->
+    <!-- 后半底座顶面：低平远景田野与草坪 -->
+    <path d="M 190 710
+             A 610 230 0 0 1 1410 710
+             L 1360 670
+             Q 800 630 240 670 Z"
+          fill="#85a356"/>
+  </g>
+
+  <!-- ==================== 4. 地面地貌与环境 ==================== -->
+  <g id="groundSurface">
+    <!-- 地面整体草地（黄绿色 #8fae5c），呈现平缓起伏微丘 -->
+    <path d="M 190 710
+             C 210 580, 480 470, 800 470
+             C 1120 470, 1390 580, 1410 710
+             C 1260 700, 1050 690, 890 690
+             L 270 690 Z"
+          fill="#8fae5c"/>
+
+    <!-- 远缘低平田野层级：提亮、降饱和、雾度软化 -->
+    <path d="M 330 540 C 500 480, 800 470, 1270 540 C 1080 500, 680 495, 330 540 Z" fill="#9db86d" opacity="0.65"/>
+    <path d="M 450 515 C 650 480, 850 478, 1150 515 C 980 490, 700 485, 450 515 Z" fill="#afc483" opacity="0.75"/>
+
+    <!-- 草地受光起伏与草地质感分色层 -->
+    <!-- 中央微微隆起的长条形草丘 (掩护地下碉堡顶板) -->
+    <g id="grassyMound">
+      <!-- 草丘背光阴影面 -->
+      <path d="M 520 630 C 560 520, 880 500, 1180 570 C 1000 585, 780 610, 520 630 Z" fill="#7d9d4c"/>
+      <!-- 草丘受光面隆起 -->
+      <path d="M 490 625 C 560 535, 840 510, 1120 570 C 880 545, 660 565, 490 625 Z" fill="#a0bf6b"/>
+      <!-- 草丘向阳最高棱线 -->
+      <path d="M 540 595 C 680 540, 880 535, 1070 575" stroke="#b4d27f" stroke-width="4" stroke-linecap="round" fill="none" opacity="0.7"/>
+    </g>
+
+    <!-- 停车场与通往小楼的蜿蜒小路 -->
+    <g id="roadAndParking" filter="url(#softShadow)">
+      <!-- 柏油碎石小路 -->
+      <path d="M 1260 635 C 1220 590, 1160 560, 1100 540 L 1050 525 L 1040 535 L 1090 550 C 1140 570, 1190 600, 1235 648 Z" fill="#9da29b"/>
+      <path d="M 1045 528 L 940 515 L 942 508 L 1048 521 Z" fill="#a8aca5"/>
+
+      <!-- 一小片平整停车场 -->
+      <polygon points="1130,595 1250,570 1285,615 1165,640" fill="#8f948e"/>
+      <!-- 停车位划线白线 -->
+      <line x1="1160" y1="593" x2="1185" y2="628" stroke="#d5d8d3" stroke-width="1.5" stroke-dasharray="8,4"/>
+      <line x1="1195" y1="585" x2="1220" y2="620" stroke="#d5d8d3" stroke-width="1.5" stroke-dasharray="8,4"/>
+      <line x1="1230" y1="578" x2="1255" y2="613" stroke="#d5d8d3" stroke-width="1.5" stroke-dasharray="8,4"/>
+    </g>
+
+    <!-- 停放的小汽车（2种尺寸、散落停放） -->
+    <g id="parkedCars">
+      <!-- 车辆1：蓝色小轿车（带轻微阴影） -->
+      <g transform="translate(1160, 595) rotate(-35)">
+        <rect x="-2" y="-2" width="22" height="13" rx="2" fill="#000" opacity="0.28"/>
+        <rect x="0" y="0" width="20" height="10" rx="2" fill="#3b6998"/>
+        <rect x="4" y="1.5" width="10" height="7" rx="1.5" fill="#6ba3d6"/>
+        <rect x="6" y="2.5" width="6" height="5" fill="#203a56"/>
+      </g>
+      <!-- 车辆2：红褐色紧凑旅行车 -->
+      <g transform="translate(1198, 586) rotate(-35)">
+        <rect x="-2" y="-2" width="25" height="13" rx="2" fill="#000" opacity="0.28"/>
+        <rect x="0" y="0" width="23" height="10" rx="2" fill="#944238"/>
+        <rect x="4" y="1.5" width="13" height="7" rx="1.5" fill="#ba6358"/>
+        <rect x="6" y="2.5" width="8" height="5" fill="#521f19"/>
+      </g>
+      <!-- 车辆3：正在慢速移入车位的微型白色车（含平滑循环动画） -->
+      <g class="anim-car" transform="translate(1220, 630) rotate(-35)">
+        <rect x="-2" y="-2" width="20" height="11" rx="2" fill="#000" opacity="0.25"/>
+        <rect x="0" y="0" width="19" height="9" rx="2" fill="#d9dedb"/>
+        <rect x="3" y="1" width="11" height="7" rx="1.5" fill="#f4f8f6"/>
+        <rect x="5" y="2" width="6" height="5" fill="#4d5450"/>
+      </g>
+    </g>
+
+    <!-- 圆形树冠小树（2-3棵，带投影与微风轻晃动画） -->
+    <g id="trees">
+      <!-- 树1 -->
+      <g class="anim-tree-1">
+        <ellipse cx="1040" cy="330" rx="16" ry="8" fill="#000" opacity="0.25"/>
+        <rect x="1038" y="318" width="4" height="12" fill="#543e2b"/>
+        <circle cx="1040" cy="312" r="18" fill="#4e7832"/>
+        <circle cx="1037" cy="308" r="15" fill="#679643"/>
+        <circle cx="1034" cy="304" r="10" fill="#81af53"/>
+      </g>
+      <!-- 树2 -->
+      <g class="anim-tree-2">
+        <ellipse cx="1108" cy="310" rx="14" ry="7" fill="#000" opacity="0.22"/>
+        <rect x="1106" y="298" width="3.5" height="12" fill="#543e2b"/>
+        <circle cx="1107" cy="294" r="15" fill="#466f2c"/>
+        <circle cx="1104" cy="290" r="12" fill="#5e8c3b"/>
+        <circle cx="1101" cy="287" r="8" fill="#75a54b"/>
+      </g>
+      <!-- 树3（稍小） -->
+      <g transform="translate(985, 335)">
+        <ellipse cx="0" cy="15" rx="11" ry="5" fill="#000" opacity="0.22"/>
+        <rect x="-1.5" y="5" width="3" height="10" fill="#543e2b"/>
+        <circle cx="0" cy="2" r="12" fill="#4a732e"/>
+        <circle cx="-2" cy="-1" r="9" fill="#61913f"/>
+      </g>
+    </g>
+
+    <!-- 走向入口小楼的游客组（带轻缓平滑位移动画） -->
+    <g id="touristGroup" filter="url(#softShadow)">
+      <!-- 第一组游客（2人并肩） -->
+      <g class="anim-visitor-1" transform="translate(1010, 520)">
+        <!-- 游客A -->
+        <circle cx="0" cy="0" r="2.2" fill="#2d3748"/>
+        <rect x="-1.8" y="2" width="3.6" height="7" rx="1" fill="#c53030"/>
+        <line x1="-0.8" y1="9" x2="-0.8" y2="15" stroke="#2d3748" stroke-width="1.3"/>
+        <line x1="0.8" y1="9" x2="0.8" y2="15" stroke="#2d3748" stroke-width="1.3"/>
+        <!-- 游客B -->
+        <circle cx="6" cy="-1" r="2.2" fill="#2d3748"/>
+        <rect x="4.2" y="1" width="3.6" height="7" rx="1" fill="#3182ce"/>
+        <line x1="5.2" y1="8" x2="5.2" y2="14" stroke="#2d3748" stroke-width="1.3"/>
+        <line x1="6.8" y1="8" x2="6.8" y2="14" stroke="#2d3748" stroke-width="1.3"/>
+      </g>
+
+      <!-- 第二组游客（单人驻足拍照后前行） -->
+      <g class="anim-visitor-2" transform="translate(965, 510)">
+        <circle cx="0" cy="0" r="2" fill="#1a202c"/>
+        <rect x="-1.6" y="2" width="3.2" height="6.5" rx="1" fill="#d69e2e"/>
+        <line x1="-0.7" y1="8.5" x2="-0.7" y2="14" stroke="#1a202c" stroke-width="1.2"/>
+        <line x1="0.7" y1="8.5" x2="0.7" y2="14" stroke="#1a202c" stroke-width="1.2"/>
+      </g>
+    </g>
+
+    <!-- 入口小楼：平顶单层浅灰混凝土结构，位于草丘东侧一端 -->
+    <g id="surfaceEntranceBuilding" filter="url(#softShadow)">
+      <!-- 建筑整体落地阴影 -->
+      <polygon points="860,545 955,520 985,550 885,575" fill="#000" opacity="0.25"/>
+
+      <!-- 背光侧立面（东侧） -->
+      <polygon points="930,470 945,465 945,510 930,515" fill="#8e918d"/>
+      <polygon points="945,465 955,462 955,507 945,510" fill="#7a7d79"/>
+
+      <!-- 南立面（正面，受光） -->
+      <polygon points="875,488 930,470 930,528 875,546" fill="#c4c6bf"/>
+      <!-- 屋顶受光顶面 -->
+      <polygon points="875,488 930,470 945,465 890,483" fill="#e2e3dd"/>
+      <line x1="875" y1="488" x2="930" y2="470" stroke="#ffffff" stroke-width="1.2"/>
+
+      <!-- 正面巨大的方形防爆门（深灰金属 #55595e，门高约为小楼2/3） -->
+      <g id="mainBlastDoor">
+        <polygon points="887,508 915,499 915,537 887,546" fill="#36393d"/>
+        <polygon points="889,510 913,502 913,535 889,543" fill="#55595e"/>
+        <!-- 门边冷色窄高光 -->
+        <line x1="889" y1="510" x2="889" y2="543" stroke="#a2c0db" stroke-width="1.5"/>
+        <line x1="889" y1="510" x2="913" y2="502" stroke="#a2c0db" stroke-width="1"/>
+        <!-- 金属加强肋条纹 -->
+        <line x1="897" y1="507" x2="897" y2="540" stroke="#3d4044" stroke-width="1.5"/>
+        <line x1="905" y1="504" x2="905" y2="537" stroke="#3d4044" stroke-width="1.5"/>
+      </g>
+
+      <!-- 门旁露出的细细通风管道与天线杆 -->
+      <g id="ventsAndAntenna">
+        <!-- 通风弯管1 (小蕈状通风帽) -->
+        <rect x="870" y="525" width="3" height="10" fill="#72777d"/>
+        <ellipse cx="871.5" cy="524" rx="3.5" ry="2" fill="#52565b"/>
+        <!-- 通风管2 -->
+        <rect x="864" y="529" width="2.5" height="8" fill="#72777d"/>
+        <path d="M 864 529 Q 861 526 861 524" stroke="#72777d" stroke-width="2.5" fill="none"/>
+        <!-- 细长金属天线杆与拉索 -->
+        <line x1="935" y1="468" x2="935" y2="408" stroke="#505459" stroke-width="1.8"/>
+        <line x1="935" y1="412" x2="938" y2="415" stroke="#7f868e" stroke-width="1"/>
+        <line x1="935" y1="425" x2="925" y2="475" stroke="#686d73" stroke-width="0.7" opacity="0.6"/>
+        <line x1="935" y1="425" x2="945" y2="467" stroke="#686d73" stroke-width="0.7" opacity="0.6"/>
+        <!-- 天线顶端微小指示红灯 -->
+        <circle cx="935" cy="408" r="1.5" fill="#e53935"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== 5. 底座大剖断面与地下主体结构 ==================== -->
+  <!-- 剖切面占底座正面约一半，展现出隧道纵深与4层地下掩体 -->
+  <g id="crossSectionCutaway">
+
+    <!-- 5.1 剖断基岩与厚覆土断面（褐色 #7a5c42） -->
+    <path d="M 190 710
+             L 270 690
+             L 1360 690
+             L 1410 710
+             A 610 230 0 0 1 800 940
+             A 610 230 0 0 1 190 710 Z"
+          fill="#7a5c42"/>
+    <!-- 覆土断面地质纹理填充 -->
+    <path d="M 190 710
+             L 270 690
+             L 1360 690
+             L 1410 710
+             A 610 230 0 0 1 800 940
+             A 610 230 0 0 1 190 710 Z"
+          fill="url(#soilTexture)"/>
+
+    <!-- 剖断面顶层泥土分界高光线 -->
+    <path d="M 190 710 L 270 690 L 1360 690 L 1410 710" stroke="#937254" stroke-width="2.5" fill="none"/>
+
+    <!-- 5.2 爆炸吸收长隧道 (Blast Tunnel) -->
+    <!-- 从入口小楼斜向向下延伸至碉堡盒子，长度约为碉堡的1.5倍，方形截面，厚壁 -->
+    <g id="blastTunnel">
+      <!-- 隧道外围厚混凝土基座/外轮廓剖面 (深灰 #a3a19a + 钢筋细点) -->
+      <polygon points="900,540 925,540 595,665 595,735 520,735 520,665 850,540" fill="#a3a19a"/>
+      <polygon points="900,540 925,540 595,665 595,735 520,735 520,665 850,540" fill="url(#rebarPattern)"/>
+
+      <!-- 隧道内部方形空间腔体（微斜向下，透视内壁采用明暗三档） -->
+      <!-- 隧道底部地面（走廊地面稍深） -->
+      <polygon points="865,550 885,550 560,675 540,675" fill="#7a7873"/>
+      <!-- 隧道背光侧壁/深处内壁 -->
+      <polygon points="885,550 885,532 560,635 560,675" fill="#4d4c47"/>
+      <!-- 隧道受光顶板底面 -->
+      <polygon points="865,532 885,532 560,635 540,635" fill="#b3b0a6"/>
+      <!-- 隧道透视剖切面 (灰白混凝土 #c9c7bf) -->
+      <polygon points="850,550 865,550 540,675 525,675 525,635 850,532" fill="#c9c7bf"/>
+      <polygon points="850,550 865,550 540,675 525,675 525,635 850,532" fill="url(#rebarPattern)"/>
+
+      <!-- 隧道内防爆隔离厚门（成排铺满，门洞错开排列，垂直于隧道，带冷色高光） -->
+      <use href="#tunnelBlastDoor" x="810" y="542" transform="scale(0.85)"/>
+      <use href="#tunnelBlastDoor" x="735" y="568" transform="scale(0.9)"/>
+      <use href="#tunnelBlastDoor" x="660" y="596" transform="scale(0.95)"/>
+      <use href="#tunnelBlastDoor" x="580" y="626" transform="scale(1.0)"/>
+
+      <!-- 隧道顶部微型工业吊灯管 -->
+      <line x1="860" y1="535" x2="550" y2="640" stroke="#fff9d6" stroke-width="1.8" stroke-dasharray="8,16" opacity="0.8"/>
+    </g>
+
+    <!-- 5.3 巨大四层混凝土盒子主体 (The 4-Story Bunker Box) -->
+    <!-- 比例：长约为高4倍，4层等高，顶板覆土厚度约1层，房间宽约1.5倍层高 -->
+    <!-- 设定尺寸：整个盒子宽 580px, 高 148px (每层 37px，宽/高 ≈ 3.92倍) -->
+    <!-- 坐标：X: 250 -> 830, Y: 690 -> 838。覆土层顶在 Y=653 处，厚度约 37px -->
+    <g id="bunkerMainBox">
+      <!-- 盒子巨厚外壁与楼板断面 (深灰 #a3a19a 并铺满钢筋细点) -->
+      <rect x="236" y="676" width="608" height="176" rx="2" fill="#a3a19a"/>
+      <rect x="236" y="676" width="608" height="176" rx="2" fill="url(#rebarPattern)"/>
+
+      <!-- 顶板上方的厚覆土层剖面标志 -->
+      <rect x="236" y="640" width="608" height="36" fill="#5e4530" opacity="0.85"/>
+      <rect x="236" y="640" width="608" height="36" fill="url(#soilTexture)"/>
+
+      <!-- 混凝土外壳剖断面边缘（灰白混凝土 #c9c7bf） -->
+      <rect x="244" y="684" width="592" height="160" fill="#c9c7bf"/>
+
+      <!-- ================= 4 个楼层结构划分 (自上而下 4F -> 1F) ================= -->
+      <!-- 楼板水平梁 (厚度 6px) -->
+      <rect x="250" y="722" width="580" height="6" fill="#a3a19a"/>
+      <rect x="250" y="760" width="580" height="6" fill="#a3a19a"/>
+      <rect x="250" y="798" width="580" height="6" fill="#a3a19a"/>
+
+      <!-- 楼板受光窄高光 -->
+      <line x1="250" y1="722" x2="830" y2="722" stroke="#dad7cf" stroke-width="1"/>
+      <line x1="250" y1="760" x2="830" y2="760" stroke="#dad7cf" stroke-width="1"/>
+      <line x1="250" y1="798" x2="830" y2="798" stroke="#dad7cf" stroke-width="1"/>
+
+      <!-- 电梯竖井与中央主楼梯间贯穿四层 (位于 X: 520 -> 565) -->
+      <g id="shaftAndStairs">
+        <!-- 竖井混凝土厚壁井道 -->
+        <rect x="522" y="688" width="48" height="148" fill="#32353a"/>
+        <!-- 钢结构导轨与线缆 -->
+        <line x1="534" y1="688" x2="534" y2="836" stroke="#5d636b" stroke-width="1.5"/>
+        <line x1="538" y1="688" x2="538" y2="836" stroke="#484d54" stroke-width="1.2"/>
+        <!-- 电梯轿厢 (停在3层) -->
+        <rect x="526" y="728" width="18" height="28" rx="1" fill="#717882"/>
+        <rect x="528" y="734" width="14" height="14" fill="#fffae8" opacity="0.7"/>
+        <line x1="535" y1="688" x2="535" y2="728" stroke="#111" stroke-width="1.2"/>
+
+        <!-- 连续错落钢楼梯剖面 -->
+        <path d="M 548 722 L 566 690 M 548 722 L 566 758 M 548 796 L 566 760 M 548 796 L 566 834"
+              stroke="#8a929a" stroke-width="1.8" stroke-linecap="round"/>
+        <!-- 楼梯梯级微小齿状结构 -->
+        <path d="M 548 722 h3 v-5 h3 v-5 h3 v-5 h3 v-5 h3 v-5 h3" fill="none" stroke="#b2b9bf" stroke-width="0.9"/>
+        <path d="M 548 726 h3 v5 h3 v5 h3 v5 h3 v5 h3 v5 h3" fill="none" stroke="#b2b9bf" stroke-width="0.9"/>
+        <path d="M 548 796 h3 v-5 h3 v-5 h3 v-5 h3 v-5 h3 v-5 h3" fill="none" stroke="#b2b9bf" stroke-width="0.9"/>
+        <path d="M 548 800 h3 v5 h3 v5 h3 v5 h3 v5 h3 v5 h3" fill="none" stroke="#b2b9bf" stroke-width="0.9"/>
+      </g>
+
+      <!-- ================= 4F 顶层：作战指挥室、机要通讯与带玻璃窗广播室 ================= -->
+      <g id="level4">
+        <!-- 房间内部底色（暖灰 #b9ad9a）与走廊深色地面 -->
+        <rect x="250" y="688" width="272" height="34" fill="#b9ad9a"/>
+        <rect x="570" y="688" width="260" height="34" fill="#b9ad9a"/>
+
+        <!-- 走廊通道地面（略深 #a39581） -->
+        <rect x="250" y="717" width="272" height="5" fill="#a39581"/>
+        <rect x="570" y="717" width="260" height="5" fill="#a39581"/>
+        <!-- 走廊顶光排灯 -->
+        <rect x="250" y="688" width="272" height="4" fill="url(#stripLight)"/>
+        <rect x="570" y="688" width="260" height="4" fill="url(#stripLight)"/>
+
+        <!-- 房间垂直隔墙（厚度 4px 灰白混凝土） -->
+        <line x1="305" y1="688" x2="305" y2="722" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="360" y1="688" x2="360" y2="722" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="415" y1="688" x2="415" y2="722" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="470" y1="688" x2="470" y2="722" stroke="#a3a19a" stroke-width="4"/>
+
+        <line x1="625" y1="688" x2="625" y2="722" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="680" y1="688" x2="680" y2="722" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="740" y1="688" x2="740" y2="722" stroke="#a3a19a" stroke-width="4"/>
+
+        <!-- 4F 特色房间：带大幅玻璃窗的紧急广播室（CBC Emergency Broadcasting Studio）位于最东端 -->
+        <g id="broadcastStudio">
+          <!-- 隔音双层玻璃窗框 -->
+          <rect x="742" y="690" width="86" height="30" fill="#2d353b"/>
+          <!-- 录音室内部控制台与复古麦克风色块 -->
+          <rect x="770" y="703" width="24" height="14" fill="#6d5d4b"/>
+          <line x1="782" y1="703" x2="782" y2="698" stroke="#c0c0c0" stroke-width="1.5"/>
+          <circle cx="782" cy="697" r="2" fill="#e0e0e0"/>
+          <!-- 录音控制室 ON AIR 红灯色块 -->
+          <rect x="746" y="692" width="8" height="3" fill="#e53935"/>
+          <!-- 隔音大观察窗玻璃反光（斜高光条） -->
+          <polygon points="748,720 762,690 776,690 762,720" fill="#a6d5fa" opacity="0.38"/>
+          <polygon points="782,720 796,690 804,690 790,720" fill="#a6d5fa" opacity="0.25"/>
+          <!-- 播音室内工作人员剪影 -->
+          <use href="#miniFigureStanding" x="756" y="694"/>
+        </g>
+
+        <!-- 4F 其他房间陈设：军情作战推演台、大型仪表墙 -->
+        <use href="#consoleRack" x="256" y="696"/>
+        <use href="#consoleRack" x="280" y="696"/>
+        <use href="#officeDesk" x="312" y="694"/>
+        <use href="#officeDesk" x="368" y="694"/>
+        <use href="#consoleRack" x="422" y="696"/>
+        <use href="#consoleRack" x="444" y="696"/>
+        <use href="#officeDesk" x="632" y="694"/>
+        <use href="#consoleRack" x="690" y="696"/>
+
+        <!-- 4F 工作人员小剪影 -->
+        <use href="#miniFigureStanding" x="330" y="694"/>
+        <use href="#miniFigureStanding" x="435" y="694"/>
+        <use href="#miniFigureStanding" x="650" y="694"/>
+      </g>
+
+      <!-- ================= 3F 三层：枢密院会议室、总理与高级官员套间 ================= -->
+      <g id="level3">
+        <rect x="250" y="728" width="272" height="32" fill="#b9ad9a"/>
+        <rect x="570" y="728" width="260" height="32" fill="#b9ad9a"/>
+        <rect x="250" y="755" width="272" height="5" fill="#a39581"/>
+        <rect x="570" y="755" width="260" height="5" fill="#a39581"/>
+        <rect x="250" y="728" width="272" height="4" fill="url(#stripLight)"/>
+        <rect x="570" y="728" width="260" height="4" fill="url(#stripLight)"/>
+
+        <!-- 垂直隔墙 -->
+        <line x1="310" y1="728" x2="310" y2="760" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="375" y1="728" x2="375" y2="760" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="440" y1="728" x2="440" y2="760" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="630" y1="728" x2="630" y2="760" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="695" y1="728" x2="695" y2="760" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="760" y1="728" x2="760" y2="760" stroke="#a3a19a" stroke-width="4"/>
+
+        <!-- 会议长桌色块、总理套房床铺与写字台 -->
+        <!-- 内阁战时会议大长桌 -->
+        <rect x="318" y="742" width="48" height="12" rx="2" fill="#5c4738"/>
+        <line x1="320" y1="742" x2="364" y2="742" stroke="#876b55" stroke-width="1.5"/>
+        <!-- 会议室参会人员剪影 -->
+        <use href="#miniFigureStanding" x="328" y="734"/>
+        <use href="#miniFigureStanding" x="348" y="734"/>
+
+        <!-- 总理套间（小床与办公桌） -->
+        <use href="#bunkBed" x="382" y="730"/>
+        <use href="#officeDesk" x="418" y="732"/>
+        <use href="#miniFigureStanding" x="424" y="734"/>
+
+        <!-- 其他官员起居间与通讯室 -->
+        <use href="#bunkBed" x="256" y="730"/>
+        <use href="#officeDesk" x="282" y="732"/>
+        <use href="#officeDesk" x="640" y="732"/>
+        <use href="#bunkBed" x="668" y="730"/>
+        <use href="#bunkBed" x="704" y="730"/>
+        <use href="#officeDesk" x="734" y="732"/>
+        <use href="#bunkBed" x="770" y="730"/>
+      </g>
+
+      <!-- ================= 2F 二层：大食堂、医疗站、多密集起居寝室 ================= -->
+      <g id="level2">
+        <rect x="250" y="766" width="272" height="32" fill="#b9ad9a"/>
+        <rect x="570" y="766" width="260" height="32" fill="#b9ad9a"/>
+        <rect x="250" y="793" width="272" height="5" fill="#a39581"/>
+        <rect x="570" y="793" width="260" height="5" fill="#a39581"/>
+        <rect x="250" y="766" width="272" height="4" fill="url(#stripLight)"/>
+        <rect x="570" y="766" width="260" height="4" fill="url(#stripLight)"/>
+
+        <!-- 隔墙 -->
+        <line x1="320" y1="766" x2="320" y2="798" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="385" y1="766" x2="385" y2="798" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="450" y1="766" x2="450" y2="798" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="635" y1="766" x2="635" y2="798" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="700" y1="766" x2="700" y2="798" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="765" y1="766" x2="765" y2="798" stroke="#a3a19a" stroke-width="4"/>
+
+        <!-- 食堂长餐桌与白色餐盘色块 -->
+        <rect x="256" y="780" width="56" height="12" rx="1" fill="#8f7f6d"/>
+        <line x1="258" y1="781" x2="310" y2="781" stroke="#baa895" stroke-width="1.2"/>
+        <rect x="264" y="777" width="5" height="2" fill="#ffffff"/>
+        <rect x="278" y="777" width="5" height="2" fill="#ffffff"/>
+        <rect x="292" y="777" width="5" height="2" fill="#ffffff"/>
+
+        <!-- 医疗站（绿色十字标志与病床色块） -->
+        <rect x="328" y="772" width="24" height="20" fill="#c2c7c5"/>
+        <rect x="330" y="778" width="20" height="4" fill="#ffffff"/>
+        <rect x="338" y="775" width="4" height="10" fill="#ffffff"/>
+        <use href="#bunkBed" x="354" y="768"/>
+
+        <!-- 多组密集双层行军床铺（成排布满） -->
+        <use href="#bunkBed" x="392" y="768"/>
+        <use href="#bunkBed" x="424" y="768"/>
+        <use href="#bunkBed" x="576" y="768"/>
+        <use href="#bunkBed" x="606" y="768"/>
+        <use href="#bunkBed" x="642" y="768"/>
+        <use href="#bunkBed" x="672" y="768"/>
+        <use href="#bunkBed" x="708" y="768"/>
+        <use href="#bunkBed" x="736" y="768"/>
+        <use href="#bunkBed" x="772" y="768"/>
+        <use href="#bunkBed" x="800" y="768"/>
+
+        <!-- 剪影小人 -->
+        <use href="#miniFigureStanding" x="272" y="772"/>
+        <use href="#miniFigureStanding" x="590" y="772"/>
+      </g>
+
+      <!-- ================= 1F 底层：发电机组、机械动力间与厚壁圆形金库 ================= -->
+      <g id="level1">
+        <rect x="250" y="804" width="272" height="32" fill="#b9ad9a"/>
+        <rect x="570" y="804" width="260" height="32" fill="#b9ad9a"/>
+        <rect x="250" y="831" width="272" height="5" fill="#a39581"/>
+        <rect x="570" y="831" width="260" height="5" fill="#a39581"/>
+        <rect x="250" y="804" width="272" height="4" fill="url(#stripLight)"/>
+        <rect x="570" y="804" width="260" height="4" fill="url(#stripLight)"/>
+
+        <!-- 隔墙 -->
+        <line x1="330" y1="804" x2="330" y2="836" stroke="#a3a19a" stroke-width="5"/>
+        <line x1="420" y1="804" x2="420" y2="836" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="640" y1="804" x2="640" y2="836" stroke="#a3a19a" stroke-width="4"/>
+        <line x1="710" y1="804" x2="710" y2="836" stroke="#a3a19a" stroke-width="4"/>
+
+        <!-- 1F 最底层一端：著名的加拿大央行黄金储备绝密厚壁金库 (Bank of Canada Vault) -->
+        <g id="bankVault">
+          <!-- 金库极厚的防爆混凝土加固包边 (深灰 #a3a19a + 钢筋细点) -->
+          <rect x="250" y="804" width="78" height="32" fill="#8f8c85"/>
+          <rect x="250" y="804" width="78" height="32" fill="url(#rebarPattern)"/>
+          <!-- 金库内部幽暗空间 -->
+          <rect x="255" y="807" width="46" height="26" fill="#22252a"/>
+          <!-- 金库内的整齐黄金货架小黄色块 -->
+          <rect x="258" y="813" width="10" height="5" fill="#d4af37"/>
+          <rect x="258" y="821" width="10" height="5" fill="#d4af37"/>
+          <rect x="272" y="813" width="12" height="5" fill="#c59b27"/>
+          <rect x="272" y="821" width="12" height="5" fill="#c59b27"/>
+
+          <!-- 巨大厚壁圆形金库大门（暗铜色 #8a6b3c，带有厚重转轴与冷铜光泽） -->
+          <g id="circularVaultDoor" transform="translate(310, 820)">
+            <!-- 门框凹槽阴影 -->
+            <circle cx="0" cy="0" r="14" fill="#1e1f21"/>
+            <!-- 铜质门主体外圈 -->
+            <circle cx="0" cy="0" r="12.5" fill="#8a6b3c"/>
+            <circle cx="0" cy="0" r="12.5" fill="none" stroke="#b89358" stroke-width="1"/>
+            <!-- 门面机械转盘与同心锁栓环 -->
+            <circle cx="0" cy="0" r="8.5" fill="#6d542e"/>
+            <circle cx="0" cy="0" r="5" fill="#8a6b3c"/>
+            <circle cx="0" cy="0" r="2.5" fill="#4d3a1e"/>
+            <!-- 四向重型锁舌闩体 (放射状) -->
+            <line x1="-11" y1="0" x2="11" y2="0" stroke="#b89358" stroke-width="2"/>
+            <line x1="0" y1="-11" x2="0" y2="11" stroke="#b89358" stroke-width="2"/>
+            <line x1="-8" y1="-8" x2="8" y2="8" stroke="#6d542e" stroke-width="1.5"/>
+            <line x1="-8" y1="8" x2="8" y2="-8" stroke="#6d542e" stroke-width="1.5"/>
+            <!-- 暗铜高光边条 -->
+            <path d="M -9 -9 A 12.5 12.5 0 0 1 9 -9" fill="none" stroke="#e0bf82" stroke-width="1.5"/>
+          </g>
+        </g>
+
+        <!-- 动力与机械保障区（巨大的柴油发电机组、通风过滤机房与仪表控制箱） -->
+        <!-- 大型发电机组体块（深灰绿机械色） -->
+        <rect x="340" y="814" width="34" height="18" rx="2" fill="#394d43"/>
+        <rect x="343" y="817" width="12" height="12" fill="#24332c"/>
+        <circle cx="362" cy="823" r="5" fill="#2b3b33"/>
+        <line x1="340" y1="814" x2="374" y2="814" stroke="#526e60" stroke-width="1.2"/>
+
+        <rect x="380" y="814" width="34" height="18" rx="2" fill="#394d43"/>
+        <circle cx="392" cy="823" r="5" fill="#2b3b33"/>
+        <rect x="401" y="817" width="10" height="12" fill="#24332c"/>
+
+        <!-- 供水、空气净化管网与动力仪表机柜 -->
+        <use href="#consoleRack" x="428" y="812"/>
+        <use href="#consoleRack" x="454" y="812"/>
+        <use href="#consoleRack" x="480" y="812"/>
+        <!-- 巨型工业通风圆管道系统 -->
+        <rect x="580" y="810" width="50" height="10" rx="3" fill="#69727d"/>
+        <line x1="580" y1="813" x2="630" y2="813" stroke="#9ba4af" stroke-width="1.2"/>
+        <rect x="648" y="812" width="54" height="20" fill="#444b52"/>
+        <use href="#consoleRack" x="720" y="812"/>
+        <use href="#consoleRack" x="746" y="812"/>
+        <use href="#consoleRack" x="772" y="812"/>
+
+        <!-- 机房巡视工程师剪影 -->
+        <use href="#miniFigureStanding" x="372" y="810"/>
+        <use href="#miniFigureStanding" x="636" y="810"/>
+      </g>
+
+      <!-- 盒子边缘构件相接的环境光遮蔽（半透明深色形状） -->
+      <rect x="250" y="688" width="580" height="4" fill="#000" opacity="0.32"/>
+      <rect x="250" y="688" width="4" height="148" fill="#000" opacity="0.25"/>
+      <rect x="826" y="688" width="4" height="148" fill="#000" opacity="0.25"/>
+    </g>
+
+    <!-- 5.4 剖切面外框收口亮边与阴影分界线 -->
+    <path d="M 190 710 A 610 230 0 0 0 800 940 A 610 230 0 0 0 1410 710" fill="none" stroke="#33363b" stroke-width="2.5"/>
+    <path d="M 190 710 A 610 230 0 0 0 800 940" fill="none" stroke="#ffffff" stroke-width="1.8" opacity="0.45"/>
+  </g>
+
+  <!-- 6. 模型微缩展品环境漫射高光柔层 -->
+  <ellipse cx="680" cy="530" rx="320" ry="120" fill="#ffffff" opacity="0.06"/>
+</svg>
