@@ -336,6 +336,7 @@ export function validatePublicRun(data) {
     'inProgress',
     'cancelledAt',
     'budgetStop',
+    'harnessGuard',
     'attempts',
     'redactions',
     'profiles',
@@ -343,6 +344,10 @@ export function validatePublicRun(data) {
   const unexpected = getUnexpectedKeys(data, allowedKeys);
   if (unexpected.length > 0) {
     errors.push(`run.json 顶层含有多余字段: ${unexpected.join(', ')}`);
+  }
+  // 直出约束：开了的轮次记附加原文，没开的轮次没有此字段
+  if (data.harnessGuard !== undefined && (typeof data.harnessGuard !== 'string' || data.harnessGuard.trim() === '')) {
+    errors.push('harnessGuard 若存在必须为非空字符串');
   }
 
   if (data.publicSchemaVersion !== 1) {

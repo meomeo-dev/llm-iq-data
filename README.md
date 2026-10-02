@@ -98,6 +98,8 @@ llm-iq-data/
 * `inProgress`: 运行完成状态，公开数据中恒为 `false`；
 * `cancelledAt`: 可选取消时间（ISO 8601 或 null）；
 * `budgetStop`: 可选预算熔断终止状态；
+* `harnessGuard`: 可选，本轮附在每条提示词之后的直出约束原文（要求模型不联网、不跑代码自测、不截图自检）；
+  没开的轮次没有此字段，`prompts[].text` 仍是题目原文——比较结果时据此区分裸模型与带 harness 增强的轮次；
 * `attempts`: 各模型执行评测明细（`PublicAttempt[]`）；
 * `redactions`: 被脱敏拦截的作品列表（`{ file: string, reason: string }[]`）；
 * `profiles`: 可选，本轮调用用到的上游 profile 公开视图（`PublicProfile[]`）；引入前的记录没有此字段。

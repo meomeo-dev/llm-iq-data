@@ -108,6 +108,12 @@ test('validatePublicRun: 正例测试', () => {
   assert.equal(errors.length, 0);
 });
 
+test('validatePublicRun: harnessGuard 可选，存在时必须为非空字符串', () => {
+  assert.equal(validatePublicRun({ ...sampleRun, harnessGuard: 'Draw it directly.' }).length, 0);
+  assert.ok(validatePublicRun({ ...sampleRun, harnessGuard: '' }).some((e) => e.includes('harnessGuard')));
+  assert.ok(validatePublicRun({ ...sampleRun, harnessGuard: 1 }).some((e) => e.includes('harnessGuard')));
+});
+
 test('validatePublicRun: 反例测试 (版本、字段缺少、rawFile不为null、usage校验)', () => {
   // inProgress 必须为 false
   const runInProgress = { ...sampleRun, inProgress: true };
