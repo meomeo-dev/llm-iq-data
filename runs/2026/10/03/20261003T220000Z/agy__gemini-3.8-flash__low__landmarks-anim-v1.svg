@@ -1,0 +1,501 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%">
+  <defs>
+    <!-- Background & Studio Lighting -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#edf2f7"/>
+      <stop offset="60%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
+    </linearGradient>
+
+    <!-- Base Gradients -->
+    <linearGradient id="plinthTopGrad" x1="20%" y1="10%" x2="80%" y2="90%">
+      <stop offset="0%" stop-color="#a3c476"/>
+      <stop offset="45%" stop-color="#8cae5e"/>
+      <stop offset="100%" stop-color="#709143"/>
+    </linearGradient>
+    <linearGradient id="plinthSideGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#475569"/>
+      <stop offset="25%" stop-color="#334155"/>
+      <stop offset="75%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="riverGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+
+    <!-- Pit & Concrete Gradients -->
+    <linearGradient id="pitDepth" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4d662e"/>
+      <stop offset="100%" stop-color="#2c3b1b"/>
+    </linearGradient>
+    <linearGradient id="cradleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e3e1da"/>
+      <stop offset="50%" stop-color="#c4c1b8"/>
+      <stop offset="100%" stop-color="#96938a"/>
+    </linearGradient>
+
+    <!-- Submarine Hull Lighting: Albacore Tear-Drop Body -->
+    <linearGradient id="hullLighting" x1="30%" y1="0%" x2="70%" y2="100%">
+      <stop offset="0%" stop-color="#72777d"/>
+      <stop offset="18%" stop-color="#5c6165"/>
+      <stop offset="38%" stop-color="#828991"/> <!-- Specular line along widest crest -->
+      <stop offset="50%" stop-color="#43474b"/>
+      <stop offset="78%" stop-color="#2f3337"/>
+      <stop offset="100%" stop-color="#17191b"/>
+    </linearGradient>
+
+    <!-- Sail / Conning Tower Gradient -->
+    <linearGradient id="sailGrad" x1="15%" y1="0%" x2="85%" y2="100%">
+      <stop offset="0%" stop-color="#72787e"/>
+      <stop offset="40%" stop-color="#5c6165"/>
+      <stop offset="85%" stop-color="#2a2e31"/>
+      <stop offset="100%" stop-color="#181a1c"/>
+    </linearGradient>
+
+    <!-- Propeller Bronze -->
+    <linearGradient id="propBronze" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b89358"/>
+      <stop offset="50%" stop-color="#8a6b3c"/>
+      <stop offset="100%" stop-color="#523e1f"/>
+    </linearGradient>
+
+    <!-- Metal Bridge & Stairs -->
+    <linearGradient id="metalSteps" x1="0%" y1="0%" x2="100%" y2="50%">
+      <stop offset="0%" stop-color="#cbd5e1"/>
+      <stop offset="50%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+
+    <!-- Soft Drop Shadows -->
+    <filter id="shadowBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <filter id="softContact" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+    <filter id="treeShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+
+    <!-- Repeated Tree Definition -->
+    <g id="miniTree">
+      <ellipse cx="6" cy="14" rx="14" ry="7" fill="#1b2e10" opacity="0.4" filter="url(#treeShadow)"/>
+      <rect x="-1.5" y="4" width="3" height="10" fill="#543d2b" rx="1"/>
+      <!-- Multi-layered foliage -->
+      <circle cx="0" cy="0" r="14" fill="#3a5a22"/>
+      <circle cx="-3" cy="-4" r="11" fill="#4d782c"/>
+      <circle cx="-5" cy="-6" r="6" fill="#6ba33e"/>
+      <ellipse cx="3" cy="2" rx="11" ry="8" fill="#2d4819" opacity="0.6"/>
+    </g>
+
+    <!-- Repeated Concrete Cradle Definition -->
+    <g id="concreteCradle">
+      <!-- Shadow on floor -->
+      <polygon points="-8,18 24,18 36,36 -2,36" fill="#18230f" opacity="0.5"/>
+      <!-- Upright pillar with curved saddle -->
+      <path d="M-8,16 L-4,-4 Q8,6 20,-4 L24,16 Z" fill="url(#cradleGrad)"/>
+      <path d="M-4,-4 Q8,6 20,-4 L23,-1 Q8,8 -1,-1 Z" fill="#e9e7e1"/>
+      <path d="M20,-4 L24,16 L22,18 L19,-2 Z" fill="#75736c"/>
+    </g>
+  </defs>
+
+  <style>
+    <![CDATA[
+      .boat-bobbing {
+        animation: boatDrift 7s ease-in-out infinite alternate;
+        transform-origin: 875px 690px;
+      }
+      .wake-pulse {
+        animation: wakeFade 7s ease-in-out infinite alternate;
+      }
+      .water-current {
+        animation: streamFlow 9s ease-in-out infinite alternate;
+      }
+      @keyframes boatDrift {
+        0% {
+          transform: translate(0px, 0px) rotate(0deg);
+        }
+        50% {
+          transform: translate(3px, -2px) rotate(1.5deg);
+        }
+        100% {
+          transform: translate(-3px, 3px) rotate(-1deg);
+        }
+      }
+      @keyframes wakeFade {
+        0% { opacity: 0.25; transform: scale(0.98); }
+        100% { opacity: 0.65; transform: scale(1.04); }
+      }
+      @keyframes streamFlow {
+        0% { transform: translateX(0px); }
+        100% { transform: translateX(8px); }
+      }
+    ]]>
+  </style>
+
+  <!-- Canvas Background -->
+  <rect width="1200" height="900" fill="url(#bgGrad)"/>
+
+  <!-- Plinth Soft Floor Shadow -->
+  <ellipse cx="600" cy="740" rx="490" ry="145" fill="#64748b" opacity="0.32" filter="url(#shadowBlur)"/>
+
+  <!-- ==================== DIORAMA BASE ==================== -->
+  <!-- Cylinder Wall (depth visible, viewed at ~30 deg) -->
+  <path d="M 120,530 
+           A 480 200 0 0 0 1080,530 
+           L 1080,578 
+           A 480 200 0 0 1 120,578 Z" 
+        fill="url(#plinthSideGrad)"/>
+  <!-- Rim highlight bottom edge -->
+  <path d="M 120,578 A 480 200 0 0 0 1080,578" fill="none" stroke="#090d16" stroke-width="2" opacity="0.8"/>
+
+  <!-- Cylinder Top Surface (Disc) -->
+  <ellipse cx="600" cy="530" rx="480" ry="200" fill="url(#plinthTopGrad)"/>
+
+  <!-- Cylinder Top Rim Specular Bevel -->
+  <ellipse cx="600" cy="530" rx="480" ry="200" fill="none" stroke="#d9f0aa" stroke-width="2.5" opacity="0.85"/>
+
+  <!-- Ground Detail & Corner River Section -->
+  <g id="parkGround">
+    <!-- River cut-out at bottom-right corner -->
+    <path d="M 760,650 C 820,600 920,620 1065,585 A 480 200 0 0 1 890,714 C 830,700 780,675 760,650 Z" 
+          fill="url(#riverGrad)"/>
+    <path d="M 760,650 C 820,600 920,620 1065,585" 
+          fill="none" stroke="#93c5fd" stroke-width="2.5" opacity="0.6"/>
+    <!-- River Bank Soil Lip -->
+    <path d="M 758,653 C 818,603 918,623 1065,585" 
+          fill="none" stroke="#483219" stroke-width="3" opacity="0.7"/>
+
+    <!-- River Flow Wavelets (SMIL Animated) -->
+    <path class="water-current" d="M 830,645 Q 855,640 880,646 T 930,642" fill="none" stroke="#bfdbfe" stroke-width="1.2" opacity="0.6"/>
+    <path class="water-current" d="M 880,670 Q 910,666 940,672 T 985,668" fill="none" stroke="#bfdbfe" stroke-width="1.2" opacity="0.5"/>
+
+    <!-- Little Moored Boat in the river corner -->
+    <g class="boat-bobbing">
+      <!-- Boat Shadow in water -->
+      <ellipse cx="880" cy="693" rx="20" ry="6" fill="#0c2340" opacity="0.4" filter="url(#softContact)"/>
+      <path class="wake-pulse" d="M 855,693 Q 880,698 905,693" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.5"/>
+      <!-- Boat Hull -->
+      <path d="M 860,690 Q 880,696 900,690 Q 903,687 898,685 Q 880,683 862,685 Z" fill="#e2e8f0"/>
+      <path d="M 862,688 Q 880,693 898,688" fill="none" stroke="#94a3b8" stroke-width="1"/>
+      <polygon points="874,685 886,685 885,688 875,688" fill="#475569"/>
+    </g>
+
+    <!-- Park Pathway & Display Pit -->
+    <!-- Display Excavation Pit: shallow rectangular trench running diagonally -->
+    <g id="displayPit">
+      <!-- Outer Trench Lip / Shadow -->
+      <polygon points="265,565 675,340 765,372 355,597" fill="#405922" opacity="0.6"/>
+      <!-- Excavated Floor -->
+      <polygon points="275,567 670,346 752,376 357,597" fill="url(#pitDepth)"/>
+      <!-- Pit Walls (Ambient Occlusion & Depth) -->
+      <polygon points="275,567 670,346 670,354 275,575" fill="#243314"/>
+      <polygon points="670,346 752,376 752,382 670,354" fill="#30441c"/>
+      <!-- Inner Concrete Foundation Slab -->
+      <polygon points="288,570 662,354 738,382 364,594" fill="#696962" opacity="0.65"/>
+    </g>
+
+    <!-- Concrete Cradles (Bedding the Submarine Hull in Pit) -->
+    <!-- Cradle 1: Aft near tapering section -->
+    <use href="#concreteCradle" x="600" y="375"/>
+    <!-- Cradle 2: Mid-aft -->
+    <use href="#concreteCradle" x="510" y="424"/>
+    <!-- Cradle 3: Mid-forward (broadest belly support) -->
+    <use href="#concreteCradle" x="420" y="474"/>
+    <!-- Cradle 4: Forward under bow section -->
+    <use href="#concreteCradle" x="330" y="524"/>
+
+    <!-- Access Steps and Bridge to Submarine Hull Access Door -->
+    <g id="accessStairsAndBridge">
+      <!-- Steps up from grass to bridge level -->
+      <!-- Step 1 -->
+      <polygon points="460,545 478,535 486,539 468,549" fill="url(#metalSteps)"/>
+      <polygon points="460,545 468,549 468,552 460,548" fill="#475569"/>
+      <!-- Step 2 -->
+      <polygon points="468,539 486,529 494,533 476,543" fill="url(#metalSteps)"/>
+      <polygon points="468,539 476,543 476,546 468,542" fill="#475569"/>
+      <!-- Bridge Walkway spanning into hull side door -->
+      <!-- Bridge Floor -->
+      <polygon points="476,533 506,516 513,520 483,537" fill="#cbd5e1"/>
+      <polygon points="476,533 483,537 483,540 476,536" fill="#64748b"/>
+      <!-- Handrails (Thin precise metal) -->
+      <path d="M 460,542 L 476,530 L 506,513" fill="none" stroke="#94a3b8" stroke-width="1.8"/>
+      <path d="M 468,546 L 483,534 L 513,517" fill="none" stroke="#64748b" stroke-width="1.8"/>
+      <!-- Stanchions -->
+      <line x1="460" y1="545" x2="460" y2="542" stroke="#64748b" stroke-width="1.5"/>
+      <line x1="476" y1="533" x2="476" y2="530" stroke="#64748b" stroke-width="1.5"/>
+      <line x1="506" y1="516" x2="506" y2="513" stroke="#64748b" stroke-width="1.5"/>
+      <line x1="468" y1="549" x2="468" y2="546" stroke="#475569" stroke-width="1.5"/>
+      <line x1="483" y1="537" x2="483" y2="534" stroke="#475569" stroke-width="1.5"/>
+      <line x1="513" y1="520" x2="513" y2="517" stroke="#475569" stroke-width="1.5"/>
+      <!-- Small bridge shadow into pit -->
+      <polygon points="472,552 506,532 516,537 482,557" fill="#1b2910" opacity="0.45"/>
+    </g>
+  </g>
+
+  <!-- ==================== SUBMARINE SHADOW ==================== -->
+  <!-- Long, smooth teardrop projected cast shadow on the ground & pit -->
+  <path d="M 285,585 C 330,625 460,580 570,510 C 690,430 765,370 785,355 C 780,350 750,352 690,380 C 560,440 370,545 285,585 Z" 
+        fill="#14210a" opacity="0.48" filter="url(#shadowBlur)"/>
+
+  <!-- ==================== THE ALBACORE (AGSS-569) ==================== -->
+  <!-- 
+    Viewer angle: Three-quarter view looking diagonally from forward-bow towards stern.
+    Bow: (~270, 520) - Rounded, blunt, hydrodynamic tear-drop head.
+    Widest diameter: At 1/3 length (~440, 435), diameter ~100px.
+    Total length: ~750px (approx 7.5x diameter).
+    Stern: (~770, 275) - Tapers smoothly into point with single screw & X-stern planes.
+  -->
+  <g id="albacoreSubmarine">
+
+    <!-- 1. Lower Keel / Ambient Occlusion under hull -->
+    <path d="M 265,535 C 320,595 440,535 550,465 C 650,400 735,320 770,285 C 755,295 670,365 570,430 C 450,505 320,560 265,535 Z" 
+          fill="#0c0e10" opacity="0.8" filter="url(#softContact)"/>
+
+    <!-- 2. Stern Running Gear: X-Stern Rudder Assembly (BEFORE Propeller) -->
+    <!-- X-configuration rudders placed at 45-degree diagonals -->
+    <g id="xRudders">
+      <!-- Upper-Port Rudder blade (pointing up-right) -->
+      <polygon points="735,302 760,266 772,272 745,308" fill="#52575c"/>
+      <polygon points="760,266 772,272 770,274 758,268" fill="#8b929a"/> <!-- Top leading edge -->
+      <polygon points="735,302 745,308 743,312 733,306" fill="#202224"/>
+
+      <!-- Lower-Starboard Rudder blade (pointing down-left) -->
+      <polygon points="742,306 726,334 736,340 752,312" fill="#222527"/>
+      <polygon points="726,334 736,340 734,342 724,336" fill="#151718"/>
+
+      <!-- Upper-Starboard Rudder blade (pointing up-left) -->
+      <polygon points="732,300 740,262 751,266 743,304" fill="#696f75"/>
+      <polygon points="740,262 751,266 750,268 739,264" fill="#a0a7af"/>
+
+      <!-- Lower-Port Rudder blade (pointing down-right) -->
+      <polygon points="748,310 772,338 782,332 758,304" fill="#2c3033"/>
+      <polygon points="772,338 782,332 780,330 770,336" fill="#1a1c1e"/>
+    </g>
+
+    <!-- 3. Single Screw (Bronze Propeller at the sharp tip of stern) -->
+    <!-- 5-bladed single propeller as on Albacore's high-speed experimental phase -->
+    <g id="propeller" transform="translate(775, 278)">
+      <!-- Prop Hub / Fairwater Cap -->
+      <path d="M-2,2 L14,-7 L12,-11 L-4,-2 Z" fill="#684f29"/>
+      <!-- Propeller Blade 1 (Up) -->
+      <path d="M 4,-4 C 8,-18 16,-22 20,-16 C 18,-10 10,-6 4,-4 Z" fill="url(#propBronze)"/>
+      <path d="M 4,-4 C 8,-18 16,-22 20,-16" fill="none" stroke="#d5ab6d" stroke-width="0.8"/>
+      <!-- Propeller Blade 2 (Right/Down) -->
+      <path d="M 6,-2 C 18,-6 26,-2 24,6 C 18,6 10,2 6,-2 Z" fill="url(#propBronze)"/>
+      <!-- Propeller Blade 3 (Down) -->
+      <path d="M 2,1 C 6,14 12,20 16,16 C 14,10 8,4 2,1 Z" fill="#684f29"/>
+      <!-- Propeller Blade 4 (Down/Left) -->
+      <path d="M -1,2 C -10,10 -16,8 -14,2 C -8,0 -2,1 -1,2 Z" fill="#523e1f"/>
+      <!-- Propeller Blade 5 (Up/Left) -->
+      <path d="M 0,-3 C -8,-12 -12,-8 -8,-2 C -4,-1 0,-2 0,-3 Z" fill="url(#propBronze)"/>
+      <!-- Hub Tip Cap -->
+      <circle cx="12" cy="-9" r="2.8" fill="#b89358"/>
+    </g>
+
+    <!-- 4. Main Hull: Continuous True Tear-Drop Solid of Revolution -->
+    <!-- Modeled with 3D volume: Lit upper surface, specular mid-ridge, dark shaded lower hull -->
+    <g id="mainHullBody">
+      <!-- Full Silhouette / Shaded Base -->
+      <path d="M 220,505 
+               C 215,480 240,455 285,425 
+               C 365,370 480,315 580,285 
+               C 665,260 740,268 775,278 
+               C 760,295 725,335 650,385 
+               C 560,445 450,515 375,548 
+               C 295,582 230,555 220,505 Z" 
+            fill="url(#hullLighting)"/>
+
+      <!-- Upper Deck Diffuse Sunlight Highlight (Left 45° top light) -->
+      <path d="M 226,490 
+               C 245,450 310,405 390,365 
+               C 490,315 590,280 680,268 
+               C 745,262 768,272 774,277 
+               C 730,270 655,275 570,300 
+               C 470,330 365,385 295,435 
+               C 250,468 230,485 226,490 Z" 
+            fill="#7e858c" opacity="0.55"/>
+
+      <!-- Specular Highlight Stripe Along Widest Curvature Ridge -->
+      <path d="M 235,492 
+               C 265,455 340,410 425,370 
+               C 515,330 615,295 710,276 
+               C 745,270 765,273 770,277" 
+            fill="none" stroke="#b2bcc7" stroke-width="2.2" stroke-linecap="round" opacity="0.75"/>
+      <path d="M 270,473 
+               C 330,432 405,394 485,360 
+               C 565,328 640,302 705,286" 
+            fill="none" stroke="#e2e8f0" stroke-width="1.0" stroke-linecap="round" opacity="0.9"/>
+
+      <!-- Bottom Rim Ambient Dark Shadow Edge -->
+      <path d="M 230,525 
+               C 265,565 345,565 425,528 
+               C 515,488 620,422 710,352 
+               C 745,322 765,298 775,278 
+               C 760,296 725,335 650,385 
+               C 560,445 450,515 375,548 
+               C 310,576 250,560 230,525 Z" 
+            fill="#121416" opacity="0.95"/>
+
+      <!-- Hull Surface Details: Sonar Windows (Blunt Bow Sides) -->
+      <!-- Port Sonar Window (forward facing sphere section) -->
+      <ellipse cx="248" cy="482" rx="7" ry="9" fill="#1a1c1e" stroke="#3d4348" stroke-width="1.2" transform="rotate(-25 248 482)"/>
+      <ellipse cx="247" cy="481" rx="5" ry="7" fill="#25292c" transform="rotate(-25 248 482)"/>
+      <circle cx="246" cy="479" r="1.5" fill="#64748b" opacity="0.8"/>
+
+      <!-- Starboard Sonar Window (lower perspective glance) -->
+      <ellipse cx="265" cy="522" rx="4" ry="7" fill="#141618" stroke="#2a2e32" stroke-width="1" transform="rotate(-30 265 522)"/>
+
+      <!-- Limber / Drainage Holes: Multiple neat rows of miniature rectangular slots -->
+      <!-- Row 1: Upper Forward-Mid Flank (Lit zone) -->
+      <g fill="#202326" opacity="0.85">
+        <rect x="330" y="440" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 330 440)"/>
+        <rect x="340" y="435" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 340 435)"/>
+        <rect x="350" y="430" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 350 430)"/>
+        <rect x="360" y="425" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 360 425)"/>
+        <rect x="370" y="420" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 370 420)"/>
+        <rect x="380" y="415" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 380 415)"/>
+        <rect x="390" y="410" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 390 410)"/>
+        <rect x="400" y="405" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 400 405)"/>
+        <rect x="410" y="400" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 410 400)"/>
+        <rect x="420" y="395" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 420 395)"/>
+        <rect x="430" y="390" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 430 390)"/>
+        <rect x="440" y="385" width="3.5" height="1.4" rx="0.5" transform="rotate(-28 440 385)"/>
+      </g>
+      <!-- Row 2: Secondary Limber Slots slightly lower -->
+      <g fill="#181a1c" opacity="0.8">
+        <rect x="338" y="446" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 338 446)"/>
+        <rect x="348" y="441" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 348 441)"/>
+        <rect x="358" y="436" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 358 436)"/>
+        <rect x="368" y="431" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 368 431)"/>
+        <rect x="378" y="426" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 378 426)"/>
+        <rect x="388" y="421" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 388 421)"/>
+        <rect x="398" y="416" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 398 416)"/>
+        <rect x="408" y="411" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 408 411)"/>
+        <rect x="418" y="406" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 418 406)"/>
+        <rect x="428" y="401" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 428 401)"/>
+        <rect x="438" y="396" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 438 396)"/>
+        <rect x="448" y="391" width="3.5" height="1.3" rx="0.5" transform="rotate(-28 448 391)"/>
+      </g>
+
+      <!-- Side Visitor Access Portal Hatch (Museum exhibit cut-in) -->
+      <g id="visitorHatch">
+        <path d="M 506,502 C 503,504 501,514 503,520 C 505,524 513,520 514,514 C 516,508 512,500 506,502 Z" 
+              fill="#090a0b"/>
+        <path d="M 506,502 C 503,504 501,514 503,520" fill="none" stroke="#71717a" stroke-width="1"/>
+      </g>
+    </g>
+
+    <!-- 5. Conning Tower / Sail (Streamlined Fairwater & Bow Planes) -->
+    <!-- Positioned amidships forward (length ~1/10 boat length, height ~1/2 diameter) -->
+    <!-- Rounded leading edge, knife-sharp trailing edge -->
+    <g id="conningTowerSail">
+      <!-- Shadow cast by sail onto hull -->
+      <path d="M 432,360 C 455,348 495,335 520,326 C 505,342 475,360 445,372 Z" 
+            fill="#121517" opacity="0.75" filter="url(#softContact)"/>
+
+      <!-- Far/Port Fairwater Plane (Sail Rudder pointing away) -->
+      <polygon points="450,332 470,305 484,310 464,337" fill="#43474b"/>
+      <polygon points="470,305 484,310 482,312 468,307" fill="#7d848c"/>
+
+      <!-- Main Sail Body -->
+      <path d="M 416,366 
+               C 413,348 416,324 425,316 
+               C 432,310 455,318 480,328 
+               C 498,336 506,346 503,348 
+               C 490,350 460,358 428,374 Z" 
+            fill="url(#sailGrad)"/>
+
+      <!-- Sail Curved Leading Edge Top Highlight -->
+      <path d="M 425,316 C 432,310 455,318 480,328 C 498,336 505,346 503,348" 
+            fill="none" stroke="#9da6af" stroke-width="1.4"/>
+      <path d="M 417,358 C 415,340 417,326 425,316" 
+            fill="none" stroke="#727981" stroke-width="1.6"/>
+
+      <!-- Periscope Shears & Mast Fairing atop Sail -->
+      <rect x="444" y="306" width="3.5" height="12" fill="#52575d" rx="1.2" transform="rotate(-18 444 306)"/>
+      <rect x="452" y="310" width="2.5" height="10" fill="#3a3e42" rx="1" transform="rotate(-18 452 310)"/>
+      <line x1="447" y1="304" x2="447" y2="296" stroke="#94a3b8" stroke-width="1.2"/> <!-- Periscope Pole -->
+      <line x1="453" y1="309" x2="453" y2="303" stroke="#64748b" stroke-width="1"/>   <!-- Snorkel Mast -->
+
+      <!-- Near/Starboard Fairwater Plane (Sail Rudder pointing outward toward viewer) -->
+      <!-- Wing span ~1.2x submarine hull diameter -->
+      <g id="starboardFairwaterPlane">
+        <!-- Root fillet shadow -->
+        <ellipse cx="445" cy="358" rx="8" ry="4" fill="#181a1d" opacity="0.6"/>
+        <!-- Plane Top Surface (Lit) -->
+        <polygon points="440,356 415,392 434,398 458,362" fill="#697077"/>
+        <polygon points="415,392 434,398 432,400 413,394" fill="#9da6af"/> <!-- Leading edge bevel -->
+        <!-- Plane Lower/Underside Flange -->
+        <polygon points="415,392 434,398 448,367 432,364" fill="#34383c"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== ENVIRONMENT & MINIATURE DIORAMA DETAILS ==================== -->
+  <g id="dioramaDetails">
+    <!-- 1. Park Bench near the submarine bow -->
+    <g id="parkBench" transform="translate(355, 615)">
+      <!-- Bench Shadow -->
+      <polygon points="0,4 20,-6 24,-4 4,6" fill="#1c2b12" opacity="0.4"/>
+      <!-- Legs -->
+      <line x1="2" y1="5" x2="2" y2="1" stroke="#334155" stroke-width="1.2"/>
+      <line x1="18" y1="-3" x2="18" y2="-7" stroke="#334155" stroke-width="1.2"/>
+      <!-- Wooden Slats (Seat & Backrest) -->
+      <polygon points="0,1 18,-8 22,-6 4,3" fill="#a16207"/>
+      <polygon points="0,1 18,-8 18,-10 0,-1" fill="#ca8a04"/>
+      <polygon points="-1,-2 17,-11 18,-13 0,-4" fill="#b45309"/>
+    </g>
+
+    <!-- 2. Tiny Visitor Silhouettes (Scaled architectural model figures) -->
+    <!-- Group A: Standing under bow looking up in awe -->
+    <g id="figureGroupBow" transform="translate(255, 570)">
+      <!-- Visitor 1 (Adult) -->
+      <ellipse cx="1" cy="6" rx="3.5" ry="1.5" fill="#182710" opacity="0.5"/>
+      <path d="M0,5 L1,0 L3,5 Z" fill="#1e293b"/> <!-- Body -->
+      <circle cx="1.2" cy="-2" r="1.6" fill="#f8fafc"/> <!-- Head -->
+      <!-- Visitor 2 (Child looking up) -->
+      <ellipse cx="7" cy="7" rx="2.5" ry="1.2" fill="#182710" opacity="0.5"/>
+      <path d="M6,6.5 L7,2.5 L9,6.5 Z" fill="#b91c1c"/>
+      <circle cx="7.2" cy="1" r="1.3" fill="#fef08a"/>
+    </g>
+
+    <!-- Group B: Couple strolling along the middle perimeter path -->
+    <g id="figureGroupPath" transform="translate(485, 605)">
+      <!-- Person 1 -->
+      <ellipse cx="0" cy="5" rx="3" ry="1.4" fill="#182710" opacity="0.4"/>
+      <path d="M-1,4 L0,-1 L2,4 Z" fill="#0369a1"/>
+      <circle cx="0.5" cy="-3" r="1.5" fill="#fed7aa"/>
+      <!-- Person 2 -->
+      <ellipse cx="7" cy="6" rx="3" ry="1.4" fill="#182710" opacity="0.4"/>
+      <path d="M6,5 L7,0 L9,5 Z" fill="#475569"/>
+      <circle cx="7.2" cy="-2" r="1.5" fill="#fbcfe8"/>
+    </g>
+
+    <!-- Group C: Solitary observer near the stern pit -->
+    <g id="figureStern" transform="translate(685, 415)">
+      <ellipse cx="0" cy="4" rx="3" ry="1.3" fill="#182710" opacity="0.4"/>
+      <path d="M-1,3 L0,-1 L2,3 Z" fill="#334155"/>
+      <circle cx="0.5" cy="-3" r="1.5" fill="#fde047"/>
+    </g>
+
+    <!-- 3. Trees with round canopy distributed along the plinth rim -->
+    <!-- Far-left rear tree (Atmospheric perspective: lighter, softer) -->
+    <use href="#miniTree" x="220" y="440" transform="scale(0.85)" opacity="0.82"/>
+    <!-- Left rim tree -->
+    <use href="#miniTree" x="175" y="495" transform="scale(1.05)"/>
+    <!-- Bottom-left foreground tree (Sharp, saturated, darker) -->
+    <use href="#miniTree" x="240" y="625" transform="scale(1.2)"/>
+    <!-- Rear-center tree behind pit -->
+    <use href="#miniTree" x="550" y="325" transform="scale(0.75)" opacity="0.75"/>
+    <!-- Far-right rear tree -->
+    <use href="#miniTree" x="790" y="355" transform="scale(0.8)" opacity="0.8"/>
+    <!-- Near right tree by riverbank border -->
+    <use href="#miniTree" x="740" y="585" transform="scale(1.1)"/>
+  </g>
+
+  <!-- Crisp Studio Ambient Vignette Ring (Subtle) -->
+  <ellipse cx="600" cy="530" rx="482" ry="202" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.4"/>
+</svg>
