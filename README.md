@@ -201,7 +201,17 @@ npm run build-index -- --check
 
 ---
 
-## 7. 开源许可证与署名要求 (Licensing & Citation)
+## 7. 作为模板建立自己的数据仓 (Use as a Template)
+
+第三方部署 [llm-iq-dashboard](https://github.com/meomeo-dev/llm-iq-dashboard) 时可以用本仓库的工具链建立自己的公开数据仓：
+
+1. 在 GitHub 上以本仓库为模板建仓（Use this template）或 fork，克隆到看板仓库的同级目录 `../<your-data-repo>`。
+2. 清空历史数据：删除 `runs/` 下全部目录与根目录 `index.json`；`schemas/`、`scripts/`、`tests/` 与 `.github/workflows/validate.yml` 保留。
+3. 看板侧在配置里写 `dataRepo.path: ../<your-data-repo>`（容器部署填 `/data-repo` 并把宿主机路径挂进 runner）。首次 `pnpm sync:data` 会生成根 `index.json`，其中 `name` 与 `repository` 从该仓的 `origin` 远程推导；`description` 可手改，之后的同步保留已有值。
+4. 公网只读展台把 `PELICAN_DATA_REPO_URL` 指向 `https://raw.githubusercontent.com/<owner>/<repo>/main`。
+5. 保留 CI：每次推送自动跑契约校验、索引一致性与泄漏扫描（`npm run validate`）。永不发布的题目清单 `UNPUBLISHABLE_PROMPT_IDS` 须与看板仓库的 `src/core/data-repo/contract.ts` 保持一致。
+
+## 8. 开源许可证与署名要求 (Licensing & Citation)
 
 本项目采用**代码与数据双轨开源授权**：
 
