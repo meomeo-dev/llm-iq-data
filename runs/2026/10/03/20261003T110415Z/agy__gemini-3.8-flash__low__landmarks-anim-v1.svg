@@ -1,0 +1,585 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%">
+  <defs>
+    <!-- 空间环境光与阴影滤镜 -->
+    <filter id="soft-shadow" x="-20%" y="-20%" width="150%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.1   0 0 0 0 0.15   0 0 0 0 0.12  0 0 0 0.45 0" />
+      <feOffset dx="-10" dy="18" />
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+    </filter>
+
+    <filter id="ambient-ground-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.15  0 0 0 0 0.22  0 0 0 0 0.15  0 0 0 0.6 0" />
+    </filter>
+
+    <filter id="subtle-blur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" />
+    </filter>
+
+    <!-- 背景漫射渐变 -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f5f7fa" />
+      <stop offset="100%" stop-color="#e4e8ee" />
+    </linearGradient>
+
+    <!-- 圆形基座渐变 -->
+    <linearGradient id="pedestal-rim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#c9ced6" />
+      <stop offset="100%" stop-color="#9aa2ad" />
+    </linearGradient>
+
+    <linearGradient id="pedestal-side" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#808791" />
+      <stop offset="25%" stop-color="#646b75" />
+      <stop offset="100%" stop-color="#464c54" />
+    </linearGradient>
+
+    <!-- 草坪渐变与修饰 -->
+    <radialGradient id="lawn-surface" cx="45%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#a0c46c" />
+      <stop offset="65%" stop-color="#8cae5e" />
+      <stop offset="100%" stop-color="#729248" />
+    </radialGradient>
+
+    <!-- 水角与水面反光渐变 -->
+    <linearGradient id="river-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5b9cb3" />
+      <stop offset="50%" stop-color="#4a89a0" />
+      <stop offset="100%" stop-color="#3b7285" />
+    </linearGradient>
+
+    <!-- 潜艇主体光影材质：从艇首圆钝到艇尾，带有细长冷色高光 -->
+    <linearGradient id="hull-linear" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#6a7075" />
+      <stop offset="18%" stop-color="#7e858a" />
+      <stop offset="24%" stop-color="#d6e0e8" /> <!-- 细长冷色高光 -->
+      <stop offset="30%" stop-color="#5c6165" /> <!-- 受光中灰 -->
+      <stop offset="65%" stop-color="#2f3337" /> <!-- 近黑深灰 -->
+      <stop offset="100%" stop-color="#181a1c" /> <!-- 背光底边暗部 -->
+    </linearGradient>
+
+    <!-- 指挥塔围壳渐变 -->
+    <linearGradient id="sail-grad" x1="10%" y1="10%" x2="90%" y2="90%">
+      <stop offset="0%" stop-color="#757c82" />
+      <stop offset="22%" stop-color="#d9e3ea" /> <!-- 顶沿高光 -->
+      <stop offset="40%" stop-color="#5c6165" />
+      <stop offset="85%" stop-color="#2c3033" />
+      <stop offset="100%" stop-color="#1a1d1f" />
+    </linearGradient>
+
+    <!-- 水平围壳舵渐变 -->
+    <linearGradient id="sail-plane-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#828a91" />
+      <stop offset="35%" stop-color="#5c6165" />
+      <stop offset="100%" stop-color="#25292c" />
+    </linearGradient>
+
+    <!-- X形尾舵各舵面光照渐变 -->
+    <linearGradient id="rudder-top-left" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#798188" />
+      <stop offset="50%" stop-color="#53585c" />
+      <stop offset="100%" stop-color="#2a2d30" />
+    </linearGradient>
+    <linearGradient id="rudder-bottom-right" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a4f54" />
+      <stop offset="70%" stop-color="#282b2e" />
+      <stop offset="100%" stop-color="#1a1c1e" />
+    </linearGradient>
+
+    <!-- 暗铜色螺旋桨渐变 -->
+    <linearGradient id="propeller-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c49e5d" />
+      <stop offset="45%" stop-color="#8a6b3c" />
+      <stop offset="100%" stop-color="#4a371c" />
+    </linearGradient>
+
+    <!-- 混凝土托架渐变 -->
+    <linearGradient id="cradle-top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dbd8d0" />
+      <stop offset="100%" stop-color="#c4c1b8" />
+    </linearGradient>
+    <linearGradient id="cradle-front" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b0ada5" />
+      <stop offset="100%" stop-color="#8c8982" />
+    </linearGradient>
+
+    <!-- 排水孔点阵图案 -->
+    <pattern id="limber-holes" width="7" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-21)">
+      <rect x="1" y="1" width="3.5" height="1.2" rx="0.5" fill="#131516" opacity="0.8" />
+    </pattern>
+
+    <!-- 重复构件：微缩混凝土托架单元 -->
+    <g id="concrete-cradle">
+      <!-- 托架底部投影 -->
+      <ellipse cx="0" cy="18" rx="28" ry="9" fill="#1d2616" opacity="0.35" />
+      <!-- 托架主体混凝土正面 -->
+      <path d="M -26,14 L 26,14 L 23,2 L -23,2 Z" fill="url(#cradle-front)" />
+      <!-- 弧形承托上顶面（凹陷贴合水滴艇身） -->
+      <path d="M -23,2 Q 0,-1 23,2 L 18,-8 Q 0,-11 -18,-8 Z" fill="url(#cradle-top)" />
+      <!-- 顶部凹槽阴影 -->
+      <path d="M -18,-8 Q 0,-11 18,-8 Q 0,-5 -18,-8 Z" fill="#202224" opacity="0.35" />
+    </g>
+
+    <!-- 重复构件：微缩球冠树木 -->
+    <g id="mini-tree-tall">
+      <ellipse cx="0" cy="22" rx="14" ry="7" fill="#28351a" opacity="0.35" />
+      <path d="M -2.5,20 L 2.5,20 L 1.5,5 L -1.5,5 Z" fill="#4d3e2b" />
+      <circle cx="-1" cy="0" r="16" fill="#4f7329" />
+      <circle cx="-4" cy="-3" r="14" fill="#678f35" />
+      <circle cx="-6" cy="-6" r="10" fill="#88b14a" />
+      <circle cx="-7" cy="-8" r="5" fill="#a4cb61" opacity="0.8" />
+    </g>
+    <g id="mini-tree-small">
+      <ellipse cx="0" cy="16" rx="11" ry="5.5" fill="#28351a" opacity="0.3" />
+      <path d="M -2,15 L 2,15 L 1,4 L -1,4 Z" fill="#4d3e2b" />
+      <circle cx="-1" cy="0" r="12" fill="#456623" />
+      <circle cx="-3" cy="-2" r="10" fill="#5b822d" />
+      <circle cx="-4.5" cy="-4" r="7.5" fill="#7ba240" />
+      <circle cx="-5.5" cy="-5.5" r="3.5" fill="#9ec45b" opacity="0.85" />
+    </g>
+
+    <style><![CDATA[
+      @keyframes boatFloat {
+        0%, 100% {
+          transform: translate(0px, 0px) rotate(0deg);
+        }
+        50% {
+          transform: translate(2.5px, 1.8px) rotate(1.2deg);
+        }
+      }
+      @keyframes waterGlimmer {
+        0%, 100% {
+          opacity: 0.35;
+          transform: translateX(0px);
+        }
+        50% {
+          opacity: 0.7;
+          transform: translateX(-4px);
+        }
+      }
+      .animated-boat {
+        animation: boatFloat 6s ease-in-out infinite;
+        transform-origin: 945px 695px;
+      }
+      .animated-wave {
+        animation: waterGlimmer 5s ease-in-out infinite;
+      }
+    ]]></style>
+  </defs>
+
+  <!-- 室内展厅柔和明亮漫射背景 -->
+  <rect width="100%" height="100%" fill="url(#bg-grad)" />
+
+  <!-- 底座底部的总漫射投影 -->
+  <ellipse cx="600" cy="545" rx="500" ry="245" fill="#1b242e" opacity="0.22" filter="url(#ambient-ground-shadow)" />
+
+  <!-- ==================== 圆形微缩展示底座 ==================== -->
+  <g id="display-pedestal">
+    <!-- 底座深色垂直侧壁 (展现厚度) -->
+    <path d="M 120,490 
+             A 480 230 0 0 0 1080 490 
+             L 1080 522 
+             A 480 230 0 0 1 120 522 Z" 
+          fill="url(#pedestal-side)" />
+
+    <!-- 侧壁外边缘底端收尾反光 -->
+    <path d="M 120,522 A 480 230 0 0 0 1080 522" stroke="#2e3238" stroke-width="2" fill="none" opacity="0.8" />
+
+    <!-- 底座顶面边缘金属亮边 -->
+    <ellipse cx="600" cy="490" rx="482" ry="232" fill="url(#pedestal-rim)" />
+
+    <!-- 底座顶面（内部由草坪与河角覆盖） -->
+    <g id="pedestal-top-surface">
+      <!-- 主草坪裁剪区 -->
+      <clipPath id="pedestal-clip">
+        <ellipse cx="600" cy="490" rx="480" ry="230" />
+      </clipPath>
+
+      <g clip-path="url(#pedestal-clip)">
+        <!-- 整片饱满草坪 -->
+        <ellipse cx="600" cy="490" rx="480" ry="230" fill="url(#lawn-surface)" />
+
+        <!-- 草坪受光面微纹理与冷暖受光过度 -->
+        <ellipse cx="480" cy="440" rx="420" ry="180" fill="#a4c971" opacity="0.25" />
+        <ellipse cx="780" cy="540" rx="350" ry="160" fill="#587834" opacity="0.2" />
+
+        <!-- 底座一角露出的宁静河面 -->
+        <path d="M 860,560 Q 940,510 1080,520 L 1080 720 L 820 720 Z" fill="url(#river-grad)" />
+        <path d="M 860,560 Q 940,510 1080,520" stroke="#87afb8" stroke-width="3" fill="none" opacity="0.7" />
+
+        <!-- 河岸浅泥质地与小坡边缘 -->
+        <path d="M 857,562 Q 938,512 1080,522 L 1080 529 Q 938,519 855,568 Z" fill="#635948" />
+
+        <!-- 漂浮在水面的动态小船与轻柔水纹 -->
+        <g class="animated-wave">
+          <ellipse cx="945" cy="690" rx="45" ry="16" fill="#69abbf" opacity="0.4" stroke="#87c7d8" stroke-width="1.5" fill-opacity="0.1" />
+          <ellipse cx="980" cy="650" rx="25" ry="8" stroke="#a7e1ef" stroke-width="1.2" fill="none" opacity="0.35" />
+        </g>
+
+        <!-- 一艘微缩游弋小木船 (带柔和水波晃动) -->
+        <g class="animated-boat">
+          <!-- 小船水面暗影 -->
+          <ellipse cx="948" cy="698" rx="22" ry="7" fill="#1d3e4a" opacity="0.45" />
+          <!-- 船体背光外壳 -->
+          <path d="M 926,695 C 934,704 962,704 970,695 L 965,689 C 955,695 938,695 931,689 Z" fill="#4d3521" />
+          <!-- 船体内部与甲板 -->
+          <path d="M 926,695 C 933,688 963,688 970,695 C 963,699 933,699 926,695 Z" fill="#8c6a49" />
+          <ellipse cx="948" cy="694" rx="15" ry="3.5" fill="#362213" />
+          <!-- 船尾微缩木质坐板 -->
+          <rect x="937" y="692.5" width="4" height="4.5" fill="#c79c6d" rx="0.5" />
+        </g>
+
+        <!-- 底座边缘分布的圆形树冠小树 -->
+        <g id="perimeter-trees">
+          <!-- 远景树木 (稍软、微降饱和度) -->
+          <use href="#mini-tree-small" x="320" y="320" transform="scale(0.85)" opacity="0.9" />
+          <use href="#mini-tree-tall" x="380" y="300" transform="scale(0.8)" opacity="0.9" />
+          <use href="#mini-tree-tall" x="440" y="290" transform="scale(0.75)" opacity="0.85" />
+          <use href="#mini-tree-small" x="780" y="315" transform="scale(0.85)" opacity="0.85" />
+          <use href="#mini-tree-tall" x="840" y="335" transform="scale(0.9)" opacity="0.9" />
+          
+          <!-- 近景边缘树木 (实、边缘清晰) -->
+          <use href="#mini-tree-small" x="180" y="470" />
+          <use href="#mini-tree-tall" x="220" y="520" />
+          <use href="#mini-tree-tall" x="270" y="575" />
+          <use href="#mini-tree-small" x="785" y="620" />
+        </g>
+
+        <!-- ==================== 草坪中央浅浅的长方形展示坑 ==================== -->
+        <g id="display-trench" transform="rotate(-21, 600, 480)">
+          <!-- 坑体外轮廓下陷深阴影与内壁 -->
+          <rect x="250" y="445" width="690" height="95" rx="8" fill="#586e3f" />
+          <!-- 坑内下沉底面 -->
+          <rect x="254" y="450" width="682" height="85" rx="6" fill="#717c69" />
+          <!-- 坑壁向光受光顶边 -->
+          <path d="M 254,535 L 936,535" stroke="#a3b586" stroke-width="2.5" stroke-linecap="round" />
+          <!-- 坑壁背光阴影面 -->
+          <path d="M 254,450 L 936,450" stroke="#37422a" stroke-width="4" stroke-linecap="round" opacity="0.75" />
+          <path d="M 254,450 L 254,535" stroke="#37422a" stroke-width="4" stroke-linecap="round" opacity="0.75" />
+
+          <!-- 展示坑内部几座并排混凝土托架 (高度不超过艇身直径1/4) -->
+          <!-- 托架自左向右 (对应自前向后布置) -->
+          <use href="#concrete-cradle" x="380" y="488" />
+          <use href="#concrete-cradle" x="480" y="488" />
+          <use href="#concrete-cradle" x="580" y="488" />
+          <use href="#concrete-cradle" x="680" y="488" />
+          <use href="#concrete-cradle" x="780" y="488" />
+          <use href="#concrete-cradle" x="850" y="488" />
+
+          <!-- 展示坑一侧的小台阶与通向艇体侧门的小桥 (浅灰金属材质) -->
+          <g id="access-bridge">
+            <!-- 地面台阶 (踏步层次) -->
+            <!-- 踏步投影 -->
+            <rect x="525" y="420" width="36" height="30" fill="#2d381c" opacity="0.4" />
+            <!-- 第1级阶梯 -->
+            <rect x="526" y="422" width="34" height="6" fill="#d2d5d9" rx="1" />
+            <rect x="526" y="427" width="34" height="3" fill="#8f949b" />
+            <!-- 第2级阶梯 -->
+            <rect x="526" y="429" width="34" height="6" fill="#d2d5d9" rx="1" />
+            <rect x="526" y="434" width="34" height="3" fill="#8f949b" />
+            <!-- 第3级阶梯/桥台 -->
+            <rect x="526" y="436" width="34" height="7" fill="#dce0e6" rx="1" />
+            <rect x="526" y="442" width="34" height="4" fill="#7a7f85" />
+
+            <!-- 通向艇体侧门的小桥梁体 -->
+            <!-- 小桥阴影打入坑内 -->
+            <rect x="532" y="445" width="22" height="42" fill="#1e2417" opacity="0.5" />
+            <!-- 桥面受光中灰 -->
+            <rect x="530" y="444" width="24" height="38" rx="2" fill="#bac0c7" />
+            <!-- 桥面金属防滑格纹/格栅细线 (只在受光面画出) -->
+            <line x1="532" y1="449" x2="552" y2="449" stroke="#9298a0" stroke-width="1" />
+            <line x1="532" y1="454" x2="552" y2="454" stroke="#9298a0" stroke-width="1" />
+            <line x1="532" y1="459" x2="552" y2="459" stroke="#9298a0" stroke-width="1" />
+            <line x1="532" y1="464" x2="552" y2="464" stroke="#9298a0" stroke-width="1" />
+            <line x1="532" y1="469" x2="552" y2="469" stroke="#9298a0" stroke-width="1" />
+            <line x1="532" y1="474" x2="552" y2="474" stroke="#9298a0" stroke-width="1" />
+            <line x1="532" y1="479" x2="552" y2="479" stroke="#9298a0" stroke-width="1" />
+            <!-- 桥身护栏 -->
+            <line x1="530" y1="444" x2="530" y2="482" stroke="#dbe0e8" stroke-width="2" />
+            <line x1="554" y1="444" x2="554" y2="482" stroke="#8b9096" stroke-width="2" />
+          </g>
+        </g>
+
+        <!-- 艇旁草地上的一张小小的长椅 -->
+        <g id="park-bench" transform="translate(490, 580) rotate(-16)">
+          <ellipse cx="14" cy="14" rx="14" ry="4" fill="#2d381c" opacity="0.35" />
+          <!-- 椅脚浅灰金属 -->
+          <path d="M 2,6 L 2,12 M 24,6 L 24,12 M 2,9 L 24,9" stroke="#50555c" stroke-width="1.8" />
+          <!-- 椅面木条受光 -->
+          <rect x="0" y="5" width="28" height="3" rx="1" fill="#ba9265" />
+          <rect x="0" y="1" width="28" height="2.5" rx="1" fill="#cfab7e" />
+        </g>
+
+        <!-- 草坪上散落的小人剪影（微缩人偶比例，约10-14px高） -->
+        <!-- 组1：艇首下方仰望的一组参观者人偶 (近景，颜色略深边缘清晰) -->
+        <g id="visitor-group-bow" transform="translate(325, 540)">
+          <!-- 站姿人偶A (父亲) -->
+          <ellipse cx="0" cy="16" rx="5" ry="2" fill="#2d381c" opacity="0.4" />
+          <line x1="-1.5" y1="8" x2="-2" y2="16" stroke="#252b33" stroke-width="2" />
+          <line x1="1.5" y1="8" x2="2" y2="16" stroke="#252b33" stroke-width="2" />
+          <path d="M -3.5,2 L 3.5,2 L 2.5,9 L -2.5,9 Z" fill="#3b5266" /> <!-- 仰望头部微向后昂 -->
+          <circle cx="0.5" cy="-1.5" r="2.2" fill="#cbb399" />
+          
+          <!-- 站姿人偶B (小孩，较小尺寸) -->
+          <ellipse cx="10" cy="16" rx="3.5" ry="1.5" fill="#2d381c" opacity="0.35" />
+          <line x1="9" y1="11" x2="8.5" y2="16" stroke="#1f2329" stroke-width="1.5" />
+          <line x1="11" y1="11" x2="11.5" y2="16" stroke="#1f2329" stroke-width="1.5" />
+          <rect x="7.5" y="6.5" width="5" height="5" rx="1" fill="#a64b38" />
+          <circle cx="10" cy="4" r="1.6" fill="#cbb399" />
+
+          <!-- 站姿人偶C (手指艇首引人注目) -->
+          <ellipse cx="-11" cy="17" rx="4.5" ry="2" fill="#2d381c" opacity="0.4" />
+          <path d="M -13,9 L -13,17 M -9.5,9 L -9.5,17" stroke="#373d45" stroke-width="1.8" />
+          <path d="M -14,3 L -8,3 L -9,10 L -13,10 Z" fill="#465c49" />
+          <circle cx="-11" cy="0" r="2" fill="#d4beaa" />
+          <!-- 伸出的手臂指向大青花鱼号饱满的水滴艇首 -->
+          <line x1="-10" y1="4" x2="-5" y2="-1" stroke="#465c49" stroke-width="1.2" stroke-linecap="round" />
+        </g>
+
+        <!-- 组2：长椅旁散步的两人剪影 -->
+        <g id="visitor-group-mid" transform="translate(545, 595)">
+          <ellipse cx="0" cy="13" rx="4" ry="1.8" fill="#2d381c" opacity="0.35" />
+          <path d="M -1.5,7 L -2,13 M 1.5,7 L 2,13" stroke="#222" stroke-width="1.6" />
+          <rect x="-3" y="1" width="6" height="6.5" rx="1" fill="#756251" />
+          <circle cx="0" cy="-2" r="1.9" fill="#d2bc9e" />
+
+          <ellipse cx="8" cy="13" rx="3.5" ry="1.6" fill="#2d381c" opacity="0.35" />
+          <path d="M 6.5,7 L 6.5,13 M 9.5,7 L 9.5,13" stroke="#222" stroke-width="1.6" />
+          <path d="M 5,1 L 11,1 L 10,8 L 6,8 Z" fill="#3c5770" />
+          <circle cx="8" cy="-2" r="1.9" fill="#d2bc9e" />
+        </g>
+
+        <!-- 组3：河岸边微缩人偶 (较远，整体提亮降对比) -->
+        <g id="visitor-group-river" transform="translate(830, 545)" opacity="0.8">
+          <ellipse cx="0" cy="11" rx="3.5" ry="1.5" fill="#2d381c" opacity="0.25" />
+          <line x1="0" y1="6" x2="0" y2="11" stroke="#454b52" stroke-width="1.5" />
+          <rect x="-2" y="1" width="4" height="5.5" fill="#8c7a65" />
+          <circle cx="0" cy="-1.5" r="1.6" fill="#d5c8b6" />
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ==================== 主体：大青花鱼号潜艇 (USS Albacore AGSS-569) ==================== -->
+  <!-- 构图：约 30° 俯视四分之三视角，从艇首一侧斜向俯视，主体位于画面正中，占70% -->
+  <g id="albacore-submarine" transform="translate(18, -12)">
+
+    <!-- 主体在地面拖出的柔和长阴影 (光自左上方45°漫射而下) -->
+    <g id="hull-ground-cast-shadow" filter="url(#ambient-ground-shadow)" opacity="0.7">
+      <path d="M 285,455 
+               C 350,470 480,510 650,490 
+               C 800,470 940,400 985,350 
+               C 960,335 830,360 670,390 
+               C 500,420 370,410 290,430 Z" 
+            fill="#121a10" />
+      <!-- 指挥塔在地面延伸出的斜向长梯形投影 -->
+      <polygon points="510,405 590,410 635,465 540,460" fill="#10170f" />
+    </g>
+
+    <!-- 艇身下层构件：左舷背侧尾舵叶与左舷背光围壳舵 (被艇体遮挡部分在下) -->
+    <!-- 1. 左舷背光围壳舵 (伸展出约1.2倍艇径之翼展，角度受透视压缩) -->
+    <path d="M 480,318 L 472,270 L 498,284 L 512,326 Z" fill="#222528" stroke="#16181a" stroke-width="0.8" />
+
+    <!-- 2. X形尾舵叶：左上方舵叶 (向左上方倾斜45°视角投影) -->
+    <g id="rudder-upper-left">
+      <!-- 舵面连接暗部 -->
+      <path d="M 870,270 L 910,215 L 928,228 L 888,280 Z" fill="url(#rudder-top-left)" />
+      <!-- 受光前沿高光窄边 -->
+      <line x1="870" y1="270" x2="910" y2="215" stroke="#9ba4ad" stroke-width="1.2" />
+      <line x1="910" y1="215" x2="928" y2="228" stroke="#50565c" stroke-width="1" />
+    </g>
+
+    <!-- 3. X形尾舵叶：右上方舵叶 (向右上方倾斜) -->
+    <g id="rudder-upper-right">
+      <path d="M 890,283 L 950,250 L 962,263 L 905,294 Z" fill="#383d42" />
+      <line x1="890" y1="283" x2="950" y2="250" stroke="#7e868e" stroke-width="1" />
+    </g>
+
+    <!-- ==================== 完整水滴形艇体 (Teardrop Hull) ==================== -->
+    <!--
+      比例严谨设定：
+      - 艇长约 660px，最大直径(最宽处)约 88px (比率 ≈ 7.5 : 1)
+      - 艇首圆钝饱满，位于前部 (约 x:280, y:430)
+      - 最大直径在前三分之一处 (约 x:490 附近)
+      - 向后平滑收细，艇尾收成一个尖 (约 x:940, y:292)
+      - 表面光滑无阶梯、无平直甲板
+    -->
+    <g id="main-hull">
+      <!-- 艇体底色与光影曲面 (融合线性高光与深暗背光腹部) -->
+      <path d="M 285,425 
+               C 260,395 295,340 370,320 
+               C 445,300 520,295 620,295 
+               C 740,295 860,285 940,292
+               C 920,305 870,325 805,345 
+               C 725,370 610,402 505,420 
+               C 420,435 340,448 300,442
+               C 288,440 280,434 285,425 Z" 
+            fill="url(#hull-linear)" />
+
+      <!-- 艇首饱满的圆形钝头立体受光高光球冠 -->
+      <path d="M 285,425 
+               C 272,408 286,375 320,352 
+               C 350,332 385,322 410,320
+               C 375,345 330,375 305,415
+               C 295,430 288,432 285,425 Z" 
+            fill="#80878e" opacity="0.35" />
+
+      <!-- 沿艇体最宽处留出的细长冷色高光线条 (贯穿中前部光滑流线) -->
+      <path d="M 320,360 
+               C 390,328 470,314 560,312 
+               C 660,310 770,305 870,294" 
+            stroke="#edf3f7" stroke-width="2.2" stroke-linecap="round" fill="none" opacity="0.85" filter="url(#subtle-blur)" />
+      <!-- 核心锐利高光 -->
+      <path d="M 350,350 
+               C 410,324 480,313 560,311 
+               C 640,310 740,306 830,297" 
+            stroke="#ffffff" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.9" />
+
+      <!-- 艇腹背光深陷处压深（体现圆柱回转体下半部体量感） -->
+      <path d="M 298,440 
+               C 335,446 415,434 505,418 
+               C 610,400 725,368 805,343 
+               C 870,323 920,303 940,292 
+               C 920,298 870,315 805,335 
+               C 725,360 610,390 505,408 
+               C 415,423 335,436 298,440 Z" 
+            fill="#121416" opacity="0.75" />
+
+      <!-- 艇首表面细节：圆形声呐窗 (小型圆形与环境闭塞小暗凹) -->
+      <g id="sonar-window" transform="translate(315, 385) rotate(-16)">
+        <!-- 声呐窗微凹阴影环 -->
+        <circle cx="0" cy="0" r="6" fill="#1b1e21" />
+        <!-- 内部传感器基底 -->
+        <circle cx="0" cy="0" r="5" fill="#32373b" />
+        <!-- 受光金属微圆顶 -->
+        <circle cx="-0.8" cy="-0.8" r="4" fill="#4d5359" />
+        <!-- 侧缘窄高光 -->
+        <path d="M -3.5,0 A 3.5 3.5 0 0 1 0,-3.5" stroke="#9da7b0" stroke-width="0.9" fill="none" />
+      </g>
+
+      <!-- 艇首两侧排布的几排细小排水孔 (成排细密整齐，不以三个代表一排) -->
+      <g id="limber-holes-group" transform="translate(365, 385) rotate(-18)">
+        <!-- 细密排水孔矩形列阵 (3排长阵) -->
+        <rect x="0" y="0" width="84" height="2" rx="0.8" fill="#141618" opacity="0.85" />
+        <rect x="0" y="4" width="90" height="2" rx="0.8" fill="#141618" opacity="0.85" />
+        <rect x="3" y="8" width="82" height="2" rx="0.8" fill="#141618" opacity="0.85" />
+
+        <!-- 孔眼受光下边缘反光微线 -->
+        <rect x="0" y="2" width="84" height="0.6" fill="#717880" opacity="0.5" />
+        <rect x="0" y="6" width="90" height="0.6" fill="#717880" opacity="0.5" />
+        <rect x="3" y="10" width="82" height="0.6" fill="#717880" opacity="0.5" />
+      </g>
+
+      <!-- 艇体通向展示小桥的微缩侧门开口 (在开口里留更深暗部与门框) -->
+      <g id="hull-access-door" transform="translate(545, 362) rotate(-15)">
+        <rect x="-2" y="-1" width="18" height="28" rx="7" fill="#16181a" />
+        <rect x="0" y="1" width="14" height="24" rx="5" fill="#26292c" />
+        <!-- 开口内部深凹暗部 -->
+        <rect x="2" y="3" width="10" height="20" rx="3.5" fill="#0d0e0f" />
+        <!-- 门框受光提亮窄边 -->
+        <path d="M 0,22 L 0,6 C 0,2 14,2 14,6" stroke="#878e96" stroke-width="0.8" fill="none" />
+      </g>
+    </g>
+
+    <!-- ==================== 艇体中部偏前：流线型指挥塔围壳 ==================== -->
+    <!--
+      比例严谨设定：
+      - 前缘圆、后缘尖（水滴流线剖面）
+      - 围壳高度约为艇身直径的一半 (~44px)
+      - 围壳长度约为艇长的十分之一 (~66px)
+      - 位于艇体中部偏前 (约艇长30%~38%之间)
+    -->
+    <g id="conning-tower-sail">
+      <!-- 围壳与艇体相接处的环境光遮蔽(AO)半透明深色形状 -->
+      <ellipse cx="505" cy="318" rx="38" ry="8" fill="#101214" opacity="0.65" />
+
+      <!-- 围壳主体流线型体块 -->
+      <path d="M 470,314 
+               C 468,295 470,270 478,266 
+               C 485,263 515,264 532,272 
+               C 540,277 544,295 545,318 
+               C 525,322 495,322 470,314 Z" 
+            fill="url(#sail-grad)" />
+
+      <!-- 围壳顶部高光亮脊（受光面顶边更亮窄边） -->
+      <path d="M 478,266 C 490,263 515,265 532,272" stroke="#e8eff5" stroke-width="1.6" stroke-linecap="round" fill="none" />
+
+      <!-- 围壳前缘饱满圆弧迎光面 -->
+      <path d="M 470,314 C 468,295 470,270 478,266" stroke="#9aa3ab" stroke-width="1.2" fill="none" />
+
+      <!-- 围壳后缘尖锐背光边缘 -->
+      <path d="M 532,272 C 540,277 544,295 545,318" stroke="#1d2022" stroke-width="1.2" fill="none" />
+
+      <!-- 围壳右舷水平围壳舵 (前部水平伸出，翼展约为艇体直径1.2倍) -->
+      <g id="sail-plane-starboard">
+        <!-- 围壳舵根部微阴影 -->
+        <ellipse cx="512" cy="296" rx="4" ry="2.5" fill="#1b1d1f" />
+        <!-- 围壳舵翼面 (流线水平机翼形) -->
+        <path d="M 504,293 
+                 L 548,318 
+                 L 542,324 
+                 L 498,298 Z" 
+              fill="url(#sail-plane-grad)" />
+        <!-- 舵前缘迎风受光锐边 -->
+        <line x1="504" y1="293" x2="548" y2="318" stroke="#d5e0e8" stroke-width="1.4" stroke-linecap="round" />
+        <!-- 舵后缘背光压暗边 -->
+        <line x1="498" y1="298" x2="542" y2="324" stroke="#181a1c" stroke-width="1" stroke-linecap="round" />
+      </g>
+    </g>
+
+    <!-- ==================== 艇尾控制面与推进构件 ==================== -->
+    <!--
+      结构严谨设定：
+      ⑤ 艇尾只有一具螺旋桨，桨前的四片舵叶排成 X 形（而不是十字形）
+      - X形舵叶翼展略大于该处艇体直径
+      - 单具暗铜色螺旋桨
+    -->
+    <!-- 4. X形尾舵叶：左下方舵叶 (向左下方倾斜) -->
+    <g id="rudder-lower-left">
+      <path d="M 872,310 L 892,365 L 908,358 L 888,303 Z" fill="url(#rudder-bottom-right)" />
+      <!-- 背光面底边压一道更暗的窄边 -->
+      <line x1="892" y1="365" x2="908" y2="358" stroke="#121314" stroke-width="1.2" />
+    </g>
+
+    <!-- 5. X形尾舵叶：右下方舵叶 (向右下方倾斜) -->
+    <g id="rudder-lower-right">
+      <path d="M 892,312 L 938,348 L 950,338 L 905,302 Z" fill="#242729" />
+      <!-- 受光窄边 -->
+      <line x1="892" y1="312" x2="938" y2="348" stroke="#484d52" stroke-width="1" />
+      <line x1="938" y1="348" x2="950" y2="338" stroke="#121315" stroke-width="1.2" />
+    </g>
+
+    <!-- 艇尾尖端收聚点与桨毂 -->
+    <path d="M 936,290 C 944,289 950,291 954,293 C 950,295 944,296 936,295 Z" fill="#1b1c1e" />
+
+    <!-- 单具暗铜色单轴螺旋桨 (五叶大侧斜微缩暗铜螺旋桨) -->
+    <g id="single-propeller" transform="translate(956, 293)">
+      <!-- 桨毂核心圆锥体 -->
+      <path d="M -2,-2.5 L 9,-0.5 L 9,0.5 L -2,2.5 Z" fill="#664f2b" />
+      <ellipse cx="-1" cy="0" rx="2" ry="3" fill="#8a6b3c" />
+
+      <!-- 螺旋桨叶片 (暗铜色 #8a6b3c，高光 #c49e5d，暗面 #4a371c) -->
+      <!-- 桨叶 1 (上方) -->
+      <path d="M 0,-1 C 4,-12 14,-15 16,-9 C 14,-4 5,-1 0,0 Z" fill="url(#propeller-grad)" stroke="#4a371c" stroke-width="0.5" />
+      <path d="M 1,-1 C 5,-10 13,-13 15,-8" stroke="#dfbf85" stroke-width="0.8" fill="none" />
+
+      <!-- 桨叶 2 (前上方) -->
+      <path d="M -1,-1 C -8,-8 -8,-17 -2,-17 C 2,-13 2,-5 0,-1 Z" fill="url(#propeller-grad)" stroke="#4a371c" stroke-width="0.5" />
+
+      <!-- 桨叶 3 (下方伸展) -->
+      <path d="M 0,1 C 6,10 16,14 17,8 C 14,3 6,1 0,0 Z" fill="url(#propeller-grad)" stroke="#4a371c" stroke-width="0.5" />
+      <path d="M 1,1 C 6,8 14,11 16,7" stroke="#b08a4c" stroke-width="0.7" fill="none" />
+
+      <!-- 桨叶 4 (后下方) -->
+      <path d="M -1,1 C -5,9 -3,17 3,15 C 5,11 2,4 0,1 Z" fill="url(#propeller-grad)" stroke="#4a371c" stroke-width="0.5" />
+
+      <!-- 桨叶 5 (轴向斜侧) -->
+      <path d="M 1,0 C 8,2 18,0 18,-4 C 14,-6 5,-2 1,0 Z" fill="url(#propeller-grad)" stroke="#4a371c" stroke-width="0.5" />
+
+      <!-- 桨毂顶端抛光小亮点 -->
+      <circle cx="8" cy="0" r="1.2" fill="#ffd991" />
+    </g>
+  </g>
+</svg>
