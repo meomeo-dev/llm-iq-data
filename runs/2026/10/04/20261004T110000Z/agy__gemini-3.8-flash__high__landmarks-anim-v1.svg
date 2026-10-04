@@ -1,0 +1,834 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="100%" height="100%">
+  <defs>
+    <!-- 背景渐变（陈列室温和漫射背景） -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8f6f1"/>
+      <stop offset="55%" stop-color="#f0ece3"/>
+      <stop offset="100%" stop-color="#e5e0d5"/>
+    </linearGradient>
+
+    <!-- 底座顶面渐变（浅米色广场地面） -->
+    <linearGradient id="pedestalTopGrad" x1="20%" y1="10%" x2="80%" y2="90%">
+      <stop offset="0%" stop-color="#eee6d8"/>
+      <stop offset="50%" stop-color="#e5dcce"/>
+      <stop offset="100%" stop-color="#d6ccbe"/>
+    </linearGradient>
+
+    <!-- 底座侧壁深色渐变 -->
+    <linearGradient id="pedestalSideGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6e584b"/>
+      <stop offset="25%" stop-color="#8a7162"/>
+      <stop offset="65%" stop-color="#584437"/>
+      <stop offset="100%" stop-color="#3d2e24"/>
+    </linearGradient>
+
+    <!-- 塔身砂岩受光面（偏橙红） -->
+    <linearGradient id="sandstoneLit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d98262"/>
+      <stop offset="60%" stop-color="#c87253"/>
+      <stop offset="100%" stop-color="#ba6446"/>
+    </linearGradient>
+
+    <!-- 塔身砂岩背光面（偏紫褐） -->
+    <linearGradient id="sandstoneShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#934d3b"/>
+      <stop offset="60%" stop-color="#803f2f"/>
+      <stop offset="100%" stop-color="#6f3324"/>
+    </linearGradient>
+
+    <!-- 绿瓦坡屋顶受光面 -->
+    <linearGradient id="roofLit" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4e8d5f"/>
+      <stop offset="60%" stop-color="#3f7a4f"/>
+      <stop offset="100%" stop-color="#356842"/>
+    </linearGradient>
+
+    <!-- 绿瓦坡屋顶背光面 -->
+    <linearGradient id="roofShadow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c5636"/>
+      <stop offset="100%" stop-color="#1f3f26"/>
+    </linearGradient>
+
+    <!-- 金铜色圆球质感 -->
+    <radialGradient id="goldSphere" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#fff1b8"/>
+      <stop offset="25%" stop-color="#e5b44d"/>
+      <stop offset="70%" stop-color="#c9962e"/>
+      <stop offset="100%" stop-color="#7a5511"/>
+    </radialGradient>
+
+    <!-- 柔和投影滤镜 -->
+    <filter id="softShadow" x="-20%" y="-20%" width="150%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="9"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.18   0 0 0 0 0.12   0 0 0 0 0.08  0 0 0 0.32 0"/>
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+    </filter>
+
+    <filter id="pedestalBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+
+    <!-- 重复构件：棕榈树叶 -->
+    <g id="palmLeaf">
+      <path d="M 0 0 C 8 -14 26 -20 44 -14 C 32 -8 18 -4 0 0 Z" fill="#366b3b"/>
+      <path d="M 0 0 C 8 -12 24 -17 40 -12" stroke="#4f8c54" stroke-width="1.2" fill="none"/>
+    </g>
+
+    <style><![CDATA[
+      /* 微缩模型动态：仅环境中的棕榈树冠与小庭院树微风摆动、净身泉水波微漾 */
+      .sway-slow-1 {
+        transform-origin: 250px 480px;
+        animation: palmSway1 6.5s ease-in-out infinite;
+      }
+      .sway-slow-2 {
+        transform-origin: 305px 545px;
+        animation: palmSway2 7.2s ease-in-out infinite;
+      }
+      .sway-slow-3 {
+        transform-origin: 350px 600px;
+        animation: palmSway1 5.8s ease-in-out infinite;
+      }
+      .sway-slow-4 {
+        transform-origin: 730px 525px;
+        animation: palmSway2 8s ease-in-out infinite;
+      }
+      .court-trees {
+        transform-origin: 620px 450px;
+        animation: treeBreeze 5s ease-in-out infinite;
+      }
+      .fountain-ripple {
+        transform-origin: 622px 466px;
+        animation: waterPulse 4.2s ease-in-out infinite;
+      }
+
+      @keyframes palmSway1 {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(2.2deg); }
+      }
+      @keyframes palmSway2 {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(-1.8deg); }
+      }
+      @keyframes treeBreeze {
+        0%, 100% { transform: skewX(0deg); }
+        50% { transform: skewX(1.2deg); }
+      }
+      @keyframes waterPulse {
+        0%, 100% { transform: scale(1); opacity: 0.75; }
+        50% { transform: scale(1.15); opacity: 0.35; }
+      }
+    ]]></style>
+  </defs>
+
+  <!-- 1. 背景：陈列室纯净柔和光幕 -->
+  <rect width="1000" height="900" fill="url(#bgGrad)"/>
+
+  <!-- 2. 展示底座（厚度可见的圆形底座） -->
+  <g id="displayPedestal">
+    <!-- 底座下方柔和阴影 -->
+    <ellipse cx="500" cy="585" rx="420" ry="185" fill="#2b1f18" opacity="0.22" filter="url(#pedestalBlur)"/>
+
+    <!-- 底座侧壁（厚度 38px） -->
+    <path d="M 110 530 A 390 185 0 0 0 890 530 v 38 A 390 185 0 0 1 110 568 Z" fill="url(#pedestalSideGrad)"/>
+    <!-- 侧壁底部暗边 -->
+    <path d="M 110 568 A 390 185 0 0 0 890 568" stroke="#251a13" stroke-width="2.5" fill="none"/>
+
+    <!-- 底座顶面（即广场地面） -->
+    <ellipse cx="500" cy="530" rx="390" ry="185" fill="url(#pedestalTopGrad)"/>
+    <!-- 顶面外沿高亮细边 -->
+    <ellipse cx="500" cy="530" rx="389" ry="184.5" fill="none" stroke="#fffdfa" stroke-width="2.2" opacity="0.85"/>
+    <ellipse cx="500" cy="530" rx="387" ry="183" fill="none" stroke="#cfc3b0" stroke-width="1" opacity="0.6"/>
+  </g>
+
+  <!-- 3. 地面投影：主体建筑群拖向右下方的漫射阴影 -->
+  <g id="buildingGroundShadow" opacity="0.32" filter="url(#softShadow)">
+    <!-- 祈祷厅与宣礼塔联合投影 -->
+    <polygon points="380,520 440,545 740,510 750,440 660,370 410,430 380,520" fill="#38261e"/>
+    <!-- 宣礼塔细长投影 -->
+    <polygon points="380,520 590,565 670,410 460,380" fill="#38261e"/>
+  </g>
+
+  <!-- 4. 远近层次——远端：早期寺院的一排矮柱基遗址（提亮、低饱和度、空气层感） -->
+  <g id="ancientRuins" opacity="0.75">
+    <!-- 浅色开挖探方下沉凹槽 -->
+    <polygon points="435,372 670,336 685,348 450,384" fill="#cfc2b2" stroke="#bfb2a0" stroke-width="0.8"/>
+    <!-- 一排连续完整的矮圆/方柱基（不省略） -->
+    <g fill="#bfae9c" stroke="#aa9783" stroke-width="0.7">
+      <path d="M 452 380 l 8 -1.2 l 0 -4 l -8 1.2 Z M 460 378.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 452 376 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 470 377 l 8 -1.2 l 0 -4 l -8 1.2 Z M 478 375.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 470 373 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 488 374 l 8 -1.2 l 0 -4 l -8 1.2 Z M 496 372.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 488 370 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 506 371 l 8 -1.2 l 0 -4 l -8 1.2 Z M 514 369.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 506 367 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 524 368 l 8 -1.2 l 0 -4 l -8 1.2 Z M 532 366.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 524 364 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 542 365 l 8 -1.2 l 0 -4 l -8 1.2 Z M 550 363.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 542 361 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 560 362 l 8 -1.2 l 0 -4 l -8 1.2 Z M 568 360.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 560 358 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 578 359 l 8 -1.2 l 0 -4 l -8 1.2 Z M 586 357.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 578 355 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 596 356 l 8 -1.2 l 0 -4 l -8 1.2 Z M 604 354.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 596 352 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 614 353 l 8 -1.2 l 0 -4 l -8 1.2 Z M 622 351.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 614 349 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 632 350 l 8 -1.2 l 0 -4 l -8 1.2 Z M 640 348.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 632 346 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+      <path d="M 650 347 l 8 -1.2 l 0 -4 l -8 1.2 Z M 658 345.8 l 5 2.5 l 0 -4 l -5 -2.5 Z M 650 343 l 8 -1.2 l 5 2.5 l -8 1.2 Z"/>
+    </g>
+  </g>
+
+  <!-- 5. 祈祷厅主体（成排绿色坡屋顶、赭红侧墙与方形庭院） -->
+  <g id="prayerHall">
+    <!-- 祈祷厅与宣礼塔交接处的环境光遮蔽（AO） -->
+    <polygon points="380,520 405,532 405,480 380,470" fill="#2d130a" opacity="0.38"/>
+
+    <!-- 祈祷厅赭红砂岩墙基 -->
+    <polygon points="405,532 670,472 670,442 405,502" fill="url(#sandstoneShadow)"/>
+    <polygon points="405,532 405,502 380,490 380,520" fill="url(#sandstoneLit)"/>
+
+    <!-- 侧墙盲拱与出入口小门（深色开口） -->
+    <g fill="#4e2116" opacity="0.85">
+      <path d="M 430 522 l 12 -2.7 v -10 a 6 6 0 0 0 -12 2.7 Z"/>
+      <path d="M 465 514 l 12 -2.7 v -10 a 6 6 0 0 0 -12 2.7 Z"/>
+      <path d="M 500 506 l 12 -2.7 v -10 a 6 6 0 0 0 -12 2.7 Z"/>
+      <path d="M 535 498 l 12 -2.7 v -10 a 6 6 0 0 0 -12 2.7 Z"/>
+    </g>
+
+    <!-- 祈祷厅成排并列的绿色瓦坡屋顶（严格排布，脊高不超过宣礼塔1/6，占地宽约与总高相当） -->
+    <!-- 脊线与坡面从左向右排列共 8 组山墙坡顶 -->
+    <!-- 坡顶 1 -->
+    <polygon points="395,496
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="100%" height="100%">
+  <defs>
+    <!-- 背景：宁静展厅漫射柔光渐变 -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8f5ee"/>
+      <stop offset="50%" stop-color="#eee9df"/>
+      <stop offset="100%" stop-color="#e0d9cd"/>
+    </linearGradient>
+
+    <!-- 底座顶面：浅米色广场砂岩地面 -->
+    <linearGradient id="plazaGround" x1="20%" y1="15%" x2="80%" y2="85%">
+      <stop offset="0%" stop-color="#eee6d7"/>
+      <stop offset="50%" stop-color="#e5dcce"/>
+      <stop offset="100%" stop-color="#d4cbbe"/>
+    </linearGradient>
+
+    <!-- 底座侧壁：厚度截面深色渐变 -->
+    <linearGradient id="pedestalSideGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#645044"/>
+      <stop offset="25%" stop-color="#7a6355"/>
+      <stop offset="70%" stop-color="#544136"/>
+      <stop offset="100%" stop-color="#3c2d25"/>
+    </linearGradient>
+
+    <!-- 宣礼塔受光面（左面偏橙红砂岩） -->
+    <linearGradient id="towerLitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#dc8363"/>
+      <stop offset="40%" stop-color="#cc7455"/>
+      <stop offset="100%" stop-color="#b8664a"/>
+    </linearGradient>
+
+    <!-- 宣礼塔背光面（右面偏紫褐砂岩） -->
+    <linearGradient id="towerShadowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#914937"/>
+      <stop offset="50%" stop-color="#7e3c2c"/>
+      <stop offset="100%" stop-color="#662d20"/>
+    </linearGradient>
+
+    <!-- 绿瓦坡屋顶受光面 -->
+    <linearGradient id="roofLitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#559968"/>
+      <stop offset="60%" stop-color="#3f7a4f"/>
+      <stop offset="100%" stop-color="#346842"/>
+    </linearGradient>
+
+    <!-- 绿瓦坡屋顶背光面 -->
+    <linearGradient id="roofShadowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2a5835"/>
+      <stop offset="100%" stop-color="#1d3f25"/>
+    </linearGradient>
+
+    <!-- 金铜色圆球高光金属材质 -->
+    <radialGradient id="goldOrbGrad" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#fff8db"/>
+      <stop offset="22%" stop-color="#f5cf6d"/>
+      <stop offset="65%" stop-color="#c9962e"/>
+      <stop offset="90%" stop-color="#8a6116"/>
+      <stop offset="100%" stop-color="#5e410b"/>
+    </radialGradient>
+
+    <!-- 柔和漫射投影滤镜 -->
+    <filter id="softShadow" x="-20%" y="-20%" width="150%" height="150%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.22   0 0 0 0 0.14   0 0 0 0 0.10  0 0 0 0.35 0"/>
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+    </filter>
+
+    <!-- 底座底部柔和弥散阴影 -->
+    <filter id="pedestalGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+
+    <style><![CDATA[
+      /* 微缩模型动态：仅环境中的棕榈树微风轻摆与净身泉水波微荡 */
+      .palm-sway-1 {
+        transform-origin: 245px 575px;
+        animation: palmAnim1 6.8s ease-in-out infinite;
+      }
+      .palm-sway-2 {
+        transform-origin: 285px 625px;
+        animation: palmAnim2 7.4s ease-in-out infinite;
+      }
+      .palm-sway-3 {
+        transform-origin: 205px 515px;
+        animation: palmAnim1 5.9s ease-in-out infinite;
+      }
+      .palm-sway-4 {
+        transform-origin: 785px 560px;
+        animation: palmAnim2 8.1s ease-in-out infinite;
+      }
+      .court-trees-anim {
+        transform-origin: 710px 480px;
+        animation: courtTreesBreeze 5.2s ease-in-out infinite;
+      }
+      .water-ripple {
+        transform-origin: 710px 486px;
+        animation: fountainRipple 4.5s ease-in-out infinite;
+      }
+
+      @keyframes palmAnim1 {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(2.4deg); }
+      }
+      @keyframes palmAnim2 {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(-2deg); }
+      }
+      @keyframes courtTreesBreeze {
+        0%, 100% { transform: skewX(0deg); }
+        50% { transform: skewX(1.4deg); }
+      }
+      @keyframes fountainRipple {
+        0%, 100% { transform: scale(1); opacity: 0.7; }
+        50% { transform: scale(1.22); opacity: 0.25; }
+      }
+    ]]></style>
+  </defs>
+
+  <!-- 1. 背景陈列室柔和纯净光晕 -->
+  <rect width="1000" height="900" fill="url(#bgGrad)"/>
+
+  <!-- 2. 圆形展示底座（厚度可见、30°俯视透视、外沿高亮细边） -->
+  <g id="pedestalGroup">
+    <!-- 底座下方淡淡的椭圆投影 -->
+    <ellipse cx="500" cy="655" rx="425" ry="190" fill="#2b1f17" opacity="0.22" filter="url(#pedestalGlow)"/>
+
+    <!-- 底座侧壁（厚度 38px） -->
+    <path d="M 90 610 A 410 195 0 0 0 910 610 v 38 A 410 195 0 0 1 90 648 Z" fill="url(#pedestalSideGrad)"/>
+    <!-- 侧壁底部收口暗边 -->
+    <path d="M 90 648 A 410 195 0 0 0 910 648" stroke="#261b14" stroke-width="2.6" fill="none"/>
+
+    <!-- 底座顶面（即广场地面） -->
+    <ellipse cx="500" cy="610" rx="410" ry="195" fill="url(#plazaGround)"/>
+    <!-- 顶面外沿高亮细边与微倒角 -->
+    <ellipse cx="500" cy="610" rx="409" ry="194.5" fill="none" stroke="#fffdfa" stroke-width="2.2" opacity="0.9"/>
+    <ellipse cx="500" cy="610" rx="407" ry="193" fill="none" stroke="#d2c5b3" stroke-width="1.2" opacity="0.5"/>
+  </g>
+
+  <!-- 3. 主体在地面上的柔和漫射投影（朝向右下方） -->
+  <g id="groundShadows" opacity="0.34" filter="url(#softShadow)">
+    <!-- 宣礼塔主阴影 -->
+    <polygon points="360,590 570,660 670,510 430,552" fill="#331e15"/>
+    <!-- 祈祷厅主体阴影 -->
+    <polygon points="430,552 690,625 830,560 815,480 680,430 430,510" fill="#331e15"/>
+  </g>
+
+  <!-- 4. 远近层次——远端：早期寺院的一排矮柱基遗址（色浅、对比低、柔和空气层感） -->
+  <g id="ancientRuins" opacity="0.72">
+    <!-- 下沉开挖遗址基坑 -->
+    <polygon points="440,435 735,395 755,410 460,450" fill="#d0c4b4" stroke="#c0b3a2" stroke-width="0.8"/>
+    <!-- 整排规整矮柱基（连续排列不省略） -->
+    <g fill="#c4b5a4" stroke="#ab9b8a" stroke-width="0.7">
+      <path d="M 462 447 l 8 -1.2 v -4.5 l -8 1.2 Z M 470 445.8 l 6 3 v -4.5 l -6 -3 Z M 462 442.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 482 444 l 8 -1.2 v -4.5 l -8 1.2 Z M 490 442.8 l 6 3 v -4.5 l -6 -3 Z M 482 439.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 502 441 l 8 -1.2 v -4.5 l -8 1.2 Z M 510 439.8 l 6 3 v -4.5 l -6 -3 Z M 502 436.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 522 438 l 8 -1.2 v -4.5 l -8 1.2 Z M 530 436.8 l 6 3 v -4.5 l -6 -3 Z M 522 433.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 542 435 l 8 -1.2 v -4.5 l -8 1.2 Z M 550 433.8 l 6 3 v -4.5 l -6 -3 Z M 542 430.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 562 432 l 8 -1.2 v -4.5 l -8 1.2 Z M 570 430.8 l 6 3 v -4.5 l -6 -3 Z M 562 427.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 582 429 l 8 -1.2 v -4.5 l -8 1.2 Z M 590 427.8 l 6 3 v -4.5 l -6 -3 Z M 582 424.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 602 426 l 8 -1.2 v -4.5 l -8 1.2 Z M 610 424.8 l 6 3 v -4.5 l -6 -3 Z M 602 421.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 622 423 l 8 -1.2 v -4.5 l -8 1.2 Z M 630 421.8 l 6 3 v -4.5 l -6 -3 Z M 622 418.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 642 420 l 8 -1.2 v -4.5 l -8 1.2 Z M 650 418.8 l 6 3 v -4.5 l -6 -3 Z M 642 415.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 662 417 l 8 -1.2 v -4.5 l -8 1.2 Z M 670 415.8 l 6 3 v -4.5 l -6 -3 Z M 662 412.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 682 414 l 8 -1.2 v -4.5 l -8 1.2 Z M 690 412.8 l 6 3 v -4.5 l -6 -3 Z M 682 409.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 702 411 l 8 -1.2 v -4.5 l -8 1.2 Z M 710 409.8 l 6 3 v -4.5 l -6 -3 Z M 702 406.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+      <path d="M 722 408 l 8 -1.2 v -4.5 l -8 1.2 Z M 730 406.8 l 6 3 v -4.5 l -6 -3 Z M 722 403.5 l 8 -1.2 l 6 3 l -8 1.2 Z"/>
+    </g>
+  </g>
+
+  <!-- 5. 祈祷厅（低矮宽阔，成排绿色坡屋顶并列，一侧为带净身泉与小树的方形庭院） -->
+  <g id="prayerHallGroup">
+    <!-- 祈祷厅与宣礼塔接合部环境光遮蔽（AO） -->
+    <polygon points="415,555 440,567 440,510 415,500" fill="#291209" opacity="0.45"/>
+
+    <!-- 祈祷厅砂岩外墙 -->
+    <!-- 背光侧主墙（右侧） -->
+    <polygon points="430,552 805,482 805,455 430,525" fill="url(#towerShadowGrad)"/>
+    <!-- 墙脚暗边 -->
+    <path d="M 430 552 L 805 482" stroke="#4a1c12" stroke-width="2"/>
+    <!-- 受光前墙端面 -->
+    <polygon points="400,538 430,552 430,525 400,511" fill="url(#towerLitGrad)"/>
+    <!-- 墙顶亮边 -->
+    <path d="M 400 511 L 430 525" stroke="#f0a58a" stroke-width="1.2"/>
+
+    <!-- 祈祷厅外墙盲拱门廊开口（深凹陷） -->
+    <g fill="#3a1810" opacity="0.88">
+      <path d="M 455 544 l 13 -2.5 v -12 a 6.5 6.5 0 0 0 -13 2.5 Z"/>
+      <path d="M 488 538 l 13 -2.5 v -12 a 6.5 6.5 0 0 0 -13 2.5 Z"/>
+      <path d="M 521 532 l 13 -2.5 v -12 a 6.5 6.5 0 0 0 -13 2.5 Z"/>
+      <path d="M 554 526 l 13 -2.5 v -12 a 6.5 6.5 0 0 0 -13 2.5 Z"/>
+      <path d="M 587 520 l 13 -2.5 v -12 a 6.5 6.5 0 0 0 -13 2.5 Z"/>
+      <path d="M 620 514 l 13 -2.5 v -12 a 6.5 6.5 0 0 0 -13 2.5 Z"/>
+    </g>
+
+    <!-- 祈祷厅并列绿色瓦坡屋顶（成排铺满，脊高严格不超过宣礼塔1/6，占地宽约宣礼塔总高） -->
+    <!-- 坡面依次排布，分出受光面、背光面与顶脊亮边 -->
+    <g id="parallelGabledRoofs">
+      <!-- 屋面 1 -->
+      <polygon points="410,515 422,500 472,425 460,440" fill="url(#roofLitGrad)"/>
+      <polygon points="422,500 435,511 485,436 472,425" fill="url(#roofShadowGrad)"/>
+      <path d="M 422 500 L 472 425" stroke="#7ac48d" stroke-width="1.2"/>
+
+      <!-- 屋面 2 -->
+      <polygon points="435,511 447,496 497,421 485,436" fill="url(#roofLitGrad)"/>
+      <polygon points="447,496 460,507 510,432 497,421" fill="url(#roofShadowGrad)"/>
+      <path d="M 447 496 L 497 421" stroke="#7ac48d" stroke-width="1.2"/>
+
+      <!-- 屋面 3 -->
+      <polygon points="460,507 472,492 522,417 510,432" fill="url(#roofLitGrad)"/>
+      <polygon points="472,492 485,503 535,428 522,417" fill="url(#roofShadowGrad)"/>
+      <path d="M 472 492 L 522 417" stroke="#7ac48d" stroke-width="1.2"/>
+
+      <!-- 屋面 4 -->
+      <polygon points="485,503 497,488 547,413 535,428" fill="url(#roofLitGrad)"/>
+      <polygon points="497,488 510,499 560,424 547,413" fill="url(#roofShadowGrad)"/>
+      <path d="M 497 488 L 547 413" stroke="#7ac48d" stroke-width="1.2"/>
+
+      <!-- 屋面 5 -->
+      <polygon points="510,499 522,484 572,409 560,424" fill="url(#roofLitGrad)"/>
+      <polygon points="522,484 535,495 585,420 572,409" fill="url(#roofShadowGrad)"/>
+      <path d="M 522 484 L 572 409" stroke="#7ac48d" stroke-width="1.2"/>
+
+      <!-- 屋面 6 -->
+      <polygon points="535,495 547,480 597,405 585,420" fill="url(#roofLitGrad)"/>
+      <polygon points="547,480 560,491 610,416 597,405" fill="url(#roofShadowGrad)"/>
+      <path d="M 547 480 L 597 405" stroke="#7ac48d" stroke-width="1.2"/>
+
+      <!-- 屋面 7 -->
+      <polygon points="560,491 572,476 622,401 610,416" fill="url(#roofLitGrad)"/>
+      <polygon points="572,476 585,487 635,412 622,401" fill="url(#roofShadowGrad)"/>
+      <path d="M 572 476 L 622 401" stroke="#7ac48d" stroke-width="1.2"/>
+
+      <!-- 屋面 8 -->
+      <polygon points="585,487 597,472 647,397 635,412" fill="url(#roofLitGrad)"/>
+      <polygon points="597,472 610,483 660,408 647,397" fill="url(#roofShadowGrad)"/>
+      <path d="M 597 472 L 647 397" stroke="#7ac48d" stroke-width="1.2"/>
+
+      <!-- 屋面 9 -->
+      <polygon points="610,483 622,468 672,393 660,408" fill="url(#roofLitGrad)"/>
+      <polygon points="622,468 635,479 685,404 672,393" fill="url(#roofShadowGrad)"/>
+      <path d="M 622 468 L 672 393" stroke="#7ac48d" stroke-width="1.2"/>
+
+      <!-- 屋面 10 -->
+      <polygon points="635,479 647,464 697,389 685,404" fill="url(#roofLitGrad)"/>
+      <polygon points="647,464 660,475 710,400 697,389" fill="url(#roofShadowGrad)"/>
+      <path d="M 647 464 L 697 389" stroke="#7ac48d" stroke-width="1.2"/>
+    </g>
+
+    <!-- 一侧的方形庭院（Sahn，带净身泉与成排小树） -->
+    <g id="courtyardSahn">
+      <!-- 庭院内凹开口地面 -->
+      <polygon points="665,470 760,452 790,478 695,496" fill="#ded5c5" stroke="#bdae9c" stroke-width="1.2"/>
+      <!-- 庭院内壁阴影 -->
+      <polygon points="665,470 760,452 760,459 665,477" fill="#693325" opacity="0.8"/>
+      <polygon points="665,470 665,477 695,503 695,496" fill="#8c4331" opacity="0.6"/>
+
+      <!-- 净身泉（八角形石盆，清水水面） -->
+      <g id="ablutionFountain">
+        <!-- 泉池基座与暗影 -->
+        <ellipse cx="712" cy="484" rx="14" ry="7" fill="#2d170f" opacity="0.4"/>
+        <path d="M 700 482 l 6 -3.5 h 12 l 6 3.5 l -6 3.5 h -12 Z" fill="#ebe4d8" stroke="#a39686" stroke-width="0.8"/>
+        <!-- 泉水水面 -->
+        <path d="M 702 482 l 5 -2.5 h 10 l 5 2.5 l -5 2.5 h -10 Z" fill="#3b7d8c"/>
+        <ellipse cx="712" cy="482" rx="4.5" ry="2" fill="#58a4b5"/>
+        <!-- 水面微波涟漪动画 -->
+        <ellipse class="water-ripple" cx="712" cy="482" rx="7" ry="3.2" fill="none" stroke="#b2e5f0" stroke-width="0.75"/>
+      </g>
+
+      <!-- 庭院内成排小树（成排铺满，微风轻晃） -->
+      <g class="court-trees-anim" id="courtTrees">
+        <!-- 小树1 -->
+        <ellipse cx="738" cy="466" rx="4.5" ry="2.2" fill="#291810" opacity="0.3"/>
+        <line x1="738" y1="466" x2="738" y2="459" stroke="#523927" stroke-width="1.2"/>
+        <circle cx="738" cy="457" r="5" fill="#3f7535"/>
+        <circle cx="737" cy="455.5" r="3.5" fill="#579948"/>
+
+        <!-- 小树2 -->
+        <ellipse cx="748" cy="471" rx="4.5" ry="2.2" fill="#291810" opacity="0.3"/>
+        <line x1="748" y1="471" x2="748" y2="464" stroke="#523927" stroke-width="1.2"/>
+        <circle cx="748" cy="462" r="5" fill="#3f7535"/>
+        <circle cx="747" cy="460.5" r="3.5" fill="#579948"/>
+
+        <!-- 小树3 -->
+        <ellipse cx="758" cy="476" rx="4.5" ry="2.2" fill="#291810" opacity="0.3"/>
+        <line x1="758" y1="476" x2="758" y2="469" stroke="#523927" stroke-width="1.2"/>
+        <circle cx="758" cy="467" r="5" fill="#3f7535"/>
+        <circle cx="757" cy="465.5" r="3.5" fill="#579948"/>
+
+        <!-- 小树4 -->
+        <ellipse cx="768" cy="481" rx="4.5" ry="2.2" fill="#291810" opacity="0.3"/>
+        <line x1="768" y1="481" x2="768" y2="474" stroke="#523927" stroke-width="1.2"/>
+        <circle cx="768" cy="472" r="5" fill="#3f7535"/>
+        <circle cx="767" cy="470.5" r="3.5" fill="#579948"/>
+
+        <!-- 小树5 -->
+        <ellipse cx="778" cy="486" rx="4.5" ry="2.2" fill="#291810" opacity="0.3"/>
+        <line x1="778" y1="486" x2="778" y2="479" stroke="#523927" stroke-width="1.2"/>
+        <circle cx="778" cy="477" r="5" fill="#3f7535"/>
+        <circle cx="777" cy="475.5" r="3.5" fill="#579948"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- 6. 宣礼塔主体（从祈祷厅一角升起，方形塔身，比例准确） -->
+  <g id="minaret">
+    <!-- ③ 主塔身（占总高约4/5，高约312px，底边宽约74px） -->
+    <g id="mainShaft">
+      <!-- 受光面（左面） -->
+      <polygon points="360,590 295,554 295,242 360,278" fill="url(#towerLitGrad)"/>
+      <!-- 受光面顶沿亮边 -->
+      <path d="M 295 242 L 360 278" stroke="#ffd1bc" stroke-width="1.6"/>
+
+      <!-- 背光面（右面） -->
+      <polygon points="360,590 430,552 430,240 360,278" fill="url(#towerShadowGrad)"/>
+      <!-- 背光面底沿压暗边 -->
+      <path d="M 360 590 L 430 552" stroke="#481a10" stroke-width="1.8"/>
+
+      <!-- 受光面（左面）浅浮雕盲拱装饰图案（精巧细致的浅浮雕与明暗刻线） -->
+      <g id="leftFaceRelief" stroke-linecap="round">
+        <!-- 底段：成双马蹄盲拱与小窗 -->
+        <path d="M 312 505 c 0 -16 12 -22 22 -22 c 10 0 22 6 22 22" fill="none" stroke="#f29b7a" stroke-width="1.5"/>
+        <path d="M 314 505 c 0 -14 10 -20 20 -20 c 10 0 20 6 20 20" fill="none" stroke="#94432d" stroke-width="0.9"/>
+        <!-- 凹入的深色窗洞 -->
+        <path d="M 320 503 v -14 a 3.5 3.5 0 0 1 7 0 v 14 Z" fill="#4d1f14"/>
+        <path d="M 333 496 v -14 a 3.5 3.5 0 0 1 7 0 v 14 Z" fill="#4d1f14"/>
+
+        <!-- 中段：多叶拱与相互交织的菱形网状塞夫卡纹（Sebka） -->
+        <path d="M 307 430 c 6 -12 18 -16 26 -8 c 8 -8 20 -4 24 8" fill="none" stroke="#f29b7a" stroke-width="1.4"/>
+        <!-- 菱格交错浮雕线 -->
+        <path d="M 310 422 l 14 -18 l 14 18 l 14 -18" fill="none" stroke="#f29b7a" stroke-width="1.2"/>
+        <path d="M 324 404 l 14 -16 l 14 16" fill="none" stroke="#f29b7a" stroke-width="1.2"/>
+        <path d="M 310 404 l 14 18 l 14 -18 l 14 18" fill="none" stroke="#8f3f2a" stroke-width="0.8"/>
+        <!-- 中段中央窄拱小窗 -->
+        <path d="M 330 408 v -16 a 4 4 0 0 1 8 0 v 16 Z" fill="#4d1f14"/>
+
+        <!-- 上段：阶梯形钟乳垂幔盲拱（Lambrequin Arches）与排列凹槽 -->
+        <path d="M 305 340 q 10 -15 25 -5 q 15 -10 25 5" fill="none" stroke="#f29b7a" stroke-width="1.5"/>
+        <path d="M 305 340 l 4 -6 h 6 l 4 -6 h 6 l 5 6 h 6 l 4 6" fill="none" stroke="#94432d" stroke-width="0.9"/>
+        <path d="M 312 332 v -22 a 3 3 0 0 1 6 0 v 22 Z" fill="#4d1f14"/>
+        <path d="M 324 326 v -22 a 3 3 0 0 1 6 0 v 22 Z" fill="#4d1f14"/>
+        <path d="M 336 320 v -22 a 3 3 0 0 1 6 0 v 22 Z" fill="#4d1f14"/>
+        <path d="M 348 314 v -22 a 3 3 0 0 1 6 0 v 22 Z" fill="#4d1f14"/>
+      </g>
+
+      <!-- 背光面（右面）另一组不同样式的盲拱（并入暗部，凹陷处呈现更深的暗红褐） -->
+      <g id="rightFaceShadowRelief" opacity="0.85">
+        <!-- 连续交叉多尖拱深槽 -->
+        <path d="M 370 500 c 12 -14 26 -16 48 -2" fill="none" stroke="#541e14" stroke-width="1.8"/>
+        <path d="M 382 500 v -16 a 4 4 0 0 1 8 0 v 16 Z" fill="#311009"/>
+        <path d="M 402 492 v -16 a 4 4 0 0 1 8 0 v 16 Z" fill="#311009"/>
+
+        <!-- 中段阶梯盲拱暗槽 -->
+        <path d="M 370 425 c 14 -12 28 -14 52 -2" fill="none" stroke="#541e14" stroke-width="1.8"/>
+        <path d="M 390 415 v -20 a 5 5 0 0 1 10 0 v 20 Z" fill="#311009"/>
+
+        <!-- 上段深凹开间 -->
+        <path d="M 372 342 l 12 -12 l 12 12 l 12 -12 l 12 12" fill="none" stroke="#541e14" stroke-width="1.6"/>
+        <path d="M 380 338 v -18 a 3 3 0 0 1 6 0 v 18 Z" fill="#311009"/>
+        <path d="M 394 330 v -18 a 3 3 0 0 1 6 0 v 18 Z" fill="#311009"/>
+        <path d="M 408 322 v -18 a 3 3 0 0 1 6 0 v 18 Z" fill="#311009"/>
+      </g>
+
+      <!-- ④ 主塔身顶部一条白绿相间的瓷砖带（White & Emerald Ceramic Frieze） -->
+      <g id="ceramicTileBand">
+        <!-- 受光面瓷砖带基底 -->
+        <polygon points="295,256 360,292 360,278 295,242" fill="#2f8f6a"/>
+        <!-- 受光面白色与翠绿几何相间瓷砖格 -->
+        <g stroke="#237053" stroke-width="0.5">
+          <polygon points="297,255 304,259 304,249 297,245" fill="#ffffff"/>
+          <polygon points="307,261 314,265 314,255 307,251" fill="#ffffff"/>
+          <polygon points="317,267 324,271 324,261 317,257" fill="#ffffff"/>
+          <polygon points="327,273 334,277 334,267 327,263" fill="#ffffff"/>
+          <polygon points="337,279 344,283 344,273 337,269" fill="#ffffff"/>
+          <polygon points="347,285 354,289 354,279 347,275" fill="#ffffff"/>
+          <polygon points="357,290 360,292 360,282 357,280" fill="#ffffff"/>
+        </g>
+        <!-- 釉面强反光亮窄边 -->
+        <path d="M 295 243 L 360 279" stroke="#ffffff" stroke-width="1" opacity="0.9"/>
+
+        <!-- 背光面瓷砖带基底（暗翠绿） -->
+        <polygon points="360,292 430,254 430,240 360,278" fill="#1b5c43"/>
+        <g stroke="#144532" stroke-width="0.5" opacity="0.75">
+          <polygon points="364,288 372,284 372,274 364,278" fill="#d9ede2"/>
+          <polygon points="376,282 384,278 384,268 376,272" fill="#d9ede2"/>
+          <polygon points="388,276 396,272 396,262 388,266" fill="#d9ede2"/>
+          <polygon points="400,270 408,266 408,256 400,260" fill="#d9ede2"/>
+          <polygon points="412,264 420,260 420,250 412,254" fill="#d9ede2"/>
+          <polygon points="424,258 429,255 429,245 424,248" fill="#d9ede2"/>
+        </g>
+      </g>
+
+      <!-- ④ 瓷砖带其上一圈阶梯状雉堞（Stepped Merlons 严密围合一整圈） -->
+      <g id="steppedMerlons">
+        <!-- 受光面雉堞（左沿） -->
+        <g fill="#d47959" stroke="#9c4934" stroke-width="0.6">
+          <polygon points="295,242 299,244 299,235 303,235 303,231 306,231 306,239 308,239 308,249 295,242"/>
+          <polygon points="308,249 312,251 312,242 316,242 316,238 319,238 319,246 321,246 321,256 308,249"/>
+          <polygon points="321,256 325,258 325,249 329,249 329,245 332,245 332,253 334,253 334,263 321,256"/>
+          <polygon points="334,263 338,265 338,256 342,256 342,252 345,252 345,260 347,260 347,270 334,263"/>
+          <polygon points="347,270 351,272 351,263 355,263 355,259 358,259 358,267 360,267 360,278 347,270"/>
+        </g>
+        <!-- 背光面雉堞（右沿） -->
+        <g fill="#703123" stroke="#481a10" stroke-width="0.6">
+          <polygon points="360,278 362,277 362,267 365,267 365,259 368,259 368,263 372,263 372,272 374,271 360,278"/>
+          <polygon points="374,271 376,270 376,260 379,260 379,252 382,252 382,256 386,256 386,265 388,264 374,271"/>
+          <polygon points="388,264 390,263 390,253 393,253 393,245 396,245 396,249 400,249 400,258 402,257 388,264"/>
+          <polygon points="402,257 404,256 404,246 407,246 407,238 410,238 410,242 414,242 414,251 416,250 402,257"/>
+          <polygon points="416,250 418,249 418,239 421,239 421,231 424,231 424,235 428,235 428,244 430,240 416,250"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- ⑤ 雉堞之内立更小的方形小塔（Lantern，边长约为主塔身一半，高约48px） -->
+    <g id="lanternTower">
+      <!-- 平台内凹阴影 -->
+      <polygon points="328,242 360,260 395,241 363,223" fill="#2b1109" opacity="0.5"/>
+
+      <!-- 小塔受光面（左面） -->
+      <polygon points="360,256 328,238 328,190 360,208" fill="url(#towerLitGrad)"/>
+      <path d="M 328 190 L 360 208" stroke="#ffd1bc" stroke-width="1.2"/>
+
+      <!-- 小塔背光面（右面） -->
+      <polygon points="360,256 395,236 395,188 360,208" fill="url(#towerShadowGrad)"/>
+      <path d="M 360 256 L 395 236" stroke="#4a180e" stroke-width="1.2"/>
+
+      <!-- 小塔四面菱格纹板（Sebka Panel 浅浮雕花格） -->
+      <!-- 受光面菱格纹 -->
+      <g stroke="#f59c7b" stroke-width="0.9" fill="none">
+        <path d="M 333 234 l 7 -10 l 7 10 l 7 -10"/>
+        <path d="M 340 224 l 7 -9 l 7 9"/>
+        <path d="M 333 214 l 7 10 l 7 -10 l 7 10"/>
+        <path d="M 340 204 l 7 10 l 7 -10"/>
+        <!-- 盲拱基脚 -->
+        <path d="M 332 238 c 4 -7 12 -7 16 0 c 4 -7 12 -7 16 0"/>
+      </g>
+      <!-- 背光面深色菱格纹（并入暗部） -->
+      <g stroke="#4f1b11" stroke-width="0.9" fill="none">
+        <path d="M 366 226 l 7 -10 l 7 10 l 7 -10"/>
+        <path d="M 373 216 l 7 -9 l 7 9"/>
+        <path d="M 366 206 l 7 10 l 7 -10 l 7 10"/>
+      </g>
+
+      <!-- 小塔顶檐白色与翠绿细瓷砖带与微型雉堞 -->
+      <polygon points="328,193 360,211 360,206 328,188" fill="#2f8f6a"/>
+      <polygon points="360,211 395,191 395,186 360,206" fill="#1b5c43"/>
+      <!-- 小塔微型雉堞 -->
+      <path d="M 328 188 l 4 2 v -3 h 4 v 3 l 4 2 v -3 h 4 v 3 l 4 2 v -3 h 4 v 3 l 4 2 v -3 h 4 v 3" stroke="#ffd1bc" stroke-width="0.8" fill="none"/>
+      <path d="M 360 206 l 4 -2 v -3 h 4 v 3 l 4 -2 v -3 h 4 v 3 l 4 -2 v -3 h 4 v 3 l 4 -2 v -3 h 4 v 3" stroke="#521f15" stroke-width="0.8" fill="none"/>
+    </g>
+
+    <!-- ⑥ 小塔顶上带竖向凹槽的小穹顶（Ribbed / Fluted Dome） -->
+    <g id="ribbedDome">
+      <!-- 穹顶底座圆环过渡 -->
+      <ellipse cx="361" cy="189" rx="14" ry="7" fill="#a85237" stroke="#702d1d" stroke-width="0.8"/>
+
+      <!-- 穹顶外形轮廓主体 -->
+      <path d="M 347 189 C 347 172 375 172 375 189 C 375 194 347 194 347 189 Z" fill="#b8664a"/>
+
+      <!-- 竖向凹槽花瓣瓣片（Fluted Lobes 明暗分明立体塑造） -->
+      <!-- 瓣 1（最左受光高光面） -->
+      <path d="M 347 189 C 347 176 352 173 358 171 C 354 176 351 184 350 191 Z" fill="#e89172"/>
+      <!-- 瓣 2（受光中心面） -->
+      <path d="M 350 191 C 351 184 354 176 358 171 C 361 176 362 184 362 192 Z" fill="#d97f60"/>
+      <!-- 瓣 3（正中过渡面） -->
+      <path d="M 362 192 C 362 184 361 176 358 171 C 365 176 368 184 369 191 Z" fill="#9e4c36"/>
+      <!-- 瓣 4（背光右面） -->
+      <path d="M 369 191 C 368 184 365 176 358 171 C 372 173 375 177 375 189 Z" fill="#6e2d1f"/>
+
+      <!-- 竖向凹槽阴影刻线与受光棱线 -->
+      <path d="M 358 171 Q 350 178 350 191" stroke="#fce3d7" stroke-width="0.75" fill="none"/>
+      <path d="M 358 171 Q 361 178 362 192" stroke="#5c2014" stroke-width="0.85" fill="none"/>
+      <path d="M 358 171 Q 368 178 369 191" stroke="#48180e" stroke-width="0.85" fill="none"/>
+    </g>
+
+    <!-- ⑦ 穹顶上串着三颗由大到小的金铜色圆球，旁边一根细杆（Jamur Finial） -->
+    <g id="goldenFinialStaff">
+      <!-- 穹顶尖顶基座金属环 -->
+      <ellipse cx="359" cy="171" rx="3.5" ry="1.6" fill="#a1751f" stroke="#573e0e" stroke-width="0.6"/>
+
+      <!-- 旁边的一根金铜色细杆（与圆球轴杆并立） -->
+      <line x1="363.5" y1="172" x2="363.5" y2="84" stroke="#c9962e" stroke-width="1.1"/>
+      <line x1="363.2" y1="172" x2="363.2" y2="84" stroke="#fff4cf" stroke-width="0.5"/>
+      <circle cx="363.5" cy="83.5" r="1.1" fill="#fff4cf"/>
+
+      <!-- 穿串三颗圆球的中心主轴针 -->
+      <line x1="359" y1="171" x2="359" y2="92" stroke="#8a6116" stroke-width="1.6"/>
+      <line x1="358.5" y1="171" x2="358.5" y2="92" stroke="#fffae6" stroke-width="0.6"/>
+
+      <!-- 球 1（底部大圆球，直径 14px） -->
+      <circle cx="359" cy="155" r="7" fill="url(#goldOrbGrad)"/>
+      <ellipse cx="357" cy="153" rx="2.5" ry="1.4" fill="#ffffff" opacity="0.8"/>
+      <!-- 球间金属垫环 -->
+      <ellipse cx="359" cy="147.2" rx="2.8" ry="1.1" fill="#69480a"/>
+
+      <!-- 球 2（中间中圆球，直径 10px） -->
+      <circle cx="359" cy="141" r="5" fill="url(#goldOrbGrad)"/>
+      <ellipse cx="357.5" cy="139.5" rx="1.8" ry="1" fill="#ffffff" opacity="0.85"/>
+      <!-- 球间金属垫环 -->
+      <ellipse cx="359" cy="135.2" rx="2.2" ry="0.9" fill="#69480a"/>
+
+      <!-- 球 3（顶端小圆球，直径 6.5px） -->
+      <circle cx="359" cy="131" r="3.25" fill="url(#goldOrbGrad)"/>
+      <ellipse cx="358" cy="130" rx="1.2" ry="0.7" fill="#ffffff" opacity="0.9"/>
+
+      <!-- 尖饰顶部矛头状宝顶细收口 -->
+      <path d="M 358 127.5 L 359 90 L 360 127.5 Z" fill="#c9962e" stroke="#ffe28a" stroke-width="0.4"/>
+      <circle cx="359" cy="90" r="1.2" fill="#fffbe8"/>
+    </g>
+  </g>
+
+  <!-- 7. 环境与微缩细节（严格依照要求绘制）：广场、玫瑰园、高瘦棕榈树、白色圆顶小屋 -->
+  <!-- 玫瑰园（几块深绿色的圆角矩形，留出浅色小径，深绿配几点玫红） -->
+  <g id="roseGardens">
+    <!-- 花坛 1 -->
+    <rect x="175" y="605" width="80" height="42" rx="9" ry="9" fill="#184224" stroke="#2a5e37" stroke-width="1.2"/>
+    <!-- 浅色花坛内沿倒角亮边 -->
+    <rect x="176.5" y="606.5" width="77" height="39" rx="7.5" ry="7.5" fill="none" stroke="#3b7a4c" stroke-width="0.8" opacity="0.6"/>
+    <!-- 散落盛开的玫红点点玫瑰花 -->
+    <circle cx="188" cy="618" r="2.2" fill="#c23368"/>
+    <circle cx="189" cy="617.5" r="1" fill="#ffa1c3"/>
+    <circle cx="204" cy="625" r="2.5" fill="#c23368"/>
+    <circle cx="205" cy="624" r="1.2" fill="#ffa1c3"/>
+    <circle cx="228" cy="616" r="2.2" fill="#c23368"/>
+    <circle cx="240" cy="630" r="2.6" fill="#c23368"/>
+    <circle cx="218" cy="635" r="2.2" fill="#c23368"/>
+
+    <!-- 花坛 2（留出小径） -->
+    <rect x="275" y="628" width="65" height="38" rx="8" ry="8" fill="#184224" stroke="#2a5e37" stroke-width="1.2"/>
+    <circle cx="290" cy="640" r="2.4" fill="#c23368"/>
+    <circle cx="291" cy="639.2" r="1" fill="#ffa1c3"/>
+    <circle cx="318" cy="645" r="2.6" fill="#c23368"/>
+    <circle cx="304" cy="654" r="2.1" fill="#c23368"/>
+
+    <!-- 花坛 3 -->
+    <rect x="205" y="668" width="90" height="36" rx="9" ry="9" fill="#184224" stroke="#2a5e37" stroke-width="1.2"/>
+    <circle cx="220" cy="682" r="2.4" fill="#c23368"/>
+    <circle cx="245" cy="686" r="2.6" fill="#c23368"/>
+    <circle cx="246" cy="685" r="1.1" fill="#ffa1c3"/>
+    <circle cx="272" cy="680" r="2.2" fill="#c23368"/>
+
+    <!-- 花坛 4 -->
+    <rect x="312" y="682" width="68" height="32" rx="7" ry="7" fill="#184224" stroke="#2a5e37" stroke-width="1.2"/>
+    <circle cx="328" cy="695" r="2.3" fill="#c23368"/>
+    <circle cx="352" cy="697" r="2.5" fill="#c23368"/>
+    <circle cx="353" cy="696" r="1" fill="#ffa1c3"/>
+  </g>
+
+  <!-- 广场一角：极小的白色圆顶小屋（Koubba 圣陵微缩模型） -->
+  <g id="whiteKoubba">
+    <!-- 小屋地面投影 -->
+    <ellipse cx="196" cy="542" rx="14" ry="7" fill="#2d1f17" opacity="0.32"/>
+
+    <!-- 立方形下层墙体（受光面与背光面） -->
+    <polygon points="192,542 180,534 180,518 192,525" fill="#ffffff"/>
+    <path d="M 180 518 L 192 525" stroke="#ffffff" stroke-width="1"/>
+    <!-- 凹深拱门开口 -->
+    <path d="M 184 533 v -8 a 2 2 0 0 1 4 0 v 8 Z" fill="#3b2b22"/>
+
+    <polygon points="192,542 208,533 208,517 192,525" fill="#d6cec3"/>
+    <path d="M 192 542 L 208 533" stroke="#9e9384" stroke-width="1"/>
+
+    <!-- 八角形微型台阶鼓座 -->
+    <polygon points="182,517 192,522 206,515 196,511" fill="#ebe4d8"/>
+
+    <!-- 纯白小圆顶（带受光漫反射球形高光） -->
+    <ellipse cx="194" cy="511" rx="8" ry="4.5" fill="#c7beb0"/>
+    <path d="M 186 511 A 8 8 0 0 1 202 511 Z" fill="#fcfbfa"/>
+    <path d="M 186 511 A 8 8 0 0 1 198 504 A 8 8 0 0 0 186 511 Z" fill="#ffffff"/>
+    <circle cx="191" cy="507" r="2.2" fill="#ffffff"/>
+    <!-- 顶部极小金珠尖饰 -->
+    <circle cx="194" cy="502.5" r="0.9" fill="#c9962e"/>
+  </g>
+
+  <!-- 广场上点缀的几棵高瘦棕榈树（树高严格不超过主塔身1/3即≤104px；成组不同尺寸、散落不排成阵；微风轻曳） -->
+  <!-- 棕榈树 1（左侧前景大号，高约94px） -->
+  <g class="palm-sway-1" id="palmTree1">
+    <!-- 树影 -->
+    <ellipse cx="258" cy="583" rx="16" ry="6" fill="#2d1c14" opacity="0.32"/>
+    <!-- 纤细微弯树干 -->
+    <path d="M 245 575 Q 243 530 248 488" stroke="#7a553e" stroke-width="2.8" stroke-linecap="round" fill="none"/>
+    <path d="M 244.5 575 Q 242.5 530 247.5 488" stroke="#9e7358" stroke-width="1.2" fill="none"/>
+    <!-- 棕榈树冠羽叶 -->
+    <g transform="translate(248, 488)">
+      <path d="M 0 0 C -12 -12 -28 -14 -40 -6 C -28 -2 -14 0 0 0 Z" fill="#27562e"/>
+      <path d="M 0 0 C -8 -18 -20 -28 -34 -26 C -22 -14 -10 -4 0 0 Z" fill="#326e3a"/>
+      <path d="M 0 0 C 0 -22 -4 -34 -10 -38 C -4 -24 -2 -10 0 0 Z" fill="#428a4c"/>
+      <path d="M 0 0 C 10 -22 18 -32 26 -32 C 18 -18 8 -8 0 0 Z" fill="#387a42"/>
+      <path d="M 0 0 C 18 -16 32 -20 42 -14 C 28 -6 14 -2 0 0 Z" fill="#27562e"/>
+      <path d="M 0 0 C 16 -8 28 -4 38 8 C 24 6 12 2 0 0 Z" fill="#1e4524"/>
+      <!-- 叶脉亮线 -->
+      <path d="M 0 0 C -6 -14 -16 -22 -28 -22" stroke="#60af6c" stroke-width="0.9" fill="none"/>
+      <path d="M 0 0 C 8 -16 16 -24 22 -24" stroke="#60af6c" stroke-width="0.9" fill="none"/>
+      <!-- 树心嫩叶 -->
+      <circle cx="0" cy="-2" r="2.8" fill="#589e63"/>
+    </g>
+  </g>
+
+  <!-- 棕榈树 2（玫瑰园侧中号，高约86px） -->
+  <g class="palm-sway-2" id="palmTree2">
+    <ellipse cx="297" cy="632" rx="14" ry="5.5" fill="#2d1c14" opacity="0.32"/>
+    <path d="M 285 625 Q 288 585 284 544" stroke="#7a553e" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+    <path d="M 284.5 625 Q 287.5 585 283.5 544" stroke="#9e7358" stroke-width="1" fill="none"/>
+    <g transform="translate(284, 544) scale(0.88)">
+      <path d="M 0 0 C -12 -12 -28 -14 -38 -6 C -26 -2 -12 0 0 0 Z" fill="#27562e"/>
+      <path d="M 0 0 C -8 -18 -18 -26 -32 -24 C -20 -12 -10 -4 0 0 Z" fill="#326e3a"/>
+      <path d="M 0 0 C 0 -20 -4 -30 -8 -34 C -4 -22 -2 -8 0 0 Z" fill="#428a4c"/>
+      <path d="M 0 0 C 10 -20 18 -28 24 -28 C 16 -16 8 -6 0 0 Z" fill="#387a42"/>
+      <path d="M 0 0 C 16 -14 30 -18 38 -12 C 26 -6 12 -2 0 0 Z" fill="#27562e"/>
+      <circle cx="0" cy="-1.5" r="2.4" fill="#589e63"/>
+    </g>
+  </g>
+
+  <!-- 棕榈树 3（靠近清真寺与遗址深处小号，高约72px） -->
+  <g class="palm-sway-3" id="palmTree3">
+    <ellipse cx="214" cy="520" rx="11" ry="4.5" fill="#2d1c14" opacity="0.25"/>
+    <path d="M 205 515 Q 203 480 207 447" stroke="#7a553e" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+    <g transform="translate(207, 447) scale(0.72)">
+      <path d="M 0 0 C -12 -12 -26 -14 -36 -6 C -24 -2 -12 0 0 0 Z" fill="#27562e"/>
+      <path d="M 0 0 C -8 -18 -18 -26 -30 -24 C -18 -12 -8 -4 0 0 Z" fill="#326e3a"/>
+      <path d="M 0 0 C 0 -20 -4 -30 -8 -34 C -4 -22 -2 -8 0 0 Z" fill="#428a4c"/>
+      <path d="M 0 0 C 10 -20 18 -28 24 -28 C 16 -16 8 -6 0 0 Z" fill="#387a42"/>
+      <path d="M 0 0 C 16 -14 28 -18 36 -12 C 24 -6 12 -2 0 0 Z" fill="#27562e"/>
+      <circle cx="0" cy="-1.5" r="2.2" fill="#589e63"/>
+    </g>
+  </g>
+
+  <!-- 棕榈树 4（右侧广场边缘中细号，高约80px） -->
+  <g class="palm-sway-4" id="palmTree4">
+    <ellipse cx="796" cy="566" rx="13" ry="5" fill="#2d1c14" opacity="0.28"/>
+    <path d="M 785 560 Q 782 524 786 485" stroke="#7a553e" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+    <path d="M 784.5 560 Q 781.5 524 785.5 485" stroke="#9e7358" stroke-width="1" fill="none"/>
+    <g transform="translate(786, 485) scale(0.8)">
+      <path d="M 0 0 C -12 -12 -26 -14 -36 -6 C -24 -2 -12 0 0 0 Z" fill="#27562e"/>
+      <path d="M 0 0 C -8 -18 -18 -26 -30 -24 C -18 -12 -8 -4 0 0 Z" fill="#326e3a"/>
+      <path d="M 0 0 C 0 -20 -4 -30 -8 -34 C -4 -22 -2 -8 0 0 Z" fill="#428a4c"/>
+      <path d="M 0 0 C 10 -20 18 -28 24 -28 C 16 -16 8 -6 0 0 Z" fill="#387a42"/>
+      <path d="M 0 0 C 16 -14 28 -18 36 -12 C 24 -6 12 -2 0 0 Z" fill="#27562e"/>
+      <circle cx="0" cy="-1.5" r="2.3" fill="#589e63"/>
+    </g>
+  </g>
+</svg>

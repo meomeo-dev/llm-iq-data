@@ -1,0 +1,548 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 900" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f4f1ea"/>
+      <stop offset="60%" stop-color="#eae4d7"/>
+      <stop offset="100%" stop-color="#dfd7c5"/>
+    </linearGradient>
+
+    <!-- Base Gradients -->
+    <radialGradient id="pedestalFloor" cx="48%" cy="46%" r="50%">
+      <stop offset="0%" stop-color="#fdfbf7"/>
+      <stop offset="70%" stop-color="#ede6d6"/>
+      <stop offset="100%" stop-color="#dfd6c0"/>
+    </radialGradient>
+    <linearGradient id="pedestalRim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#b8ad96"/>
+      <stop offset="25%" stop-color="#91856e"/>
+      <stop offset="100%" stop-color="#5a5141"/>
+    </linearGradient>
+
+    <!-- Material Gradients -->
+    <!-- Sandstone: Light, Mid, Shadow -->
+    <linearGradient id="sandstoneLit" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d67e5f"/>
+      <stop offset="100%" stop-color="#c97253"/>
+    </linearGradient>
+    <linearGradient id="sandstoneShd" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9a4e39"/>
+      <stop offset="100%" stop-color="#7a3a2b"/>
+    </linearGradient>
+    <!-- Roof Tile Green -->
+    <linearGradient id="roofLit" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#559969"/>
+      <stop offset="100%" stop-color="#3f7a4f"/>
+    </linearGradient>
+    <linearGradient id="roofShd" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#336641"/>
+      <stop offset="100%" stop-color="#234a2e"/>
+    </linearGradient>
+    <!-- Gold / Brass -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffe682"/>
+      <stop offset="40%" stop-color="#d8a335"/>
+      <stop offset="100%" stop-color="#8f5d17"/>
+    </linearGradient>
+
+    <!-- Drop Shadows / Blur Filters -->
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="14"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.25   0 0 0 0 0.2   0 0 0 0 0.15  0 0 0 0.35 0"/>
+      <feOffset dx="0" dy="18"/>
+      <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+    </filter>
+    <filter id="bldgShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="treeShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="3.5"/>
+    </filter>
+
+    <!-- Reusable Miniature Elements -->
+    <!-- Palm Tree with subtle sway animation -->
+    <g id="palmTree">
+      <!-- Trunk -->
+      <path d="M 0,0 Q 1,-22 -3,-44 Q -5,-58 -1,-70" fill="none" stroke="#7d593f" stroke-width="3.2" stroke-linecap="round"/>
+      <path d="M 0,0 Q 1,-22 -3,-44 Q -5,-58 -1,-70" fill="none" stroke="#b08460" stroke-width="1.2" stroke-linecap="round"/>
+      <!-- Fronds Top Cluster -->
+      <g transform="translate(-1, -70)">
+        <g class="palm-fronds">
+          <path d="M 0,0 Q -12,-8 -24,-2 Q -18,6 0,0" fill="#366b37"/>
+          <path d="M 0,0 Q 14,-10 26,-4 Q 18,7 0,0" fill="#2d572d"/>
+          <path d="M 0,0 Q -8,-16 -18,-18 Q -10,-4 0,0" fill="#447e43"/>
+          <path d="M 0,0 Q 10,-17 20,-16 Q 12,-3 0,0" fill="#3b703a"/>
+          <path d="M 0,0 Q -2,-20 2,-26 Q 6,-14 0,0" fill="#4d8f4b"/>
+          <path d="M 0,0 Q -18,2 -26,12 Q -15,10 0,0" fill="#274d28"/>
+          <path d="M 0,0 Q 17,2 24,11 Q 14,8 0,0" fill="#1f4220"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- Small Courtyard Tree -->
+    <g id="smallTree">
+      <ellipse cx="0" cy="0" rx="4" ry="2" fill="rgba(60,50,40,0.3)"/>
+      <path d="M 0,0 L 0,-10" stroke="#63452d" stroke-width="1.8"/>
+      <ellipse cx="0" cy="-13" rx="6.5" ry="8" fill="#437d45"/>
+      <ellipse cx="-1.5" cy="-14" rx="4.5" ry="6" fill="#589e5a"/>
+    </g>
+
+    <!-- Single Ruin Pillar Base -->
+    <g id="ruinPillar">
+      <ellipse cx="0" cy="0" rx="4.5" ry="2.2" fill="#7d6a59"/>
+      <path d="M -4.5,0 L -4.5,-5 C -4.5,-6.2 4.5,-6.2 4.5,-5 L 4.5,0 Z" fill="#aa9784"/>
+      <ellipse cx="0" cy="-5" rx="4.5" ry="2.2" fill="#d2c3b2"/>
+      <ellipse cx="0" cy="-5" rx="3.2" ry="1.6" fill="#beae9c"/>
+    </g>
+
+    <style><![CDATA[
+      .palm1 { animation: sway 6s ease-in-out infinite alternate; transform-origin: 0px 0px; }
+      .palm2 { animation: sway 7.5s ease-in-out infinite alternate-reverse; transform-origin: 0px 0px; }
+      .palm3 { animation: sway 8.5s ease-in-out infinite alternate; transform-origin: 0px 0px; }
+      .palm4 { animation: sway 6.8s ease-in-out infinite alternate-reverse; transform-origin: 0px 0px; }
+      .rose-glow { animation: pulseBloom 5s ease-in-out infinite alternate; }
+
+      @keyframes sway {
+        0% { transform: rotate(0deg) skewX(0deg); }
+        50% { transform: rotate(1.8deg) skewX(1deg); }
+        100% { transform: rotate(-1.5deg) skewX(-0.8deg); }
+      }
+      @keyframes pulseBloom {
+        0% { opacity: 0.85; }
+        100% { opacity: 1; filter: drop-shadow(0 0 1px #d6336c); }
+      }
+    ]]></style>
+  </defs>
+
+  <!-- Background Environment -->
+  <rect width="1000" height="900" fill="url(#bgGrad)"/>
+
+  <!-- Pedestal Floor Shadow -->
+  <ellipse cx="500" cy="670" rx="430" ry="175" fill="rgba(80, 70, 55, 0.22)" filter="url(#softShadow)"/>
+
+  <!-- ========================================== -->
+  <!-- CIRCULAR DISPLAY PEDESTAL (Diorama Base)  -->
+  <!-- ========================================== -->
+  <!-- Cylinder Wall (Bevel & Depth) -->
+  <path d="M 100,600 C 100,705 279,790 500,790 C 721,790 900,705 900,600 L 900,630 C 900,735 721,820 500,820 C 279,820 100,735 100,630 Z" fill="url(#pedestalRim)"/>
+  <path d="M 100,600 C 100,705 279,790 500,790 C 721,790 900,705 900,600" fill="none" stroke="#f2ecde" stroke-width="2.5" opacity="0.8"/>
+
+  <!-- Pedestal Top Surface (Miniature Diorama Ground) -->
+  <ellipse cx="500" cy="600" rx="400" ry="190" fill="url(#pedestalFloor)"/>
+  <!-- Highlight Rim -->
+  <ellipse cx="500" cy="600" rx="399" ry="189" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- DIORAMA SURFACE ELEMENTS & CAST SHADOWS -->
+  <g id="dioramaBaseSurfaces">
+    <!-- Ground Shadows of Prayer Hall and Tower -->
+    <g opacity="0.32" filter="url(#bldgShadow)">
+      <!-- Main Tower Shadow -->
+      <polygon points="340,530 420,550 630,510 590,470 380,480" fill="#301f16"/>
+      <!-- Prayer Hall Shadow -->
+      <polygon points="410,545 740,490 850,530 680,630 380,620" fill="#301f16"/>
+    </g>
+
+    <!-- ① BACKGROUND: ANCIENT MOSQUE COLUMN RUIN BASES (一排矮柱基遗址) -->
+    <!-- Distinct line of archaeological stone stumps on far side -->
+    <g id="ruins" opacity="0.75">
+      <g transform="translate(360, 440)"><use href="#ruinPillar"/></g>
+      <g transform="translate(385, 434)"><use href="#ruinPillar"/></g>
+      <g transform="translate(410, 428)"><use href="#ruinPillar"/></g>
+      <g transform="translate(435, 422)"><use href="#ruinPillar"/></g>
+      <g transform="translate(460, 416)"><use href="#ruinPillar"/></g>
+      <g transform="translate(485, 410)"><use href="#ruinPillar"/></g>
+      <g transform="translate(510, 404)"><use href="#ruinPillar"/></g>
+      <g transform="translate(535, 398)"><use href="#ruinPillar"/></g>
+      <g transform="translate(560, 392)"><use href="#ruinPillar"/></g>
+      <g transform="translate(585, 386)"><use href="#ruinPillar"/></g>
+      <!-- Excavated boundary trench -->
+      <path d="M 345,446 L 600,383" stroke="#b5a593" stroke-width="1.8" stroke-dasharray="6,4" fill="none" opacity="0.6"/>
+    </g>
+
+    <!-- ① FOREGROUND/MIDGROUND: ROSE GARDENS WITH PATHS (玫瑰园) -->
+    <!-- Geometric parterres in south plaza -->
+    <g id="roseGardens" transform="translate(240, 615)">
+      <!-- Bed 1 -->
+      <g transform="rotate(-15) skewX(25)">
+        <rect x="0" y="0" width="85" height="42" rx="10" fill="#284e31" stroke="#ded4be" stroke-width="2.5"/>
+        <rect x="3" y="3" width="79" height="36" rx="8" fill="#22422a"/>
+        <!-- Rose dots -->
+        <g class="rose-glow" fill="#d82b6b">
+          <circle cx="15" cy="12" r="2.6"/><circle cx="28" cy="22" r="2"/><circle cx="40" cy="11" r="2.8"/>
+          <circle cx="58" cy="18" r="2.4"/><circle cx="70" cy="27" r="2.2"/><circle cx="22" cy="30" r="2.6"/>
+          <circle cx="50" cy="28" r="2.5"/><circle cx="34" cy="14" r="1.8"/><circle cx="65" cy="10" r="2.4"/>
+        </g>
+      </g>
+
+      <!-- Bed 2 -->
+      <g transform="translate(115, -15) rotate(-15) skewX(25)">
+        <rect x="0" y="0" width="95" height="40" rx="10" fill="#284e31" stroke="#ded4be" stroke-width="2.5"/>
+        <rect x="3" y="3" width="89" height="34" rx="8" fill="#22422a"/>
+        <g class="rose-glow" fill="#e63978">
+          <circle cx="14" cy="16" r="2.4"/><circle cx="32" cy="12" r="2.8"/><circle cx="48" cy="24" r="2.2"/>
+          <circle cx="64" cy="14" r="2.6"/><circle cx="78" cy="22" r="2.5"/><circle cx="24" cy="26" r="2.2"/>
+          <circle cx="42" cy="28" r="2.4"/><circle cx="56" cy="29" r="2"/><circle cx="85" cy="12" r="2.4"/>
+        </g>
+      </g>
+
+      <!-- Bed 3 -->
+      <g transform="translate(60, 42) rotate(-15) skewX(25)">
+        <rect x="0" y="0" width="75" height="32" rx="8" fill="#284e31" stroke="#ded4be" stroke-width="2.5"/>
+        <rect x="3" y="3" width="69" height="26" rx="6" fill="#22422a"/>
+        <g class="rose-glow" fill="#d82b6b">
+          <circle cx="12" cy="14" r="2.2"/><circle cx="28" cy="18" r="2.6"/><circle cx="46" cy="12" r="2.5"/>
+          <circle cx="60" cy="20" r="2.2"/><circle cx="38" cy="22" r="2"/>
+        </g>
+      </g>
+    </g>
+
+    <!-- PLAZA DETAIL: TINY WHITE DOMED KOUBBA / SHRINE (极小的白色圆顶小屋) -->
+    <g id="koubba" transform="translate(200, 620)">
+      <!-- Ground Contact Shadow -->
+      <ellipse cx="0" cy="6" rx="16" ry="8" fill="rgba(50,40,30,0.25)"/>
+      <!-- Body Lit (South-West) -->
+      <polygon points="-10,-10 2,-16 2,4 -10,10" fill="#fdfbf7"/>
+      <!-- Body Shaded (South-East) -->
+      <polygon points="2,-16 13,-9 13,10 2,4" fill="#d2cbbe"/>
+      <!-- Tiny Arched Door -->
+      <path d="M -5,9 L -5,2 C -5,-2 -1,-2 -1,2 L -1,7 Z" fill="#4d3b31"/>
+      <!-- Mini Dome -->
+      <path d="M -7,-14 C -7,-24 5,-24 5,-14 Z" fill="#ffffff" stroke="#e0d7c5" stroke-width="0.7"/>
+      <!-- Finial needle -->
+      <line x1="-1" y1="-24" x2="-1" y2="-27" stroke="#caa246" stroke-width="1"/>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- ② PRAYER HALL COMPLEX & COURTYARD (祈祷厅)   -->
+  <!-- ========================================== -->
+  <!-- The broad prayer hall with multiple parallel gabled green tile roofs & courtyard -->
+  <g id="prayerHall">
+    <!-- Base Structure / Foundation Slab -->
+    <!-- Hall walls: Ochre red sandstone -->
+    <!-- Back / Left Lit Wall Facade -->
+    <polygon points="400,480 340,515 340,545 400,510" fill="#b8664a"/>
+    <!-- Front Facing Wall -->
+    <polygon points="400,510 400,545 740,650 740,615" fill="#8f432d"/>
+    <!-- Far East Wall -->
+    <polygon points="740,615 740,650 820,590 820,555" fill="#753523"/>
+
+    <!-- PRAYER HALL PARALLEL GABLED GREEN ROOFS (成排绿色瓦坡屋顶并列) -->
+    <!-- Parallel naves running NW to SE, roof ridge under 1/6 minaret height -->
+    <!-- Ridge 1 -->
+    <g class="roof-nave">
+      <polygon points="415,480 540,520 535,538 410,498" fill="url(#roofLit)"/>
+      <polygon points="540,520 670,562 665,580 535,538" fill="url(#roofShd)"/>
+    </g>
+    <!-- Ridge 2 -->
+    <g class="roof-nave">
+      <polygon points="435,470 560,510 555,528 430,488" fill="url(#roofLit)"/>
+      <polygon points="560,510 690,552 685,570 555,528" fill="url(#roofShd)"/>
+    </g>
+    <!-- Ridge 3 -->
+    <g class="roof-nave">
+      <polygon points="455,460 580,500 575,518 450,478" fill="url(#roofLit)"/>
+      <polygon points="580,500 710,542 705,560 575,518" fill="url(#roofShd)"/>
+    </g>
+    <!-- Ridge 4 -->
+    <g class="roof-nave">
+      <polygon points="475,450 600,490 595,508 470,468" fill="url(#roofLit)"/>
+      <polygon points="600,490 730,532 725,550 595,508" fill="url(#roofShd)"/>
+    </g>
+    <!-- Ridge 5 -->
+    <g class="roof-nave">
+      <polygon points="495,440 620,480 615,498 490,458" fill="url(#roofLit)"/>
+      <polygon points="620,480 750,522 745,540 615,498" fill="url(#roofShd)"/>
+    </g>
+    <!-- Ridge 6 -->
+    <g class="roof-nave">
+      <polygon points="515,430 640,470 635,488 510,448" fill="url(#roofLit)"/>
+      <polygon points="640,470 770,512 765,530 635,488" fill="url(#roofShd)"/>
+    </g>
+    <!-- Ridge 7 (Transept / Central Axial Nave Highlight) -->
+    <g class="roof-nave">
+      <polygon points="535,420 660,460 655,478 530,438" fill="#529966"/>
+      <polygon points="660,460 790,502 785,520 655,478" fill="#2b5c38"/>
+    </g>
+
+    <!-- COURTYARD (SAHN) ON ONE SIDE (带净身泉与成排小树的方形庭院) -->
+    <!-- Integrated into the complex on the North/East flank -->
+    <g id="courtyard" transform="translate(10, 5)">
+      <!-- Sunken Courtyard Pavement -->
+      <polygon points="640,450 730,420 805,465 715,500" fill="#eae3d3" stroke="#b0826b" stroke-width="1.5"/>
+      <!-- Courtyard Gallery Arcade Walls (Inner) -->
+      <polygon points="640,450 640,457 715,507 715,500" fill="#9c543d"/>
+      <polygon points="715,500 715,507 805,472 805,465" fill="#753525"/>
+
+      <!-- Central Ablutions Fountain Basin (净身泉) -->
+      <g id="ablutionsFountain" transform="translate(720, 460)">
+        <polygon points="0,-8 14,0 0,8 -14,0" fill="#c4b59f" stroke="#877562" stroke-width="1"/>
+        <polygon points="0,-6 10,0 0,6 -10,0" fill="#2c728a"/> <!-- Fountain pool -->
+        <circle cx="0" cy="0" r="2.2" fill="#e9f3f7"/> <!-- Central water jet -->
+      </g>
+
+      <!-- Row of Courtyard Orange/Citrus Trees (成排小树) -->
+      <g transform="translate(670, 452)"><use href="#smallTree"/></g>
+      <g transform="translate(688, 462)"><use href="#smallTree"/></g>
+      <g transform="translate(706, 472)"><use href="#smallTree"/></g>
+      <g transform="translate(724, 482)"><use href="#smallTree"/></g>
+      <g transform="translate(742, 492)"><use href="#smallTree"/></g>
+      <!-- Second neat row on opposite arcade -->
+      <g transform="translate(710, 435)"><use href="#smallTree"/></g>
+      <g transform="translate(728, 444)"><use href="#smallTree"/></g>
+      <g transform="translate(746, 453)"><use href="#smallTree"/></g>
+      <g transform="translate(764, 462)"><use href="#smallTree"/></g>
+      <g transform="translate(782, 471)"><use href="#smallTree"/></g>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- ③-⑥ KOUTOUBIA MINARET TOWER (宣礼塔主体)  -->
+  <!-- ========================================== -->
+  <!-- Rises from a corner of the prayer hall; 30° isometric view shows West (Lit) and South (Shaded) facades -->
+  <g id="minaretTower">
+
+    <!-- Tower Base Shadow Cast against Roof -->
+    <polygon points="380,510 405,525 405,535 380,520" fill="rgba(40,20,10,0.5)"/>
+
+    <!-- TOWER SHAFT (主塔身: 5:1 height/width ratio, square cross-section) -->
+    <!-- Dimensions: Left corner at x=280, Center corner at x=340, Right corner at x=400.
+         Width = 60px each face (~85px total projection), Height = ~320px (from y=200 to y=520) -->
+
+    <!-- WEST FACADE (受光面: OCHRE RED / WARM APRICOT SANDSTONE) -->
+    <polygon points="280,215 340,245 340,530 280,490" fill="url(#sandstoneLit)"/>
+    <!-- Top edge bright highlight line -->
+    <line x1="280" y1="215" x2="340" y2="245" stroke="#f6ab8d" stroke-width="1.8"/>
+
+    <!-- SOUTH FACADE (背光面: DEEP PURPLE-BROWN / SHADOWED SANDSTONE) -->
+    <polygon points="340,245 400,215 400,490 340,530" fill="url(#sandstoneShd)"/>
+    <!-- Bottom edge deep ambient shadow -->
+    <line x1="340" y1="530" x2="400" y2="490" stroke="#4a1a12" stroke-width="2.5"/>
+    <line x1="280" y1="490" x2="340" y2="530" stroke="#5a2217" stroke-width="2"/>
+
+    <!-- CORNER BEVEL / VERTICAL RIDGE HIGHLIGHT -->
+    <line x1="340" y1="245" x2="340" y2="530" stroke="#f0a384" stroke-width="1.2" opacity="0.8"/>
+
+    <!-- ③ BAS-RELIEF BLIND ARCHES ON SHAFT (四面各一组不同的浅浮雕盲拱) -->
+    <!-- Carved details strictly on lit face as required by spec -->
+    <g id="shaftBlindArchesLitFace" stroke="#99472e" stroke-width="1.4" fill="none">
+      <!-- Tier 1 (Lowest): Tall Double Horseshoe Lancet Arches -->
+      <path d="M 292,460 L 292,410 C 292,398 304,398 304,410 L 304,466"/>
+      <path d="M 312,470 L 312,420 C 312,408 324,408 324,420 L 324,476"/>
+      <!-- Inner pierced slit windows (with deep shadow accent) -->
+      <rect x="296" y="415" width="4" height="15" fill="#4d1d14" stroke="none"/>
+      <rect x="316" y="425" width="4" height="15" fill="#4d1d14" stroke="none"/>
+
+      <!-- Tier 2 (Middle): Multi-foil Polylobed Interlacing Arches -->
+      <path d="M 288,380 C 288,365 296,355 304,360 C 312,355 320,365 320,380"/>
+      <path d="M 300,390 C 300,375 308,365 316,370 C 324,365 332,375 332,390"/>
+      <!-- Polylobes curves -->
+      <path d="M 294,365 Q 298,358 304,364 Q 310,358 314,365"/>
+      <rect x="306" y="372" width="5" height="12" fill="#4d1d14" stroke="none"/>
+
+      <!-- Tier 3 (Upper): Sebka / Diamond Lattice Lozenge Relief (Almohad Network) -->
+      <g stroke="#913f28" stroke-width="1.3">
+        <path d="M 290,340 L 305,315 L 320,340 L 335,315"/>
+        <path d="M 290,315 L 305,340 L 320,315 L 335,340"/>
+        <path d="M 290,290 L 305,315 L 320,290 L 335,315"/>
+        <path d="M 305,290 L 320,315 L 335,290"/>
+        <!-- Framing Alfiz Molding -->
+        <path d="M 286,346 L 286,285 L 338,310 L 338,348" stroke="#a34d34" stroke-width="2"/>
+        <!-- Window cutout with horseshoe crown -->
+        <path d="M 308,320 L 308,304 C 308,299 316,299 316,304 L 316,324 Z" fill="#3d140e" stroke="none"/>
+      </g>
+
+      <!-- Tier 4 (Sub-band under frieze): Triple Arcade -->
+      <path d="M 288,260 C 288,248 298,248 298,260"/>
+      <path d="M 302,267 C 302,255 312,255 312,267"/>
+      <path d="M 316,274 C 316,262 326,262 326,274"/>
+    </g>
+
+    <!-- Deep Inset Windows on South Shaded Face (Darkened recesses) -->
+    <g fill="#33140d">
+      <rect x="360" y="420" width="5" height="16" rx="2" transform="skewY(-26)"/>
+      <rect x="378" y="475" width="5" height="16" rx="2" transform="skewY(-26)"/>
+      <rect x="368" y="325" width="6" height="18" rx="2.5" transform="skewY(-26)"/>
+    </g>
+
+    <!-- ④ WHITE AND EMERALD GREEN CERAMIC TILE FRIEZE (白绿相间瓷砖带) -->
+    <!-- West face ceramic frieze -->
+    <g id="tileBandWest">
+      <polygon points="280,215 340,245 340,227 280,197" fill="#ffffff"/>
+      <!-- Green tile mosaic checkers (#2f8f6a) -->
+      <polygon points="284,213 294,218 294,204 284,199" fill="#2f8f6a"/>
+      <polygon points="298,220 308,225 308,211 298,206" fill="#2f8f6a"/>
+      <polygon points="312,227 322,232 322,218 312,213" fill="#2f8f6a"/>
+      <polygon points="326,234 336,239 336,225 326,220" fill="#2f8f6a"/>
+      <!-- Top and bottom white piping bands -->
+      <line x1="280" y1="215" x2="340" y2="245" stroke="#ffffff" stroke-width="1.8"/>
+      <line x1="280" y1="197" x2="340" y2="227" stroke="#ffffff" stroke-width="1.8"/>
+    </g>
+
+    <!-- South face ceramic frieze (shaded tone) -->
+    <g id="tileBandSouth">
+      <polygon points="340,245 400,215 400,197 340,227" fill="#c2ded2"/>
+      <polygon points="344,241 354,236 354,222 344,227" fill="#1b5e44"/>
+      <polygon points="358,234 368,229 368,215 358,220" fill="#1b5e44"/>
+      <polygon points="372,227 382,222 382,208 372,213" fill="#1b5e44"/>
+      <polygon points="386,220 396,215 396,201 386,206" fill="#1b5e44"/>
+      <line x1="340" y1="245" x2="400" y2="215" stroke="#bad4c9" stroke-width="1.8"/>
+      <line x1="340" y1="227" x2="400" y2="197" stroke="#bad4c9" stroke-width="1.8"/>
+    </g>
+
+    <!-- ④ STEPPED CRENELLATIONS / MERLONS (一圈阶梯状雉堞) -->
+    <!-- Distinctive Moroccan stepped sawtooth battlements -->
+    <!-- West Merlons (Lit: Ochre with highlights) -->
+    <g fill="#d4795b" stroke="#f6ab8d" stroke-width="0.6">
+      <!-- Merlon 1 -->
+      <polygon points="280,197 286,200 286,188 283,188 283,184 280,184"/>
+      <!-- Merlon 2 -->
+      <polygon points="291,202 297,205 297,193 294,193 294,189 291,189"/>
+      <!-- Merlon 3 -->
+      <polygon points="302,208 308,211 308,199 305,199 305,195 302,195"/>
+      <!-- Merlon 4 -->
+      <polygon points="313,214 319,217 319,205 316,205 316,201 313,201"/>
+      <!-- Merlon 5 -->
+      <polygon points="324,220 330,223 330,211 327,211 327,207 324,207"/>
+      <!-- Corner Merlon -->
+      <polygon points="335,225 341,228 341,215 338,215 338,210 335,210"/>
+    </g>
+    <!-- South Merlons (Shadowed) -->
+    <g fill="#703223" stroke="#873c2a" stroke-width="0.6">
+      <polygon points="345,226 351,223 351,210 348,210 348,214 345,214"/>
+      <polygon points="356,220 362,217 362,204 359,204 359,208 356,208"/>
+      <polygon points="367,215 373,212 373,199 370,199 370,203 367,203"/>
+      <polygon points="378,209 384,206 384,193 381,193 381,197 378,197"/>
+      <polygon points="389,204 395,201 395,188 392,188 392,192 389,192"/>
+    </g>
+
+    <!-- Platform Walkway Surface inside parapet -->
+    <polygon points="310,188 340,203 370,188 340,178" fill="#a15840"/>
+
+    <!-- ⑤ UPPER LANTERN TOWER (更小的方形小塔: 1/2 width of main shaft) -->
+    <!-- Width: from x=310 to x=340 to x=370 (30px face width vs 60px main shaft) -->
+    <!-- Height: y=130 to y=190 (~60px) -->
+
+    <!-- West Lit Wall -->
+    <polygon points="310,145 340,160 340,198 310,183" fill="#d97f60"/>
+    <line x1="310" y1="145" x2="340" y2="160" stroke="#fca98d" stroke-width="1.2"/>
+
+    <!-- South Shadow Wall -->
+    <polygon points="340,160 370,145 370,183 340,198" fill="#873f2e"/>
+    <line x1="340" y1="198" x2="370" y2="183" stroke="#522116" stroke-width="1.5"/>
+
+    <!-- Lantern Corner Highlight -->
+    <line x1="340" y1="160" x2="340" y2="198" stroke="#f69a7c" stroke-width="1"/>
+
+    <!-- ⑤ LANTERN SEBKA / LOZENGE PANELS (菱格纹板) -->
+    <g stroke="#9c4c35" stroke-width="1.1" fill="none">
+      <!-- West Face Sebka Lattice -->
+      <path d="M 316,177 L 325,162 L 334,177"/>
+      <path d="M 316,162 L 325,177 L 334,162"/>
+      <path d="M 316,167 L 325,152 L 334,167"/>
+      <path d="M 316,152 L 325,167 L 334,152"/>
+      <!-- Sebka Arch Frame -->
+      <rect x="314" y="152" width="22" height="24" stroke="#a65239" stroke-width="1.3" transform="skewY(26) scale(1, 0.9)"/>
+    </g>
+
+    <!-- Lantern Top Miniature Crenellations -->
+    <polygon points="310,145 315,147.5 315,142 310,142" fill="#d97f60"/>
+    <polygon points="318,149 323,151.5 323,146 318,146" fill="#d97f60"/>
+    <polygon points="326,153 331,155.5 331,150 326,150" fill="#d97f60"/>
+    <polygon points="335,157 340,159.5 340,154 335,154" fill="#d97f60"/>
+    <!-- South side mini merlons -->
+    <polygon points="345,157 350,154.5 350,149 345,149" fill="#753526"/>
+    <polygon points="354,152 359,149.5 359,144 354,144" fill="#753526"/>
+    <polygon points="363,148 368,145.5 368,140 363,140" fill="#753526"/>
+
+    <!-- ⑥ FLUTED CUPOLA / DOME (带竖向凹槽的小穹顶) -->
+    <!-- Base octagonal/square collar -->
+    <polygon points="322,143 340,151 358,143 340,137" fill="#b06248"/>
+    <!-- Fluted Ribbed Dome -->
+    <!-- Dome Base shape -->
+    <path d="M 324,141 C 324,116 356,116 356,141 Z" fill="#b8664a"/>
+    <!-- Flutes / Vertical Grooves (带竖向凹槽) with light and shadow ribs -->
+    <path d="M 324,141 C 325,125 332,118 340,116 C 334,120 329,129 328,143 Z" fill="#e08667"/>
+    <path d="M 328,143 C 330,126 335,118 340,116 C 336,122 334,132 334,145 Z" fill="#d4795b"/>
+    <path d="M 334,145 C 336,128 338,118 340,116 C 341,122 342,132 342,147 Z" fill="#ba6449"/>
+    <path d="M 342,147 C 344,128 343,118 340,116 C 346,120 349,130 349,144 Z" fill="#8f4430"/>
+    <path d="M 349,144 C 352,129 348,120 340,116 C 351,121 355,130 356,141 Z" fill="#733221"/>
+
+    <!-- ⑦ GOLDEN BRASS ORBS ON SPIRE & SIDE SHAFT (三颗由大到小的金铜色圆球，旁边一根细杆) -->
+    <g id="jamurFinial">
+      <!-- Shadow cast from finial onto dome -->
+      <line x1="340" y1="116" x2="346" y2="128" stroke="rgba(50,20,10,0.4)" stroke-width="1.5"/>
+
+      <!-- Central Vertical Spire Rod (穿过三颗圆球的细杆) -->
+      <line x1="340" y1="116" x2="340" y2="44" stroke="url(#goldGrad)" stroke-width="2.6" stroke-linecap="round"/>
+      <line x1="339.2" y1="116" x2="339.2" y2="44" stroke="#fff3b0" stroke-width="0.8"/>
+
+      <!-- Orb 1 (Lowest, Largest: radius 8px) -->
+      <circle cx="340" cy="98" r="8" fill="url(#goldGrad)"/>
+      <circle cx="337.5" cy="95.5" r="2.5" fill="#fff9d6" opacity="0.85"/>
+      <circle cx="340" cy="98" r="8" fill="none" stroke="#784c0c" stroke-width="0.7"/>
+
+      <!-- Orb 2 (Middle: radius 5.8px) -->
+      <circle cx="340" cy="80" r="5.8" fill="url(#goldGrad)"/>
+      <circle cx="338" cy="78" r="1.8" fill="#fff9d6" opacity="0.85"/>
+      <circle cx="340" cy="80" r="5.8" fill="none" stroke="#784c0c" stroke-width="0.6"/>
+
+      <!-- Orb 3 (Top, Smallest: radius 3.8px) -->
+      <circle cx="340" cy="65" r="3.8" fill="url(#goldGrad)"/>
+      <circle cx="338.5" cy="63.5" r="1.2" fill="#fff9d6" opacity="0.9"/>
+      <circle cx="340" cy="65" r="3.8" fill="none" stroke="#784c0c" stroke-width="0.5"/>
+
+      <!-- Spire Spearpoint Tip -->
+      <polygon points="338.5,48 340,39 341.5,48" fill="#ffd966"/>
+
+      <!-- Side Rod / Gnomon Arm (旁边一根细杆) -->
+      <!-- As seen on historic Almohad finials (horizontal support strut + tilted pointer needle) -->
+      <path d="M 340,90 L 354,84 L 354,52" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="354" cy="51" r="1.8" fill="#ffe07a"/>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- ENVIRONMENT: TALL SLENDER PALM TREES (棕榈树) -->
+  <!-- Height < 1/3 main tower height (~90px max); Animated subtle sway -->
+  <!-- ========================================== -->
+  <g id="palms">
+    <!-- Palm 1: South-West foreground (with separate ground shadow) -->
+    <g transform="translate(230, 560)">
+      <ellipse cx="-8" cy="0" rx="14" ry="5" fill="rgba(60,50,40,0.28)" filter="url(#treeShadow)"/>
+      <g class="palm1"><use href="#palmTree" transform="scale(1.15)"/></g>
+    </g>
+
+    <!-- Palm 2: West plaza edge -->
+    <g transform="translate(170, 520)">
+      <ellipse cx="-7" cy="0" rx="12" ry="4.5" fill="rgba(60,50,40,0.25)" filter="url(#treeShadow)"/>
+      <g class="palm2"><use href="#palmTree" transform="scale(1.0)"/></g>
+    </g>
+
+    <!-- Palm 3: Near ancient ruins (farther, paler, softer) -->
+    <g transform="translate(320, 460)" opacity="0.85">
+      <ellipse cx="-6" cy="0" rx="10" ry="4" fill="rgba(60,50,40,0.2)" filter="url(#treeShadow)"/>
+      <g class="palm3"><use href="#palmTree" transform="scale(0.85)"/></g>
+    </g>
+
+    <!-- Palm 4: South-East near garden walk -->
+    <g transform="translate(480, 640)">
+      <ellipse cx="-8" cy="0" rx="13" ry="5" fill="rgba(60,50,40,0.28)" filter="url(#treeShadow)"/>
+      <g class="palm4"><use href="#palmTree" transform="scale(1.05)"/></g>
+    </g>
+
+    <!-- Palm 5: East plaza edge -->
+    <g transform="translate(810, 580)">
+      <ellipse cx="-7" cy="0" rx="11" ry="4.5" fill="rgba(60,50,40,0.22)" filter="url(#treeShadow)"/>
+      <g class="palm1"><use href="#palmTree" transform="scale(0.95)"/></g>
+    </g>
+  </g>
+
+  <!-- Ambient Occlusion and Corner Depth Accent Gradients -->
+  <linearGradient id="vignette" x1="0%" y1="0%" x2="0%" y2="100%">
+    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.1"/>
+    <stop offset="85%" stop-color="#000000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#4a3828" stop-opacity="0.12"/>
+  </linearGradient>
+  <rect width="1000" height="900" fill="url(#vignette)" pointer-events="none"/>
+</svg>
