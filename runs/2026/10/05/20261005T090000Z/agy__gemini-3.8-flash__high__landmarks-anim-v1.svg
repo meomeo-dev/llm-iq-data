@@ -1,0 +1,572 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%">
+  <defs>
+    <!-- 背景渐变：安静陈列室的漫射柔光 -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ebf0ea"/>
+      <stop offset="50%" stop-color="#f3f6f2"/>
+      <stop offset="100%" stop-color="#f9fbf8"/>
+    </linearGradient>
+
+    <!-- 底座侧壁渐变 -->
+    <linearGradient id="plinthSideGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2c3631"/>
+      <stop offset="35%" stop-color="#414d47"/>
+      <stop offset="70%" stop-color="#333e38"/>
+      <stop offset="100%" stop-color="#222b26"/>
+    </linearGradient>
+
+    <!-- 底座顶外沿高光边渐变 -->
+    <linearGradient id="plinthRimGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="35%" stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop offset="70%" stop-color="#ffffff" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.6"/>
+    </linearGradient>
+
+    <!-- 柔和阴影滤镜 -->
+    <filter id="softBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="miniBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5"/>
+    </filter>
+    <filter id="plinthShadowBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+
+    <!-- 机库受光面材质微渐变 -->
+    <linearGradient id="litWallGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#96a497"/>
+      <stop offset="100%" stop-color="#889689"/>
+    </linearGradient>
+
+    <!-- 机库受光坡顶渐变 -->
+    <linearGradient id="litRoofGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9db09f"/>
+      <stop offset="40%" stop-color="#8f9d90"/>
+      <stop offset="100%" stop-color="#859386"/>
+    </linearGradient>
+
+    <!-- 机库背光坡顶渐变 -->
+    <linearGradient id="shadeRoofGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#556460"/>
+      <stop offset="100%" stop-color="#465450"/>
+    </linearGradient>
+
+    <!-- 端门材质渐变 -->
+    <linearGradient id="doorGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#93a294"/>
+      <stop offset="50%" stop-color="#9cb09f"/>
+      <stop offset="100%" stop-color="#8e9d90"/>
+    </linearGradient>
+
+    <!-- 树冠球形漫射高光渐变 -->
+    <radialGradient id="treeGrad1" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#8db758"/>
+      <stop offset="55%" stop-color="#5a8032"/>
+      <stop offset="100%" stop-color="#36521e"/>
+    </radialGradient>
+    <radialGradient id="treeGrad2" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#9fc267"/>
+      <stop offset="55%" stop-color="#678f39"/>
+      <stop offset="100%" stop-color="#3d5a21"/>
+    </radialGradient>
+
+    <!-- 底座顶面圆形剪裁 (30° 俯视椭圆) -->
+    <clipPath id="plinthTopClip">
+      <ellipse cx="600" cy="500" rx="470" ry="235"/>
+    </clipPath>
+
+    <!-- 侧墙竖向骨架重复单元 (用于精确铺满全长) -->
+    <pattern id="shedRibPattern" width="5.8" height="60" patternUnits="userSpaceOnUse" patternTransform="matrix(1 0 0 1 0 0)">
+      <line x1="0" y1="0" x2="0" y2="60" stroke="#5d6d60" stroke-width="1.1"/>
+      <line x1="1.3" y1="0" x2="1.3" y2="60" stroke="#a4b5a5" stroke-width="0.7" stroke-opacity="0.8"/>
+    </pattern>
+
+    <!-- 巨型门扇细密横纹纹理 -->
+    <pattern id="doorRibPattern" width="40" height="2.4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#778778" stroke-width="0.8"/>
+    </pattern>
+  </defs>
+
+  <!-- 1. 背景：柔和温润的陈列室漫射渐变 -->
+  <rect width="1200" height="900" fill="url(#bgGrad)"/>
+
+  <!-- 2. 底座下方淡淡的椭圆投影 -->
+  <ellipse cx="600" cy="565" rx="490" ry="240" fill="#1b2520" opacity="0.14" filter="url(#plinthShadowBlur)"/>
+  <ellipse cx="600" cy="550" rx="475" ry="236" fill="#15201b" opacity="0.18" filter="url(#miniBlur)"/>
+
+  <!-- 3. 圆形展示底座厚度侧壁 (厚度 42px，比顶面深一档) -->
+  <path d="M 130,500 A 470,235 0 0,0 1070,500 L 1070,542 A 470,235 0 0,1 130,542 Z" fill="url(#plinthSideGrad)"/>
+  <!-- 侧壁底部微暗收边 -->
+  <path d="M 130,542 A 470,235 0 0,0 1070,542 L 1070,544 A 470,235 0 0,1 130,544 Z" fill="#18201b"/>
+
+  <!-- 4. 底座顶面：平坦农田、树篱与道路 (受 plinthTopClip 剪裁) -->
+  <g clip-path="url(#plinthTopClip)">
+    <!-- 基础草地底色 -->
+    <ellipse cx="600" cy="500" rx="472" ry="237" fill="#8fa956"/>
+
+    <!-- ① 拼布状农田：黄绿与麦黄相间 -->
+    <!-- 田块 1: 西北麦黄田 -->
+    <polygon points="120,480 280,390 390,460 210,540" fill="#d2b96a"/>
+    <!-- 田块 2: 北部黄绿田 -->
+    <polygon points="280,390 450,310 540,380 390,460" fill="#9db862"/>
+    <!-- 田块 3: 远端深绿牧草田 -->
+    <polygon points="450,310 610,270 660,330 540,380" fill="#8aa751"/>
+    <!-- 田块 4: 东北成熟麦田 -->
+    <polygon points="610,270 780,285 810,360 660,330" fill="#dfc674"/>
+    <!-- 田块 5: 远东嫩绿田 -->
+    <polygon points="780,285 940,335 900,420 810,360" fill="#a4bf67"/>
+    <!-- 田块 6: 正东金黄麦田 -->
+    <polygon points="940,335 1080,470 970,535 900,420" fill="#cbb25b"/>
+    <!-- 田块 7: 东南黄绿相间田 -->
+    <polygon points="900,420 970,535 860,610 780,500" fill="#9db862"/>
+    <!-- 田块 8: 东南麦黄田 -->
+    <polygon points="970,535 1060,560 920,670 820,630" fill="#d9bf6c"/>
+    <!-- 田块 9: 南端偏西草地 -->
+    <polygon points="820,630 920,670 770,725 700,660" fill="#8fa956"/>
+    <!-- 田块 10: 正南麦田 -->
+    <polygon points="700,660 770,725 570,735 530,665" fill="#d2b96a"/>
+    <!-- 田块 11: 西南黄绿大田 -->
+    <polygon points="530,665 570,735 360,715 390,635" fill="#9db862"/>
+    <!-- 田块 12: 西南边缘浅黄田 -->
+    <polygon points="360,715 180,635 240,565 390,635" fill="#cbb05d"/>
+    <!-- 机库基座地坪 (压平土地与碎石区) -->
+    <polygon points="300,420 710,250 930,480 500,660" fill="#9ab45f" opacity="0.35"/>
+
+    <!-- 农田犁垄细纹 (微缩质感肌理) -->
+    <g stroke="#ffffff" stroke-width="0.6" stroke-opacity="0.22" stroke-dasharray="6,4">
+      <line x1="140" y1="500" x2="260" y2="420"/>
+      <line x1="160" y1="515" x2="280" y2="435"/>
+      <line x1="180" y1="530" x2="300" y2="450"/>
+      <line x1="830" y1="380" x2="920" y2="440"/>
+      <line x1="850" y1="395" x2="940" y2="455"/>
+      <line x1="870" y1="410" x2="960" y2="470"/>
+      <line x1="680" y1="675" x2="750" y2="720"/>
+      <line x1="660" y1="685" x2="730" y2="730"/>
+    </g>
+
+    <!-- 田野细细的树篱 (Hedgerows) -->
+    <g stroke="#3a5226" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.9">
+      <!-- 树篱投影 -->
+      <path d="M 280,390 L 390,460 L 210,540 M 390,460 L 540,380 M 660,330 L 810,360 L 900,420 M 780,500 L 860,610 M 700,660 L 820,630 M 390,635 L 530,665" stroke="#1d2b14" stroke-width="3.5" opacity="0.25"/>
+      <!-- 树篱灌木主体 -->
+      <path d="M 280,390 L 390,460 L 210,540 M 390,460 L 540,380 M 660,330 L 810,360 L 900,420 M 780,500 L 860,610 M 700,660 L 820,630 M 390,635 L 530,665"/>
+      <!-- 树篱受光亮斑点缀 -->
+      <path d="M 280,390 L 390,460 L 210,540 M 390,460 L 540,380 M 660,330 L 810,360 L 900,420 M 780,500 L 860,610 M 700,660 L 820,630 M 390,635 L 530,665" stroke="#688a44" stroke-width="1.2" stroke-dasharray="3,3"/>
+    </g>
+
+    <!-- 道路系统 -->
+    <!-- ⑦ 两库之间的笔直小路 (浅灰) -->
+    <polygon points="768,552 805,534 445,358 408,376" fill="#bcc3ba"/>
+    <!-- 笔直小路中央轮印与路缘暗线 -->
+    <line x1="786.5" y1="543" x2="426.5" y2="367" stroke="#9ba399" stroke-width="1.2" stroke-dasharray="4,2"/>
+    <line x1="768" y1="552" x2="408" y2="376" stroke="#6d786a" stroke-width="0.8" opacity="0.6"/>
+    <line x1="805" y1="534" x2="445" y2="358" stroke="#6d786a" stroke-width="0.8" opacity="0.6"/>
+
+    <!-- 乡间小路：从底座左下边缘蜿蜒通向两库之间 -->
+    <path d="M 195,655 C 260,642 340,632 440,616 C 540,600 630,586 710,568 C 740,562 765,556 786,543" fill="none" stroke="#253023" stroke-width="6.5" opacity="0.22"/>
+    <path d="M 195,655 C 260,642 340,632 440,616 C 540,600 630,586 710,568 C 740,562 765,556 786,543" fill="none" stroke="#c0c7bd" stroke-width="5.5" stroke-linecap="round"/>
+    <path d="M 195,655 C 260,642 340,632 440,616 C 540,600 630,586 710,568 C 740,562 765,556 786,543" fill="none" stroke="#a7b0a4" stroke-width="1.2" stroke-dasharray="5,2"/>
+
+    <!-- 机库主体投在农田上的柔和阴影 (光源自左上方45°) -->
+    <!-- 远侧机库 (Shed 2) 地面投影 -->
+    <polygon points="807,534 895,492 970,528 920,380 575,200 464,370" fill="#202c24" opacity="0.32" filter="url(#miniBlur)"/>
+    <!-- 近侧机库 (Shed 1) 地面投影 (延伸至笔直小路与远库基座) -->
+    <polygon points="690,590 778,548 855,585 810,480 435,300 294,401" fill="#1c2820" opacity="0.36" filter="url(#miniBlur)"/>
+  </g>
+
+  <!-- 5. 远侧巨型机库：Shed 2 (结构完全对称，按比例略短于近侧机库) -->
+  <g id="shed2">
+    <!-- 背光端墙与内凹阴影 (远端，仅隐约可见轮廓) -->
+    <polygon points="464,370 464,314 508,260 552,274 552,330" fill="#323e3a"/>
+
+    <!-- 侧墙 (面向两库空地的一侧，中间明度带阴影) -->
+    <polygon points="807,534 464,370 464,314 807,478" fill="#586762"/>
+    <!-- 侧墙底部环境光遮蔽 -->
+    <polygon points="807,534 464,370 464,364 807,528" fill="#2a3531" opacity="0.6"/>
+
+    <!-- 屋顶背光坡面 (右侧坡顶，背光偏深蓝灰 #4e5d59) -->
+    <polygon points="851,424 895,438 552,274 508,260" fill="url(#shadeRoofGrad)"/>
+    <!-- 屋顶受光坡面 (左侧坡顶，微带弧度的两坡顶，受光面 #8f9d90) -->
+    <polygon points="807,478 851,424 508,260 464,314" fill="url(#litRoofGrad)"/>
+    <!-- 受光坡面屋脊圆润过渡与分缝 -->
+    <line x1="851" y1="424" x2="508" y2="260" stroke="#a9bba9" stroke-width="1.8"/>
+
+    <!-- ⑥ 屋脊通长天窗带 (浅灰白) -->
+    <!-- 天窗背光侧 -->
+    <polygon points="849,421 853,422 510,258 506,257" fill="#4a5652"/>
+    <!-- 天窗受光立面与顶面 (浅灰白) -->
+    <polygon points="847,422 849,418 506,254 504,258" fill="#e5ece5"/>
+    <polygon points="849,418 852,419 509,255 506,254" fill="#f4f7f4"/>
+    <line x1="849" y1="418" x2="506" y2="254" stroke="#ffffff" stroke-width="0.8"/>
+
+    <!-- ⑤ 远侧机库近端端墙 (几乎整面为分段巨门，关闭状态) -->
+    <!-- 端墙山墙基底 -->
+    <polygon points="807,534 895,492 895,438 851,424 807,478" fill="#728277"/>
+    <!-- 巨门滑轨顶罩横梁与环境光遮蔽 -->
+    <polygon points="805,483 897,439 897,443 805,487" fill="#36433b"/>
+    <polygon points="805,482 897,438 897,440 805,484" fill="#a4b5a6"/>
+
+    <!-- 分段巨门扇面 (6扇闭合巨门，略浅并带细密横向线) -->
+    <g>
+      <!-- 门扇底色与横向波纹纹理 -->
+      <polygon points="808,533 894,492 894,442 808,484" fill="url(#doorGrad)"/>
+      <polygon points="808,533 894,492 894,442 808,484" fill="url(#doorRibPattern)" opacity="0.65"/>
+      <!-- 门扇之间纵向细缝 (向两侧滑开的分段缝) -->
+      <line x1="822.3" y1="526" x2="822.3" y2="477" stroke="#3d4941" stroke-width="1.3"/>
+      <line x1="836.6" y1="519" x2="836.6" y2="470" stroke="#3d4941" stroke-width="1.3"/>
+      <line x1="851.0" y1="512" x2="851.0" y2="463" stroke="#3d4941" stroke-width="1.3"/>
+      <line x1="865.3" y1="505" x2="865.3" y2="456" stroke="#3d4941" stroke-width="1.3"/>
+      <line x1="879.6" y1="499" x2="879.6" y2="450" stroke="#3d4941" stroke-width="1.3"/>
+    </g>
+    <!-- 山墙拱形顶框与高光窄边 -->
+    <polyline points="807,478 851,424 895,438" fill="none" stroke="#adc0ad" stroke-width="1.5"/>
+  </g>
+
+  <!-- 6. 画面近侧巨型机库：Shed 1 (长宽比约4.5:1，高度约为宽度的0.9倍，完全展现微缩模型精细细节) -->
+  <g id="shed1">
+    <!-- 背光端墙微露暗角 (最远端，受景深影响略虚) -->
+    <polygon points="294,401 294,345 338,290 382,304 382,360" fill="#2c3632" opacity="0.85"/>
+
+    <!-- 屋顶背光坡面 (右侧坡顶，背光深蓝灰 #4e5d59) -->
+    <polygon points="734,480 778,494 382,304 338,290" fill="url(#shadeRoofGrad)"/>
+    <!-- 凹角遮蔽暗带 (天窗与屋顶交接处) -->
+    <polygon points="733,478 740,481 344,292 337,289" fill="#2e3a35" opacity="0.7"/>
+
+    <!-- 屋顶受光坡面 (左侧坡顶，微弧两坡顶，受光浅灰绿 #8f9d90) -->
+    <polygon points="690,534 734,480 338,290 294,345" fill="url(#litRoofGrad)"/>
+    <!-- 坡面波纹分块细缝 (纵向成排铺满) -->
+    <g stroke="#7d8d7e" stroke-width="0.7" opacity="0.7">
+      <line x1="650" y1="515" x2="694" y2="461"/>
+      <line x1="611" y1="496" x2="655" y2="442"/>
+      <line x1="571" y1="477" x2="615" y2="423"/>
+      <line x1="532" y1="458" x2="576" y2="404"/>
+      <line x1="492" y1="439" x2="536" y2="385"/>
+      <line x1="453" y1="420" x2="497" y2="366"/>
+      <line x1="413" y1="400" x2="457" y2="346"/>
+      <line x1="374" y1="381" x2="418" y2="327"/>
+      <line x1="334" y1="362" x2="378" y2="308"/>
+    </g>
+    <!-- 圆润屋脊顶线高光窄边 -->
+    <line x1="734" y1="480" x2="338" y2="290" stroke="#bad0bc" stroke-width="2.2"/>
+
+    <!-- ⑥ 屋脊通长天窗带 (浅灰白，贯穿全长) -->
+    <g id="skylight1">
+      <!-- 天窗阴影底面 -->
+      <polygon points="732,476 737,478 341,288 336,286" fill="#384540"/>
+      <!-- 天窗背光立面 -->
+      <polygon points="734,475 737,477 341,287 338,285" fill="#a4b0a6"/>
+      <!-- 天窗受光立面 (浅灰白) -->
+      <polygon points="730,477 733,472 337,282 334,287" fill="#ebf2ea"/>
+      <!-- 天窗连续顶脊高光线 -->
+      <line x1="733" y1="472" x2="337" y2="282" stroke="#ffffff" stroke-width="1.2"/>
+      <!-- 天窗立柱微缩窄格 -->
+      <g stroke="#89978b" stroke-width="0.8">
+        <line x1="690" y1="458" x2="687" y2="453"/>
+        <line x1="645" y1="436" x2="642" y2="431"/>
+        <line x1="600" y1="415" x2="597" y2="410"/>
+        <line x1="555" y1="393" x2="552" y2="388"/>
+        <line x1="510" y1="371" x2="507" y2="366"/>
+        <line x1="465" y1="350" x2="462" y2="345"/>
+        <line x1="420" y1="328" x2="417" y2="323"/>
+        <line x1="375" y1="306" x2="372" y2="301"/>
+      </g>
+    </g>
+
+    <!-- ④ 近侧机库垂直侧墙：密集的竖向骨架分成窄格成排铺满整个长度 -->
+    <!-- 侧墙基底 (受光面 #8f9d90) -->
+    <polygon points="690,590 294,401 294,345 690,534" fill="url(#litWallGrad)"/>
+    <!-- 侧墙檐口阴影窄带 -->
+    <polygon points="690,534 294,345 294,348 690,537" fill="#4f5d51" opacity="0.6"/>
+
+    <!-- 成排铺满的竖向凸起骨架 (利用矢量循环线条组，精确展现微缩骨架) -->
+    <g id="verticalRibsShed1">
+      <!-- 骨架微投影线 (深色细线，画在受光面) -->
+      <path d="
+        M 685,587.5 L 685,531.5 M 680,585 L 680,529 M 675,582.5 L 675,526.5 M 670,580 L 670,524 M 665,578 L 665,522
+        M 660,575.5 L 660,519.5 M 655,573 L 655,517 M 650,570.5 L 650,514.5 M 645,568 L 645,512 M 640,566 L 640,510
+        M 635,563.5 L 635,507.5 M 630,561 L 630,505 M 625,558.5 L 625,502.5 M 620,556 L 620,500 M 615,554 L 615,498
+        M 610,551.5 L 610,495.5 M 605,549 L 605,493 M 600,546.5 L 600,490.5 M 595,544 L 595,488 M 590,542 L 590,486
+        M 585,539.5 L 585,483.5 M 580,537 L 580,481 M 575,534.5 L 575,478.5 M 570,532 L 570,476 M 565,530 L 565,474
+        M 560,527.5 L 560,471.5 M 555,525 L 555,469 M 550,522.5 L 550,466.5 M 545,520 L 545,464 M 540,518 L 540,462
+        M 535,515.5 L 535,459.5 M 530,513 L 530,457 M 525,510.5 L 525,454.5 M 520,508 L 520,452 M 515,506 L 515,450
+        M 510,503.5 L 510,447.5 M 505,501 L 505,445 M 500,498.5 L 500,442.5 M 495,496 L 495,440 M 490,494 L 490,438
+        M 485,491.5 L 485,435.5 M 480,489 L 480,433 M 475,486.5 L 475,430.5 M 470,484 L 470,428 M 465,482 L 465,426
+        M 460,479.5 L 460,423.5 M 455,477 L 455,421 M 450,474.5 L 450,418.5 M 445,472 L 445,416 M 440,470 L 440,414
+        M 435,467.5 L 435,411.5 M 430,465 L 430,409 M 425,462.5 L 425,406.5 M 420,460 L 420,404 M 415,458 L 415,402
+        M 410,455.5 L 410,399.5 M 405,453 L 405,397 M 400,450.5 L 400,394.5 M 395,448 L 395,392 M 390,446 L 390,390
+        M 385,443.5 L 385,387.5 M 380,441 L 380,385 M 375,438.5 L 375,382.5 M 370,436 L 370,380 M 365,434 L 365,378
+        M 360,431.5 L 360,375.5 M 355,429 L 355,373 M 350,426.5 L 350,370.5 M 345,424 L 345,368 M 340,422 L 340,366
+        M 335,419.5 L 335,363.5 M 330,417 L 330,361 M 325,414.5 L 325,358.5 M 320,412 L 320,356 M 315,410 L 315,354
+        M 310,407.5 L 310,351.5 M 305,405 L 305,349 M 300,402.5 L 300,346.5
+      " stroke="#566658" stroke-width="1.2"/>
+
+      <!-- 骨架受光棱线 (并置微亮反光，产生微缩凸起立体感) -->
+      <path d="
+        M 686,587.5 L 686,531.5 M 681,585 L 681,529 M 676,582.5 L 676,526.5 M 671,580 L 671,524 M 666,578 L 666,522
+        M 661,575.5 L 661,519.5 M 656,573 L 656,517 M 651,570.5 L 651,514.5 M 646,568 L 646,512 M 641,566 L 641,510
+        M 636,563.5 L 636,507.5 M 631,561 L 631,505 M 626,558.5 L 626,502.5 M 621,556 L 621,500 M 616,554 L 616,498
+        M 611,551.5 L 611,495.5 M 606,549 L 606,493 M 601,546.5 L 601,490.5 M 596,544 L 596,488 M 591,542 L 591,486
+        M 586,539.5 L 586,483.5 M 581,537 L 581,481 M 576,534.5 L 576,478.5 M 571,532 L 571,476 M 566,530 L 566,474
+        M 561,527.5 L 561,471.5 M 556,525 L 556,469 M 551,522.5 L 551,466.5 M 546,520 L 546,464 M 541,518 L 541,462
+        M 536,515.5 L 536,459.5 M 531,513 L 531,457 M 526,510.5 L 526,454.5 M 521,508 L 521,452 M 516,506 L 516,450
+        M 511,503.5 L 511,447.5 M 506,501 L 506,445 M 501,498.5 L 501,442.5 M 496,496 L 496,440 M 491,494 L 491,438
+        M 486,491.5 L 486,435.5 M 481,489 L 481,433 M 476,486.5 L 476,430.5 M 471,484 L 471,428 M 466,482 L 466,426
+        M 461,479.5 L 461,423.5 M 456,477 L 456,421 M 451,474.5 L 451,418.5 M 446,472 L 446,416 M 441,470 L 441,414
+        M 436,467.5 L 436,411.5 M 431,465 L 431,409 M 426,462.5 L 426,406.5 M 421,460 L 421,404 M 416,458 L 416,402
+        M 411,455.5 L 411,399.5 M 406,453 L 406,397 M 401,450.5 L 401,394.5 M 396,448 L 396,392 M 391,446 L 391,390
+        M 386,443.5 L 386,387.5 M 381,441 L 381,385 M 376,438.5 L 376,382.5 M 371,436 L 371,380 M 366,434 L 366,378
+        M 361,431.5 L 361,375.5 M 356,429 L 356,373 M 351,426.5 L 351,370.5 M 346,424 L 346,368 M 341,422 L 341,366
+        M 336,419.5 L 336,363.5 M 331,417 L 331,361 M 326,414.5 L 326,358.5 M 321,412 L 321,356 M 316,410 L 316,354
+        M 311,407.5 L 311,351.5 M 306,405 L 306,349 M 301,402.5 L 301,346.5
+      " stroke="#a6bca8" stroke-width="0.7" opacity="0.85"/>
+    </g>
+
+    <!-- 侧墙顶边亮边与底座压暗踢脚 -->
+    <line x1="690" y1="534" x2="294" y2="345" stroke="#c0d7c2" stroke-width="1.6"/>
+    <line x1="690" y1="590" x2="294" y2="401" stroke="#3b483e" stroke-width="2.2"/>
+
+    <!-- ⑤ 近端端墙 (几乎整面为分段巨门，关闭，门扇留细缝) -->
+    <!-- 端墙山墙基底 -->
+    <polygon points="690,590 778,548 778,494 734,480 690,534" fill="#78887e"/>
+    <!-- 山墙上部微缩加强斜撑骨架 -->
+    <g stroke="#5f7064" stroke-width="1.1">
+      <line x1="734" y1="480" x2="734" y2="498"/>
+      <line x1="712" y1="507" x2="712" y2="525"/>
+      <line x1="756" y1="487" x2="756" y2="505"/>
+    </g>
+
+    <!-- 巨门顶部悬挂导轨箱与暗部遮蔽 -->
+    <polygon points="688,539 780,495 780,500 688,544" fill="#2d3831"/>
+    <polygon points="688,538 780,494 780,496 688,540" fill="#a7bca9"/>
+
+    <!-- 分段巨门扇面 (高度约为机库高度四分之三，门扇略浅并带细密横向线) -->
+    <g id="shed1Doors">
+      <!-- 门扇底色与精细横纹纹理 -->
+      <polygon points="691,589 777,548 777,498 691,540" fill="url(#doorGrad)"/>
+      <polygon points="691,589 777,548 777,498 691,540" fill="url(#doorRibPattern)" opacity="0.6"/>
+
+      <!-- 6扇巨型滑门之间的缝隙 (细缝与侧边阴影) -->
+      <!-- 门缝 1 -->
+      <line x1="705.3" y1="582" x2="705.3" y2="533" stroke="#38453c" stroke-width="1.4"/>
+      <line x1="706.3" y1="582" x2="706.3" y2="533" stroke="#b0c4b2" stroke-width="0.6"/>
+      <!-- 门缝 2 -->
+      <line x1="719.6" y1="575" x2="719.6" y2="526" stroke="#38453c" stroke-width="1.4"/>
+      <line x1="720.6" y1="575" x2="720.6" y2="526" stroke="#b0c4b2" stroke-width="0.6"/>
+      <!-- 门缝 3 (正中央主闭合缝) -->
+      <line x1="734.0" y1="568" x2="734.0" y2="519" stroke="#2c3630" stroke-width="1.8"/>
+      <line x1="735.2" y1="568" x2="735.2" y2="519" stroke="#bad0bc" stroke-width="0.7"/>
+      <!-- 门缝 4 -->
+      <line x1="748.3" y1="561" x2="748.3" y2="512" stroke="#38453c" stroke-width="1.4"/>
+      <line x1="749.3" y1="561" x2="749.3" y2="512" stroke="#b0c4b2" stroke-width="0.6"/>
+      <!-- 门缝 5 -->
+      <line x1="762.6" y1="555" x2="762.6" y2="506" stroke="#38453c" stroke-width="1.4"/>
+      <line x1="763.6" y1="555" x2="763.6" y2="506" stroke="#b0c4b2" stroke-width="0.6"/>
+
+      <!-- 门扇底缘地面滑轨槽 -->
+      <line x1="691" y1="589" x2="777" y2="548" stroke="#313d35" stroke-width="2.2"/>
+    </g>
+
+    <!-- 端墙山墙顶部外框轮廓与受光亮边 -->
+    <polyline points="690,534 734,480 778,494" fill="none" stroke="#b3cbb5" stroke-width="1.8"/>
+    <!-- 端墙立柱受光高光角线 -->
+    <line x1="690" y1="590" x2="690" y2="534" stroke="#c2d9c4" stroke-width="1.6"/>
+  </g>
+
+  <!-- 7. 环境与微缩细节：底座一角一簇村舍、小教堂尖塔、圆形大树 (比例不超过机库高度十分之一，即 ≤9px) -->
+  <g id="villageAndTrees" clip-path="url(#plinthTopClip)">
+    <!-- 小教堂与墓园树林 (位于左下侧 280, 620 区域) -->
+    <!-- 教堂地面投影 -->
+    <polygon points="295,626 312,626 318,634 300,636" fill="#18231c" opacity="0.32" filter="url(#miniBlur)"/>
+    <polygon points="282,628 290,628 293,638 284,639" fill="#18231c" opacity="0.35" filter="url(#miniBlur)"/>
+
+    <!-- 教堂主体 (石砌小教堂，坡屋顶，高度约7px) -->
+    <g id="churchNave">
+      <!-- 侧墙背光 -->
+      <polygon points="292,624 308,620 308,625 292,629" fill="#69716c"/>
+      <!-- 山墙受光 -->
+      <polygon points="286,626 292,624 292,629 286,631" fill="#9ca59f"/>
+      <!-- 坡屋顶 (砖红灰瓦) -->
+      <polygon points="286,626 289,622 305,618 308,620 292,624" fill="#a45946"/>
+      <polygon points="289,622 305,618 306,616 290,620" fill="#ba6853"/>
+    </g>
+
+    <!-- 教堂钟楼与小尖塔 (Square tower with pointed spire，高度约16px) -->
+    <g id="churchSpire">
+      <!-- 塔楼受光南面与西面 -->
+      <polygon points="282,631 287,632 287,624 282,623" fill="#959e98"/>
+      <polygon points="287,632 291,630 291,622 287,624" fill="#6e7771"/>
+      <line x1="287" y1="632" x2="287" y2="624" stroke="#c0cac3" stroke-width="0.8"/>
+      <!-- 尖塔基座檐口 -->
+      <polygon points="281,623 292,622 291,621 281,622" fill="#525b55"/>
+      <!-- 八角小尖塔 (背光与受光面，耸立尖顶) -->
+      <polygon points="286.5,612 281.5,622 286.5,623" fill="#586762"/>
+      <polygon points="286.5,612 286.5,623 291.5,621" fill="#3c4743"/>
+      <!-- 尖塔迎光棱线 -->
+      <line x1="286.5" y1="612" x2="286.5" y2="623" stroke="#8fa099" stroke-width="0.8"/>
+    </g>
+
+    <!-- 一簇村舍 (5座微型乡村小屋，高度5-7px，错落有致，至少两种尺寸) -->
+    <!-- 村舍 1 (茅草/麦黄坡屋顶，靠近教堂) -->
+    <g id="cottage1">
+      <polygon points="318,638 330,638 334,644 322,644" fill="#18231c" opacity="0.25"/>
+      <polygon points="317,635 325,633 325,638 317,640" fill="#9ca59f"/>
+      <polygon points="325,633 331,635 331,640 325,638" fill="#6e7872"/>
+      <!-- 坡屋顶 -->
+      <polygon points="316,634 321,630 329,632 325,636" fill="#cbb36b"/>
+      <polygon points="321,630 329,632 332,634 325,633" fill="#b19a55"/>
+    </g>
+
+    <!-- 村舍 2 (红瓦坡顶小农舍) -->
+    <g id="cottage2">
+      <polygon points="338,628 348,628 352,633 342,633" fill="#18231c" opacity="0.25"/>
+      <polygon points="336,625 343,623 343,628 336,630" fill="#a4aba6"/>
+      <polygon points="336,625 339,621 346,623 343,627" fill="#b95843"/>
+      <polygon points="339,621 346,623 348,625 343,623" fill="#924331"/>
+      <!-- 微型烟囱 -->
+      <rect x="340" y="620" width="1.2" height="2.5" fill="#693024"/>
+    </g>
+
+    <!-- 村舍 3 (石板灰蓝坡顶较大农舍) -->
+    <g id="cottage3">
+      <polygon points="262,646 276,646 280,653 266,653" fill="#18231c" opacity="0.25"/>
+      <polygon points="261,643 270,641 270,647 261,649" fill="#949e98"/>
+      <polygon points="270,641 277,643 277,649 270,647" fill="#68726c"/>
+      <polygon points="260,642 265,638 274,640 270,644" fill="#606d75"/>
+      <polygon points="265,638 274,640 278,642 270,641" fill="#465158"/>
+    </g>
+
+    <!-- 村舍 4 & 5 (路边矮小屋) -->
+    <g id="cottage4">
+      <polygon points="352,642 360,642 363,647 355,647" fill="#18231c" opacity="0.2"/>
+      <polygon points="351,640 357,638 357,643 351,645" fill="#9ca59f"/>
+      <polygon points="350,639 354,636 360,638 357,641" fill="#c4705a"/>
+    </g>
+    <g id="cottage5">
+      <polygon points="248,628 255,628 258,633 251,633" fill="#18231c" opacity="0.2"/>
+      <polygon points="247,626 253,624 253,629 247,631" fill="#8f9992"/>
+      <polygon points="246,625 250,622 255,624 253,627" fill="#bfab63"/>
+    </g>
+
+    <!-- 几棵圆形树冠的大树 (不同尺寸，散落分布，带球体微缩光影与地面小投影) -->
+    <!-- 大树 1 (教堂旁老橡树，直径约16px) -->
+    <g id="tree1">
+      <ellipse cx="272" cy="628" rx="8" ry="4.5" fill="#152019" opacity="0.32" filter="url(#miniBlur)"/>
+      <rect x="270.5" y="621" width="2" height="5" fill="#4a3c2c"/>
+      <circle cx="271" cy="617" r="7.5" fill="url(#treeGrad1)"/>
+      <ellipse cx="269" cy="614.5" rx="3.5" ry="2.5" fill="#b0db73" opacity="0.45"/>
+    </g>
+
+    <!-- 大树 2 (村舍间绿树，直径约14px) -->
+    <g id="tree2">
+      <ellipse cx="335" cy="645" rx="7" ry="4" fill="#152019" opacity="0.3" filter="url(#miniBlur)"/>
+      <rect x="334" y="639" width="1.8" height="4" fill="#443628"/>
+      <circle cx="334" cy="635" r="6.5" fill="url(#treeGrad2)"/>
+      <ellipse cx="332.5" cy="633" rx="3" ry="2" fill="#c3eb7d" opacity="0.4"/>
+    </g>
+
+    <!-- 大树 3 (路边孤植树，直径约13px) -->
+    <g id="tree3">
+      <ellipse cx="445" cy="627" rx="6.5" ry="3.5" fill="#152019" opacity="0.3" filter="url(#miniBlur)"/>
+      <rect x="444" y="621" width="1.6" height="4.5" fill="#4a3c2c"/>
+      <circle cx="444" cy="618" r="6" fill="url(#treeGrad1)"/>
+      <ellipse cx="442.5" cy="616" rx="2.8" ry="1.8" fill="#b0db73" opacity="0.4"/>
+    </g>
+
+    <!-- 大树 4 & 5 (田埂边的圆冠树) -->
+    <g id="tree4">
+      <ellipse cx="545" cy="612" rx="7" ry="4" fill="#152019" opacity="0.28" filter="url(#miniBlur)"/>
+      <circle cx="544" cy="605" r="6.5" fill="url(#treeGrad2)"/>
+    </g>
+    <g id="tree5">
+      <ellipse cx="375" cy="615" rx="6" ry="3.5" fill="#152019" opacity="0.25" filter="url(#miniBlur)"/>
+      <circle cx="374" cy="609" r="5.5" fill="url(#treeGrad1)"/>
+    </g>
+
+    <!-- 停在村舍旁的静止小车 -->
+    <g id="parkedCar" transform="translate(328, 642) rotate(-16)">
+      <ellipse cx="0" cy="1" rx="4.5" ry="2.5" fill="#111813" opacity="0.4"/>
+      <rect x="-4" y="-2.2" width="8" height="4.4" rx="1.2" fill="#3a4f66"/>
+      <rect x="-2" y="-1.6" width="4" height="3.2" rx="0.8" fill="#8cb3d9"/>
+      <rect x="-1" y="-1.2" width="2.5" height="2.4" rx="0.5" fill="#e8f2fc"/>
+    </g>
+  </g>
+
+  <!-- 8. 动态：乡间小路上缓慢平稳驶向两库之间的微缩汽车 (现实中本就会动之物，严格遵循无跳变平滑循环) -->
+  <!-- 运动路径 1：主干道小车 (深绿色复古小轿车，循环时长 9.6s，缓入缓出) -->
+  <g id="movingCar1">
+    <!-- 小车模型 (长约9px，带自身小投影与高光车顶) -->
+    <g>
+      <!-- 自身小投影 -->
+      <ellipse cx="0" cy="1.2" rx="5.2" ry="2.6" fill="#101812" opacity="0.45"/>
+      <!-- 车体底座与轮轴 -->
+      <rect x="-4.5" y="-2.2" width="9" height="4.4" rx="1.4" fill="#2d4233"/>
+      <!-- 轮子小点 -->
+      <circle cx="-3" cy="-2.2" r="0.7" fill="#181f19"/>
+      <circle cx="3" cy="-2.2" r="0.7" fill="#181f19"/>
+      <circle cx="-3" cy="2.2" r="0.7" fill="#181f19"/>
+      <circle cx="3" cy="2.2" r="0.7" fill="#181f19"/>
+      <!-- 车厢座舱 -->
+      <rect x="-2.4" y="-1.6" width="4.8" height="3.2" rx="0.9" fill="#1b281f"/>
+      <!-- 挡风玻璃与车顶反光 -->
+      <rect x="-1.2" y="-1.2" width="3" height="2.4" rx="0.6" fill="#7ba385"/>
+      <circle cx="0.5" cy="0" r="0.8" fill="#dcedde"/>
+    </g>
+    <!-- SMIL 动画：沿小路平滑向前移动 -->
+    <animateMotion
+      path="M 210,652 C 270,640 350,630 450,614 C 550,598 640,584 715,566 C 740,560 760,552 780,542"
+      dur="9.6s"
+      repeatCount="indefinite"
+      rotate="auto"
+      keyPoints="0; 0.15; 0.5; 0.85; 1"
+      keyTimes="0; 0.2; 0.5; 0.8; 1"
+      calcMode="spline"
+      keySplines="0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1"
+    />
+    <!-- 首尾透明度缓入缓出，循环处完全无跳变 -->
+    <animate
+      attributeName="opacity"
+      values="0; 1; 1; 1; 0; 0"
+      keyTimes="0; 0.08; 0.85; 0.94; 0.98; 1"
+      dur="9.6s"
+      repeatCount="indefinite"
+    />
+  </g>
+
+  <!-- 运动路径 2：第二辆小车 (浅暖红小客货车，错落发车，循环时长 11.2s) -->
+  <g id="movingCar2">
+    <g>
+      <!-- 自身小投影 -->
+      <ellipse cx="0" cy="1" rx="4.8" ry="2.4" fill="#101812" opacity="0.4"/>
+      <!-- 车体 -->
+      <rect x="-4.2" y="-2" width="8.4" height="4" rx="1.2" fill="#8c3d2f"/>
+      <!-- 驾驶室与货斗 -->
+      <rect x="-1.5" y="-1.5" width="4.5" height="3" rx="0.8" fill="#5e261c"/>
+      <rect x="0.2" y="-1.1" width="2.4" height="2.2" rx="0.5" fill="#f0c2b8"/>
+    </g>
+    <animateMotion
+      path="M 370,627 C 470,611 565,596 645,580 C 705,568 745,558 775,544 C 785,538 775,532 750,518"
+      dur="11.2s"
+      begin="-5.6s"
+      repeatCount="indefinite"
+      rotate="auto"
+      keyPoints="0; 0.2; 0.6; 0.9; 1"
+      keyTimes="0; 0.25; 0.6; 0.88; 1"
+      calcMode="spline"
+      keySplines="0.35 0 0.25 1; 0.35 0 0.25 1; 0.35 0 0.25 1; 0.35 0 0.25 1"
+    />
+    <animate
+      attributeName="opacity"
+      values="0; 1; 1; 1; 0; 0"
+      keyTimes="0; 0.08; 0.85; 0.93; 0.97; 1"
+      dur="11.2s"
+      begin="-5.6s"
+      repeatCount="indefinite"
+    />
+  </g>
+
+  <!-- 9. 底座顶面外沿细亮边 (在最上层，封固纯净的微缩模型底座外沿) -->
+  <ellipse cx="600" cy="500" rx="470" ry="235" fill="none" stroke="url(#plinthRimGrad)" stroke-width="1.8"/>
+  <ellipse cx="600" cy="501" rx="469" ry="234" fill="none" stroke="#ffffff" stroke-width="0.8" stroke-opacity="0.4"/>
+</svg>

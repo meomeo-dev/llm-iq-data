@@ -1,0 +1,515 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" width="100%" height="100%">
+  <defs>
+    <!-- Background clean studio gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#edf2f4"/>
+      <stop offset="60%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+
+    <!-- Base Cylinder Gradients -->
+    <linearGradient id="pedestalRim" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="#e2e8f0" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <linearGradient id="pedestalSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4a5568"/>
+      <stop offset="25%" stop-color="#2d3748"/>
+      <stop offset="70%" stop-color="#1a202c"/>
+      <stop offset="100%" stop-color="#2d3748"/>
+    </linearGradient>
+
+    <!-- Hangar Shading & Rib Textures -->
+    <!-- Rib pattern for lit side wall (approx 40 ribs across the hangar length) -->
+    <pattern id="ribPattern" width="12" height="120" patternUnits="userSpaceOnUse" patternTransform="rotate(26.565)">
+      <rect x="0" y="0" width="12" height="120" fill="#8f9d90"/>
+      <!-- vertical rib extrusion: subtle highlight line + shadow line -->
+      <line x1="9" y1="0" x2="9" y2="120" stroke="#a4b2a5" stroke-width="1.2"/>
+      <line x1="11" y1="0" x2="11" y2="120" stroke="#5d6c60" stroke-width="1.5"/>
+    </pattern>
+
+    <!-- End wall massive sliding door horizontal corrugated texture -->
+    <pattern id="doorPattern" width="40" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-30)">
+      <line x1="0" y1="2" x2="40" y2="2" stroke="#526255" stroke-width="0.75" opacity="0.65"/>
+      <line x1="0" y1="3" x2="40" y2="3" stroke="#9bb09d" stroke-width="0.5" opacity="0.4"/>
+    </pattern>
+
+    <!-- Tree Symbol: Miniature architectural diorama sponge tree with subtle cast shadow -->
+    <g id="miniTree">
+      <!-- Ground contact shadow -->
+      <ellipse cx="0" cy="5" rx="10" ry="5" fill="#2b3b24" opacity="0.35"/>
+      <!-- Trunk -->
+      <path d="M-1.5,4 L-1, -6 L1, -6 L1.5, 4 Z" fill="#4a3728"/>
+      <!-- Canopy layers -->
+      <circle cx="0" cy="-14" r="11" fill="#4d6e37"/>
+      <circle cx="-3" cy="-17" r="8" fill="#628b45"/>
+      <circle cx="3" cy="-13" r="8" fill="#3b572a"/>
+      <circle cx="-4" cy="-18" r="4.5" fill="#7ba856"/>
+    </g>
+
+    <!-- Small House: Cottage style with pitched roof -->
+    <g id="miniCottage">
+      <!-- Shadow -->
+      <polygon points="-12,4 12,4 18,-2 -6,-2" fill="#202c1e" opacity="0.3"/>
+      <!-- Walls (lit & shadow) -->
+      <polygon points="-10,0 2,6 2,-6 -10,-12" fill="#d9d5c7"/>
+      <polygon points="2,6 14,0 14,-12 2,-6" fill="#8e897b"/>
+      <!-- Gable/Roof -->
+      <polygon points="-11,-12 2,-19 2,-6" fill="#bd5d44"/>
+      <polygon points="2,-19 15,-13 14,-12 2,-6" fill="#913b24"/>
+      <!-- Chimney -->
+      <rect x="5" y="-21" width="2" height="5" fill="#783424"/>
+    </g>
+
+    <!-- Soft Drop Shadow Filter for Base & Hangars -->
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="15"/>
+      <feOffset dx="10" dy="25"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.3"/></feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <filter id="baseShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="35"/>
+      <feOffset dx="0" dy="45"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.35"/></feComponentTransfer>
+    </filter>
+  </defs>
+
+  <style><![CDATA[
+    /* CSS Keyframe animations for miniature cars moving along the country lane */
+    @keyframes carMove1 {
+      0% {
+        transform: translate(320px, 940px);
+      }
+      100% {
+        transform: translate(660px, 660px);
+      }
+    }
+    @keyframes carMove2 {
+      0% {
+        transform: translate(750px, 580px);
+      }
+      100% {
+        transform: translate(450px, 830px);
+      }
+    }
+    @keyframes carMove3 {
+      0% {
+        transform: translate(790px, 545px);
+      }
+      100% {
+        transform: translate(960px, 400px);
+      }
+    }
+    .anim-car-1 {
+      animation: carMove1 11s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+    }
+    .anim-car-2 {
+      animation: carMove2 9s cubic-bezier(0.4, 0.0, 0.6, 1.0) infinite;
+    }
+    .anim-car-3 {
+      animation: carMove3 7.5s cubic-bezier(0.42, 0.0, 0.58, 1.0) infinite;
+    }
+  ]]></style>
+
+  <!-- Clean Background -->
+  <rect width="1600" height="1200" fill="url(#bgGrad)"/>
+
+  <!-- ========================================== -->
+  <!-- 1. DISPLAY BASE (CIRCULAR PEDESTAL)       -->
+  <!-- ========================================== -->
+
+  <!-- Soft ambient contact shadow under the pedestal -->
+  <ellipse cx="800" cy="740" rx="630" ry="340" fill="#1e252b" filter="url(#baseShadow)"/>
+
+  <!-- Pedestal Lower Cylinder Side (thickness/depth) -->
+  <path d="M 170,720 
+           A 630 330 0 0 0 1430,720 
+           L 1430,780 
+           A 630 330 0 0 1 170,780 Z" 
+        fill="url(#pedestalSide)"/>
+
+  <!-- Pedestal Base Bottom Trim -->
+  <path d="M 170,780 A 630 330 0 0 0 1430,780" stroke="#11161d" stroke-width="3" fill="none"/>
+
+  <!-- Pedestal Top Rim Highlight -->
+  <ellipse cx="800" cy="720" rx="630" ry="330" fill="none" stroke="url(#pedestalRim)" stroke-width="4.5"/>
+
+  <!-- ========================================== -->
+  <!-- 2. BASE TOP SURFACE (FARMLAND DIORAMA)     -->
+  <!-- Clip Path for circular model disc          -->
+  <!-- ========================================== -->
+  <clipPath id="discClip">
+    <ellipse cx="800" cy="720" rx="628" ry="328"/>
+  </clipPath>
+
+  <g clip-path="url(#discClip)">
+    <!-- Base grass terrain -->
+    <ellipse cx="800" cy="720" rx="630" ry="330" fill="#7ea354"/>
+
+    <!-- Patchwork Farmland Plots (Yellows, Olives, Wheat & Greens) -->
+    <!-- Top-left fields (distant) -->
+    <polygon points="150,600 450,450 650,560 300,740" fill="#a4be68" opacity="0.9"/>
+    <polygon points="450,450 780,395 860,490 650,560" fill="#d2b96a"/>
+    <polygon points="780,395 1100,410 1050,500 860,490" fill="#8ea853"/>
+    <polygon points="1100,410 1400,520 1260,600 1050,500" fill="#e0c777"/>
+    <polygon points="1260,600 1450,660 1350,780 1120,680" fill="#6e8f47"/>
+
+    <!-- Mid & foreground fields -->
+    <polygon points="200,700 420,590 520,710 260,860" fill="#cbb362"/>
+    <polygon points="260,860 520,710 660,880 380,1030" fill="#9db862"/>
+    <polygon points="520,710 740,600 840,730 660,880" fill="#e8d58c"/>
+    <polygon points="660,880 840,730 1000,920 780,1050" fill="#8ba84d"/>
+    <polygon points="1120,680 1350,780 1240,930 1010,800" fill="#d8be69"/>
+    <polygon points="1010,800 1240,930 1080,1040 920,910" fill="#92ad59"/>
+    <polygon points="780,1050 1000,920 1080,1040 850,1060" fill="#b8a156"/>
+
+    <!-- Ploughed Furrow Textures on Wheat Fields -->
+    <g stroke="#b89e4c" stroke-width="1.2" opacity="0.35">
+      <line x1="470" y1="465" x2="630" y2="555"/>
+      <line x1="490" y1="460" x2="650" y2="550"/>
+      <line x1="510" y1="455" x2="670" y2="545"/>
+      <line x1="530" y1="450" x2="690" y2="540"/>
+      <line x1="280" y1="875" x2="490" y2="735"/>
+      <line x1="300" y1="895" x2="510" y2="755"/>
+      <line x1="320" y1="915" x2="530" y2="775"/>
+      <line x1="340" y1="935" x2="550" y2="795"/>
+    </g>
+
+    <!-- Hedgerows (Dark organic borders between farm fields) -->
+    <g stroke="#394f27" stroke-linecap="round" opacity="0.85">
+      <path d="M 200,700 L 420,590 L 650,560 L 860,490 L 1050,500 L 1260,600" stroke-width="3"/>
+      <path d="M 450,450 L 650,560 L 520,710 L 260,860" stroke-width="3.5"/>
+      <path d="M 660,880 L 840,730 L 1010,800 L 1240,930" stroke-width="4"/>
+      <path d="M 1050,500 L 1120,680 L 1010,800 L 920,910 L 780,1050" stroke-width="3"/>
+      <path d="M 1260,600 L 1450,660" stroke-width="2.5"/>
+      <!-- Small shrub bumps on hedges -->
+      <circle cx="340" cy="635" r="3.5" fill="#2d421d"/>
+      <circle cx="580" cy="575" r="4" fill="#2d421d"/>
+      <circle cx="750" cy="790" r="4.5" fill="#2d421d"/>
+      <circle cx="950" cy="850" r="4" fill="#2d421d"/>
+      <circle cx="1180" cy="740" r="4" fill="#2d421d"/>
+    </g>
+
+    <!-- Country lane leading from disk edge into the space between hangars -->
+    <!-- Road Surface: Light grey gravel/tarmac (#c4cac3) with soft edges -->
+    <path d="M 280,980 Q 420,860 580,730 L 680,645 L 800,545 L 1000,380" 
+          stroke="#424c44" stroke-width="17" fill="none" opacity="0.3"/>
+    <path d="M 280,980 Q 420,860 580,730 L 680,645 L 800,545 L 1000,380" 
+          stroke="#bcc3ba" stroke-width="14" fill="none"/>
+    <path d="M 280,980 Q 420,860 580,730 L 680,645 L 800,545 L 1000,380" 
+          stroke="#dedfd9" stroke-width="3" stroke-dasharray="12,14" fill="none" opacity="0.6"/>
+
+    <!-- Direct straight road between the two hangars (Airfield Service Spine) -->
+    <polygon points="560,740 600,710 1025,365 990,390" fill="#b0b8ae"/>
+    <line x1="580" y1="725" x2="1008" y2="378" stroke="#8d978a" stroke-width="1.5"/>
+
+    <!-- ========================================== -->
+    <!-- 3. SHADOWS OF THE GIGANTIC HANGARS        -->
+    <!-- Cast on ground towards right/back (light from top-left ~45°) -->
+    <!-- ========================================== -->
+    <g opacity="0.45" fill="#1c2b21">
+      <!-- Shadow of Far Hangar 1 -->
+      <polygon points="615,445 1060,110 1195,145 1190,265 745,550"/>
+      <!-- Shadow of Near Hangar 2 -->
+      <polygon points="450,670 950,285 1110,320 1100,460 605,790"/>
+    </g>
+
+    <!-- ========================================== -->
+    <!-- 4. FAR HANGAR (HANGAR NO. 1 - NORTH)       -->
+    <!-- Parallel, slightly shorter than near one   -->
+    <!-- Length: 490px, Width: 115px, Height: 104px -->
+    <!-- ========================================== -->
+    <g id="hangarFar">
+      <!-- Ground contact ambient occlusion -->
+      <polygon points="605,440 1030,110 1140,195 715,525" fill="#18231c" opacity="0.6"/>
+
+      <!-- Far Back End Wall (Barely visible perspective back) -->
+      <polygon points="1030,110 1088,65 1140,195 1082,240" fill="#2d373c" opacity="0.8"/>
+
+      <!-- South Lit Side Wall (Extending along axis) -->
+      <!-- Length approx 4.3x width -->
+      <polygon points="605,440 1030,110 1030,30 605,360" fill="url(#ribPattern)"/>
+      <polygon points="605,440 1030,110 1030,30 605,360" fill="#8f9d90" opacity="0.35"/>
+      <!-- Bottom AO line on wall -->
+      <line x1="605" y1="440" x2="1030" y2="110" stroke="#3b473d" stroke-width="3"/>
+      <!-- Eaves highlight line -->
+      <line x1="605" y1="360" x2="1030" y2="30" stroke="#b6c6b7" stroke-width="2"/>
+
+      <!-- South Roof Slope (Lit slope, facing south-west/top-left) -->
+      <path d="M 605,360 
+               Q 655,300 660,295 
+               L 1085,-35 
+               Q 1080,-30 1030,30 Z" 
+            fill="#9eb09f"/>
+      <!-- Subtle roof truss ribbing -->
+      <g stroke="#7c8e7e" stroke-width="1" opacity="0.6">
+        <line x1="648" y1="326" x2="1073" y2="-4"/>
+        <line x1="630" y1="340" x2="1055" y2="10"/>
+      </g>
+
+      <!-- Roof Lantern / Skylight Strip (Continuous along ridge) -->
+      <!-- Top lit face -->
+      <polygon points="656,290 666,282 1091,-48 1081,-40" fill="#f0f4f1"/>
+      <!-- Side face of skylight -->
+      <polygon points="656,290 656,297 1081,-33 1081,-40" fill="#7a8b7d"/>
+
+      <!-- North Roof Slope (Shadow side) -->
+      <polygon points="666,282 720,325 1145,-5 1091,-48" fill="#46585f"/>
+
+      <!-- East/Near End Wall (Massive segmented sliding doors facing camera) -->
+      <!-- Overall gable wall silhouette -->
+      <!-- Dimensions: Width ~115px, Height ~104px (h = 0.9w) -->
+      <!-- Base: (605,440) to (715,525), Eaves: (605,360) and (720,445), Ridge: (660,295) -->
+      <polygon points="605,440 605,360 660,295 720,345 715,525" fill="#58675b"/>
+
+      <!-- Giant Segmented Sliding Doors (H ~ 0.75 hangar height, closed with hairline gaps) -->
+      <g id="farDoors">
+        <!-- Door recess frame / dark boundary -->
+        <polygon points="613,443 613,365 707,438 707,516" fill="#2d3630"/>
+
+        <!-- Door Leaf 1 (Left outer) -->
+        <polygon points="615,441 615,368 637,385 637,458" fill="#7b8c7d"/>
+        <polygon points="615,441 615,368 637,385 637,458" fill="url(#doorPattern)"/>
+        <!-- Door Leaf 2 (Left inner) -->
+        <polygon points="639,459 639,386 661,403 661,476" fill="#849686"/>
+        <polygon points="639,459 639,386 661,403 661,476" fill="url(#doorPattern)"/>
+        <!-- Center vertical split gap -->
+        <line x1="661.5" y1="403" x2="661.5" y2="476" stroke="#1f2621" stroke-width="1.5"/>
+        <!-- Door Leaf 3 (Right inner) -->
+        <polygon points="663,477 663,404 685,421 685,494" fill="#697a6c"/>
+        <polygon points="663,477 663,404 685,421 685,494" fill="url(#doorPattern)"/>
+        <!-- Door Leaf 4 (Right outer) -->
+        <polygon points="687,495 687,422 705,436 705,510" fill="#5b6b5e"/>
+        <polygon points="687,495 687,422 705,436 705,510" fill="url(#doorPattern)"/>
+
+        <!-- Sliding track hardware on top and base rail -->
+        <line x1="611" y1="364" x2="709" y2="440" stroke="#3d493f" stroke-width="3"/>
+        <line x1="611" y1="363" x2="709" y2="439" stroke="#9bb09d" stroke-width="1"/>
+        <line x1="611" y1="445" x2="709" y2="521" stroke="#252f27" stroke-width="2"/>
+      </g>
+
+      <!-- Gable End Upper Arch/Pediment truss texture (above doors) -->
+      <polygon points="613,365 660,298 707,438" fill="#617364" opacity="0.6"/>
+      <line x1="660" y1="298" x2="660" y2="402" stroke="#48564a" stroke-width="1.5"/>
+      <line x1="635" y1="333" x2="685" y2="370" stroke="#48564a" stroke-width="1.2"/>
+    </g>
+
+    <!-- ========================================== -->
+    <!-- 5. NEAR HANGAR (HANGAR NO. 2 - SOUTH)      -->
+    <!-- Exactly parallel, slightly longer (4.5x),  -->
+    <!-- Higher detail, strong contrast and clarity -->
+    <!-- Width: ~125px, Length: ~560px, H: ~112px   -->
+    <!-- Separation: ~42px (approx 1/3 hangar width)-->
+    <!-- ========================================== -->
+    <g id="hangarNear" filter="url(#softShadow)">
+      <!-- Contact Shadow at base -->
+      <polygon points="440,665 940,275 1065,370 565,760" fill="#131c15" opacity="0.7"/>
+
+      <!-- Lit Side Wall (Facing South / South-East perspective) -->
+      <!-- Length = 560px, width = 125px -> Length is 4.5x width -->
+      <!-- Wall Height = 80px (total building height = 112px, h = 0.9w) -->
+      <polygon points="440,665 940,275 940,195 440,585" fill="#8f9d90"/>
+      <!-- Ribs pattern overlay (dense vertical structural pillars) -->
+      <polygon points="440,665 940,275 940,195 440,585" fill="url(#ribPattern)"/>
+
+      <!-- Individual prominent framing pylons along side wall for miniature tactile quality -->
+      <g stroke="#556457" stroke-width="1.6" opacity="0.8">
+        <!-- 40 densely spaced vertical ribs across the length -->
+        <path d="
+          M 465,645 L 465,565 M 490,625 L 490,545 M 515,605 L 515,525 M 540,585 L 540,505
+          M 565,565 L 565,485 M 590,545 L 590,465 M 615,525 L 615,445 M 640,505 L 640,425
+          M 665,485 L 665,405 M 690,465 L 690,385 M 715,445 L 715,365 M 740,425 L 740,345
+          M 765,405 L 765,325 M 790,385 L 790,305 M 815,365 L 815,285 M 840,345 L 840,265
+          M 865,325 L 865,245 M 890,305 L 890,225 M 915,285 L 915,205
+        "/>
+      </g>
+      <!-- Highlights on rib edges -->
+      <g stroke="#b0c2b2" stroke-width="0.8" opacity="0.7">
+        <path d="
+          M 464,645 L 464,565 M 489,625 L 489,545 M 514,605 L 514,525 M 539,585 L 539,505
+          M 564,565 L 564,485 M 589,545 L 589,465 M 614,525 L 614,445 M 639,505 L 639,425
+          M 664,485 L 664,405 M 689,465 L 689,385 M 714,445 L 714,365 M 739,425 L 739,345
+          M 764,405 L 764,325 M 789,385 L 789,305 M 814,365 L 814,285 M 839,345 L 839,265
+          M 864,325 L 864,245 M 889,305 L 889,225 M 914,285 L 914,205
+        "/>
+      </g>
+
+      <!-- Bottom Ambient Occlusion shadow bar along ground line -->
+      <polygon points="439,668 941,278 941,272 439,662" fill="#2d372e"/>
+      <!-- Crisp Top Eaves highlight line -->
+      <line x1="439" y1="584" x2="941" y2="194" stroke="#d5e4d6" stroke-width="2"/>
+
+      <!-- Lit Roof Slope (South side, gently curved profile) -->
+      <path d="M 440,585 
+               Q 495,520 500,510 
+               L 1000,120 
+               Q 995,130 940,195 Z" 
+            fill="#a1b3a2"/>
+      <!-- Soft longitudinal panel highlights on the curve -->
+      <path d="M 460,560 L 960,170" stroke="#b9ccba" stroke-width="6" opacity="0.6"/>
+      <path d="M 480,535 L 980,145" stroke="#899d8b" stroke-width="4" opacity="0.5"/>
+
+      <!-- Continuous Roof Ridge Skylight Strip (Lantern) -->
+      <!-- South lit upstand wall of skylight -->
+      <polygon points="496,505 496,512 996,122 996,115" fill="#758877"/>
+      <!-- Top glazed surface of skylight -->
+      <polygon points="496,505 506,497 1006,107 996,115" fill="#f4faf5"/>
+      <line x1="496" y1="505" x2="996" y2="115" stroke="#ffffff" stroke-width="1"/>
+
+      <!-- Shadowed Roof Slope (North side, deep cool grey-blue-green) -->
+      <polygon points="506,497 565,545 1065,155 1006,107" fill="#465a63"/>
+      <!-- Subtle rib shadow lines on far slope -->
+      <line x1="535" y1="521" x2="1035" y2="131" stroke="#37474e" stroke-width="1.5"/>
+
+      <!-- ========================================== -->
+      <!-- NEAR END WALL & ENORMOUS SLIDING GATES    -->
+      <!-- Diagonal isometric width: (440,665) to (565,760) -->
+      <!-- Gable Peak: (500,510)                       -->
+      <!-- ========================================== -->
+      <!-- End Wall Base Profile -->
+      <polygon points="440,665 440,585 500,510 565,560 565,760" fill="#5a6a5c"/>
+
+      <!-- Doorway Opening Frame Recess (Deep ambient occlusion) -->
+      <!-- Doors height = 3/4 of building height (~84px high) -->
+      <polygon points="448,669 448,582 557,665 557,752" fill="#1e2720"/>
+
+      <!-- 4 Massive Segmented Sliding Leaves (Closed, with precision hairline gaps) -->
+      <g id="nearDoors">
+        <!-- Door 1 (Far Left Leaf) -->
+        <polygon points="450,667 450,586 476,606 476,687" fill="#859987"/>
+        <polygon points="450,667 450,586 476,606 476,687" fill="url(#doorPattern)"/>
+        <!-- Fine vertical panel struts on door -->
+        <line x1="463" y1="596" x2="463" y2="677" stroke="#687869" stroke-width="1"/>
+
+        <!-- Door 2 (Mid Left Leaf) -->
+        <polygon points="478,688 478,607 503,626 503,707" fill="#8ea290"/>
+        <polygon points="478,688 478,607 503,626 503,707" fill="url(#doorPattern)"/>
+        <line x1="490" y1="616" x2="490" y2="697" stroke="#6f8271" stroke-width="1"/>
+
+        <!-- Center dividing split line between main door halves -->
+        <line x1="504" y1="626" x2="504" y2="708" stroke="#111712" stroke-width="2.2"/>
+
+        <!-- Door 3 (Mid Right Leaf - slightly darker tone) -->
+        <polygon points="505,709 505,628 530,647 530,728" fill="#788b7a"/>
+        <polygon points="505,709 505,628 530,647 530,728" fill="url(#doorPattern)"/>
+        <line x1="517" y1="637" x2="517" y2="718" stroke="#5d6e5f" stroke-width="1"/>
+
+        <!-- Door 4 (Far Right Leaf) -->
+        <polygon points="532,729 532,648 555,665 555,746" fill="#6a7c6c"/>
+        <polygon points="532,729 532,648 555,665 555,746" fill="url(#doorPattern)"/>
+        <line x1="543" y1="656" x2="543" y2="737" stroke="#526053" stroke-width="1"/>
+
+        <!-- Massive Top Guide Rail & Hood Truss -->
+        <polygon points="446,584 559,669 559,663 446,578" fill="#354237"/>
+        <line x1="446" y1="578" x2="559" y2="663" stroke="#b4c6b5" stroke-width="1.8"/>
+        <!-- Bottom Ground Rollers Rail -->
+        <line x1="447" y1="671" x2="558" y2="755" stroke="#1d261e" stroke-width="2.5"/>
+      </g>
+
+      <!-- Gable End Upper Arch Structure (Above the doors up to curved ridge) -->
+      <polygon points="448,582 500,513 557,665" fill="#697a6b" opacity="0.4"/>
+      <!-- Bracing girders in gable -->
+      <g stroke="#48574a" stroke-width="1.4" opacity="0.75">
+        <line x1="500" y1="513" x2="500" y2="624"/>
+        <line x1="474" y1="548" x2="530" y2="590"/>
+        <line x1="460" y1="565" x2="545" y2="630"/>
+      </g>
+    </g>
+
+    <!-- ========================================== -->
+    <!-- 6. ENVIRONMENT & MINIATURE DETAILS         -->
+    <!-- Hamlet of cottages, church spire, trees,   -->
+    <!-- hedgerows, and moving vehicles             -->
+    <!-- (Max building height < 1/10 hangar ~11px)  -->
+    <!-- ========================================== -->
+
+    <!-- Village Cluster (Bottom-Left Corner of Disc) -->
+    <g id="villageCluster" transform="translate(320, 820)">
+      <!-- Church Spire & Nave (< 11px high relative to hangar) -->
+      <!-- Church footprint shadow -->
+      <polygon points="5,5 30,5 35,-5 10,-5" fill="#202c1e" opacity="0.35"/>
+      <!-- Church body -->
+      <polygon points="6,2 22,8 22,-2 6,-8" fill="#dedbd0"/>
+      <polygon points="22,8 32,3 32,-7 22,-2" fill="#9b9689"/>
+      <polygon points="5,-8 22,-14 33,-7 22,-2" fill="#7d6756"/>
+      <!-- Church Tower -->
+      <polygon points="2,3 8,5 8,-14 2,-16" fill="#eae7dc"/>
+      <polygon points="8,5 13,3 13,-16 8,-14" fill="#aba597"/>
+      <!-- Sharp Spire Tip -->
+      <polygon points="2,-16 8,-14 5,-32" fill="#8c979a"/>
+      <polygon points="8,-14 13,-16 5,-32" fill="#5b6669"/>
+
+      <!-- Cottages scattered around the church (at least 2 sizes, organic placement) -->
+      <use href="#miniCottage" x="-35" y="-10" transform="scale(0.85)"/>
+      <use href="#miniCottage" x="-15" y="25" transform="scale(1.0)"/>
+      <use href="#miniCottage" x="35" y="15" transform="scale(0.9)"/>
+      <use href="#miniCottage" x="55" y="-15" transform="scale(0.75)"/>
+      <use href="#miniCottage" x="-50" y="15" transform="scale(0.8)"/>
+
+      <!-- Village Trees -->
+      <use href="#miniTree" x="-45" y="-20" transform="scale(0.9)"/>
+      <use href="#miniTree" x="-25" y="5" transform="scale(1.1)"/>
+      <use href="#miniTree" x="2" y="18" transform="scale(0.8)"/>
+      <use href="#miniTree" x="48" y="2" transform="scale(1.2)"/>
+      <use href="#miniTree" x="25" y="-22" transform="scale(1.0)"/>
+      <use href="#miniTree" x="70" y="-8" transform="scale(0.85)"/>
+    </g>
+
+    <!-- Additional Standalone Trees along Hedges and Lanes -->
+    <g id="scatteredTrees">
+      <use href="#miniTree" x="260" y="690" transform="scale(1.1)"/>
+      <use href="#miniTree" x="290" y="675" transform="scale(0.85)"/>
+      <use href="#miniTree" x="430" y="580" transform="scale(1.0)"/>
+      <use href="#miniTree" x="650" y="555" transform="scale(1.2)"/>
+      <use href="#miniTree" x="740" y="605" transform="scale(0.95)"/>
+      <use href="#miniTree" x="870" y="485" transform="scale(0.8)"/>
+      <use href="#miniTree" x="1060" y="495" transform="scale(0.9)"/>
+      <use href="#miniTree" x="1250" y="595" transform="scale(1.15)"/>
+      <use href="#miniTree" x="1140" y="675" transform="scale(1.0)"/>
+      <use href="#miniTree" x="930" y="905" transform="scale(1.25)"/>
+      <use href="#miniTree" x="670" y="875" transform="scale(1.05)"/>
+    </g>
+
+    <!-- ========================================== -->
+    <!-- 7. ANIMATED MINIATURE VEHICLES             -->
+    <!-- 2-3 tiny cars moving along the country lane-->
+    <!-- Scale appropriate: ~6px long diorama cars  -->
+    <!-- ========================================== -->
+
+    <!-- Vehicle 1: Small red estate car moving towards the hangars -->
+    <g class="anim-car-1">
+      <!-- Miniature car drop shadow -->
+      <ellipse cx="0" cy="2" rx="4.5" ry="2" fill="#1a241c" opacity="0.5"/>
+      <!-- Body -->
+      <rect x="-4" y="-2" width="8" height="3.5" rx="1" fill="#b93829" transform="rotate(-38)"/>
+      <!-- Cabin roof -->
+      <rect x="-2" y="-1.5" width="4" height="2.2" rx="0.5" fill="#f0ebe1" transform="rotate(-38)"/>
+    </g>
+
+    <!-- Vehicle 2: Small dark blue saloon car moving outwards from hangars -->
+    <g class="anim-car-2">
+      <ellipse cx="0" cy="2" rx="4" ry="1.8" fill="#1a241c" opacity="0.45"/>
+      <rect x="-3.5" y="-1.8" width="7" height="3.2" rx="0.8" fill="#2c4b75" transform="rotate(142)"/>
+      <rect x="-1.5" y="-1.3" width="3.5" height="2" rx="0.4" fill="#a8c1db" transform="rotate(142)"/>
+    </g>
+
+    <!-- Vehicle 3: Light cream delivery van on the central straight track -->
+    <g class="anim-car-3">
+      <ellipse cx="0" cy="2" rx="5" ry="2.2" fill="#1a241c" opacity="0.5"/>
+      <!-- Boxy body -->
+      <rect x="-4.5" y="-2.2" width="9" height="4" rx="0.5" fill="#ddd5c1" transform="rotate(-39)"/>
+      <rect x="-1" y="-2" width="2.5" height="3.6" fill="#3b484f" transform="rotate(-39)"/>
+    </g>
+
+  </g> <!-- End of Disc Clip -->
+
+  <!-- Top Rim Specular Glint (Precision clean museum glass / polished base edge) -->
+  <path d="M 170,720 A 630 330 0 0 1 1430,720" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.75"/>
+</svg>
