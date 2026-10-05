@@ -1,0 +1,416 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="studioBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#edf2f7" />
+      <stop offset="100%" stop-color="#f7fafc" />
+    </linearGradient>
+
+    <!-- Plinth Lighting -->
+    <linearGradient id="plinthRim" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#e2e8f0" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.4" />
+    </linearGradient>
+    <linearGradient id="plinthBase" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="35%" stop-color="#64748b" />
+      <stop offset="70%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#334155" />
+    </linearGradient>
+
+    <!-- Drop Shadows -->
+    <filter id="softShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="15" dy="25" stdDeviation="18" flood-color="#1e293b" flood-opacity="0.32" />
+    </filter>
+    <filter id="carShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="1.5" dy="2.5" stdDeviation="1.5" flood-color="#2c3e50" flood-opacity="0.45" />
+    </filter>
+
+    <!-- Corrugated / Rib Pattern for Hangar Walls -->
+    <pattern id="wallRibs" width="4.5" height="20" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="20" stroke="#5a685e" stroke-width="0.9" stroke-opacity="0.6" />
+      <line x1="1.2" y1="0" x2="1.2" y2="20" stroke="#a2b1a3" stroke-width="0.8" stroke-opacity="0.5" />
+    </pattern>
+
+    <!-- Door Horizontal Slats Pattern -->
+    <pattern id="doorSlats" width="20" height="2.8" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="20" y2="0" stroke="#546357" stroke-width="0.6" stroke-opacity="0.55" />
+      <line x1="0" y1="1.4" x2="20" y2="1.4" stroke="#9bb19d" stroke-width="0.5" stroke-opacity="0.45" />
+    </pattern>
+
+    <!-- Clustered Tree Component -->
+    <g id="miniTree">
+      <ellipse cx="2" cy="3" rx="7.5" ry="4" fill="#2d4022" opacity="0.3" filter="blur(1px)" />
+      <ellipse cx="0" cy="-4" rx="7" ry="7.5" fill="#4d6829" />
+      <ellipse cx="-1.5" cy="-5" rx="5.5" ry="6" fill="#698532" />
+      <ellipse cx="-2.5" cy="-6" rx="3.5" ry="3.5" fill="#88a846" />
+    </g>
+
+    <!-- Village Cottage -->
+    <g id="cottage">
+      <polygon points="0,0 8,4 8,-6 0,-10" fill="#cbd5e1" />
+      <polygon points="8,4 18,-1 18,-11 8,-6" fill="#94a3b8" />
+      <polygon points="-1,-10 7,-15 17,-11 9,-6" fill="#c26351" />
+      <polygon points="9,-6 17,-11 19,-9 10,-4" fill="#a44b3b" />
+    </g>
+  </defs>
+
+  <style>
+    <![CDATA[
+      @keyframes carRunA {
+        0% { transform: translate(320px, 660px); opacity: 0; }
+        6% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { transform: translate(525px, 515px); opacity: 0; }
+      }
+      @keyframes carRunB {
+        0% { transform: translate(560px, 490px); opacity: 0; }
+        10% { opacity: 1; }
+        92% { opacity: 1; }
+        100% { transform: translate(355px, 635px); opacity: 0; }
+      }
+      @keyframes carRunC {
+        0% { transform: translate(540px, 505px); }
+        50% { transform: translate(615px, 452px); }
+        100% { transform: translate(540px, 505px); }
+      }
+      .anim-car-1 { animation: carRunA 11s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+      .anim-car-2 { animation: carRunB 9s cubic-bezier(0.4, 0, 0.2, 1) infinite; animation-delay: 3s; }
+      .anim-car-3 { animation: carRunC 8s ease-in-out infinite; }
+    ]]>
+  </style>
+
+  <!-- Clean Studio Background -->
+  <rect width="100%" height="100%" fill="url(#studioBg)" />
+
+  <!-- Base Table Soft Drop Shadow -->
+  <ellipse cx="600" cy="570" rx="490" ry="245" fill="#0f172a" opacity="0.14" filter="blur(26px)" />
+  <ellipse cx="590" cy="560" rx="465" ry="230" fill="#1e293b" opacity="0.12" filter="blur(14px)" />
+
+  <!-- Cylindrical Display Base -->
+  <g id="plinth">
+    <!-- Cylinder Side Wall (Visible Thickness) -->
+    <path d="M 140,510 A 460,225 0 0,0 1060,510 L 1060,555 A 460,225 0 0,1 140,555 Z" fill="url(#plinthBase)" />
+    <!-- Side Wall Bottom Lip Shadow -->
+    <path d="M 140,555 A 460,225 0 0,0 1060,555 L 1060,558 A 460,225 0 0,1 140,558 Z" fill="#1e293b" opacity="0.6" />
+    <!-- Cylinder Top Surface Rim Highlight -->
+    <ellipse cx="600" cy="510" rx="461" ry="226" fill="none" stroke="url(#plinthRim)" stroke-width="3" />
+  </g>
+
+  <!-- Top Diorama Island (Clipped to the base oval) -->
+  <g id="diorama-surface">
+    <clipPath id="plinthClip">
+      <ellipse cx="600" cy="510" rx="460" ry="225" />
+    </clipPath>
+
+    <g clip-path="url(#plinthClip)">
+      <!-- Base Earth / Soil Layer -->
+      <ellipse cx="600" cy="510" rx="465" ry="230" fill="#758953" />
+
+      <!-- Agricultural Field Patchwork (Pastoral Bedfordshire Mosaic) -->
+      <!-- Top / Distant Fields (Slightly softer and cooler tone) -->
+      <polygon points="140,500 350,370 560,320 380,510" fill="#a4bd6e" />
+      <polygon points="560,320 720,295 860,350 630,410" fill="#c8b467" />
+      <polygon points="720,295 950,310 1070,410 860,350" fill="#90ab58" />
+      <polygon points="350,370 560,320 630,410 430,470" fill="#b9cd7c" />
+
+      <!-- Central / Midground Fields -->
+      <polygon points="130,510 410,480 320,630 150,580" fill="#d2b96a" />
+      <polygon points="320,630 520,530 460,690 280,680" fill="#9db862" />
+      <polygon points="410,480 620,440 520,530" fill="#8ca854" />
+      <polygon points="620,440 850,420 760,550 560,560" fill="#ddc776" />
+      <polygon points="850,420 1070,410 1060,530 760,550" fill="#86a550" />
+
+      <!-- Foreground Fields -->
+      <polygon points="460,690 730,570 700,730 470,735" fill="#a6bf6d" />
+      <polygon points="730,570 1060,530 990,660 700,730" fill="#cfb663" />
+      <polygon points="280,680 470,735 440,740 230,670" fill="#88a24e" />
+      <polygon points="700,730 990,660 910,720 680,735" fill="#9bb35c" />
+
+      <!-- Field Furrows / Textures (Fine parallel agricultural lines) -->
+      <g stroke="#ffffff" stroke-width="0.8" opacity="0.18">
+        <line x1="200" y1="520" x2="350" y2="440" />
+        <line x1="220" y1="535" x2="370" y2="455" />
+        <line x1="240" y1="550" x2="390" y2="470" />
+        <line x1="260" y1="565" x2="410" y2="485" />
+        <line x1="680" y1="435" x2="800" y2="520" />
+        <line x1="700" y1="430" x2="820" y2="515" />
+        <line x1="720" y1="425" x2="840" y2="510" />
+        <line x1="740" y1="420" x2="860" y2="505" />
+        <line x1="520" y1="690" x2="680" y2="600" />
+        <line x1="540" y1="700" x2="700" y2="610" />
+        <line x1="560" y1="710" x2="720" y2="620" />
+      </g>
+
+      <!-- Organic Hedgerows bordering agricultural parcels -->
+      <g stroke="#3e5323" stroke-linecap="round" opacity="0.8">
+        <path d="M 140,500 Q 240,430 350,370" stroke-width="3" stroke-dasharray="3,1" />
+        <path d="M 350,370 Q 450,340 560,320" stroke-width="2.5" />
+        <path d="M 560,320 Q 640,305 720,295" stroke-width="2.2" />
+        <path d="M 410,480 Q 370,550 320,630" stroke-width="3.2" stroke-dasharray="6,2" />
+        <path d="M 620,440 Q 685,490 760,550" stroke-width="3.5" stroke-dasharray="5,1.5" />
+        <path d="M 850,420 Q 855,475 860,540" stroke-width="3" />
+        <path d="M 460,690 Q 575,630 730,570" stroke-width="3.8" stroke-dasharray="8,2" />
+        <path d="M 730,570 Q 860,615 990,660" stroke-width="3.5" />
+        <path d="M 320,630 Q 390,660 460,690" stroke-width="3.2" />
+      </g>
+
+      <!-- Access Road from Perimeter into the Airship Complex -->
+      <!-- Curved Country Road -->
+      <path d="M 290,690 C 350,650 420,590 515,528" fill="none" stroke="#d5d8dc" stroke-width="7" />
+      <path d="M 290,690 C 350,650 420,590 515,528" fill="none" stroke="#b0b7bd" stroke-width="1" stroke-dasharray="12,8" />
+      <!-- Straight Road between the Twin Hangars -->
+      <polygon points="510,532 548,505 845,295 832,286" fill="#cbd0d5" />
+      <line x1="529" y1="518" x2="838" y2="290" stroke="#b1b8be" stroke-width="1.2" stroke-dasharray="8,6" />
+
+      <!-- Airship Shed Apron / Concrete Surrounds -->
+      <polygon points="410,570 540,480 500,452 370,542" fill="#bac1c4" opacity="0.75" />
+      <polygon points="460,470 560,400 525,375 425,445" fill="#b0b7ba" opacity="0.65" />
+
+      <!-- Village Cluster (Corner Diorama Detail: Cottages & Church) -->
+      <g id="villageCluster" transform="translate(235, 615)">
+        <!-- Village Green and Trees -->
+        <ellipse cx="25" cy="5" rx="35" ry="18" fill="#58742b" opacity="0.4" />
+        <use href="#miniTree" x="0" y="5" transform="scale(1.3)" />
+        <use href="#miniTree" x="14" y="12" transform="scale(1.1)" />
+        <use href="#miniTree" x="42" y="8" transform="scale(1.4)" />
+        <use href="#miniTree" x="55" y="-5" transform="scale(0.9)" />
+
+        <!-- Cottages (Height < 1/10th of Hangar) -->
+        <use href="#cottage" x="5" y="-8" />
+        <use href="#cottage" x="22" y="-12" />
+        <use href="#cottage" x="-10" y="2" />
+        <use href="#cottage" x="35" y="-2" />
+
+        <!-- Parish Church with Tower & Spire -->
+        <g transform="translate(18, -20)">
+          <!-- Church Nave -->
+          <polygon points="0,5 12,9 12,0 0,-4" fill="#cbd5e1" />
+          <polygon points="12,9 24,5 24,-4 12,0" fill="#94a3b8" />
+          <polygon points="0,-4 12,-9 24,-4 12,0" fill="#84382b" />
+          <!-- Tower -->
+          <polygon points="-5,5 2,7 2,-11 -5,-13" fill="#e2e8f0" />
+          <polygon points="2,7 8,5 8,-13 2,-11" fill="#94a3b8" />
+          <!-- Spire -->
+          <polygon points="-5,-13 2,-13 -1.5,-26" fill="#64748b" />
+          <polygon points="2,-13 8,-13 -1.5,-26" fill="#475569" />
+        </g>
+      </g>
+
+      <!-- Tiny Moving Miniature Vehicles on Road -->
+      <g id="anim-vehicles">
+        <!-- Vehicle 1: Moving inward along rural road -->
+        <g class="anim-car-1">
+          <ellipse cx="0" cy="1" rx="5" ry="2.5" fill="#1e293b" opacity="0.35" />
+          <rect x="-4" y="-3" width="8" height="4.5" rx="1.5" fill="#b91c1c" />
+          <rect x="-2" y="-2.3" width="4" height="3" rx="1" fill="#e2e8f0" />
+        </g>
+        <!-- Vehicle 2: Moving outward -->
+        <g class="anim-car-2">
+          <ellipse cx="0" cy="1" rx="4.5" ry="2.2" fill="#1e293b" opacity="0.35" />
+          <rect x="-3.5" y="-2.5" width="7" height="4" rx="1.2" fill="#0369a1" />
+          <rect x="-1.8" y="-2" width="3.5" height="2.8" rx="0.8" fill="#f8fafc" />
+        </g>
+        <!-- Vehicle 3: Service vehicle between hangars -->
+        <g class="anim-car-3">
+          <ellipse cx="0" cy="1" rx="4" ry="2" fill="#1e293b" opacity="0.3" />
+          <rect x="-3" y="-2" width="6.5" height="3.5" rx="1" fill="#d97706" />
+          <rect x="-1" y="-1.6" width="3" height="2.2" rx="0.6" fill="#fed7aa" />
+        </g>
+      </g>
+
+      <!-- Cast Shadows of the Two Giant Sheds on the Terrain -->
+      <g id="hangar-shadows" filter="url(#softShadow)" opacity="0.7">
+        <!-- Far Hangar Shadow (Cast towards right-back due to 45° left-front light) -->
+        <polygon points="460,420 540,430 840,215 890,210 930,230 670,440" fill="#1e293b" />
+        <!-- Near Hangar Shadow -->
+        <polygon points="420,535 520,550 860,310 940,310 970,340 640,570" fill="#1e293b" />
+      </g>
+
+      <!-- ======================================================== -->
+      <!-- HANGAR NO. 2 (Far Hangar, North Shed: slightly shorter) -->
+      <!-- Length ~360, Width ~80, Height ~72                      -->
+      <!-- ======================================================== -->
+      <g id="hangar-far" transform="translate(10, -55)">
+        <!-- Ambient Occlusion Base Contour -->
+        <polygon points="465,470 545,415 850,200 770,255" fill="#1a2e22" opacity="0.35" />
+
+        <!-- Longitudinal Side Wall (Facing South-East: Shaded / Backlight Side) -->
+        <!-- Deep blue-grey tint (#526466 / #415254) -->
+        <polygon points="545,415 850,200 850,140 545,355" fill="#465859" />
+        <!-- Base ambient shadow strip -->
+        <polygon points="545,415 850,200 850,195 545,410" fill="#2d3b3c" opacity="0.5" />
+
+        <!-- Arched Curved Gable End Wall (Facing South-West: Intermediate Light) -->
+        <!-- Profile: Vertical side walls (y: 415->355 & 470->410), slightly curved pitched roof meeting at rounded ridge (505,338) -->
+        <path d="M 465,470 L 545,415 L 545,355 Q 525,342 505,338 Q 485,352 465,410 Z" fill="#657668" />
+
+        <!-- Giant Segmented Sliding Doors (End Wall) -->
+        <!-- Door height is ~75% of shed height: from y=470/415 up to y=425/370 -->
+        <path d="M 470,466 L 540,418 L 540,372 Q 505,358 470,424 Z" fill="#758778" stroke="#3b483e" stroke-width="0.8" />
+        <!-- Horizontal Slats on Door Surface -->
+        <path d="M 470,466 L 540,418 L 540,372 Q 505,358 470,424 Z" fill="url(#doorSlats)" />
+        <!-- Vertical Segments / Leaves Splits (Sliding Door Leaves) -->
+        <g stroke="#3a473d" stroke-width="1.2">
+          <line x1="484" y1="456" x2="484" y2="413" />
+          <line x1="498" y1="446" x2="498" y2="403" />
+          <line x1="512" y1="437" x2="512" y2="393" />
+          <line x1="526" y1="427" x2="526" y2="383" />
+          <!-- Center Split Fine Gap -->
+          <line x1="505" y1="442" x2="505" y2="360" stroke="#253228" stroke-width="1.6" />
+        </g>
+        <!-- Inset Door Portal Reveal Shadow -->
+        <path d="M 470,424 Q 505,358 540,372 L 540,369 Q 505,355 470,421 Z" fill="#2d3a30" opacity="0.6" />
+
+        <!-- Pitched Roof (North-West slope: Sun-lit, South-East slope: shaded) -->
+        <!-- Lit Roof Slope (Facing North-West / Light side) -->
+        <polygon points="465,410 Q 485,352 505,338 L 810,123 Q 790,137 770,195 Z" fill="#889789" />
+        <!-- Roof Subtle Longitudinal Corrugations -->
+        <g stroke="#a4b3a5" stroke-width="0.7" opacity="0.6">
+          <line x1="473" y1="395" x2="778" y2="180" />
+          <line x1="481" y1="380" x2="786" y2="165" />
+          <line x1="490" y1="365" x2="795" y2="150" />
+          <line x1="498" y1="350" x2="803" y2="135" />
+        </g>
+        <!-- Shaded Roof Slope (South-East side) -->
+        <polygon points="505,338 Q 525,342 545,355 L 850,140 Q 830,127 810,123 Z" fill="#586b6c" />
+
+        <!-- Continuous Ridge Lantern / Skylight Strip (通长天窗带) -->
+        <!-- Raised monitor along the smooth curved crest -->
+        <polygon points="508,336 807,121 812,124 513,339" fill="#e8edf0" stroke="#cbd5e1" stroke-width="0.6" />
+        <polygon points="513,339 812,124 812,127 513,342" fill="#94a3b8" />
+        <!-- Top Edge Sharp Highlight -->
+        <line x1="465" y1="410" x2="770" y2="195" stroke="#b9c7ba" stroke-width="1.2" />
+        <line x1="505" y1="338" x2="810" y2="123" stroke="#f1f5f9" stroke-width="1.4" />
+      </g>
+
+
+      <!-- ======================================================== -->
+      <!-- HANGAR NO. 1 (Near Hangar, South Shed: Closer, Longer)   -->
+      <!-- Length ~415, Width ~92, Height ~83 (L:W=4.5, H:W=0.9)    -->
+      <!-- Detailed, crisp contrast, high micro-fidelity            -->
+      <!-- ======================================================== -->
+      <g id="hangar-near">
+        <!-- Ambient Occlusion Base Under Near Hangar -->
+        <polygon points="395,570 495,502 915,212 815,280" fill="#142017" opacity="0.4" />
+
+        <!-- Longitudinal Side Wall (Facing South-East: Shaded Side) -->
+        <!-- Deep blue-slate grey (#415354) with dark base rim -->
+        <polygon points="495,502 915,212 915,138 495,428" fill="#435557" />
+        <!-- Bottom Edge Ambient Occlusion Strip -->
+        <polygon points="495,502 915,212 915,206 495,496" fill="#243335" />
+
+        <!-- Dense Vertical Wall Framing / Ribs on Lit Surfaces -->
+        <!-- Side Wall (Facing North-West - unseen from this angle, but Gable End & Top Ribs are prominent) -->
+
+        <!-- Tall Near End Wall (Facing South-West: Angled oblique forward view) -->
+        <!-- Vertical side corners: (395,570)->(395,495) and (495,502)->(495,428) -->
+        <!-- Rounded crest at (445,408) -->
+        <path d="M 395,570 L 495,502 L 495,428 Q 470,412 445,408 Q 420,424 395,495 Z" fill="#6f7f72" />
+
+        <!-- Vertical Rib / Structural Stiffeners on Gable Framework -->
+        <g stroke="#566659" stroke-width="1" opacity="0.75">
+          <line x1="407" y1="562" x2="407" y2="480" />
+          <line x1="420" y1="553" x2="420" y2="445" />
+          <line x1="433" y1="544" x2="433" y2="420" />
+          <line x1="457" y1="528" x2="457" y2="420" />
+          <line x1="470" y1="519" x2="470" y2="445" />
+          <line x1="483" y1="510" x2="483" y2="480" />
+        </g>
+
+        <!-- Giant Sliding Portal / Segmented Doors (端墙分段巨门) -->
+        <!-- Height = 3/4 of Shed Height. Door top profile arches gracefully under the gable -->
+        <path d="M 402,565 L 488,506 L 488,446 Q 445,430 402,488 Z" fill="#7d8f80" stroke="#37453a" stroke-width="1" />
+
+        <!-- Fine Horizontal Slats on Sliding Door Leaves -->
+        <path d="M 402,565 L 488,506 L 488,446 Q 445,430 402,488 Z" fill="url(#doorSlats)" />
+
+        <!-- Inset Reveal Shadow over Door Top (Recessed track) -->
+        <path d="M 402,488 Q 445,430 488,446 L 488,442 Q 445,426 402,484 Z" fill="#202c23" opacity="0.65" />
+
+        <!-- Massive Vertical Door Leaf Splits & Fine Gaps (细缝) -->
+        <g stroke="#2f3b31" stroke-width="1.4">
+          <line x1="416" y1="555" x2="416" y2="473" />
+          <line x1="431" y1="545" x2="431" y2="452" />
+          <line x1="459" y1="526" x2="459" y2="452" />
+          <line x1="474" y1="516" x2="474" y2="473" />
+          <!-- Center Meeting Split with pronounced depth gap -->
+          <line x1="445" y1="535" x2="445" y2="432" stroke="#1d271f" stroke-width="2.2" />
+        </g>
+        <!-- Horizontal Guide Rail & Foot Sill -->
+        <line x1="400" y1="566" x2="490" y2="505" stroke="#253227" stroke-width="2" />
+
+        <!-- Pitched Rounded Roof Structure -->
+        <!-- NW Lit Slope (Facing light from upper-left 45°) -->
+        <!-- Palette: Recommended #8f9d90 light tone -->
+        <path d="M 395,495 Q 420,424 445,408 L 865,118 Q 840,134 815,205 Z" fill="#8f9d90" />
+
+        <!-- Dense Vertical / Transverse Rib Framework along the entire length -->
+        <!-- Spaced ~ H/40 ≈ 2.1px to 4.5px apart along the roof slope -->
+        <g stroke="#718273" stroke-width="0.9" opacity="0.65">
+          <!-- Transverse Arched Rib Trusses across Roof Profile -->
+          <path d="M 410,484 Q 427,433 448,416 L 452,419 Q 431,436 414,487 Z" fill="#a1b2a2" />
+          <path d="M 442,462 Q 459,411 480,394 L 484,397 Q 463,414 446,465 Z" fill="#a1b2a2" />
+          <path d="M 474,440 Q 491,389 512,372 L 516,375 Q 495,392 478,443 Z" fill="#a1b2a2" />
+          <path d="M 506,418 Q 523,367 544,350 L 548,353 Q 527,370 510,421 Z" fill="#a1b2a2" />
+          <path d="M 538,396 Q 555,345 576,328 L 580,331 Q 559,348 542,399 Z" fill="#a1b2a2" />
+          <path d="M 570,374 Q 587,323 608,306 L 612,309 Q 591,326 574,377 Z" fill="#a1b2a2" />
+          <path d="M 602,352 Q 619,301 640,284 L 644,287 Q 623,304 606,355 Z" fill="#a1b2a2" />
+          <path d="M 634,330 Q 651,279 672,262 L 676,265 Q 655,282 638,333 Z" fill="#a1b2a2" />
+          <path d="M 666,308 Q 683,257 704,240 L 708,243 Q 687,260 670,311 Z" fill="#a1b2a2" />
+          <path d="M 698,286 Q 715,235 736,218 L 740,221 Q 719,238 702,289 Z" fill="#a1b2a2" />
+          <path d="M 730,264 Q 747,213 768,196 L 772,199 Q 751,216 734,267 Z" fill="#a1b2a2" />
+          <path d="M 762,242 Q 779,191 800,174 L 804,177 Q 783,194 766,245 Z" fill="#a1b2a2" />
+          <path d="M 794,220 Q 811,169 832,152 L 836,155 Q 815,172 798,223 Z" fill="#a1b2a2" />
+        </g>
+
+        <!-- Longitudinal Purlins / Sheeting seams on Lit Roof -->
+        <g stroke="#a8baa9" stroke-width="0.8" opacity="0.75">
+          <line x1="405" y1="477" x2="825" y2="187" />
+          <line x1="416" y1="459" x2="836" y2="169" />
+          <line x1="426" y1="441" x2="846" y2="151" />
+          <line x1="436" y1="423" x2="856" y2="133" />
+        </g>
+
+        <!-- SE Shaded Roof Slope -->
+        <path d="M 445,408 Q 470,412 495,428 L 915,138 Q 890,122 865,118 Z" fill="#526466" />
+        <!-- Purlin seams on shade roof -->
+        <g stroke="#3c4c4e" stroke-width="0.8" opacity="0.6">
+          <line x1="458" y1="413" x2="878" y2="123" />
+          <line x1="471" y1="418" x2="891" y2="128" />
+          <line x1="484" y1="423" x2="904" y2="133" />
+        </g>
+
+        <!-- Continuous Full-Length Ridge Skylight / Lantern (通长天窗带) -->
+        <polygon points="448,406 863,116 868,119 453,409" fill="#f8fafc" stroke="#e2e8f0" stroke-width="0.8" />
+        <polygon points="453,409 868,119 868,123 453,413" fill="#94a3b8" />
+        <!-- Glazing Bars on Lantern -->
+        <g stroke="#64748b" stroke-width="0.5" opacity="0.5">
+          <line x1="485" y1="384" x2="485" y2="388" />
+          <line x1="525" y1="356" x2="525" y2="360" />
+          <line x1="565" y1="328" x2="565" y2="332" />
+          <line x1="605" y1="300" x2="605" y2="304" />
+          <line x1="645" y1="272" x2="645" y2="276" />
+          <line x1="685" y1="244" x2="685" y2="248" />
+          <line x1="725" y1="216" x2="725" y2="220" />
+          <line x1="765" y1="188" x2="765" y2="192" />
+          <line x1="805" y1="160" x2="805" y2="164" />
+          <line x1="845" y1="132" x2="845" y2="136" />
+        </g>
+
+        <!-- Roof Edges Fine Highlights & Creases -->
+        <!-- Lit Eaves Top Highlight Strip -->
+        <line x1="395" y1="495" x2="815" y2="205" stroke="#d5e2d6" stroke-width="1.6" />
+        <!-- Roof Peak Ridge Highlight -->
+        <line x1="445" y1="408" x2="865" y2="118" stroke="#ffffff" stroke-width="1.8" />
+        <!-- Shaded Eave Shadow Line -->
+        <line x1="495" y1="428" x2="915,138" stroke="#253537" stroke-width="1.2" />
+      </g>
+
+      <!-- Atmospheric Miniature Vignette (Rim Softening & Clean Studio Specular) -->
+      <ellipse cx="600" cy="510" rx="460" ry="225" fill="none" stroke="#ffffff" stroke-width="3.5" opacity="0.55" />
+      <ellipse cx="600" cy="510" rx="458" ry="223" fill="none" stroke="#000000" stroke-width="1.5" opacity="0.12" />
+    </g>
+  </g>
+</svg>
