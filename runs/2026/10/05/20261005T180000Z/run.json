@@ -1,0 +1,651 @@
+{
+  "runId": "20261005T180000Z",
+  "prompts": [
+    {
+      "promptId": "animated-pelican-v1",
+      "text": "Generate an SVG of a California brown pelican riding a bicycle featuring pure inline SVG animation (using SMIL <animateTransform> or inline CSS @keyframes). The bicycle must have a correctly shaped frame, handlebar, saddle, spoked wheels, pedals, and crank arms. The pelican must be seated and pedaling the bicycle with its feet on the pedals. Animations must run smoothly and continuously in a modern browser: 1. Both front and rear wheels must continuously rotate around their respective axle center points (transform-origin). 2. The crank arms and pedals must smoothly revolve around the bottom bracket spindle. 3. The pelican's legs must smoothly animate up and down in synchrony with the pedaling motion. The entire output must be completely self-contained within a single valid SVG element (ensure strictly well-formed XML: if using <style>, wrap CSS inside <![CDATA[ ... ]]> or avoid raw unescaped '&' and '<'), requiring no external scripts or stylesheets.",
+      "bindings": {}
+    }
+  ],
+  "startedAt": "2026-10-05T18:00:00.059Z",
+  "finishedAt": "2026-10-05T18:03:23.101Z",
+  "durationMs": 203042,
+  "trigger": "schedule",
+  "harnessGuard": "Draw it directly in this single reply. Do not search the web or fetch anything online, do not run or test any code, and do not render, screenshot, or otherwise inspect your own output to check it. Output the final SVG straight away.",
+  "publicSchemaVersion": 1,
+  "inProgress": false,
+  "attempts": [
+    {
+      "targetId": "claude__claude-sonnet-5-5__high",
+      "promptId": "animated-pelican-v1",
+      "cli": "claude",
+      "model": "claude-sonnet-5-5",
+      "effort": "high",
+      "appliedEffort": "high",
+      "effortHonored": true,
+      "label": "Claude Sonnet 5.5 · high",
+      "status": "ok",
+      "svgFile": "claude__claude-sonnet-5-5__high__animated-pelican-v1.svg",
+      "startedAt": "2026-10-05T18:00:17.157Z",
+      "finishedAt": "2026-10-05T18:02:06.760Z",
+      "durationMs": 109603,
+      "svgBytes": 7480,
+      "error": null,
+      "usage": {
+        "tokens": {
+          "input": 2,
+          "cache_read": 3387,
+          "output": 13745,
+          "cache_write_1h": 6269
+        },
+        "reasoningTokens": 9571,
+        "serviceTier": "standard",
+        "reportedCostUsd": 0.8134967500000001
+      },
+      "rawFile": null,
+      "judge": {
+        "schemaVersion": 1,
+        "subject": {
+          "runId": "20261005T180000Z",
+          "attemptKey": "claude__claude-sonnet-5-5__high__animated-pelican-v1",
+          "promptId": "animated-pelican-v1",
+          "cli": "claude",
+          "model": "claude-sonnet-5-5",
+          "effort": "high",
+          "svgFile": "claude__claude-sonnet-5-5__high__animated-pelican-v1.svg",
+          "svgSha256": "36c603034b9834ec1a86a5108b6a01f1f73b24e52487743ca00ee561f95871b4"
+        },
+        "rubric": {
+          "id": "animated-pelican-v1",
+          "version": 1,
+          "passThreshold": 78
+        },
+        "gates": [
+          {
+            "id": "G1",
+            "source": "static",
+            "title": "XML 合法",
+            "standard": "XML 解析零错误",
+            "passed": true,
+            "evidence": "XML 解析无错误"
+          },
+          {
+            "id": "G2",
+            "source": "static",
+            "title": "写了动画",
+            "standard": "存在 <animate*>，或 <style> 内同时有 @keyframes 与 animation",
+            "passed": true,
+            "evidence": "SMIL 动画 8 个，CSS 动画 0 个"
+          },
+          {
+            "id": "G3",
+            "source": "static",
+            "title": "自包含且无脚本",
+            "standard": "无 <script>、<foreignObject>、外部引用、内嵌位图",
+            "passed": true,
+            "evidence": "无脚本、外部引用与位图"
+          },
+          {
+            "id": "G4",
+            "source": "render",
+            "title": "确实在动",
+            "standard": "8 帧两两像素差的最大值超过阈值",
+            "passed": true,
+            "evidence": "8 帧里 7 帧与首帧不同"
+          },
+          {
+            "id": "G5",
+            "source": "render",
+            "title": "不出画布",
+            "standard": "每一帧的内容包围盒都在 viewBox 内",
+            "passed": true,
+            "evidence": "3 个部件全程在画布内"
+          }
+        ],
+        "criteria": [
+          {
+            "id": "C1",
+            "source": "render",
+            "title": "车轮绕轴心旋转",
+            "standard": "前后车轮各绕自身轴心旋转：旋转中心与轮子圆心一致，逐帧位置不漂移；绕全局 (0,0) 或其他点旋转为零分",
+            "maxScore": 10,
+            "score": 10,
+            "reason": "g 旋转中心偏离圆心 0.0，半径 68.0；渲染：wheel1 轮心漂移 0.0，wheel2 轮心漂移 0.0"
+          },
+          {
+            "id": "C2",
+            "source": "render",
+            "title": "曲柄绕五通旋转",
+            "standard": "曲柄与脚踏绕五通中心旋转，两脚踏相位相差 180°；曲柄不转或绕错中心为零分",
+            "maxScore": 8,
+            "score": 8,
+            "reason": "g 五通 (370, 360) 在两轮之间；旋转中心偏离圆心 0.0，半径 18.0；渲染：曲柄量测点漂移 0.0（包围盒对角线 100.7）"
+          },
+          {
+            "id": "C3",
+            "source": "render",
+            "title": "循环播放",
+            "standard": "repeatCount=\"indefinite\" 或 infinite，首帧与末帧接近；只播放一次或末帧跳变为零分",
+            "maxScore": 4,
+            "score": 4,
+            "reason": "3 个旋转动画都是 indefinite / infinite；渲染：t=2000ms 各部件回到首帧位置，循环闭合"
+          },
+          {
+            "id": "C4",
+            "source": "render",
+            "title": "腿与曲柄同步",
+            "standard": "腿部动画周期与曲柄周期相等或成整数倍，且渲染后脚（腿的末端）每帧都落在脚踏上；腿不动、周期无关或脚离开脚踏一段曲柄臂为零分",
+            "maxScore": 8,
+            "score": 8,
+            "reason": "path 周期 2000ms 与曲柄 2000ms 同步；渲染：leg1 脚踏点离腿的距离最多变了 3.6，leg2 脚踏点离腿的距离最多变了 14.6（曲柄伸出 51.3，脚始终跟着脚踏）"
+          },
+          {
+            "id": "C5",
+            "source": "ai",
+            "title": "自行车结构完整",
+            "standard": "车架、车把、座垫、辐条轮、脚踏、曲柄齐全且形状正确；只有轮子或缺少主要部件为零分",
+            "maxScore": 10,
+            "score": 10,
+            "reason": "车架、车把、座垫、辐条轮、脚踏及曲柄等自行车主要部件齐全且结构形态正确。"
+          },
+          {
+            "id": "C6",
+            "source": "ai",
+            "title": "主体是鹈鹕",
+            "standard": "盲描述能认出鹈鹕（长喙、喉囊）；认成其他鸟或无法辨认为零分",
+            "maxScore": 10,
+            "score": 10,
+            "reason": "头部具有标志性的巨大长喙与明显喉囊，体羽特征清晰，完全符合鹈鹕外观。"
+          },
+          {
+            "id": "C7",
+            "source": "ai",
+            "title": "坐在座垫上、脚在脚踏上",
+            "standard": "鹈鹕坐在座垫上，双脚落在脚踏上；悬空、脱离车身或脚不在脚踏上为零分",
+            "maxScore": 10,
+            "score": 10,
+            "reason": "1至8帧中臀部持续稳坐在座垫上，左右脚全程精准落在对应脚踏上无脱离或悬空。"
+          },
+          {
+            "id": "C8",
+            "source": "ai",
+            "title": "踩踏动作可信",
+            "standard": "8 帧连看，腿的伸缩与脚踏位置对应；腿与脚踏各动各的为零分",
+            "maxScore": 20,
+            "score": 20,
+            "reason": "1至8帧中双腿关节的屈伸动作与脚踏的360度旋转轨迹严格同步对应，踩踏动态自然可信。"
+          },
+          {
+            "id": "C9",
+            "source": "ai",
+            "title": "翅膀扶住车把",
+            "standard": "鹈鹕的翅膀（前肢）搭在车把上，像在扶着车把骑行；翅膀收在身侧、够不着车把或没有车把可扶为零分",
+            "maxScore": 20,
+            "score": 20,
+            "reason": "1至8帧中翅膀向前伸展平稳搭在车把横梁与把立上方，生动呈现扶把骑行姿态。"
+          }
+        ],
+        "total": {
+          "score": 100,
+          "maxScore": 100,
+          "verdict": "online",
+          "judgedAt": "2026-10-05T18:08:04.929Z"
+        },
+        "blindDescription": "画面主体是一只鹈鹕，它俯身在一辆红色的自行车上踩动脚踏板，正在持续做向前骑自行车的动作。",
+        "judges": [
+          {
+            "kind": "code",
+            "id": "static-judge@1",
+            "judgedAt": "2026-10-05T18:02:06.760Z",
+            "durationMs": 21
+          },
+          {
+            "kind": "code",
+            "id": "render-judge@1",
+            "judgedAt": "2026-10-05T18:02:09.708Z",
+            "durationMs": 2916
+          },
+          {
+            "kind": "ai",
+            "promptVersion": 1,
+            "id": "agy/gemini-3.8-flash@high",
+            "judgedAt": "2026-10-05T18:08:04.929Z",
+            "durationMs": 281816,
+            "usage": {
+              "tokens": {
+                "input": 143774,
+                "output": 60731,
+                "cache_read": 85371
+              },
+              "reasoningTokens": 59616,
+              "serviceTier": "standard",
+              "reportedCostUsd": null
+            },
+            "asks": 3
+          }
+        ]
+      }
+    },
+    {
+      "targetId": "agy__gemini-3.8-flash__low",
+      "promptId": "animated-pelican-v1",
+      "cli": "agy",
+      "model": "gemini-3.8-flash",
+      "effort": "low",
+      "appliedEffort": "low",
+      "effortHonored": true,
+      "label": "Gemini 3.8 Flash · low",
+      "status": "ok",
+      "svgFile": "agy__gemini-3.8-flash__low__animated-pelican-v1.svg",
+      "startedAt": "2026-10-05T18:00:17.157Z",
+      "finishedAt": "2026-10-05T18:01:04.110Z",
+      "durationMs": 46953,
+      "svgBytes": 23032,
+      "error": null,
+      "usage": {
+        "tokens": {
+          "input": 13411,
+          "output": 10338
+        },
+        "reasoningTokens": 0,
+        "serviceTier": "standard",
+        "reportedCostUsd": null
+      },
+      "rawFile": null,
+      "judge": {
+        "schemaVersion": 1,
+        "subject": {
+          "runId": "20261005T180000Z",
+          "attemptKey": "agy__gemini-3.8-flash__low__animated-pelican-v1",
+          "promptId": "animated-pelican-v1",
+          "cli": "agy",
+          "model": "gemini-3.8-flash",
+          "effort": "low",
+          "svgFile": "agy__gemini-3.8-flash__low__animated-pelican-v1.svg",
+          "svgSha256": "56d0a379f094cb0382b3359381a96ce979a3893314d2e1deebd67282f0007078"
+        },
+        "rubric": {
+          "id": "animated-pelican-v1",
+          "version": 1,
+          "passThreshold": 78
+        },
+        "gates": [
+          {
+            "id": "G1",
+            "source": "static",
+            "title": "XML 合法",
+            "standard": "XML 解析零错误",
+            "passed": true,
+            "evidence": "XML 解析无错误"
+          },
+          {
+            "id": "G2",
+            "source": "static",
+            "title": "写了动画",
+            "standard": "存在 <animate*>，或 <style> 内同时有 @keyframes 与 animation",
+            "passed": true,
+            "evidence": "SMIL 动画 0 个，CSS 动画 16 个"
+          },
+          {
+            "id": "G3",
+            "source": "static",
+            "title": "自包含且无脚本",
+            "standard": "无 <script>、<foreignObject>、外部引用、内嵌位图",
+            "passed": true,
+            "evidence": "无脚本、外部引用与位图"
+          },
+          {
+            "id": "G4",
+            "source": "render",
+            "title": "确实在动",
+            "standard": "8 帧两两像素差的最大值超过阈值",
+            "passed": true,
+            "evidence": "8 帧里 7 帧与首帧不同"
+          },
+          {
+            "id": "G5",
+            "source": "render",
+            "title": "不出画布",
+            "standard": "每一帧的内容包围盒都在 viewBox 内",
+            "passed": true,
+            "evidence": "3 个部件全程在画布内"
+          }
+        ],
+        "criteria": [
+          {
+            "id": "C1",
+            "source": "render",
+            "title": "车轮绕轴心旋转",
+            "standard": "前后车轮各绕自身轴心旋转：旋转中心与轮子圆心一致，逐帧位置不漂移；绕全局 (0,0) 或其他点旋转为零分",
+            "maxScore": 10,
+            "score": 10,
+            "reason": "g.wheel-spin 旋转中心偏离圆心 0.0，半径 115.0；渲染：wheel1 轮心漂移 0.0，wheel2 轮心漂移 0.0"
+          },
+          {
+            "id": "C2",
+            "source": "render",
+            "title": "曲柄绕五通旋转",
+            "standard": "曲柄与脚踏绕五通中心旋转，两脚踏相位相差 180°；曲柄不转或绕错中心为零分",
+            "maxScore": 8,
+            "score": 8,
+            "reason": "g#californiaPelican 五通 (0, 0) 在两轮之间；组内的圆偏在曲柄末端，视为脚踏，按位置判；渲染：曲柄量测点漂移 30.1（包围盒对角线 687.4）"
+          },
+          {
+            "id": "C3",
+            "source": "render",
+            "title": "循环播放",
+            "standard": "repeatCount=\"indefinite\" 或 infinite，首帧与末帧接近；只播放一次或末帧跳变为零分",
+            "maxScore": 4,
+            "score": 4,
+            "reason": "3 个旋转动画都是 indefinite / infinite；渲染：t=800ms 各部件回到首帧位置，循环闭合"
+          },
+          {
+            "id": "C4",
+            "source": "render",
+            "title": "腿与曲柄同步",
+            "standard": "腿部动画周期与曲柄周期相等或成整数倍，且渲染后脚（腿的末端）每帧都落在脚踏上；腿不动、周期无关或脚离开脚踏一段曲柄臂为零分",
+            "maxScore": 8,
+            "score": 0,
+            "reason": "g.thigh-anim-right 周期 1600ms 与曲柄 800ms 同步；渲染：2 条候选腿的脚尖没有一帧碰到脚踏（曲柄伸出 115.0）"
+          },
+          {
+            "id": "C5",
+            "source": "ai",
+            "title": "自行车结构完整",
+            "standard": "车架、车把、座垫、辐条轮、脚踏、曲柄齐全且形状正确；只有轮子或缺少主要部件为零分",
+            "maxScore": 10,
+            "score": 8,
+            "reason": "车架、弯把、辐条轮、曲柄和脚踏都有,且各帧中曲柄和脚踏在转;座垫被鹈鹕身体遮住,看不清楚。"
+          },
+          {
+            "id": "C6",
+            "source": "ai",
+            "title": "主体是鹈鹕",
+            "standard": "盲描述能认出鹈鹕（长喙、喉囊）；认成其他鸟或无法辨认为零分",
+            "maxScore": 10,
+            "score": 9,
+            "reason": "各帧的长喙、橙红色喉囊、白色头部和棕色身体都能让人认出是鹈鹕。"
+          },
+          {
+            "id": "C7",
+            "source": "ai",
+            "title": "坐在座垫上、脚在脚踏上",
+            "standard": "鹈鹕坐在座垫上，双脚落在脚踏上；悬空、脱离车身或脚不在脚踏上为零分",
+            "maxScore": 10,
+            "score": 3,
+            "reason": "臀部大致在座管上方,但脚踏细节图显示脚悬在链条上方,多数帧(如第 1、5、6 帧)脚没有踩在脚踏上。"
+          },
+          {
+            "id": "C8",
+            "source": "ai",
+            "title": "踩踏动作可信",
+            "standard": "8 帧连看，腿的伸缩与脚踏位置对应；腿与脚踏各动各的为零分",
+            "maxScore": 20,
+            "score": 4,
+            "reason": "腿有摆动,但脚始终在后轮附近的高处,脚踏在下方绕圈(第 3、5、6 帧脚踏在最低点),腿和脚踏基本各动各的。（低于门槛 6 分：不计入总分，直接判降智）"
+          },
+          {
+            "id": "C9",
+            "source": "ai",
+            "title": "翅膀扶住车把",
+            "standard": "鹈鹕的翅膀（前肢）搭在车把上，像在扶着车把骑行；翅膀收在身侧、够不着车把或没有车把可扶为零分",
+            "maxScore": 20,
+            "score": 17,
+            "reason": "所有帧里翅膀都向前伸出,翅尖搭在车把和把立上,像在扶把,只是握把的姿势有点僵硬。"
+          }
+        ],
+        "total": {
+          "score": 59,
+          "maxScore": 100,
+          "verdict": "degraded",
+          "judgedAt": "2026-10-05T18:04:11.354Z"
+        },
+        "blindDescription": "一只棕色羽毛、橙色喉囊、长喙的鹈鹕骑着一辆青绿色自行车，沿着海边的深色栈道前进，背景是蓝天、大海和淡黄色的太阳。8 帧里车轮和踏板位置略有变化，是在持续蹬车骑行，身体和头部基本保持不动。",
+        "judges": [
+          {
+            "kind": "code",
+            "id": "static-judge@1",
+            "judgedAt": "2026-10-05T18:01:04.111Z",
+            "durationMs": 219
+          },
+          {
+            "kind": "code",
+            "id": "render-judge@1",
+            "judgedAt": "2026-10-05T18:01:08.265Z",
+            "durationMs": 3908
+          },
+          {
+            "kind": "ai",
+            "promptVersion": 1,
+            "id": "claude/claude-sonnet-5-5@high",
+            "judgedAt": "2026-10-05T18:04:11.354Z",
+            "durationMs": 48221,
+            "usage": {
+              "tokens": {
+                "input": 12,
+                "cache_read": 50404,
+                "output": 1942,
+                "cache_write_1h": 37282
+              },
+              "reasoningTokens": 318,
+              "serviceTier": "standard",
+              "reportedCostUsd": 0.855461
+            },
+            "asks": 3
+          }
+        ]
+      }
+    },
+    {
+      "targetId": "agy__gemini-3.8-flash__high",
+      "promptId": "animated-pelican-v1",
+      "cli": "agy",
+      "model": "gemini-3.8-flash",
+      "effort": "high",
+      "appliedEffort": "high",
+      "effortHonored": true,
+      "label": "Gemini 3.8 Flash · high",
+      "status": "ok",
+      "svgFile": "agy__gemini-3.8-flash__high__animated-pelican-v1.svg",
+      "startedAt": "2026-10-05T18:01:08.282Z",
+      "finishedAt": "2026-10-05T18:03:20.063Z",
+      "durationMs": 131781,
+      "svgBytes": 29004,
+      "error": null,
+      "usage": {
+        "tokens": {
+          "input": 13408,
+          "output": 41565
+        },
+        "reasoningTokens": 26241,
+        "serviceTier": "standard",
+        "reportedCostUsd": null
+      },
+      "rawFile": null,
+      "judge": {
+        "schemaVersion": 1,
+        "subject": {
+          "runId": "20261005T180000Z",
+          "attemptKey": "agy__gemini-3.8-flash__high__animated-pelican-v1",
+          "promptId": "animated-pelican-v1",
+          "cli": "agy",
+          "model": "gemini-3.8-flash",
+          "effort": "high",
+          "svgFile": "agy__gemini-3.8-flash__high__animated-pelican-v1.svg",
+          "svgSha256": "d345f678ad1dcfe5a51aa3a7649d74fde64296a59cca7dea72ff05c0c04ea3bd"
+        },
+        "rubric": {
+          "id": "animated-pelican-v1",
+          "version": 1,
+          "passThreshold": 78
+        },
+        "gates": [
+          {
+            "id": "G1",
+            "source": "static",
+            "title": "XML 合法",
+            "standard": "XML 解析零错误",
+            "passed": true,
+            "evidence": "XML 解析无错误"
+          },
+          {
+            "id": "G2",
+            "source": "static",
+            "title": "写了动画",
+            "standard": "存在 <animate*>，或 <style> 内同时有 @keyframes 与 animation",
+            "passed": true,
+            "evidence": "SMIL 动画 16 个，CSS 动画 0 个"
+          },
+          {
+            "id": "G3",
+            "source": "static",
+            "title": "自包含且无脚本",
+            "standard": "无 <script>、<foreignObject>、外部引用、内嵌位图",
+            "passed": true,
+            "evidence": "无脚本、外部引用与位图"
+          },
+          {
+            "id": "G4",
+            "source": "render",
+            "title": "确实在动",
+            "standard": "8 帧两两像素差的最大值超过阈值",
+            "passed": true,
+            "evidence": "8 帧里 7 帧与首帧不同"
+          },
+          {
+            "id": "G5",
+            "source": "render",
+            "title": "不出画布",
+            "standard": "每一帧的内容包围盒都在 viewBox 内",
+            "passed": true,
+            "evidence": "3 个部件全程在画布内"
+          }
+        ],
+        "criteria": [
+          {
+            "id": "C1",
+            "source": "render",
+            "title": "车轮绕轴心旋转",
+            "standard": "前后车轮各绕自身轴心旋转：旋转中心与轮子圆心一致，逐帧位置不漂移；绕全局 (0,0) 或其他点旋转为零分",
+            "maxScore": 10,
+            "score": 10,
+            "reason": "g#rear-wheel-rotating 旋转中心偏离圆心 0.0，半径 95.0；g#front-wheel-rotating 旋转中心偏离圆心 0.0，半径 95.0；渲染：wheel1 轮心漂移 0.0，wheel2 轮心漂移 0.0"
+          },
+          {
+            "id": "C2",
+            "source": "render",
+            "title": "曲柄绕五通旋转",
+            "standard": "曲柄与脚踏绕五通中心旋转，两脚踏相位相差 180°；曲柄不转或绕错中心为零分",
+            "maxScore": 8,
+            "score": 8,
+            "reason": "g#far-crank-assembly 五通 (440, 440) 在两轮之间；组内的圆偏在曲柄末端，视为脚踏，按位置判；渲染：曲柄量测点漂移 0.0（包围盒对角线 54.4）"
+          },
+          {
+            "id": "C3",
+            "source": "render",
+            "title": "循环播放",
+            "standard": "repeatCount=\"indefinite\" 或 infinite，首帧与末帧接近；只播放一次或末帧跳变为零分",
+            "maxScore": 4,
+            "score": 4,
+            "reason": "3 个旋转动画都是 indefinite / infinite；渲染：t=1600ms 各部件回到首帧位置，循环闭合"
+          },
+          {
+            "id": "C4",
+            "source": "render",
+            "title": "腿与曲柄同步",
+            "standard": "腿部动画周期与曲柄周期相等或成整数倍，且渲染后脚（腿的末端）每帧都落在脚踏上；腿不动、周期无关或脚离开脚踏一段曲柄臂为零分",
+            "maxScore": 8,
+            "score": 8,
+            "reason": "path 周期 800ms 与曲柄 1600ms 同步（未命名为腿，是否为腿待渲染层核对）；渲染：leg7 脚踏点离腿的距离最多变了 15.3（曲柄伸出 56.0，脚始终跟着脚踏）"
+          },
+          {
+            "id": "C5",
+            "source": "ai",
+            "title": "自行车结构完整",
+            "standard": "车架、车把、座垫、辐条轮、脚踏、曲柄齐全且形状正确；只有轮子或缺少主要部件为零分",
+            "maxScore": 10,
+            "score": 9,
+            "reason": "全帧可见青绿色车架、弯曲银色车把、辐条轮、链轮、曲柄和脚踏，座垫被鹈鹕身体遮住大半，但整车结构完整。"
+          },
+          {
+            "id": "C6",
+            "source": "ai",
+            "title": "主体是鹈鹕",
+            "standard": "盲描述能认出鹈鹕（长喙、喉囊）；认成其他鸟或无法辨认为零分",
+            "maxScore": 10,
+            "score": 8,
+            "reason": "头与喙图（全帧）显示白色头部、长灰喙和红色喉囊，能认出是鹈鹕，只是喉囊偏红、颜色不典型。"
+          },
+          {
+            "id": "C7",
+            "source": "ai",
+            "title": "坐在座垫上、脚在脚踏上",
+            "standard": "鹈鹕坐在座垫上，双脚落在脚踏上；悬空、脱离车身或脚不在脚踏上为零分",
+            "maxScore": 10,
+            "score": 7,
+            "reason": "身体压在座垫上方，脚踏图中每帧都能看到黑色脚落在橙色脚踏上；髋部位置略高于座垫，显得有点悬。"
+          },
+          {
+            "id": "C8",
+            "source": "ai",
+            "title": "踩踏动作可信",
+            "standard": "8 帧连看，腿的伸缩与脚踏位置对应；腿与脚踏各动各的为零分",
+            "maxScore": 20,
+            "score": 16,
+            "reason": "脚踏图 1–8 帧里，脚随曲柄转到下、后、上、前各位置，腿相应伸缩，动作与脚踏同步，只是腿的形状略僵。"
+          },
+          {
+            "id": "C9",
+            "source": "ai",
+            "title": "翅膀扶住车把",
+            "standard": "鹈鹕的翅膀（前肢）搭在车把上，像在扶着车把骑行；翅膀收在身侧、够不着车把或没有车把可扶为零分",
+            "maxScore": 20,
+            "score": 12,
+            "reason": "翅与车把图中，深色翅膀从身体向前伸到喉囊下方，指向银色车把，像是搭在把上，但翅膀基本不动，接触点不够清楚。"
+          }
+        ],
+        "total": {
+          "score": 82,
+          "maxScore": 100,
+          "verdict": "online",
+          "judgedAt": "2026-10-05T18:04:13.262Z"
+        },
+        "blindDescription": "画面主体是一只白头、红色长喙（或围巾状）的鹈鹕，穿着深蓝色外套，骑着一辆青绿色自行车，沿着海边的步道前行，背景是夕阳、棕榈树和海面。8 帧中它一直在蹬车，车轮和踏板的位置逐帧变化，身体略向前倾，整体是在匀速骑行。",
+        "judges": [
+          {
+            "kind": "code",
+            "id": "static-judge@1",
+            "judgedAt": "2026-10-05T18:03:20.063Z",
+            "durationMs": 33
+          },
+          {
+            "kind": "code",
+            "id": "render-judge@1",
+            "judgedAt": "2026-10-05T18:03:22.961Z",
+            "durationMs": 2835
+          },
+          {
+            "kind": "ai",
+            "promptVersion": 1,
+            "id": "claude/claude-sonnet-5-5@high",
+            "judgedAt": "2026-10-05T18:04:13.262Z",
+            "durationMs": 50152,
+            "usage": {
+              "tokens": {
+                "input": 12,
+                "cache_read": 54820,
+                "output": 2018,
+                "cache_write_1h": 53052
+              },
+              "reasoningTokens": 370,
+              "serviceTier": "standard",
+              "reportedCostUsd": 1.1757650000000002
+            },
+            "asks": 3
+          }
+        ]
+      }
+    }
+  ],
+  "redactions": []
+}
