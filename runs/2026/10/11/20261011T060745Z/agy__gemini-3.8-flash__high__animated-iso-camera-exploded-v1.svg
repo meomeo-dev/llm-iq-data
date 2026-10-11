@@ -1,0 +1,521 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <!-- Background Technical Grid Pattern -->
+    <pattern id="iso-grid" width="60" height="103.923" patternUnits="userSpaceOnUse">
+      <path d="M 0 0 L 60 34.641 L 60 103.923 M 0 69.282 L 60 103.923 M 0 0 L 0 69.282 M 60 0 L 0 34.641 L 60 69.282" 
+            fill="none" stroke="#101520" stroke-width="0.7" stroke-dasharray="1.5 4"/>
+    </pattern>
+
+    <!-- Focal Glass Shading Gradients -->
+    <radialGradient id="lens-sheen" cx="42%" cy="40%" r="58%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.32"/>
+      <stop offset="35%" stop-color="#006699" stop-opacity="0.18"/>
+      <stop offset="70%" stop-color="#0a1526" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#05080f" stop-opacity="0.98"/>
+    </radialGradient>
+
+    <radialGradient id="iris-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.15"/>
+      <stop offset="60%" stop-color="#00e5ff" stop-opacity="0.03"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="body-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141822"/>
+      <stop offset="50%" stop-color="#0e1219"/>
+      <stop offset="100%" stop-color="#090c12"/>
+    </linearGradient>
+
+    <linearGradient id="metal-bevel" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#242c3d"/>
+      <stop offset="50%" stop-color="#404e68"/>
+      <stop offset="100%" stop-color="#181e2b"/>
+    </linearGradient>
+
+    <!-- 5% Maximum Focal Glow Filter -->
+    <filter id="accent-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <style>
+    <![CDATA[
+    /* Technical Drafting Base Rules */
+    text {
+      font-family: 'JetBrains Mono', 'SF Pro Display', 'Segoe UI', 'Roboto Mono', monospace;
+      user-select: none;
+    }
+
+    .hairline {
+      stroke: #334155;
+      stroke-width: 1px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .hairline-subtle {
+      stroke: #1e293b;
+      stroke-width: 0.75px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .highlight-edge {
+      stroke: #8da4c4;
+      stroke-width: 1px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .cyan-accent {
+      stroke: #00e5ff;
+      stroke-width: 1px;
+    }
+
+    .solid-plate {
+      fill: #0c1017;
+    }
+
+    .solid-mech {
+      fill: #141923;
+    }
+
+    /* 4-STAGE GOLDEN RATIO KINEMATIC TIMING (10s Continuous Loop)
+       Optical axis vector: dx = -1.73205 * dy, exactly along 30° isometric vector
+       Stage 1 (0% - 35%): Coaxial Expansion along axis
+       Stage 2 (35% - 60%): Exploded Hold (25% duration) with Callout Display
+       Stage 3 (60% - 85%): Smooth Reassembly gliding back flush
+       Stage 4 (85% - 100%): Closed Hold & Restitution (Identical states at t=0 and t=100%) */
+
+    @keyframes anim-lens {
+      0% { transform: translate(0px, 0px); animation-timing-function: cubic-bezier(0.35, 0.0, 0.15, 1); }
+      35% { transform: translate(-259.81px, 150.00px); animation-timing-function: linear; }
+      60% { transform: translate(-259.81px, 150.00px); animation-timing-function: cubic-bezier(0.35, 0.0, 0.15, 1); }
+      85% { transform: translate(0px, 0px); animation-timing-function: linear; }
+      100% { transform: translate(0px, 0px); }
+    }
+
+    @keyframes anim-barrel {
+      0% { transform: translate(0px, 0px); animation-timing-function: cubic-bezier(0.35, 0.0, 0.15, 1); }
+      35% { transform: translate(-129.90px, 75.00px); animation-timing-function: linear; }
+      60% { transform: translate(-129.90px, 75.00px); animation-timing-function: cubic-bezier(0.35, 0.0, 0.15, 1); }
+      85% { transform: translate(0px, 0px); animation-timing-function: linear; }
+      100% { transform: translate(0px, 0px); }
+    }
+
+    @keyframes anim-back {
+      0% { transform: translate(0px, 0px); animation-timing-function: cubic-bezier(0.35, 0.0, 0.15, 1); }
+      35% { transform: translate(147.22px, -85.00px); animation-timing-function: linear; }
+      60% { transform: translate(147.22px, -85.00px); animation-timing-function: cubic-bezier(0.35, 0.0, 0.15, 1); }
+      85% { transform: translate(0px, 0px); animation-timing-function: linear; }
+      100% { transform: translate(0px, 0px); }
+    }
+
+    @keyframes anim-leaders {
+      0% { opacity: 0; transform: translateY(3px); }
+      33% { opacity: 0; transform: translateY(3px); }
+      37% { opacity: 1; transform: translateY(0px); }
+      58% { opacity: 1; transform: translateY(0px); }
+      62% { opacity: 0; transform: translateY(3px); }
+      100% { opacity: 0; transform: translateY(3px); }
+    }
+
+    .sub-lens { animation: anim-lens 10s infinite; }
+    .sub-barrel { animation: anim-barrel 10s infinite; }
+    .sub-back { animation: anim-back 10s infinite; }
+    .sub-leaders { animation: anim-leaders 10s infinite; }
+    ]]>
+  </style>
+
+  <!-- Background Base Canvas -->
+  <rect width="1200" height="800" fill="#080a0f"/>
+  <rect width="1200" height="800" fill="url(#iso-grid)"/>
+
+  <!-- Technical Framing & Coordinate Metadata -->
+  <g opacity="0.6">
+    <path d="M 40 40 L 40 760 L 1160 760 L 1160 40 Z" fill="none" stroke="#1a2230" stroke-width="1"/>
+    <path d="M 35 40 L 45 40 M 40 35 L 40 45 M 1155 40 L 1165 40 M 1160 35 L 1160 45
+             M 35 760 L 45 760 M 40 755 L 40 765 M 1155 760 L 1165 760 M 1160 755 L 1160 765" 
+          stroke="#00e5ff" stroke-width="1"/>
+    
+    <!-- Title Block Header (Technical Patent Figure Style) -->
+    <text x="65" y="75" fill="#f8fafc" font-size="11" font-weight="700" letter-spacing="2">FIG. 04 — COAXIAL EXPLODED KINEMATIC DIAGRAM</text>
+    <text x="65" y="93" fill="#64748b" font-size="9" letter-spacing="1.5">RF 35mm MECHANICAL RANGEFINDER / CHASSIS TYPE M-30</text>
+    <text x="65" y="108" fill="#475569" font-size="8" letter-spacing="1">ISOMETRIC AXIS: θ = 30.0° [Δx = -cos 30°·S, Δy = sin 30°·S] | TOLERANCE: ±0.005mm</text>
+
+    <!-- Calibration Ticks along Left Margin -->
+    <path d="M 45 200 L 52 200 M 45 300 L 55 300 M 45 400 L 52 400 M 45 500 L 55 500 M 45 600 L 52 600" 
+          stroke="#334155" stroke-width="0.8"/>
+    <text x="58" y="303" fill="#334155" font-size="7">DATUM A-1</text>
+    <text x="58" y="503" fill="#334155" font-size="7">DATUM A-2</text>
+  </g>
+
+  <!-- Global Coaxial Optical Axis Guide (Centerline: 30° isometric down-left) -->
+  <g opacity="0.45">
+    <line x1="980" y1="211.75" x2="200" y2="662.08" 
+          stroke="#00e5ff" stroke-width="0.75" stroke-dasharray="8 3 2 3"/>
+    <text x="965" y="200" fill="#00e5ff" font-size="8" letter-spacing="1">OPTICAL DATUM CENTERLINE [λ = 587.6nm]</text>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- SUBASSEMBLY 4: REAR FILM DOOR (Separates Up-Right along Axis)             -->
+  <!-- ========================================================================= -->
+  <g class="sub-back">
+    <!-- Center datum reference at assembled: (720, 375) -->
+    <!-- Door Outer Perimeter and Bevel Profile -->
+    <path d="M 685 240 
+             L 870 346.8 
+             L 870 486.8 
+             L 685 380 Z" 
+          fill="#0c1017" class="hairline"/>
+    <path d="M 685 240 L 870 346.8" class="highlight-edge"/>
+    
+    <!-- Light Seal Perimeter Recess -->
+    <path d="M 692 250 L 863 348.7 L 863 477.5 L 692 378.8 Z" 
+          fill="#070a0e" stroke="#1e293b" stroke-width="0.8"/>
+
+    <!-- Spring-Loaded Pressure Plate Assembly -->
+    <path d="M 720 286 L 835 352.4 L 835 448.4 L 720 382 Z" 
+          fill="#131822" stroke="#475569" stroke-width="1"/>
+    <path d="M 720 286 L 835 352.4" class="highlight-edge"/>
+
+    <!-- Precision Dimple Grid on Film Pressure Plate -->
+    <g fill="#2d3748" opacity="0.85">
+      <circle cx="745" cy="325" r="1.5"/><circle cx="770" cy="339" r="1.5"/><circle cx="795" cy="354" r="1.5"/><circle cx="815" cy="365" r="1.5"/>
+      <circle cx="745" cy="350" r="1.5"/><circle cx="770" cy="364" r="1.5"/><circle cx="795" cy="379" r="1.5"/><circle cx="815" cy="390" r="1.5"/>
+      <circle cx="745" cy="375" r="1.5"/><circle cx="770" cy="389" r="1.5"/><circle cx="795" cy="404" r="1.5"/><circle cx="815" cy="415" r="1.5"/>
+    </g>
+
+    <!-- 4x Corner Leaf Springs for Pressure Plate Floating Mount -->
+    <path d="M 723 291 L 733 297 M 832 354 L 822 348 M 723 378 L 733 372 M 832 443 L 822 437" 
+          stroke="#94a3b8" stroke-width="1.2"/>
+
+    <!-- Door Hinge Bracket & Pivot Pin on Left Edge -->
+    <path d="M 681 248 L 687 251.5 L 687 375 L 681 371.5 Z" fill="#1e293b" stroke="#64748b" stroke-width="0.8"/>
+    <ellipse cx="684" cy="250" rx="3.5" ry="2" fill="#64748b"/>
+    <ellipse cx="684" cy="373" rx="3.5" ry="2" fill="#64748b"/>
+
+    <!-- Locking Latch Mechanism on Right Edge -->
+    <path d="M 870 410 L 878 414.6 L 878 430 L 870 425.4 Z" fill="#2d3748" stroke="#94a3b8" stroke-width="0.8"/>
+    <line x1="878" y1="422" x2="872" y2="418.5" stroke="#00e5ff" stroke-width="1"/>
+
+    <!-- Film Guide Roller Shaft -->
+    <path d="M 848 365 L 854 368.5 L 854 458 L 848 454.5 Z" fill="#18202c" stroke="#475569" stroke-width="0.8"/>
+    <path d="M 850 375 L 850 450" stroke="#64748b" stroke-width="0.6" stroke-dasharray="2 2"/>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- SUBASSEMBLY 3: CAMERA BODY HOUSING (Datum Anchor / Baseline at 0,0)       -->
+  <!-- ========================================================================= -->
+  <g class="sub-body">
+    <!-- Camera Body Main Shell Block (Iso: Width=280 along +30°, Height=155, Depth=65) -->
+    <!-- Top Deck Plate (Stepped Leica M Silhouette) -->
+    <path d="M 480 280 
+             L 740 430.1 
+             L 796.3 397.6 
+             L 536.3 247.5 Z" 
+          fill="#171d29" class="hairline"/>
+    <path d="M 480 280 L 740 430.1" class="highlight-edge"/>
+    <path d="M 480 280 L 536.3 247.5" class="highlight-edge"/>
+
+    <!-- Front Body Face -->
+    <path d="M 480 280 
+             L 740 430.1 
+             L 740 565 
+             L 480 414.9 Z" 
+          fill="url(#body-grad)" class="hairline"/>
+
+    <!-- Right Side Outer Plate -->
+    <path d="M 740 430.1 
+             L 796.3 397.6 
+             L 796.3 532.5 
+             L 740 565 Z" 
+          fill="#0c1017" class="hairline"/>
+    <path d="M 740 430.1 L 796.3 397.6" class="highlight-edge"/>
+
+    <!-- Vulcanite Leatherette Grip Inset Band -->
+    <path d="M 480 340 L 740 490.1 L 740 550 L 480 400 Z" 
+          fill="#0a0d13" stroke="#1e2638" stroke-width="0.8"/>
+    <!-- Fine Vulcanite Surface Texture Hatch -->
+    <path d="M 488 350 L 732 490.8 M 488 362 L 732 502.8 M 488 374 L 732 514.8 M 488 386 L 732 526.8" 
+          stroke="#151b26" stroke-width="0.6" stroke-dasharray="1 3"/>
+
+    <!-- Rangefinder Optical Windows on Front Plate -->
+    <!-- Main Viewfinder Eyepiece Window -->
+    <path d="M 525 298 L 548 311.3 L 548 327 L 525 313.7 Z" fill="#071a2e" stroke="#475569" stroke-width="1"/>
+    <path d="M 527 301 L 545 311.5" stroke="#00e5ff" stroke-width="0.8" opacity="0.8"/>
+    
+    <!-- Frameline Illuminator Frosted Window (Center) -->
+    <path d="M 565 321 L 585 332.5 L 585 348 L 565 336.5 Z" fill="#101824" stroke="#475569" stroke-width="0.8"/>
+    <path d="M 567 325 L 583 334.2 M 567 330 L 583 339.2 M 567 335 L 583 344.2" stroke="#334155" stroke-width="0.6"/>
+
+    <!-- Rangefinder Split-Image Window -->
+    <path d="M 610 347 L 626 356.2 L 626 370 L 610 360.8 Z" fill="#0a192f" stroke="#475569" stroke-width="1"/>
+    <circle cx="618" cy="358" r="3" fill="#00e5ff" opacity="0.4" filter="url(#accent-glow)"/>
+
+    <!-- Red Rangefinder Dot Logo -->
+    <circle cx="638" cy="405" r="7" fill="#dc2626" stroke="#ef4444" stroke-width="0.6"/>
+    <text x="635" y="407.5" fill="#ffffff" font-size="5" font-weight="700">L</text>
+
+    <!-- Top Plate Dials & Hardware Controls -->
+    <!-- Shutter Speed Selector Dial (Isometric Cylinder) -->
+    <g transform="translate(640, 345)">
+      <path d="M -22 -12.7 L 0 0 L 0 10 L -22 -2.7 Z" fill="#1e293b" class="hairline"/>
+      <path d="M 0 0 L 22 -12.7 L 22 -2.7 L 0 10 Z" fill="#0f172a" class="hairline"/>
+      <ellipse cx="0" cy="-12.7" rx="22" ry="12.7" fill="#243044" stroke="#64748b" stroke-width="1"/>
+      <ellipse cx="0" cy="-12.7" rx="16" ry="9.2" fill="#172033" stroke="#334155" stroke-width="0.6"/>
+      <line x1="0" y1="-21.9" x2="0" y2="-12.7" stroke="#ff4444" stroke-width="1.2"/>
+      <text x="-4" y="-14" fill="#94a3b8" font-size="4.5" font-weight="700">1000</text>
+    </g>
+
+    <!-- Film Advance Lever & Frame Counter Collar -->
+    <g transform="translate(710, 385)">
+      <path d="M -5 -2.9 L 35 20.2 L 50 15 L 12 -7 L -5 -2.9 Z" fill="#334155" stroke="#64748b" stroke-width="1"/>
+      <ellipse cx="0" cy="0" rx="14" ry="8.1" fill="#1e293b" stroke="#94a3b8" stroke-width="1"/>
+      <ellipse cx="0" cy="0" rx="8" ry="4.6" fill="#090d14" stroke="#00e5ff" stroke-width="0.6"/>
+      <text x="-2" y="1.5" fill="#f8fafc" font-size="4" font-weight="700">S</text>
+      <!-- Shutter Release Button -->
+      <ellipse cx="0" cy="-4" rx="4.5" ry="2.6" fill="#94a3b8" stroke="#f8fafc" stroke-width="0.8"/>
+      <circle cx="0" cy="-4" r="1" fill="#0f172a"/>
+    </g>
+
+    <!-- Hot Shoe Bracket for Viewfinder/Flash -->
+    <g transform="translate(565, 301)">
+      <path d="M -12 -6.9 L 8 4.6 L 16 0 L -4 -11.5 Z" fill="#090d14" stroke="#475569" stroke-width="0.8"/>
+      <line x1="-3" y1="-2" x2="5" y2="2.6" stroke="#ffaa00" stroke-width="1.2"/>
+    </g>
+
+    <!-- Self-Timer Mechanical Lever on Front Plate -->
+    <g transform="translate(642, 470)">
+      <ellipse cx="0" cy="0" rx="4" ry="2.3" fill="#64748b"/>
+      <path d="M 0 0 L 12 6.9 L 14 15 L 10 12.7 Z" fill="#334155" stroke="#94a3b8" stroke-width="0.8"/>
+      <circle cx="12" cy="13.5" r="1.5" fill="#ffffff"/>
+    </g>
+
+    <!-- Lens Mount Throat & Bayonet Flange (Center: 580, 445) -->
+    <!-- Camera Internal Dark Chamber (Exposed when barrel is detached) -->
+    <g transform="translate(580, 445)">
+      <!-- Chamber Cavity -->
+      <ellipse cx="0" cy="0" rx="55" ry="31.75" transform="rotate(-30)" fill="#05070a" stroke="#1e293b" stroke-width="1.2"/>
+      
+      <!-- Focal Plane Shutter Curtain (Titanium Foil / Cloth Slats) -->
+      <path d="M -15 -25 L 30 1 L 18 26 L -27 0 Z" fill="#12161f" stroke="#2a3547" stroke-width="0.8"/>
+      <line x1="-8" y1="-12" x2="24" y2="6.5" stroke="#334155" stroke-width="0.8" stroke-dasharray="3 2"/>
+      <line x1="-1" y1="2" x2="20" y2="14" stroke="#334155" stroke-width="0.8" stroke-dasharray="3 2"/>
+
+      <!-- Rangefinder Follower Cam Wheel at 12 o'clock -->
+      <ellipse cx="-8" cy="-22" rx="4" ry="2.5" fill="#d97706" stroke="#f59e0b" stroke-width="0.6"/>
+
+      <!-- Stainless Steel Bayonet Mount Collar -->
+      <ellipse cx="0" cy="0" rx="58" ry="33.49" transform="rotate(-30)" fill="none" stroke="#64748b" stroke-width="1.5"/>
+      <ellipse cx="0" cy="0" rx="63" ry="36.37" transform="rotate(-30)" fill="none" stroke="#334155" stroke-width="0.8"/>
+
+      <!-- 4x Precision Bayonet Locking Lugs -->
+      <path d="M -45 -15 L -35 -26 M 35 -22 L 48 -12 M 42 16 L 30 28 M -32 25 L -44 14" 
+            stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Red Lens Index Alignment Dot at 1 o'clock -->
+      <circle cx="22" cy="-26" r="1.8" fill="#ef4444" stroke="#b91c1c" stroke-width="0.5"/>
+      <!-- Bayonet Lock Release Pin at 8 o'clock -->
+      <circle cx="-32" cy="18" r="2.2" fill="#cbd5e1" stroke="#475569" stroke-width="0.6"/>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- SUBASSEMBLY 2: APERTURE / FOCUS BARREL (Translates Down-Left along Axis)   -->
+  <!-- ========================================================================= -->
+  <g class="sub-barrel">
+    <!-- Assembled Center Datum: (580, 445) -->
+    <g transform="translate(580, 445)">
+      <!-- Rear Bayonet Mating Sleeve -->
+      <g opacity="0.95">
+        <!-- Cylinder Depth Extrusion along Axis (length = 25px -> dx=-21.65, dy=12.5) -->
+        <path d="M -48.5 -18.2 L -70.15 -5.7 A 56 32.33 -30 0 0 26.55 50.3 L 48.2 37.8 A 56 32.33 -30 0 1 -48.5 -18.2 Z" 
+              fill="#111722" stroke="#253043" stroke-width="1"/>
+        <ellipse cx="0" cy="0" rx="56" ry="32.33" transform="rotate(-30)" fill="#151d2a" stroke="#475569" stroke-width="1"/>
+      </g>
+
+      <!-- Helical Brass Focusing Thread Grooves (Internal) -->
+      <g stroke="#927137" stroke-width="0.75" opacity="0.8">
+        <path d="M -30 -10 L -45 -1.3 M -18 -15 L -38 -3.5 M -6 -20 L -30 -6 M 6 -24 L -22 -8 M 18 -27 L -14 -9"/>
+      </g>
+
+      <!-- Internal Iris Aperture Mechanism Housing -->
+      <!-- Radial Aperture Glow Sheen -->
+      <ellipse cx="-21.65" cy="12.5" rx="36" ry="20.78" transform="rotate(-30)" fill="url(#iris-glow)"/>
+
+      <!-- 10 Overlapping Precision Curved Iris Blades -->
+      <g stroke="#00e5ff" stroke-width="0.7" fill="#090d14" opacity="0.9">
+        <path d="M -16 -4 C -8 -12, 10 -15, 18 -8 L 8 4 C 2 -2, -10 1, -16 -4 Z"/>
+        <path d="M -10 -14 C 2 -18, 20 -12, 24 -2 L 15 7 C 10 1, 0 -3, -10 -14 Z"/>
+        <path d="M 4 -18 C 16 -16, 28 -4, 25 8 L 14 12 C 14 3, 7 -7, 4 -18 Z"/>
+        <path d="M 16 -12 C 24 -4, 28 10, 18 19 L 9 17 C 13 9, 11 -3, 16 -12 Z"/>
+        <path d="M 22 -1 C 24 11, 19 24, 7 26 L 1 20 C 8 16, 12 7, 22 -1 Z"/>
+        <path d="M 18 11 C 13 21, 1 28, -10 24 L -10 16 C -3 18, 8 14, 18 11 Z"/>
+        <path d="M 8 20 C -4 25, -18 23, -23 13 L -19 6 C -13 12, -4 15, 8 20 Z"/>
+        <path d="M -6 22 C -18 20, -28 9, -26 -3 L -19 -2 C -19 6, -12 15, -6 22 Z"/>
+        <path d="M -18 14 C -25 5, -27 -9, -19 -18 L -13 -13 C -17 -4, -14 7, -18 14 Z"/>
+        <path d="M -22 1 C -23 -11, -16 -23, -4 -25 L 0 -19 C -7 -16, -13 -7, -22 1 Z"/>
+      </g>
+      <!-- Central Optical Aperture Polygon Opening -->
+      <polygon points="-5,1 -8,6 -4,11 2,12 8,8 10,2 6,-3 1,-4" fill="#030508" stroke="#00e5ff" stroke-width="1.2"/>
+
+      <!-- Exterior Barrel Ring: Depth of Field & Aperture Index Scale -->
+      <g transform="translate(-21.65, 12.5)">
+        <!-- Barrel Outer Wall Cylinder -->
+        <path d="M -50.2 -18.9 L -71.85 -6.4 A 58 33.49 -30 0 0 28.55 51.5 L 50.2 38.9 A 58 33.49 -30 0 1 -50.2 -18.9 Z" 
+              fill="#151c27" class="hairline"/>
+        <ellipse cx="0" cy="0" rx="58" ry="33.49" transform="rotate(-30)" fill="#1c2534" stroke="#475569" stroke-width="1"/>
+        <ellipse cx="0" cy="0" rx="58" ry="33.49" transform="rotate(-30)" class="highlight-edge"/>
+
+        <!-- Knurled Focus Grip Ring Fluting (Parallel Isometric Line Array) -->
+        <g stroke="#334155" stroke-width="0.8">
+          <line x1="-48" y1="-5" x2="-62" y2="3"/><line x1="-40" y1="2" x2="-54" y2="10"/>
+          <line x1="-30" y1="9" x2="-44" y2="17"/><line x1="-18" y1="16" x2="-32" y2="24"/>
+          <line x1="-4" y1="23" x2="-18" y2="31"/><line x1="12" y1="30" x2="-2" y2="38"/>
+          <line x1="28" y1="36" x2="14" y2="44"/>
+        </g>
+
+        <!-- Classic Ergonomic Focus Tab -->
+        <path d="M -30 20 C -45 35, -55 50, -40 55 C -30 57, -20 40, -15 30 Z" 
+              fill="#18202c" stroke="#64748b" stroke-width="0.8"/>
+
+        <!-- Engraved Witness Scales: Aperture Markings & DOF Bracket -->
+        <text x="-48" y="-12" fill="#ef4444" font-size="4.5" font-weight="700">|</text>
+        <text x="-44" y="-10" fill="#94a3b8" font-size="3.5">5.6 8 11 16</text>
+        <text x="-28" y="-2" fill="#00e5ff" font-size="3.5" font-weight="700">f/2.0</text>
+        <text x="-12" y="7" fill="#f59e0b" font-size="3.5">2.8 4</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- SUBASSEMBLY 1: FRONT LENS ELEMENT GROUP (Translates Furthest Down-Left)   -->
+  <!-- ========================================================================= -->
+  <g class="sub-lens">
+    <!-- Assembled Center Datum: (580, 445) -> Base Offset along axis = (dx=-43.3, dy=25.0) -->
+    <g transform="translate(536.7, 470)">
+      <!-- Outer Metal Lens Bezel / Threaded Filter Ring -->
+      <!-- Outer Cylinder Depth (length = 20px -> dx=-17.32, dy=10.0) -->
+      <path d="M -46.77 -17.6 L -64.09 -7.6 A 54 31.18 -30 0 0 29.51 45.8 L 46.83 35.8 A 54 31.18 -30 0 1 -46.77 -17.6 Z" 
+            fill="#121824" class="hairline"/>
+      <ellipse cx="0" cy="0" rx="54" ry="31.18" transform="rotate(-30)" fill="#1a2332" stroke="#475569" stroke-width="1"/>
+      <ellipse cx="0" cy="0" rx="54" ry="31.18" transform="rotate(-30)" class="highlight-edge"/>
+
+      <!-- Precision Filter Threads M39 x 0.5 -->
+      <ellipse cx="-4.33" cy="2.5" rx="52" ry="30.02" transform="rotate(-30)" fill="none" stroke="#2a374a" stroke-width="0.6" stroke-dasharray="4 2"/>
+      <ellipse cx="-8.66" cy="5.0" rx="50" ry="28.87" transform="rotate(-30)" fill="none" stroke="#2a374a" stroke-width="0.6" stroke-dasharray="4 2"/>
+
+      <!-- Spanner Wrench Installation Notches at 180° -->
+      <rect x="-48" y="-12" width="3" height="1.5" transform="rotate(30)" fill="#64748b"/>
+      <rect x="45" y="10" width="3" height="1.5" transform="rotate(30)" fill="#64748b"/>
+
+      <!-- Front Retaining Ring Typographic Engraving -->
+      <g fill="#94a3b8" font-size="3.5" font-weight="600" letter-spacing="0.8">
+        <text transform="translate(-38, -6) rotate(-30)">SUMMICRON-M 1:2/50</text>
+        <text transform="translate(-10, 18) rotate(-30)">E39 GERMANY</text>
+        <text transform="translate(18, 12) rotate(30)">N° 4821903</text>
+      </g>
+
+      <!-- Front Meniscus Convex Glass Element -->
+      <g transform="translate(-8.66, 5.0)">
+        <!-- Lens Retaining Inner Bevel -->
+        <ellipse cx="0" cy="0" rx="44" ry="25.40" transform="rotate(-30)" fill="#06090f" stroke="#334155" stroke-width="1"/>
+
+        <!-- Multi-Coated Lens Element Glass Body -->
+        <ellipse cx="0" cy="0" rx="42" ry="24.25" transform="rotate(-30)" fill="url(#lens-sheen)"/>
+
+        <!-- High-Precision Curvature Specular Highlights (Coating Glare Arcs) -->
+        <path d="M -30 -10 A 38 21.94 -30 0 1 18 -18" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" opacity="0.85"/>
+        <path d="M -22 -4 A 32 18.48 -30 0 1 12 -12" fill="none" stroke="#00e5ff" stroke-width="0.8" stroke-linecap="round" opacity="0.6"/>
+        
+        <!-- Secondary Violet Reflection (Multi-Coated Magnesium Fluoride) -->
+        <path d="M -15 15 A 36 20.78 -30 0 0 25 5" fill="none" stroke="#a855f7" stroke-width="0.8" stroke-linecap="round" opacity="0.45"/>
+        
+        <!-- Vertex Spherical Dome Accent Glow (< 5% Focal Area) -->
+        <ellipse cx="-2" cy="-2" rx="14" ry="8.08" transform="rotate(-30)" fill="#00e5ff" opacity="0.12" filter="url(#accent-glow)"/>
+        <circle cx="-6" cy="-4" r="1.5" fill="#ffffff" opacity="0.75"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================================================= -->
+  <!-- TECHNICAL LEADER LINES & ANCHORED CALLOUT LABELS (Stage 2 Display)        -->
+  <!-- ========================================================================= -->
+  <g class="sub-leaders">
+    <!-- CALLOUT 1: FRONT LENS ELEMENT GROUP -->
+    <g transform="translate(0, 0)">
+      <!-- Anchor point at expanded lens: (536.7 - 259.8, 470 + 150) = (276.9, 620) -->
+      <circle cx="276.9" cy="620" r="2.5" fill="#00e5ff"/>
+      <circle cx="276.9" cy="620" r="5" fill="none" stroke="#00e5ff" stroke-width="0.7" stroke-dasharray="2 2"/>
+      
+      <!-- Dogleg Technical Leader Line -->
+      <polyline points="276.9,620 220,560 110,560" fill="none" stroke="#00e5ff" stroke-width="1"/>
+      <rect x="106" y="558" width="4" height="4" fill="#00e5ff"/>
+      
+      <!-- Crisp Uppercase Typography -->
+      <text x="110" y="546" fill="#f8fafc" font-size="13" font-weight="700" letter-spacing="1.5">LENS</text>
+      <text x="110" y="530" fill="#00e5ff" font-size="8" font-weight="600" letter-spacing="1">SUBASSEMBLY 01 // OPTICAL</text>
+      <text x="110" y="575" fill="#94a3b8" font-size="7.5" letter-spacing="0.5">DUAL-COATED SPHERICAL MENISCUS</text>
+      <text x="110" y="587" fill="#64748b" font-size="7" letter-spacing="0.5">E39 THREADED HOUSING • F/2.0 FLANGE</text>
+    </g>
+
+    <!-- CALLOUT 2: APERTURE / FOCUS BARREL -->
+    <g transform="translate(0, 0)">
+      <!-- Anchor point at expanded barrel: (580 - 129.9, 445 + 75) = (450.1, 520) -->
+      <circle cx="450.1" cy="520" r="2.5" fill="#00e5ff"/>
+      <circle cx="450.1" cy="520" r="5" fill="none" stroke="#00e5ff" stroke-width="0.7" stroke-dasharray="2 2"/>
+      
+      <!-- Dogleg Leader Line to Upper Left -->
+      <polyline points="450.1,520 390,380 260,380" fill="none" stroke="#00e5ff" stroke-width="1"/>
+      <rect x="256" y="378" width="4" height="4" fill="#00e5ff"/>
+      
+      <text x="260" y="366" fill="#f8fafc" font-size="13" font-weight="700" letter-spacing="1.5">BARREL</text>
+      <text x="260" y="350" fill="#00e5ff" font-size="8" font-weight="600" letter-spacing="1">SUBASSEMBLY 02 // HELICOID</text>
+      <text x="260" y="395" fill="#94a3b8" font-size="7.5" letter-spacing="0.5">10-BLADE TITANIUM IRIS MECHANISM</text>
+      <text x="260" y="407" fill="#64748b" font-size="7" letter-spacing="0.5">MULTI-START BRASS FOCUS TRACK</text>
+    </g>
+
+    <!-- CALLOUT 3: CAMERA BODY HOUSING -->
+    <g transform="translate(0, 0)">
+      <!-- Anchor point at body top deck: (640, 345) -->
+      <circle cx="640" cy="345" r="2.5" fill="#00e5ff"/>
+      <circle cx="640" cy="345" r="5" fill="none" stroke="#00e5ff" stroke-width="0.7" stroke-dasharray="2 2"/>
+      
+      <!-- Dogleg Leader Line to Top Right -->
+      <polyline points="640,345 710,170 840,170" fill="none" stroke="#00e5ff" stroke-width="1"/>
+      <rect x="836" y="168" width="4" height="4" fill="#00e5ff"/>
+      
+      <text x="845" y="156" fill="#f8fafc" font-size="13" font-weight="700" letter-spacing="1.5">BODY</text>
+      <text x="845" y="140" fill="#00e5ff" font-size="8" font-weight="600" letter-spacing="1">SUBASSEMBLY 03 // CHASSIS</text>
+      <text x="845" y="185" fill="#94a3b8" font-size="7.5" letter-spacing="0.5">COINCIDENCE RANGEFINDER BLOCK</text>
+      <text x="845" y="197" fill="#64748b" font-size="7" letter-spacing="0.5">FOCAL PLANE SHUTTER • DIE-CAST CORE</text>
+    </g>
+
+    <!-- CALLOUT 4: REAR FILM DOOR -->
+    <g transform="translate(0, 0)">
+      <!-- Anchor point at expanded rear door: (775 + 147.2, 380 - 85) = (922.2, 295) -->
+      <circle cx="922.2" cy="295" r="2.5" fill="#00e5ff"/>
+      <circle cx="922.2" cy="295" r="5" fill="none" stroke="#00e5ff" stroke-width="0.7" stroke-dasharray="2 2"/>
+      
+      <!-- Dogleg Leader Line to Far Right -->
+      <polyline points="922.2,295 980,330 1080,330" fill="none" stroke="#00e5ff" stroke-width="1"/>
+      <rect x="1076" y="328" width="4" height="4" fill="#00e5ff"/>
+      
+      <text x="980" y="316" fill="#f8fafc" font-size="13" font-weight="700" letter-spacing="1.5">BACK</text>
+      <text x="980" y="300" fill="#00e5ff" font-size="8" font-weight="600" letter-spacing="1">SUBASSEMBLY 04 // GATE</text>
+      <text x="980" y="345" fill="#94a3b8" font-size="7.5" letter-spacing="0.5">SPRING-SUSPENDED PRESSURE PLATE</text>
+      <text x="980" y="357" fill="#64748b" font-size="7" letter-spacing="0.5">PERIMETER VELVET LIGHT BAFFLES</text>
+    </g>
+  </g>
+
+  <!-- Technical Spec Engineering Footer Block -->
+  <g opacity="0.75" transform="translate(65, 725)">
+    <line x1="0" y1="0" x2="1070" y2="0" stroke="#1e293b" stroke-width="1"/>
+    <text x="0" y="16" fill="#475569" font-size="7.5" letter-spacing="1.5">KINEMATICS: 4-STAGE COAXIAL GOLDEN CYCLE</text>
+    <text x="320" y="16" fill="#475569" font-size="7.5" letter-spacing="1.5">EXP: 0%-35%  |  HOLD: 35%-60%  |  RET: 60%-85%  |  REST: 85%-100%</text>
+    <text x="880" y="16" fill="#00e5ff" font-size="7.5" font-weight="600" letter-spacing="1.5">RESTITUTION DRIFT: 0.0000 px</text>
+  </g>
+</svg>

@@ -1,0 +1,972 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="100%" height="100%">
+  <defs>
+    <!-- Master Color & Material Definitions -->
+    <style type="text/css">
+      <![CDATA[
+        .bg-fill { fill: #080a0f; }
+        .grid-line { stroke: #131924; stroke-width: 1; stroke-dasharray: 4 8; }
+        .grid-line-solid { stroke: #18202e; stroke-width: 1; }
+        .cad-hairline { stroke: #263345; stroke-width: 1; fill: none; }
+        .cad-accent { stroke: #3d516b; stroke-width: 1; fill: none; }
+        .cad-spec { stroke: #6884a6; stroke-width: 1; fill: none; }
+        .chassis-top { fill: #161c26; stroke: #2a3648; stroke-width: 1; }
+        .chassis-front { fill: #10141c; stroke: #242f40; stroke-width: 1; }
+        .chassis-side { fill: #0b0e14; stroke: #1c2533; stroke-width: 1; }
+        .chassis-bevel { fill: #1d2533; stroke: #344359; stroke-width: 1; }
+        .key-top { fill: #1a222e; stroke: #313f54; stroke-width: 0.8; }
+        .key-front { fill: #10151f; stroke: #242f40; stroke-width: 0.8; }
+        .key-side { fill: #0c1017; stroke: #1a222d; stroke-width: 0.8; }
+        .hud-text { font-family: 'Courier New', Courier, monospace; font-size: 8px; fill: #485c75; letter-spacing: 0.8px; }
+        .hud-dim { fill: #2c394a; }
+        .amber-text-main { font-family: 'Courier New', Courier, monospace; font-size: 6px; fill: #ffa214; letter-spacing: 0.6px; }
+        .amber-text-bold { font-family: 'Courier New', Courier, monospace; font-size: 7px; font-weight: bold; fill: #ffb833; letter-spacing: 0.8px; }
+        .amber-text-dim { font-family: 'Courier New', Courier, monospace; font-size: 5.5px; fill: #d67a00; letter-spacing: 0.4px; }
+      ]]>
+    </style>
+
+    <!-- CRT Screen Aperture Clip -->
+    <clipPath id="crt-screen-clip">
+      <rect x="22" y="20" width="206" height="132" rx="14" ry="14" />
+    </clipPath>
+
+    <!-- Scanline Raster Overlay Pattern -->
+    <pattern id="scanlines" width="4" height="2" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="4" y2="0" stroke="#000000" stroke-width="0.8" opacity="0.4" />
+    </pattern>
+
+    <!-- Localized Phosphor Luminescence Gradient -->
+    <radialGradient id="crt-phosphor-glow" cx="48%" cy="46%" r="58%">
+      <stop offset="0%" stop-color="#ff9a00" stop-opacity="0.22" />
+      <stop offset="55%" stop-color="#e67300" stop-opacity="0.10" />
+      <stop offset="85%" stop-color="#994400" stop-opacity="0.04" />
+      <stop offset="100%" stop-color="#331400" stop-opacity="0.0" />
+    </radialGradient>
+
+    <!-- CRT Glass Curvature Vignette Gradient -->
+    <radialGradient id="crt-vignette" cx="50%" cy="50%" r="52%">
+      <stop offset="70%" stop-color="#000000" stop-opacity="0.0" />
+      <stop offset="92%" stop-color="#000000" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.85" />
+    </radialGradient>
+
+    <!-- Sweep Scanline Highlight Band -->
+    <linearGradient id="scanline-sweep" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb336" stop-opacity="0.0" />
+      <stop offset="35%" stop-color="#ffb336" stop-opacity="0.06" />
+      <stop offset="50%" stop-color="#ffe299" stop-opacity="0.24" />
+      <stop offset="65%" stop-color="#ff9900" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#ff8400" stop-opacity="0.0" />
+    </linearGradient>
+
+    <!-- Subtle Bezel Inner Reflection Gradient -->
+    <linearGradient id="bezel-inner-amber" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffa500" stop-opacity="0.25" />
+      <stop offset="25%" stop-color="#ff8c00" stop-opacity="0.08" />
+      <stop offset="80%" stop-color="#3a1c00" stop-opacity="0.0" />
+    </linearGradient>
+
+    <!-- Localized Desk Plinth Phosphor Spill -->
+    <radialGradient id="desk-amber-spill" cx="45%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffa500" stop-opacity="0.14" />
+      <stop offset="35%" stop-color="#ff8c00" stop-opacity="0.07" />
+      <stop offset="70%" stop-color="#ff6a00" stop-opacity="0.02" />
+      <stop offset="100%" stop-color="#ff6a00" stop-opacity="0.0" />
+    </radialGradient>
+
+    <!-- Cable Shading Gradient -->
+    <linearGradient id="cable-shading" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3d4d63" />
+      <stop offset="45%" stop-color="#242e3d" />
+      <stop offset="100%" stop-color="#0f141c" />
+    </linearGradient>
+  </defs>
+
+  <!-- Deep Technical Background -->
+  <rect width="1200" height="900" class="bg-fill" />
+
+  <!-- ========================================== -->
+  <!-- TECHNICAL CAD BORDER & SCHEMATIC CALLOUTS  -->
+  <!-- ========================================== -->
+  <g id="technical-border">
+    <rect x="24" y="24" width="1152" height="852" class="cad-hairline" />
+    <rect x="28" y="28" width="1144" height="844" stroke="#151c27" stroke-width="0.8" fill="none" />
+    
+    <!-- Corner Alignment Marks -->
+    <path d="M 20 24 L 34 24 M 24 20 L 24 34" class="cad-accent" />
+    <path d="M 1180 24 L 1166 24 M 1176 20 L 1176 34" class="cad-accent" />
+    <path d="M 20 876 L 34 876 M 24 880 L 24 866" class="cad-accent" />
+    <path d="M 1180 876 L 1166 876 M 1176 880 L 1176 866" class="cad-accent" />
+
+    <!-- Isometric Coordinate Indicator (Top-Left) -->
+    <g transform="translate(60, 60)">
+      <circle cx="0" cy="0" r="14" class="cad-hairline" stroke-dasharray="2 2" />
+      <circle cx="0" cy="0" r="2" fill="#3d516b" />
+      <line x1="0" y1="0" x2="25.98" y2="15" class="cad-accent" />
+      <line x1="0" y1="0" x2="-25.98" y2="15" class="cad-accent" />
+      <line x1="0" y1="0" x2="0" y2="-30" class="cad-accent" />
+      <text x="30" y="18" class="hud-text">+X [30°]</text>
+      <text x="-72" y="18" class="hud-text">+Y [150°]</text>
+      <text x="-12" y="-35" class="hud-text">+Z [90°]</text>
+      <text x="-40" y="44" class="hud-text">ISO-METRIC 30° / AXONOMETRIC REF</text>
+    </g>
+
+    <!-- Engineering Drawing Meta Block (Bottom-Right) -->
+    <g transform="translate(860, 780)">
+      <rect x="0" y="0" width="280" height="66" class="chassis-side" />
+      <rect x="0" y="0" width="280" height="66" class="cad-hairline" />
+      <line x1="0" y1="22" x2="280" y2="22" class="cad-hairline" />
+      <line x1="0" y1="44" x2="280" y2="44" class="cad-hairline" />
+      <line x1="140" y1="22" x2="140" y2="66" class="cad-hairline" />
+      <text x="12" y="15" class="hud-text">SYSTEM: WS-8400 CRT WORKSTATION</text>
+      <text x="12" y="37" class="hud-text">DISP: 12" AMBER (P-134)</text>
+      <text x="148" y="37" class="hud-text">RASTER: 60Hz NON-INT</text>
+      <text x="12" y="58" class="hud-text">SPEC: REV 4.2 / DWG-09</text>
+      <text x="148" y="58" class="hud-text">CAD/FIGURE REF #01</text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- ISOMETRIC DESK PLINTH & GROUND GRID        -->
+  <!-- ========================================== -->
+  <g id="isometric-ground-grid">
+    <!-- Grid lines along X (+30 deg) -->
+    <line x1="180" y1="365" x2="630" y2="625" class="grid-line" />
+    <line x1="240" y1="330" x2="720" y2="607" class="grid-line" />
+    <line x1="300" y1="295" x2="810" y2="590" class="grid-line" />
+    <line x1="360" y1="260" x2="900" y2="572" class="grid-line" />
+    <line x1="420" y1="225" x2="990" y2="555" class="grid-line" />
+    
+    <!-- Grid lines along Y (+150 deg) -->
+    <line x1="788" y1="277" x2="338" y2="537" class="grid-line" />
+    <line x1="848" y1="312" x2="428" y2="555" class="grid-line" />
+    <line x1="908" y1="347" x2="518" y2="572" class="grid-line" />
+    <line x1="968" y1="381" x2="608" y2="590" class="grid-line" />
+    <line x1="1028" y1="416" x2="698" y2="607" class="grid-line" />
+
+    <!-- Technical Plinth Platform (Z = 0) -->
+    <!-- Plinth Top Face -->
+    <polygon points="580,240 1013,490 580,740 147,490" class="chassis-side" />
+    <polygon points="580,240 1013,490 580,740 147,490" class="cad-hairline" />
+
+    <!-- Plinth Front Bevel Drop (Z = -14) -->
+    <polygon points="147,490 580,740 580,754 147,504" fill="#06080b" stroke="#1a2330" stroke-width="1" />
+    <polygon points="580,740 1013,490 1013,504 580,754" fill="#040508" stroke="#161d28" stroke-width="1" />
+
+    <!-- Top Highlight along Plinth Front Rim -->
+    <line x1="147" y1="490" x2="580" y2="740" class="cad-accent" />
+    <line x1="580" y1="740" x2="1013" y2="490" stroke="#253242" stroke-width="1" />
+    
+    <!-- Axis Ticks along Plinth Edge -->
+    <line x1="255" y1="552" x2="262" y2="556" class="cad-spec" />
+    <line x1="363" y1="615" x2="370" y2="619" class="cad-spec" />
+    <line x1="472" y1="677" x2="479" y2="681" class="cad-spec" />
+  </g>
+
+  <!-- ========================================== -->
+  <!-- LOCALIZED PHOSPHOR SPILL ON DESK PLINTH    -->
+  <!-- ========================================== -->
+  <!-- Rhythmic pulsation synchronized with CRT breathing (T = 4.0s) -->
+  <g transform="matrix(0.8660254, 0.5, -0.8660254, 0.5, 520, 560)">
+    <ellipse cx="0" cy="0" rx="140" ry="85" fill="url(#desk-amber-spill)">
+      <animate attributeName="opacity"
+               values="0.45; 0.70; 0.95; 0.70; 0.45"
+               keyTimes="0; 0.25; 0.5; 0.75; 1"
+               dur="4s"
+               repeatCount="indefinite" />
+    </ellipse>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- COMPUTER BASE UNIT (SYSTEM CHASSIS)        -->
+  <!-- ========================================== -->
+  <g id="system-chassis">
+    <!-- Base Unit Placement: Width=290, Depth=200, Height=68 -->
+    <!-- Top Face: (Z = 68) -->
+    <polygon points="363.5,377 536.7,277 787.8,422 614.6,522" class="chassis-top" />
+    <line x1="363.5" y1="377" x2="614.6" y2="522" class="cad-spec" />
+    <line x1="363.5" y1="377" x2="536.7" y2="277" class="cad-accent" />
+
+    <!-- Right Side Face -->
+    <polygon points="614.6,522 787.8,422 787.8,490 614.6,590" class="chassis-side" />
+    <line x1="614.6" y1="522" x2="787.8" y2="422" class="cad-accent" />
+
+    <!-- Right Side Cooling Louvers (Isometric parallel slits) -->
+    <g stroke="#1b232e" stroke-width="1.2">
+      <line x1="645" y1="518" x2="755" y2="455" />
+      <line x1="645" y1="525" x2="755" y2="462" />
+      <line x1="645" y1="532" x2="755" y2="469" />
+      <line x1="645" y1="539" x2="755" y2="476" />
+      <line x1="645" y1="546" x2="755" y2="483" />
+      <line x1="645" y1="553" x2="755" y2="490" />
+    </g>
+
+    <!-- Front Face (Normal along +Y) -->
+    <polygon points="363.5,377 614.6,522 614.6,590 363.5,445" class="chassis-front" />
+    <line x1="363.5" y1="445" x2="614.6" y2="590" class="cad-hairline" />
+
+    <!-- Chassis Front Bevel Rim Glow Reflection -->
+    <line x1="363.5" y1="377" x2="614.6" y2="522" stroke="#ff9500" stroke-width="1">
+      <animate attributeName="stroke-opacity"
+               values="0.25; 0.45; 0.60; 0.45; 0.25"
+               keyTimes="0; 0.25; 0.5; 0.75; 1"
+               dur="4s"
+               repeatCount="indefinite" />
+    </line>
+
+    <!-- Front Face Functional Elements mapped via Isometric Matrix -->
+    <g transform="matrix(0.8660254, 0.5, 0, 1, 363.5, 377)">
+      <!-- Left: Ventilation Grille Louvers -->
+      <g stroke="#080b0f" stroke-width="1.8">
+        <line x1="20" y1="28" x2="135" y2="28" />
+        <line x1="20" y1="34" x2="135" y2="34" />
+        <line x1="20" y1="40" x2="135" y2="40" />
+        <line x1="20" y1="46" x2="135" y2="46" />
+        <line x1="20" y1="52" x2="135" y2="52" />
+      </g>
+      <!-- Grille top highlights -->
+      <g stroke="#2c384a" stroke-width="0.8">
+        <line x1="20" y1="27" x2="135" y2="27" />
+        <line x1="20" y1="33" x2="135" y2="33" />
+        <line x1="20" y1="39" x2="135" y2="39" />
+        <line x1="20" y1="45" x2="135" y2="45" />
+        <line x1="20" y1="51" x2="135" y2="51" />
+      </g>
+
+      <!-- Chassis Model Emblem Badge -->
+      <rect x="20" y="10" width="70" height="11" fill="#0c1017" stroke="#36455b" stroke-width="0.8" />
+      <text x="24" y="18" font-family="'Courier New', Courier, monospace" font-size="5.5" fill="#758ea8" letter-spacing="0.5">TITAN // PC-84</text>
+
+      <!-- Keyboard DIN Socket Receptacle -->
+      <circle cx="152" cy="50" r="6" fill="#090d13" stroke="#344357" stroke-width="0.8" />
+      <circle cx="152" cy="50" r="4" fill="#040608" />
+      <circle cx="150" cy="49" r="0.8" fill="#4d617a" />
+      <circle cx="154" cy="49" r="0.8" fill="#4d617a" />
+      <circle cx="152" cy="52" r="0.8" fill="#4d617a" />
+
+      <!-- Power Switch & Status LEDs -->
+      <rect x="145" y="12" width="14" height="20" fill="#090d13" stroke="#263345" stroke-width="0.8" />
+      <rect x="147" y="14" width="10" height="8" fill="#1b2533" stroke="#3d4f66" stroke-width="0.6" />
+      <!-- Power Indicator LED (Steady Low Amber Accent) -->
+      <circle cx="152" cy="27" r="1.5" fill="#ff9900" opacity="0.85" />
+
+      <!-- Right: Dual 5.25" Floppy Disk Bay Assembly -->
+      <rect x="175" y="8" width="105" height="52" fill="#0a0d13" stroke="#2a3547" stroke-width="1" />
+
+      <!-- DRIVE A (Top) -->
+      <g transform="translate(180, 12)">
+        <rect x="0" y="0" width="95" height="20" fill="#111620" stroke="#222c3b" stroke-width="0.8" />
+        <!-- Floppy Slot -->
+        <rect x="10" y="7" width="65" height="2.2" fill="#05070a" stroke="#1d2633" stroke-width="0.6" />
+        <!-- Latch Arm (Closed position) -->
+        <rect x="36" y="5" width="13" height="6" fill="#1c2533" stroke="#3a4b61" stroke-width="0.8" />
+        <line x1="42.5" y1="5" x2="42.5" y2="11" stroke="#526987" stroke-width="0.8" />
+        <!-- Eject Button -->
+        <rect x="80" y="6" width="9" height="5" fill="#18202b" stroke="#324054" stroke-width="0.6" />
+        <!-- Activity LED (Drive A) -->
+        <circle cx="5" cy="8" r="1.2" fill="#2bff6a" opacity="0.4" />
+        <text x="4" y="17" font-family="'Courier New', Courier, monospace" font-size="4" fill="#42556e">DRIVE A</text>
+      </g>
+
+      <!-- DRIVE B (Bottom) -->
+      <g transform="translate(180, 36)">
+        <rect x="0" y="0" width="95" height="20" fill="#111620" stroke="#222c3b" stroke-width="0.8" />
+        <!-- Floppy Slot -->
+        <rect x="10" y="7" width="65" height="2.2" fill="#05070a" stroke="#1d2633" stroke-width="0.6" />
+        <!-- Latch Arm (Closed position) -->
+        <rect x="36" y="5" width="13" height="6" fill="#1c2533" stroke="#3a4b61" stroke-width="0.8" />
+        <line x1="42.5" y1="5" x2="42.5" y2="11" stroke="#526987" stroke-width="0.8" />
+        <!-- Eject Button -->
+        <rect x="80" y="6" width="9" height="5" fill="#18202b" stroke="#324054" stroke-width="0.6" />
+        <!-- Activity LED (Drive B - Active Amber Read Pulsation) -->
+        <circle cx="5" cy="8" r="1.2" fill="#ffaa00">
+          <animate attributeName="opacity" values="0.1; 0.9; 0.3; 0.8; 0.1" keyTimes="0; 0.2; 0.4; 0.7; 1" dur="2s" repeatCount="indefinite" />
+        </circle>
+        <text x="4" y="17" font-family="'Courier New', Courier, monospace" font-size="4" fill="#42556e">DRIVE B</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- CRT MONITOR (STAND, HOUSING & BEZEL)       -->
+  <!-- ========================================== -->
+  <g id="crt-monitor">
+    <!-- Monitor Tilt-Swivel Pedestal Base (Z = 68 to 94) -->
+    <polygon points="460,375 560,433 530,450 430,392" class="chassis-side" />
+    <polygon points="440,360 550,424 535,433 425,369" class="chassis-bevel" />
+    <line x1="425" y1="369" x2="535" y2="433" class="cad-accent" />
+
+    <!-- Monitor Rear Tapered Housing -->
+    <!-- Rear Housing Top Plane (sloping down-back towards electron gun) -->
+    <polygon points="389.5,164 558.3,121.5 714.2,211.5 606,289" class="chassis-top" />
+    <line x1="389.5" y1="164" x2="606" y2="289" class="cad-spec" />
+    <line x1="389.5" y1="164" x2="558.3" y2="121.5" class="cad-accent" />
+    <line x1="558.3" y1="121.5" x2="714.2" y2="211.5" class="cad-hairline" />
+
+    <!-- Top Housing Ventilation Grille Slots -->
+    <g stroke="#10151d" stroke-width="1.5">
+      <line x1="480" y1="190" x2="590" y2="160" />
+      <line x1="495" y1="202" x2="605" y2="172" />
+      <line x1="510" y1="214" x2="620" y2="184" />
+      <line x1="525" y1="226" x2="635" y2="196" />
+      <line x1="540" y1="238" x2="650" y2="208" />
+    </g>
+
+    <!-- Monitor Right Tapered Side Face -->
+    <polygon points="606,289 714.2,211.5 714.2,363.5 606,481" class="chassis-side" />
+    <line x1="606" y1="289" x2="714.2" y2="211.5" class="cad-accent" />
+    <line x1="606" y1="481" x2="714.2" y2="363.5" class="cad-hairline" />
+
+    <!-- Right Side Ventilation Slits -->
+    <g stroke="#1a2330" stroke-width="1.2">
+      <line x1="630" y1="305" x2="695" y2="258" />
+      <line x1="630" y1="315" x2="695" y2="268" />
+      <line x1="630" y1="325" x2="695" y2="278" />
+      <line x1="630" y1="335" x2="695" y2="288" />
+      <line x1="630" y1="345" x2="695" y2="298" />
+      <line x1="630" y1="355" x2="695" y2="308" />
+    </g>
+
+    <!-- Monitor Front Bezel Surround (Y = 100 plane, Width=250, Height=192) -->
+    <!-- Front Face Base Polygon -->
+    <polygon points="389.5,164 606,289 606,481 389.5,356" class="chassis-front" />
+    <line x1="389.5" y1="356" x2="606" y2="481" class="cad-hairline" />
+    <line x1="389.5" y1="164" x2="389.5" y2="356" class="cad-hairline" />
+
+    <!-- Front Bezel Details mapped to Front Isometric Matrix -->
+    <g transform="matrix(0.8660254, 0.5, 0, 1, 389.5, 164)">
+      <!-- Outer Chamfer Bevel Ring -->
+      <rect x="6" y="6" width="238" height="180" rx="4" ry="4" fill="none" stroke="#2f3c4f" stroke-width="1" />
+      
+      <!-- Chamfer Highlight Line (Top & Front edge) -->
+      <line x1="6" y1="6" x2="244" y2="6" stroke="#5d7594" stroke-width="1" />
+      <line x1="6" y1="6" x2="6" y2="186" stroke="#41536b" stroke-width="1" />
+
+      <!-- Lower Bezel Control Panel (Below CRT Screen) -->
+      <g transform="translate(0, 160)">
+        <!-- Brand Badge -->
+        <rect x="22" y="7" width="55" height="10" fill="#090d13" stroke="#2a374a" stroke-width="0.8" />
+        <text x="25" y="14" font-family="'Courier New', Courier, monospace" font-size="5" fill="#607691" letter-spacing="0.5">AMBER-P134</text>
+        
+        <!-- Brightness Rotary Knob with Tick Marks -->
+        <circle cx="160" cy="12" r="5" fill="#18202b" stroke="#3d4f66" stroke-width="0.8" />
+        <line x1="160" y1="7" x2="160" y2="10" stroke="#7e9bbd" stroke-width="0.8" />
+        <text x="150" y="22" font-family="'Courier New', Courier, monospace" font-size="3.5" fill="#364659">BRIGHT</text>
+
+        <!-- Contrast Rotary Knob -->
+        <circle cx="180" cy="12" r="5" fill="#18202b" stroke="#3d4f66" stroke-width="0.8" />
+        <line x1="178" y1="9" x2="180" y2="12" stroke="#7e9bbd" stroke-width="0.8" />
+        <text x="171" y="22" font-family="'Courier New', Courier, monospace" font-size="3.5" fill="#364659">CONTRAST</text>
+
+        <!-- Monitor Power Rocker Switch -->
+        <rect x="204" y="6" width="16" height="12" fill="#0e131a" stroke="#2d3a4d" stroke-width="0.8" />
+        <rect x="206" y="8" width="12" height="8" fill="#1b2533" stroke="#485c75" stroke-width="0.6" />
+        <!-- Micro Amber LED (Monitor Power Indicator) -->
+        <circle cx="226" cy="12" r="1.5" fill="#ffaa00" />
+      </g>
+
+      <!-- Recessed Inner CRT Bezel Ring (Step-down aperture) -->
+      <rect x="18" y="16" width="214" height="140" rx="16" ry="16" fill="#080a0f" stroke="#1d2633" stroke-width="1.5" />
+      
+      <!-- Bevel Inner Lip Shadow -->
+      <rect x="20" y="18" width="210" height="136" rx="15" ry="15" fill="none" stroke="#05070a" stroke-width="2" />
+
+      <!-- Inner Rim Localized Amber Glint (Phosphor Backlight Refraction) -->
+      <rect x="21" y="19" width="208" height="134" rx="14" ry="14" fill="none" stroke="url(#bezel-inner-amber)" stroke-width="1.2">
+        <animate attributeName="stroke-opacity"
+                 values="0.55; 0.85; 1.0; 0.85; 0.55"
+                 keyTimes="0; 0.25; 0.5; 0.75; 1"
+                 dur="4s"
+                 repeatCount="indefinite" />
+      </rect>
+
+      <!-- ========================================== -->
+      <!-- CRT SCREEN DISPLAY AREA (CLIPPED)          -->
+      <!-- ========================================== -->
+      <g clip-path="url(#crt-screen-clip)">
+        <!-- Deep Obsidian Amber Background -->
+        <rect x="22" y="20" width="206" height="132" fill="#140800" />
+
+        <!-- Screen Phosphor Active Breathing Layer (T = 4.0s Seamless) -->
+        <g id="screen-phosphor-breathing">
+          <animate attributeName="opacity"
+                   values="0.82; 0.94; 1.0; 0.94; 0.82"
+                   keyTimes="0; 0.25; 0.5; 0.75; 1"
+                   dur="4s"
+                   repeatCount="indefinite" />
+
+          <!-- Center Radial Amber Glow -->
+          <rect x="22" y="20" width="206" height="132" fill="url(#crt-phosphor-glow)" />
+
+          <!-- Telemetry Waveform Display Section (Top Right) -->
+          <g transform="translate(130, 28)">
+            <!-- Mini CAD Grid for Osc Trace -->
+            <path d="M 0 10 L 84 10 M 0 24 L 84 24 M 0 38 L 84 38 M 21 0 L 21 48 M 42 0 L 42 48 M 63 0 L 63 48" 
+                  stroke="#592d00" stroke-width="0.5" stroke-dasharray="1 3" fill="none" />
+            <!-- Phosphor Sine Wave Harmonic Vector -->
+            <path d="M 0 24 Q 10.5 4 21 24 T 42 24 T 63 24 T 84 24" 
+                  fill="none" stroke="#ffa500" stroke-width="1.2" stroke-linecap="round" />
+            <text x="0" y="6" class="amber-text-dim">OSC // 60.00 Hz</text>
+            <text x="44" y="46" class="amber-text-dim">BEAM: NOMINAL</text>
+          </g>
+
+          <!-- Terminal System Initialization Text Lines -->
+          <text x="32" y="38" class="amber-text-bold">TITAN-84 CONSOLE ARCHITECTURE</text>
+          <text x="32" y="48" class="amber-text-main">SYS-ID: 0x4B2E // REV 3.01</text>
+          <text x="32" y="58" class="amber-text-dim">640 KB BASE MEMORY TEST OK</text>
+          <text x="32" y="67" class="amber-text-dim">VDU: AMBER 80x25 HIGH-RES</text>
+          <text x="32" y="76" class="amber-text-dim">FD-0: MOUNTED &quot;DIAG_SYS&quot;</text>
+          
+          <line x1="32" y1="82" x2="216" y2="82" stroke="#8c4400" stroke-width="0.6" stroke-dasharray="3 2" />
+
+          <!-- Interactive Command Terminal Session -->
+          <text x="32" y="93" class="amber-text-main">A:\&gt; LOAD TELEMETRY.SYS</text>
+          <text x="32" y="103" class="amber-text-dim">CORE KERNEL INTEGRITY: 99.8%</text>
+          <text x="32" y="113" class="amber-text-dim">SYNC: AUTO  SWEEP: 4.0s</text>
+          <text x="32" y="125" class="amber-text-bold">A:\&gt;</text>
+
+          <!-- Steady Blinking Command Prompt Cursor (2 Hz Cadence = 0.5s Period) -->
+          <!-- 8 clean blinks per 4s master cycle: 100% seamless at t=0 and t=T -->
+          <rect x="54" y="117" width="5.5" height="9" fill="#ffae19">
+            <animate attributeName="opacity"
+                     values="1; 1; 0; 0; 1"
+                     keyTimes="0; 0.499; 0.5; 0.999; 1"
+                     dur="0.5s"
+                     repeatCount="indefinite" />
+          </rect>
+        </g>
+
+        <!-- CRT Physical Scanline Raster Mask -->
+        <rect x="22" y="20" width="206" height="132" fill="url(#scanlines)" pointer-events="none" />
+
+        <!-- Continuous Sweeping Scanline Highlight Band -->
+        <!-- Loops seamlessly: sweeps from y=-40 to y=155 in exactly 4.0s -->
+        <g>
+          <rect x="22" y="-40" width="206" height="36" fill="url(#scanline-sweep)">
+            <animate attributeName="y"
+                     from="-40"
+                     to="155"
+                     dur="4s"
+                     repeatCount="indefinite" />
+          </rect>
+          <!-- Internal specular ray line for fine raster sweep -->
+          <line x1="22" y1="-22" x2="228" y2="-22" stroke="#fff1b8" stroke-width="0.8" opacity="0.45">
+            <animate attributeName="y1" from="-22" to="173" dur="4s" repeatCount="indefinite" />
+            <animate attributeName="y2" from="-22" to="173" dur="4s" repeatCount="indefinite" />
+          </line>
+        </g>
+
+        <!-- Spherical CRT Faceplate Glass Vignette & Highlight Arch -->
+        <rect x="22" y="20" width="206" height="132" fill="url(#crt-vignette)" pointer-events="none" />
+        <path d="M 28 32 Q 125 18 222 32" fill="none" stroke="#ffffff" stroke-width="0.75" opacity="0.12" />
+        <path d="M 30 35 Q 125 24 220 35" fill="none" stroke="#ffa200" stroke-width="0.5" opacity="0.18" />
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- TIERED KEYBOARD (SCULPTED DESK UNIT)       -->
+  <!-- ========================================== -->
+  <g id="tiered-keyboard">
+    <!-- Keyboard Chassis Placement:
+         Width = 280, Depth = 110. Wedge Slopes from Back (Z=32) to Front (Z=12).
+         Screen Coords:
+         Back-Left-Top: (311.5, 448),  Back-Right-Top: (554.0, 588)
+         Front-Left-Top: (216.3, 523), Front-Right-Top: (458.8, 663)
+         Front-Left-Bot: (216.3, 535), Front-Right-Bot: (458.8, 675)
+    -->
+
+    <!-- Keyboard Top Main Face (Sloped) -->
+    <polygon points="311.5,448 554,588 458.8,663 216.3,523" class="chassis-top" />
+    
+    <!-- Top-Front Highlight Hairline -->
+    <line x1="216.3" y1="523" x2="458.8" y2="663" class="cad-spec" />
+    <line x1="311.5" y1="448" x2="554" y2="588" class="cad-accent" />
+    <line x1="311.5" y1="448" x2="216.3" y2="523" class="cad-accent" />
+
+    <!-- Keyboard Front Lip Face (Drop to desk) -->
+    <polygon points="216.3,523 458.8,663 458.8,675 216.3,535" class="chassis-front" />
+    <line x1="216.3" y1="535" x2="458.8" y2="675" class="cad-hairline" />
+
+    <!-- Keyboard Right Wedge Face -->
+    <polygon points="554,588 458.8,663 458.8,675 554,600" class="chassis-side" />
+    <line x1="554" y1="588" x2="458.8" y2="663" class="cad-accent" />
+    <line x1="458.8" y1="675" x2="554" y2="600" class="cad-hairline" />
+
+    <!-- Ergonomic Front Palm-Rest Bevel Line -->
+    <line x1="225" y1="529" x2="467" y2="669" class="cad-hairline" stroke-dasharray="6 3" />
+
+    <!-- Recessed Keycap Basin / Tray -->
+    <polygon points="305,456 540,592 452,654 228,520" fill="#0d1118" stroke="#1f2838" stroke-width="1" />
+
+    <!-- ========================================== -->
+    <!-- SCULPTED KEYCAP TIERS & INDIVIDUAL KEYS    -->
+    <!-- ========================================== -->
+    <!-- Helper macro structure for isometric keys:
+         Each key has Top facet (quad), Front facet (quad), and Right facet.
+    -->
+    <g id="keyboard-keycaps">
+      <!-- ROW 1 (F-KEYS & ESC) - Highest Tier (Z ≈ 34) -->
+      <g id="key-row-1">
+        <!-- ESC Key -->
+        <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+        <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+        <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        <line x1="299" y1="465" x2="308" y2="470" stroke="#5a708f" stroke-width="0.6" />
+
+        <!-- F1-F4 Block -->
+        <g transform="translate(18, 10.5)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+          <line x1="299" y1="465" x2="308" y2="470" stroke="#5a708f" stroke-width="0.6" />
+        </g>
+        <g transform="translate(30, 17.5)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        </g>
+        <g transform="translate(42, 24.5)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        </g>
+        <g transform="translate(54, 31.5)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        </g>
+
+        <!-- F5-F8 Block -->
+        <g transform="translate(74, 43)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        </g>
+        <g transform="translate(86, 50)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        </g>
+        <g transform="translate(98, 57)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        </g>
+        <g transform="translate(110, 64)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        </g>
+
+        <!-- System / Numpad Function Keys -->
+        <g transform="translate(140, 81)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        </g>
+        <g transform="translate(152, 88)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        </g>
+        <g transform="translate(164, 95)">
+          <polygon points="302,460 311,465 308,470 299,465" class="key-top" />
+          <polygon points="299,465 308,470 308,473 299,468" class="key-front" />
+          <polygon points="308,470 311,465 311,468 308,473" class="key-side" />
+        </g>
+      </g>
+
+      <!-- ROW 2 (NUMBER ROW) - Tier 2 (Z ≈ 30) -->
+      <g id="key-row-2" transform="translate(-13, 14)">
+        <!-- 14 Consecutive Sculpted Keys across width -->
+        <!-- Keys: Tilde, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, -, =, Backspace -->
+        <path d="
+          M 299 465 L 308 470 L 305 475 L 296 470 Z
+          M 311 472 L 320 477 L 317 482 L 308 477 Z
+          M 323 479 L 332 484 L 329 489 L 320 484 Z
+          M 335 486 L 344 491 L 341 496 L 332 491 Z
+          M 347 493 L 356 498 L 353 503 L 344 498 Z
+          M 359 500 L 368 505 L 365 510 L 356 505 Z
+          M 371 507 L 380 512 L 377 517 L 368 512 Z
+          M 383 514 L 392 519 L 389 524 L 380 519 Z
+          M 395 521 L 404 526 L 401 531 L 392 526 Z
+          M 407 528 L 416 533 L 413 538 L 404 533 Z
+          M 419 535 L 428 540 L 425 545 L 416 540 Z
+          M 431 542 L 440 547 L 437 552 L 428 547 Z
+          M 443 549 L 452 554 L 449 559 L 440 554 Z
+          M 455 556 L 472 566 L 469 571 L 452 561 Z
+        " class="key-top" />
+        <!-- Front Facets -->
+        <path d="
+          M 296 470 L 305 475 L 305 478 L 296 473 Z
+          M 308 477 L 317 482 L 317 485 L 308 480 Z
+          M 320 484 L 329 489 L 329 492 L 320 487 Z
+          M 332 491 L 341 496 L 341 499 L 332 494 Z
+          M 344 498 L 353 503 L 353 506 L 344 501 Z
+          M 356 505 L 365 510 L 365 513 L 356 508 Z
+          M 368 512 L 377 517 L 377 520 L 368 515 Z
+          M 380 519 L 389 524 L 389 527 L 380 522 Z
+          M 392 526 L 401 531 L 401 534 L 392 529 Z
+          M 404 533 L 413 538 L 413 541 L 404 536 Z
+          M 416 540 L 425 545 L 425 548 L 416 543 Z
+          M 428 547 L 437 552 L 437 555 L 428 550 Z
+          M 440 554 L 449 559 L 449 562 L 440 557 Z
+          M 452 561 L 469 571 L 469 574 L 452 564 Z
+        " class="key-front" />
+        <!-- Stepped Key Top Highlights -->
+        <line x1="296" y1="470" x2="305" y2="475" stroke="#5a708f" stroke-width="0.7" />
+        <line x1="452" y1="561" x2="469" y2="571" stroke="#5a708f" stroke-width="0.7" />
+      </g>
+
+      <!-- ROW 3 (QWERTY ROW) - Tier 3 (Z ≈ 26) -->
+      <g id="key-row-3" transform="translate(-26, 28)">
+        <!-- Tab Key (Wide) + Alpha Keys -->
+        <polygon points="293,475 307,483 304,488 290,480" class="key-top" />
+        <polygon points="290,480 304,488 304,491 290,483" class="key-front" />
+        
+        <path d="
+          M 310 485 L 319 490 L 316 495 L 307 490 Z
+          M 322 492 L 331 497 L 328 502 L 319 497 Z
+          M 334 499 L 343 504 L 340 509 L 331 504 Z
+          M 346 506 L 355 511 L 352 516 L 343 511 Z
+          M 358 513 L 367 518 L 364 523 L 355 518 Z
+          M 370 520 L 379 525 L 376 530 L 367 525 Z
+          M 382 527 L 391 532 L 388 537 L 379 532 Z
+          M 394 534 L 403 539 L 400 544 L 391 539 Z
+          M 406 541 L 415 546 L 412 551 L 403 546 Z
+          M 418 548 L 427 553 L 424 558 L 415 553 Z
+          M 430 555 L 439 560 L 436 565 L 427 560 Z
+          M 442 562 L 451 567 L 448 572 L 439 567 Z
+        " class="key-top" />
+        <path d="
+          M 307 490 L 316 495 L 316 498 L 307 493 Z
+          M 319 497 L 328 502 L 328 505 L 319 500 Z
+          M 331 504 L 340 509 L 340 512 L 331 507 Z
+          M 343 511 L 352 516 L 352 519 L 343 514 Z
+          M 355 518 L 364 523 L 364 526 L 355 521 Z
+          M 367 525 L 376 530 L 376 533 L 367 528 Z
+          M 379 532 L 388 537 L 388 540 L 379 535 Z
+          M 391 539 L 400 544 L 400 547 L 391 542 Z
+          M 403 546 L 412 551 L 412 554 L 403 549 Z
+          M 415 553 L 424 558 L 424 561 L 415 556 Z
+          M 427 560 L 436 565 L 436 568 L 427 563 Z
+          M 439 567 L 448 572 L 448 575 L 439 570 Z
+        " class="key-front" />
+      </g>
+
+      <!-- ROW 4 (ASDF / HOME ROW) - Tier 4 (Z ≈ 22) -->
+      <g id="key-row-4" transform="translate(-39, 42)">
+        <!-- Caps Lock (Wide) -->
+        <polygon points="287,485 303,494 300,499 284,490" class="key-top" />
+        <polygon points="284,490 300,499 300,502 284,493" class="key-front" />
+
+        <!-- ASDF Keys -->
+        <path d="
+          M 306 496 L 315 501 L 312 506 L 303 501 Z
+          M 318 503 L 327 508 L 324 513 L 315 508 Z
+          M 330 510 L 339 515 L 336 520 L 327 515 Z
+          M 342 517 L 351 522 L 348 527 L 339 522 Z
+          M 354 524 L 363 529 L 360 534 L 351 529 Z
+          M 366 531 L 375 536 L 372 541 L 363 536 Z
+          M 378 538 L 387 543 L 384 548 L 375 543 Z
+          M 390 545 L 399 550 L 396 555 L 387 550 Z
+          M 402 552 L 411 557 L 408 562 L 399 557 Z
+          M 414 559 L 423 564 L 420 569 L 411 564 Z
+          M 426 566 L 435 571 L 432 576 L 423 571 Z
+        " class="key-top" />
+        <path d="
+          M 303 501 L 312 506 L 312 509 L 303 504 Z
+          M 315 508 L 324 513 L 324 516 L 315 511 Z
+          M 327 515 L 336 520 L 336 523 L 327 518 Z
+          M 339 522 L 348 527 L 348 530 L 339 525 Z
+          M 351 529 L 360 534 L 360 537 L 351 532 Z
+          M 363 536 L 372 541 L 372 544 L 363 539 Z
+          M 375 543 L 384 548 L 384 551 L 375 546 Z
+          M 387 550 L 396 555 L 396 558 L 387 553 Z
+          M 399 557 L 408 562 L 408 565 L 399 560 Z
+          M 411 564 L 420 569 L 420 572 L 411 567 Z
+          M 423 571 L 432 576 L 432 579 L 423 574 Z
+        " class="key-front" />
+
+        <!-- Stepped L-Shaped ISO Return / Enter Key -->
+        <polygon points="438,573 457,584 453,594 443,588 444,585 434,579" class="key-top" />
+        <polygon points="434,579 444,585 444,588 434,582" class="key-front" />
+        <line x1="434" y1="579" x2="444" y2="585" stroke="#667f9e" stroke-width="0.8" />
+      </g>
+
+      <!-- ROW 5 (ZXCV ROW) - Tier 5 (Z ≈ 18) -->
+      <g id="key-row-5" transform="translate(-52, 56)">
+        <!-- Left Shift (Extra Wide) -->
+        <polygon points="281,495 301,507 298,512 278,500" class="key-top" />
+        <polygon points="278,500 298,512 298,515 278,503" class="key-front" />
+        <line x1="278" y1="500" x2="298" y2="512" stroke="#5a708f" stroke-width="0.7" />
+
+        <!-- Alpha Keys -->
+        <path d="
+          M 304 509 L 313 514 L 310 519 L 301 514 Z
+          M 316 516 L 325 521 L 322 526 L 313 521 Z
+          M 328 523 L 337 528 L 334 533 L 325 528 Z
+          M 340 530 L 349 535 L 346 540 L 337 535 Z
+          M 352 537 L 361 542 L 358 547 L 349 542 Z
+          M 364 544 L 373 549 L 370 554 L 361 549 Z
+          M 376 551 L 385 556 L 382 561 L 373 556 Z
+          M 388 558 L 397 563 L 394 568 L 385 563 Z
+          M 400 565 L 409 570 L 406 575 L 397 570 Z
+          M 412 572 L 421 577 L 418 582 L 409 577 Z
+        " class="key-top" />
+        <path d="
+          M 301 514 L 310 519 L 310 522 L 301 517 Z
+          M 313 521 L 322 526 L 322 529 L 313 524 Z
+          M 325 528 L 334 533 L 334 536 L 325 531 Z
+          M 337 535 L 346 540 L 346 543 L 337 538 Z
+          M 349 542 L 358 547 L 358 550 L 349 545 Z
+          M 361 549 L 370 554 L 370 557 L 361 552 Z
+          M 373 556 L 382 561 L 382 564 L 373 559 Z
+          M 385 563 L 394 568 L 394 571 L 385 566 Z
+          M 397 570 L 406 575 L 406 578 L 397 573 Z
+          M 409 577 L 418 582 L 418 585 L 409 580 Z
+        " class="key-front" />
+
+        <!-- Right Shift Key -->
+        <polygon points="424,579 448,593 445,598 421,584" class="key-top" />
+        <polygon points="421,584 445,598 445,601 421,587" class="key-front" />
+      </g>
+
+      <!-- ROW 6 (SPACEBAR & MODIFIERS) - Tier 6 (Z ≈ 14) -->
+      <g id="key-row-6" transform="translate(-65, 70)">
+        <!-- Left Ctrl -->
+        <polygon points="275,505 289,513 286,519 272,511" class="key-top" />
+        <polygon points="272,511 286,519 286,523 272,515" class="key-front" />
+
+        <!-- Left Alt -->
+        <polygon points="292,515 306,523 303,529 289,521" class="key-top" />
+        <polygon points="289,521 303,523 303,527 289,525" class="key-front" />
+
+        <!-- Sculpted Broad Spacebar -->
+        <!-- Top Face (Wide quad) -->
+        <polygon points="310,525 395,574 391,582 306,533" class="key-top" />
+        <!-- Front Bevel Face -->
+        <polygon points="306,533 391,582 391,587 306,538" class="key-front" />
+        <!-- Right Face -->
+        <polygon points="391,582 395,574 395,579 391,587" class="key-side" />
+        <!-- Center Specular Line along Spacebar Top-Front -->
+        <line x1="306" y1="533" x2="391" y2="582" stroke="#6884a6" stroke-width="0.9" />
+
+        <!-- Right Alt -->
+        <polygon points="399,576 413,584 410,590 396,582" class="key-top" />
+        <polygon points="396,582 410,590 410,594 396,586" class="key-front" />
+
+        <!-- Right Ctrl -->
+        <polygon points="416,586 430,594 427,600 413,592" class="key-top" />
+        <polygon points="413,592 427,600 427,604 413,596" class="key-front" />
+      </g>
+
+      <!-- Navigation Inverted-T Cluster & Numeric Keypad -->
+      <g id="numpad-nav-block" transform="translate(68, 48)">
+        <!-- Nav Arrow Keys -->
+        <!-- Up Arrow -->
+        <polygon points="330,490 338,495 335,499 327,494" class="key-top" />
+        <polygon points="327,494 335,499 335,502 327,497" class="key-front" />
+        <!-- Left, Down, Right -->
+        <g transform="translate(-10, 10)">
+          <polygon points="330,490 338,495 335,499 327,494" class="key-top" />
+          <polygon points="327,494 335,499 335,502 327,497" class="key-front" />
+        </g>
+        <g transform="translate(0, 16)">
+          <polygon points="330,490 338,495 335,499 327,494" class="key-top" />
+          <polygon points="327,494 335,499 335,502 327,497" class="key-front" />
+        </g>
+        <g transform="translate(10, 22)">
+          <polygon points="330,490 338,495 335,499 327,494" class="key-top" />
+          <polygon points="327,494 335,499 335,502 327,497" class="key-front" />
+        </g>
+
+        <!-- Numeric Keypad Matrix -->
+        <g transform="translate(36, 12)">
+          <path d="
+            M 320 484 L 328 489 L 325 493 L 317 488 Z
+            M 331 490 L 339 495 L 336 499 L 328 494 Z
+            M 342 496 L 350 501 L 347 505 L 339 500 Z
+            M 310 494 L 318 499 L 315 503 L 307 498 Z
+            M 321 500 L 329 505 L 326 509 L 318 504 Z
+            M 332 506 L 340 511 L 337 515 L 329 510 Z
+            M 300 504 L 308 509 L 305 513 L 297 508 Z
+            M 311 510 L 319 515 L 316 519 L 308 514 Z
+            M 322 516 L 330 521 L 327 525 L 319 520 Z
+          " class="key-top" />
+          <!-- Tall Numpad Enter Key -->
+          <polygon points="353,503 361,508 355,518 347,513" class="key-top" />
+          <polygon points="347,513 355,518 355,522 347,517" class="key-front" />
+          <line x1="347" y1="513" x2="355" y2="518" stroke="#6884a6" stroke-width="0.7" />
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- COILED KEYBOARD INTERCONNECT CABLE         -->
+  <!-- ========================================== -->
+  <g id="coiled-cable">
+    <!-- Keyboard Strain Relief Boot (Exit at rear-left) -->
+    <polygon points="334,472 328,469 324,471 330,474" fill="#0f151e" stroke="#2c3a4d" stroke-width="0.8" />
+    
+    <!-- Cast Shadows under helical loops on desk plinth -->
+    <g fill="#020305" opacity="0.45">
+      <ellipse cx="265" cy="538" rx="8" ry="3.5" />
+      <ellipse cx="274" cy="546" rx="8" ry="3.5" />
+      <ellipse cx="285" cy="553" rx="8" ry="3.5" />
+      <ellipse cx="297" cy="558" rx="8" ry="3.5" />
+      <ellipse cx="310" cy="562" rx="8" ry="3.5" />
+      <ellipse cx="323" cy="564" rx="8" ry="3.5" />
+      <ellipse cx="337" cy="563" rx="8" ry="3.5" />
+      <ellipse cx="351" cy="559" rx="8" ry="3.5" />
+      <ellipse cx="365" cy="553" rx="8" ry="3.5" />
+      <ellipse cx="378" cy="545" rx="8" ry="3.5" />
+      <ellipse cx="390" cy="535" rx="8" ry="3.5" />
+      <ellipse cx="401" cy="524" rx="8" ry="3.5" />
+      <ellipse cx="411" cy="511" rx="8" ry="3.5" />
+      <ellipse cx="419" cy="497" rx="8" ry="3.5" />
+    </g>
+
+    <!-- Uncoiled Lead Wire from Keyboard down to first coil -->
+    <path d="M 326 470 C 298 480, 272 505, 262 532" fill="none" stroke="url(#cable-shading)" stroke-width="3.5" stroke-linecap="round" />
+    <path d="M 326 470 C 298 480, 272 505, 262 532" fill="none" stroke="#546b87" stroke-width="0.8" stroke-linecap="round" />
+
+    <!-- Isometric Helical Spring Loops (14 consecutive overlapping coils) -->
+    <!-- Loop 1 -->
+    <g transform="translate(265, 532)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 2 -->
+    <g transform="translate(274, 540)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 3 -->
+    <g transform="translate(285, 547)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 4 -->
+    <g transform="translate(297, 552)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 5 -->
+    <g transform="translate(310, 556)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 6 -->
+    <g transform="translate(323, 558)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 7 -->
+    <g transform="translate(337, 557)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 8 -->
+    <g transform="translate(351, 553)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 9 -->
+    <g transform="translate(365, 547)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 10 -->
+    <g transform="translate(378, 539)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 11 -->
+    <g transform="translate(390, 529)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 12 -->
+    <g transform="translate(401, 518)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 13 -->
+    <g transform="translate(411, 505)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Loop 14 -->
+    <g transform="translate(419, 491)">
+      <path d="M -7 -4 C -5 -9, 5 -9, 7 -4" fill="none" stroke="#121822" stroke-width="3.2" />
+      <path d="M -7 -4 C -9 2, -2 8, 6 6" fill="none" stroke="url(#cable-shading)" stroke-width="3.2" stroke-linecap="round" />
+      <path d="M -6 0 C -3 5, 3 5, 5 3" fill="none" stroke="#637e9e" stroke-width="0.8" />
+    </g>
+
+    <!-- Uncoiled Lead Wire rising from last coil into Chassis Port -->
+    <path d="M 425 487 C 438 472, 452 462, 492 452" fill="none" stroke="url(#cable-shading)" stroke-width="3.5" stroke-linecap="round" />
+    <path d="M 425 487 C 438 472, 452 462, 492 452" fill="none" stroke="#546b87" stroke-width="0.8" stroke-linecap="round" />
+
+    <!-- Molded 5-Pin DIN Male Plug at Chassis Face -->
+    <g transform="translate(494, 451)">
+      <polygon points="0,-4 8,0 8,6 0,2" fill="#1b2533" stroke="#485c75" stroke-width="0.8" />
+      <line x1="2" y1="-2" x2="2" y2="4" stroke="#6f88a8" stroke-width="0.6" />
+      <line x1="5" y1="0" x2="5" y2="5" stroke="#6f88a8" stroke-width="0.6" />
+      <!-- Strain-relief ribs -->
+      <line x1="-3" y1="-3" x2="-3" y2="1" stroke="#222f40" stroke-width="2" />
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- TECHNICAL FIGURE SCHEMATIC POINTERS        -->
+  <!-- ========================================== -->
+  <g id="schematic-callouts" class="hud-text">
+    <!-- Pointer [01]: CRT Phosphor -->
+    <path d="M 280 180 L 350 180 L 430 230" class="cad-hairline" />
+    <circle cx="430" cy="230" r="2" fill="#ff9900" />
+    <text x="135" y="177" class="hud-text">[01] CRT DISPLAY (AMBER P-134)</text>
+
+    <!-- Pointer [02]: Disk Drives -->
+    <path d="M 830 500 L 760 500 L 600 480" class="cad-hairline" />
+    <circle cx="600" cy="480" r="2" fill="#3d516b" />
+    <text x="838" y="503" class="hud-text">[02] DUAL 5.25&quot; STORAGE BAYS</text>
+
+    <!-- Pointer [03]: Coiled Cable -->
+    <path d="M 170 610 L 240 610 L 310 565" class="cad-hairline" />
+    <circle cx="310" cy="565" r="2" fill="#3d516b" />
+    <text x="60" y="613" class="hud-text">[03] HELICAL INTERCONNECT</text>
+
+    <!-- Pointer [04]: Tiered Keyboard -->
+    <path d="M 180 710 L 260 710 L 340 650" class="cad-hairline" />
+    <circle cx="340" cy="650" r="2" fill="#3d516b" />
+    <text x="68" y="713" class="hud-text">[04] SCULPTED TIERED KEYBOARD</text>
+  </g>
+</svg>
